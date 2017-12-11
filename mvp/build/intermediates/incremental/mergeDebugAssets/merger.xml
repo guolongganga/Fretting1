@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/src/main/assets"/><source path="/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/generated/assets/shaders/debug"/></dataSet><dataSet config="debug"><source path="/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/src/debug/assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/src/main/assets"/><source path="/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/generated/assets/shaders/debug"/></dataSet><dataSet config="debug"><source path="/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/src/debug/assets"/></dataSet></merger>

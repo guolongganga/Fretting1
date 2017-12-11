@@ -11,7 +11,8 @@ public class TaetModel extends BaseModel<TaetModel> {
 
     //如果外面data是[] 那么就可以直接在这类里面定义参数了
     //public class TaetModel extends BaseModel<List<TaetModel>>
-    //private String id；
+    private String id;
+    //TODO 增加dalog弹出框
 
     private List<Happ> dictData;
 
