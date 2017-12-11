@@ -3,13 +3,17 @@ package com.zhsoft.fretting.ui.fragment.user;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
+import com.zhsoft.fretting.MainActivity;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.BaseModel;
 import com.zhsoft.fretting.model.Happ;
 import com.zhsoft.fretting.model.TaetModel;
 import com.zhsoft.fretting.present.UserPresent;
+import com.zhsoft.fretting.ui.activity.user.RegisterFirstActivity;
 
 import java.util.List;
 
@@ -25,18 +29,29 @@ import cn.droidlover.xdroidmvp.utils.EncryptDecrypt;
 public class UserFragment extends XFragment<UserPresent> {
 
     @BindView(R.id.mytext) TextView mytext;
+    @BindView(R.id.head_title) TextView headTitle;
+    @BindView(R.id.register) Button register;
+
+    private boolean isLogin = false;//未登录
 
     @Override
     public void initData(Bundle savedInstanceState) {
-//        String string = "ezG8gPH6LJffPr1F9fLQlLUdoyNPd69mYzoLmbfIQfhz9/qQl88d0FFuyAccx5rVFjyoqxJEVHQ68zNUR6s7ftuIgp9ETDYZ/PHAhD/gkHLMovt9QH2B4YCKKE+mrf7pafEk+YFGab5l1GzKWF+fCAt54o7ZcM2g48ntAXn3Iq0qSdxz/FcJz1aM+OTqPhI8/2TWUDXIHv773dSj7rTuPMy6yXbES6CbRpFyO5TRh9Tp2+2PBmlCz/UllIaqTf73Q3x81fPsfrnWSwBdrJ8cwA==";
-//        String data = EncryptDecrypt.decrptByAES(string);
-//        mytext.setText(data);
+        headTitle.setText("我的");
+        if (isLogin) {
+
+        }
         getP().loadTestData();
     }
 
+
     @Override
     public void initEvents() {
-
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(RegisterFirstActivity.class);
+            }
+        });
     }
 
     @Override
@@ -57,6 +72,6 @@ public class UserFragment extends XFragment<UserPresent> {
     public void showData(TaetModel data) {
         List<Happ> list = data.getDictData();
         list.get(0);
-        mytext.setText(data.getDictData().size()+"----"+list.get(0).getDictDesc());
+        mytext.setText(data.getDictData().size() + "----" + list.get(0).getDictDesc());
     }
 }

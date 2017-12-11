@@ -22,5 +22,6 @@ public class TaetModel extends BaseModel<TaetModel> {
 
     public void setDictData(List<Happ> dictData) {
         this.dictData = dictData;
+
     }
 }
