@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+
+    <color name="white">#ffffff</color>
+
+    <!--默认浅戏线颜色-->
+    <color name="color_e7e7e7">#e7e7e7</color>
+    <color name="color_f7f7f7">#f7f7f7</color>
+    <color name="color_divider">#eeeeee</color>
+
+    <!--导航栏字体颜色 主色调-->
+    <color name="color_main">#ff3366</color>
+    <color name="color_main_tint">#f56f90</color>
+
+    <color name="color_f7182d">#f7182d</color>
+    <color name="color_666666">#666666</color>
+
+</resources>
