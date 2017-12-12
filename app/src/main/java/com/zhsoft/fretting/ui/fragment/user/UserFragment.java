@@ -16,6 +16,7 @@ import com.zhsoft.fretting.model.TaetModel;
 import com.zhsoft.fretting.present.UserPresent;
 import com.zhsoft.fretting.ui.activity.user.RegisterFirstActivity;
 import com.zhsoft.fretting.ui.activity.user.SetTradePwdActivity;
+import com.zhsoft.fretting.ui.activity.user.SettingActivity;
 
 import java.util.List;
 
@@ -30,7 +31,7 @@ import cn.droidlover.xdroidmvp.utils.EncryptDecrypt;
 
 public class UserFragment extends XFragment<UserPresent> {
 
-//    @BindView(R.id.mytext) TextView mytext;
+    //    @BindView(R.id.mytext) TextView mytext;
     @BindView(R.id.head_title) TextView headTitle;
     @BindView(R.id.head_right) Button headRight;
 //    @BindView(R.id.ll_logout) LinearLayout llLogout;
@@ -58,7 +59,7 @@ public class UserFragment extends XFragment<UserPresent> {
         headRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(SetTradePwdActivity.class);
+                startActivity(SettingActivity.class);
             }
         });
     }
