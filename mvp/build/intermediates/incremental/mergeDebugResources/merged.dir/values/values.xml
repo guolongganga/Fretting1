@@ -340,6 +340,9 @@
     <dimen name="design_tab_scrollable_min_width">72dp</dimen>
     <dimen name="design_tab_text_size">14sp</dimen>
     <dimen name="design_tab_text_size_2line">12sp</dimen>
+    <dimen name="dimen_100">100dp</dimen>
+    <dimen name="dimen_15">15dp</dimen>
+    <dimen name="dimen_40">40dp</dimen>
     <item format="float" name="disabled_alpha_material_dark" type="dimen">0.30</item>
     <item format="float" name="disabled_alpha_material_light" type="dimen">0.26</item>
     <item format="float" name="highlight_alpha_material_colored" type="dimen">0.26</item>
@@ -367,6 +370,7 @@
     <dimen name="notification_subtext_size">13sp</dimen>
     <dimen name="notification_top_pad">10dp</dimen>
     <dimen name="notification_top_pad_large_text">5dp</dimen>
+    <dimen name="size_16">16sp</dimen>
     <drawable name="notification_template_icon_bg">#3333B5E5</drawable>
     <drawable name="notification_template_icon_low_bg">#0cffffff</drawable>
     <item name="action_bar_activity_content" type="id"/>
@@ -418,10 +422,14 @@
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
     <string name="app_name">Mvp</string>
+    <string name="app_name_dialog">CommonDialog</string>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
     <string name="bottom_sheet_behavior" translatable="false">android.support.design.widget.BottomSheetBehavior</string>
     <string name="character_counter_pattern" translatable="false">%1$d / %2$d</string>
     <string name="define_roundedimageview"/>
+    <string name="dialog_http_loading_message_default">加载中...</string>
+    <string name="dialog_http_loading_message_upload">正在上传...</string>
+    <string name="dialog_http_loading_message_working">处理中...</string>
     <string name="library_roundedimageview_author">Vince Mi</string>
     <string name="library_roundedimageview_authorWebsite">https://github.com/vinc3m1</string>
     <string name="library_roundedimageview_isOpenSource">true</string>
@@ -1451,6 +1459,12 @@
         <item name="tabTextAppearance">@style/TextAppearance.Design.Tab</item>
         <item name="tabSelectedTextColor">?android:textColorPrimary</item>
     </style>
+    <style name="Dialog_Style" parent="android:style/Theme.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:colorBackgroundCacheHint">@null</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
     <style name="Platform.AppCompat" parent="android:Theme">
         <item name="android:windowNoTitle">true</item>
 
@@ -1921,5 +1935,12 @@
         <item name="errorTextAppearance">@style/TextAppearance.Design.Error</item>
         <item name="counterTextAppearance">@style/TextAppearance.Design.Counter</item>
         <item name="counterOverflowTextAppearance">@style/TextAppearance.Design.Counter.Overflow</item>
+    </style>
+    <style name="dialog_http_loading_style">
+        <item name="android:indeterminateDrawable">@drawable/dialog_http_loading_style</item>
+        <item name="android:minWidth">@dimen/dimen_40</item>
+        <item name="android:maxWidth">@dimen/dimen_40</item>
+        <item name="android:minHeight">@dimen/dimen_40</item>
+        <item name="android:maxHeight">@dimen/dimen_40</item>
     </style>
 </resources>
