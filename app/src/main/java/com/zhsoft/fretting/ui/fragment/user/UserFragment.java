@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.MainActivity;
@@ -30,6 +31,7 @@ public class UserFragment extends XFragment<UserPresent> {
 
     @BindView(R.id.mytext) TextView mytext;
     @BindView(R.id.head_title) TextView headTitle;
+    @BindView(R.id.ll_logout) LinearLayout llLogout;
     @BindView(R.id.register) Button register;
 
     private boolean isLogin = false;//未登录
@@ -37,9 +39,6 @@ public class UserFragment extends XFragment<UserPresent> {
     @Override
     public void initData(Bundle savedInstanceState) {
         headTitle.setText("我的");
-        if (isLogin) {
-
-        }
         getP().loadTestData();
     }
 
@@ -74,4 +73,15 @@ public class UserFragment extends XFragment<UserPresent> {
         list.get(0);
         mytext.setText(data.getDictData().size() + "----" + list.get(0).getDictDesc());
     }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        if (isLogin) {
+//            llLogout.setVisibility(View.GONE);
+//        } else {
+//            llLogout.setVisibility(View.VISIBLE);
+//        }
+//
+//    }
 }

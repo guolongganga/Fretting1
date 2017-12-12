@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:id="@+id/ll_logout"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/color_80696969"
+              android:gravity="center"
+              android:orientation="vertical">
+
+    <ImageView
+        android:layout_width="300dp"
+        android:layout_height="150dp"
+        android:src="@mipmap/ic_launcher"/>
+
+    <Button
+        android:id="@+id/login"
+        style="@style/common_blue_button"
+        android:layout_width="150dp"
+        android:text="立即登录"/>
+
+    <Button
+        android:id="@+id/register"
+        style="@style/common_blue_button"
+        android:layout_width="150dp"
+        android:layout_marginTop="20dp"
+        android:text="10秒开户"/>
+</LinearLayout>

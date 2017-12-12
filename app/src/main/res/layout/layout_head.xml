@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/dimen_44"
-                android:background="@color/colorPrimary">
+                android:background="@color/colorPrimary"
+                android:paddingTop="@dimen/dimen_22">
 
     <ImageButton
         android:id="@+id/head_back"
@@ -25,13 +26,13 @@
         android:textSize="17dp"/>
 
     <ImageButton
-        android:visibility="gone"
         android:layout_width="45dp"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:background="@android:color/transparent"
         android:scaleType="center"
         android:src="@mipmap/icon_back"
+        android:visibility="gone"
         />
 
 </RelativeLayout>

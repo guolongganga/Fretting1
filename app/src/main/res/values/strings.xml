@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">微动利</string>
+    <string name="app_name">微银财富</string>
     <string name="click_logout">再按一次退出</string>
     <string name="user_register_password_hint">请输入登录密码</string>
     <string name="user_register_password_hint_again">请再次输入登录密码</string>
