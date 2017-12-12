@@ -16,12 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 import cn.droidlover.xdroidmvp.router.Router;
 
 /**
  * 作者：sunnyzeng on 2017/12/5
- * 描述：主页面11
+ * 描述：主页面
  */
 
 public class MainActivity extends XActivity {
@@ -38,6 +39,7 @@ public class MainActivity extends XActivity {
     private Fragment fragment;
     private FragmentTransaction ft;
     private int currentTab; // 当前Tab页面索引
+
     private List<TextView> textViews;
 
     private long firstTime; //用于点击两次返回退出程序
