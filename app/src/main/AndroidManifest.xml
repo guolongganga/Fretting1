@@ -34,6 +34,8 @@
         <activity android:name=".ui.activity.user.RegisterFirstActivity"></activity>
         <!--设置交易密码页-->
         <activity android:name=".ui.activity.user.SetTradePwdActivity"></activity>
+        <!--设置-->
+        <activity android:name=".ui.activity.user.SettingActivity"></activity>
 
     </application>
 

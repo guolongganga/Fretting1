@@ -19,6 +19,7 @@
 
             <!--个人信息-->
             <TextView
+                android:id="@+id/personinfo"
                 style="@style/user_setting_line"
                 android:layout_marginTop="@dimen/dimen_10"
                 android:text="个人信息"
@@ -28,6 +29,7 @@
 
             <!--手机号码-->
             <TextView
+                android:id="@+id/phone"
                 style="@style/user_setting_line"
                 android:text="手机号码"
                 />
@@ -36,6 +38,7 @@
 
             <!--密码管理-->
             <TextView
+                android:id="@+id/password_manager"
                 style="@style/user_setting_line"
                 android:text="密码管理"
                 />
@@ -44,6 +47,7 @@
 
             <!--银行卡号-->
             <TextView
+                android:id="@+id/bankcard"
                 style="@style/user_setting_line"
                 android:text="银行卡号"
                 />
@@ -52,6 +56,7 @@
 
             <!--风险等级测评-->
             <LinearLayout
+                android:id="@+id/risk_test"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:gravity="center_vertical"
@@ -106,6 +111,7 @@
                     android:textSize="14sp"/>
 
                 <TextView
+                    android:id="@+id/call_agent"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
@@ -118,6 +124,7 @@
 
             <!--关于我们-->
             <TextView
+                android:id="@+id/about_us"
                 style="@style/user_setting_line"
                 android:text="关于我们"
                 />
@@ -126,6 +133,7 @@
 
             <!--切换账户-->
             <TextView
+                android:id="@+id/change_user"
                 style="@style/user_setting_line"
                 android:text="切换账户"
                 />
@@ -134,6 +142,7 @@
 
             <!--安全退出-->
             <Button
+                android:id="@+id/exit"
                 android:layout_width="150dp"
                 android:layout_height="40dp"
                 android:layout_marginTop="50dp"
