@@ -3,8 +3,11 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Fretting.iml" filepath="$PROJECT_DIR$/Fretting.iml" />
+      <module fileurl="file://D:\youhuiquan\Fretting\Fretting.iml" filepath="D:\youhuiquan\Fretting\Fretting.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://D:\youhuiquan\Fretting\app\app.iml" filepath="D:\youhuiquan\Fretting\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/mvp/mvp.iml" filepath="$PROJECT_DIR$/mvp/mvp.iml" />
+      <module fileurl="file://D:\youhuiquan\Fretting\mvp\mvp.iml" filepath="D:\youhuiquan\Fretting\mvp\mvp.iml" />
     </modules>
   </component>
 </project>
