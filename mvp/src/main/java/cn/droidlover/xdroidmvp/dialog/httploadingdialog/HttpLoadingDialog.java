@@ -1,6 +1,7 @@
 package cn.droidlover.xdroidmvp.dialog.httploadingdialog;
 
 /**
+ *自定义dialog
  * Created by ${Yis}
  * data: 2017/12/6
  */
