@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <include layout="@layout/layout_head"/>
+
+    <!--姓名-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginTop="50dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="姓名"
+            android:textColor="@color/color_text_333"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="张三"
+            android:textColor="@color/color_text_333"
+            android:textSize="14sp"/>
+
+    </RelativeLayout>
+
+    <include layout="@layout/layout_divider_horizontal"/>
+
+    <!--身份证号-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="身份证号"
+            android:textColor="@color/color_text_333"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="21078222919293***23"
+            android:textColor="@color/color_text_333"
+            android:textSize="14sp"/>
+
+    </RelativeLayout>
+
+    <include layout="@layout/layout_divider_horizontal"/>
+
+    <!--基金账号-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:paddingLeft="30dp"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:text="基金账号"
+            android:textColor="@color/color_text_333"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="021139388305"
+            android:textColor="@color/color_text_333"
+            android:textSize="14sp"/>
+
+    </RelativeLayout>
+
+    <include layout="@layout/layout_divider_horizontal"/>
+
+    <!--邮箱-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="邮箱"
+            android:textColor="@color/color_text_333"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="256255695@qq.com"
+            android:textColor="@color/color_text_333"
+            android:textSize="14sp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="修改"
+            android:textColor="@color/color_text_333"
+            android:textSize="14sp"/>
+
+    </LinearLayout>
+
+    <include layout="@layout/layout_divider_horizontal"/>
+
+</LinearLayout>

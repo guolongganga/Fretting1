@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+    <!--设置-->
+    <include layout="@layout/layout_head"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <!--个人信息-->
+            <TextView
+                style="@style/user_setting_line"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:text="个人信息"
+                />
+
+            <include layout="@layout/layout_divider_horizontal"/>
+
+            <!--手机号码-->
+            <TextView
+                style="@style/user_setting_line"
+                android:text="手机号码"
+                />
+
+            <include layout="@layout/layout_divider_horizontal"/>
+
+            <!--密码管理-->
+            <TextView
+                style="@style/user_setting_line"
+                android:text="密码管理"
+                />
+
+            <include layout="@layout/layout_divider_horizontal"/>
+
+            <!--银行卡号-->
+            <TextView
+                style="@style/user_setting_line"
+                android:text="银行卡号"
+                />
+
+            <include layout="@layout/layout_divider_horizontal"/>
+
+            <!--风险等级测评-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="风险等级测评"
+                    android:textColor="@color/color_text_333"
+                    android:textSize="14sp"/>
+
+                <!--测评状态-->
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="未测"
+                    android:textColor="@color/color_text_333"
+                    android:textSize="14sp"/>
+
+                <ImageView
+                    android:id="@+id/icon_arrow"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:src="@mipmap/icon_common_arrow"/>
+
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_divider_horizontal"/>
+
+            <!--客服电话-->
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:text="客服电话"
+                    android:textColor="@color/color_text_333"
+                    android:textSize="14sp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:text="拨打"
+                    android:textColor="@color/color_text_333"
+                    android:textSize="14sp"/>
+            </RelativeLayout>
+
+            <include layout="@layout/layout_divider_horizontal"/>
+
+            <!--关于我们-->
+            <TextView
+                style="@style/user_setting_line"
+                android:text="关于我们"
+                />
+
+            <include layout="@layout/layout_divider_horizontal"/>
+
+            <!--切换账户-->
+            <TextView
+                style="@style/user_setting_line"
+                android:text="切换账户"
+                />
+
+            <include layout="@layout/layout_divider_horizontal"/>
+
+            <!--安全退出-->
+            <Button
+                android:layout_width="150dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="50dp"
+                android:background="@drawable/shape_red_btn"
+                android:text="安全退出"
+                android:textColor="@color/white"/>
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

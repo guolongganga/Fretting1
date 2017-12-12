@@ -23,7 +23,7 @@ public class RegisterFirstActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_register_first;
+        return R.layout.activity_user_register_first;
     }
 
     @Override

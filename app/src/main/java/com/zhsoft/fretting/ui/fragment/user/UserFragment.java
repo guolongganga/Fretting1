@@ -15,6 +15,7 @@ import com.zhsoft.fretting.model.Happ;
 import com.zhsoft.fretting.model.TaetModel;
 import com.zhsoft.fretting.present.UserPresent;
 import com.zhsoft.fretting.ui.activity.user.RegisterFirstActivity;
+import com.zhsoft.fretting.ui.activity.user.SetTradePwdActivity;
 
 import java.util.List;
 
@@ -29,26 +30,35 @@ import cn.droidlover.xdroidmvp.utils.EncryptDecrypt;
 
 public class UserFragment extends XFragment<UserPresent> {
 
-    @BindView(R.id.mytext) TextView mytext;
+//    @BindView(R.id.mytext) TextView mytext;
     @BindView(R.id.head_title) TextView headTitle;
-    @BindView(R.id.ll_logout) LinearLayout llLogout;
-    @BindView(R.id.register) Button register;
+    @BindView(R.id.head_right) Button headRight;
+//    @BindView(R.id.ll_logout) LinearLayout llLogout;
+//    @BindView(R.id.register) Button register;
 
     private boolean isLogin = false;//未登录
 
     @Override
     public void initData(Bundle savedInstanceState) {
         headTitle.setText("我的");
+        headRight.setText("设置");
+        headRight.setVisibility(View.VISIBLE);
         getP().loadTestData();
     }
 
 
     @Override
     public void initEvents() {
-        register.setOnClickListener(new View.OnClickListener() {
+//        register.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(RegisterFirstActivity.class);
+//            }
+//        });
+        headRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(RegisterFirstActivity.class);
+                startActivity(SetTradePwdActivity.class);
             }
         });
     }
@@ -71,7 +81,7 @@ public class UserFragment extends XFragment<UserPresent> {
     public void showData(TaetModel data) {
         List<Happ> list = data.getDictData();
         list.get(0);
-        mytext.setText(data.getDictData().size() + "----" + list.get(0).getDictDesc());
+//        mytext.setText(data.getDictData().size() + "----" + list.get(0).getDictDesc());
     }
 
 //    @Override

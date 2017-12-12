@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_44"
+                android:layout_height="@dimen/dimen_66"
                 android:background="@color/colorPrimary"
                 android:paddingTop="@dimen/dimen_22">
 
@@ -19,19 +19,23 @@
     <TextView
         android:id="@+id/head_title"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_height="match_parent"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
         android:text=""
         android:textColor="@color/white"
         android:textSize="17dp"/>
 
-    <ImageButton
+    <Button
+        android:id="@+id/head_right"
         android:layout_width="45dp"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:background="@android:color/transparent"
         android:scaleType="center"
         android:src="@mipmap/icon_back"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_size_14"
         android:visibility="gone"
         />
 
