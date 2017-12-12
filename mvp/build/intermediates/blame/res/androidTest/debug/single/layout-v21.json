@@ -1,34 +1,50 @@
 [
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/layout-v21/notification_action.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/layout-v21/notification_action.xml"
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21\\notification_action.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout-v21\\notification_action.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/layout-v21/notification_action.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/layout-v21/notification_action.xml"
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21\\notification_template_icon_group.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout-v21\\notification_template_icon_group.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/layout-v21/notification_action_tombstone.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/layout-v21/notification_action_tombstone.xml"
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21\\notification_template_custom_big.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout-v21\\notification_template_custom_big.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/layout-v21/notification_action_tombstone.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/layout-v21/notification_action_tombstone.xml"
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21\\notification_action.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout-v21\\notification_action.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/layout-v21/notification_template_icon_group.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/layout-v21/notification_template_icon_group.xml"
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21\\notification_template_custom_big.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout-v21\\notification_template_custom_big.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/layout-v21/notification_template_custom_big.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/layout-v21/notification_template_custom_big.xml"
+        "merged": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21\\notification_action.xml",
+        "source": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout-v21\\notification_action.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/layout-v21/notification_template_custom_big.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/layout-v21/notification_template_custom_big.xml"
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21\\notification_action_tombstone.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout-v21\\notification_action_tombstone.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/layout-v21/notification_template_icon_group.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/layout-v21/notification_template_icon_group.xml"
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21\\notification_template_icon_group.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout-v21\\notification_template_icon_group.xml"
+    },
+    {
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21\\notification_action_tombstone.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout-v21\\notification_action_tombstone.xml"
+    },
+    {
+        "merged": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21\\notification_template_custom_big.xml",
+        "source": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout-v21\\notification_template_custom_big.xml"
+    },
+    {
+        "merged": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21\\notification_template_icon_group.xml",
+        "source": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout-v21\\notification_template_icon_group.xml"
+    },
+    {
+        "merged": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-v21\\notification_action_tombstone.xml",
+        "source": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\layout-v21\\notification_action_tombstone.xml"
     }
 ]

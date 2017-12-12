@@ -1,10 +1,14 @@
 [
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/layout-sw600dp-v13/design_layout_snackbar.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/design/23.3.0/res/layout-sw600dp-v13/design_layout_snackbar.xml"
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-sw600dp-v13\\design_layout_snackbar.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.3.0\\res\\layout-sw600dp-v13\\design_layout_snackbar.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/layout-sw600dp-v13/design_layout_snackbar.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/design/23.3.0/res/layout-sw600dp-v13/design_layout_snackbar.xml"
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-sw600dp-v13\\design_layout_snackbar.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.3.0\\res\\layout-sw600dp-v13\\design_layout_snackbar.xml"
+    },
+    {
+        "merged": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\layout-sw600dp-v13\\design_layout_snackbar.xml",
+        "source": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\design\\23.3.0\\res\\layout-sw600dp-v13\\design_layout_snackbar.xml"
     }
 ]

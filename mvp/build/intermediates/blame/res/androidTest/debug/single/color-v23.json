@@ -1,74 +1,110 @@
 [
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_switch_thumb.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/color-v23/abc_tint_switch_thumb.xml"
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_edittext.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_edittext.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_edittext.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/color-v23/abc_tint_edittext.xml"
+        "merged": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_edittext.xml",
+        "source": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_edittext.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_default.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/color-v23/abc_tint_default.xml"
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_seek_thumb.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_seek_thumb.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_default.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/color-v23/abc_tint_default.xml"
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_switch_thumb.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_switch_thumb.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_seek_thumb.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/color-v23/abc_tint_seek_thumb.xml"
+        "merged": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_color_highlight_material.xml",
+        "source": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_color_highlight_material.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_btn_checkable.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/color-v23/abc_tint_btn_checkable.xml"
+        "merged": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_default.xml",
+        "source": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_default.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/color-v23/abc_btn_colored_borderless_text_material.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/color-v23/abc_btn_colored_borderless_text_material.xml"
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_switch_thumb.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_switch_thumb.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_edittext.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/color-v23/abc_tint_edittext.xml"
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_default.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_default.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_switch_thumb.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/color-v23/abc_tint_switch_thumb.xml"
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_btn_colored_borderless_text_material.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_btn_colored_borderless_text_material.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_switch_track.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/color-v23/abc_tint_switch_track.xml"
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_edittext.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_edittext.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/color-v23/abc_btn_colored_borderless_text_material.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/color-v23/abc_btn_colored_borderless_text_material.xml"
+        "merged": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_spinner.xml",
+        "source": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_spinner.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_switch_track.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/color-v23/abc_tint_switch_track.xml"
+        "merged": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_btn_colored_borderless_text_material.xml",
+        "source": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_btn_colored_borderless_text_material.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_spinner.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/color-v23/abc_tint_spinner.xml"
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_spinner.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_spinner.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/color-v23/abc_color_highlight_material.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/color-v23/abc_color_highlight_material.xml"
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_btn_checkable.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_btn_checkable.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_seek_thumb.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/color-v23/abc_tint_seek_thumb.xml"
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_btn_colored_borderless_text_material.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_btn_colored_borderless_text_material.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/color-v23/abc_color_highlight_material.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/learn/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/color-v23/abc_color_highlight_material.xml"
+        "merged": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_switch_track.xml",
+        "source": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_switch_track.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_spinner.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/color-v23/abc_tint_spinner.xml"
+        "merged": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_btn_checkable.xml",
+        "source": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_btn_checkable.xml"
     },
     {
-        "merged": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/color-v23/abc_tint_btn_checkable.xml",
-        "source": "/Users/sunnyzeng/Desktop/workspace/Fretting/mvp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/25.0.0/res/color-v23/abc_tint_btn_checkable.xml"
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_default.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_default.xml"
+    },
+    {
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_switch_track.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_switch_track.xml"
+    },
+    {
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_color_highlight_material.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_color_highlight_material.xml"
+    },
+    {
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_spinner.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_spinner.xml"
+    },
+    {
+        "merged": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_switch_thumb.xml",
+        "source": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_switch_thumb.xml"
+    },
+    {
+        "merged": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_seek_thumb.xml",
+        "source": "D:\\youhuiquan\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_seek_thumb.xml"
+    },
+    {
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_btn_checkable.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_color_highlight_material.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\learn\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_color_highlight_material.xml"
+    },
+    {
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_seek_thumb.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_seek_thumb.xml"
+    },
+    {
+        "merged": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\res\\merged\\androidTest\\debug\\color-v23\\abc_tint_switch_track.xml",
+        "source": "D:\\Users\\sunnyzeng\\Desktop\\workspace\\Fretting\\mvp\\build\\intermediates\\exploded-aar\\com.android.support\\appcompat-v7\\25.0.0\\res\\color-v23\\abc_tint_switch_track.xml"
     }
 ]
