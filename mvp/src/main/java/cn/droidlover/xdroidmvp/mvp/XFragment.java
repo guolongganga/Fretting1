@@ -61,7 +61,7 @@ public abstract class XFragment<P extends IPresent> extends RxFragment implement
             BusProvider.getBus().register(this);
         }
         bindEvent();
-        initData(savedInstanceState);
+        initData(this.getArguments());
         initEvents();
     }
 

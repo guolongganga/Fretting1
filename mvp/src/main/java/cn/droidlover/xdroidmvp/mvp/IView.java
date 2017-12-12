@@ -16,7 +16,7 @@ public interface IView<P> {
 
     void bindEvent();
 
-    void initData(Bundle savedInstanceState);
+    void initData(Bundle bundle);
 
     void initEvents();
 

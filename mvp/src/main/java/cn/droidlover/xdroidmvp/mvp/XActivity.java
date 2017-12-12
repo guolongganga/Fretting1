@@ -51,7 +51,7 @@ public abstract class XActivity<P extends IPresent> extends RxAppCompatActivity 
             bindEvent();
         }
         setTranslucentStatus(true);
-        initData(savedInstanceState);
+        initData(this.getIntent().getExtras());
         initEvents();
     }
 

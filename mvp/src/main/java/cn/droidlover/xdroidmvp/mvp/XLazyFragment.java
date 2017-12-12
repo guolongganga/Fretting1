@@ -40,7 +40,7 @@ public abstract class XLazyFragment<P extends IPresent>
             BusProvider.getBus().register(this);
         }
         bindEvent();
-        initData(savedInstanceState);
+        initData(this.getArguments());
         initEvents();
     }
 
