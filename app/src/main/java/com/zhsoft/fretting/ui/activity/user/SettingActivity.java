@@ -71,7 +71,7 @@ public class SettingActivity extends XActivity {
         passwordManager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("密码管理");
+                startActivity(ChangePwdActivity.class);
             }
         });
         bankcard.setOnClickListener(new View.OnClickListener() {

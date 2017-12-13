@@ -5,8 +5,9 @@
               android:orientation="vertical">
 
     <include layout="@layout/layout_head"/>
-    <!--邮箱-->
+    <!--登录密码-->
     <LinearLayout
+        android:id="@+id/ll_changepwd_login"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginTop="@dimen/dimen_50"
@@ -35,8 +36,9 @@
 
     <include layout="@layout/layout_divider_horizontal"/>
 
-    <!--邮箱-->
+    <!--交易密码-->
     <LinearLayout
+        android:id="@+id/ll_changepwd_trade"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:gravity="center_vertical"

@@ -42,6 +42,12 @@
         <activity android:name=".ui.activity.user.PhoneActivity"></activity>
         <!--变更手机号 更改页-->
         <activity android:name=".ui.activity.user.PhoneChangeActivity"></activity>
+        <!--变更密码-->
+        <activity android:name=".ui.activity.user.ChangePwdActivity"></activity>
+        <!--变更登录密码-->
+        <activity android:name=".ui.activity.user.ChangeLoginPwdActivity"></activity>
+        <!--变更交易密码-->
+        <activity android:name=".ui.activity.user.ChangeTradePwdActivity"></activity>
 
     </application>
 
