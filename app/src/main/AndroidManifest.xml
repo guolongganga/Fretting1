@@ -36,6 +36,8 @@
         <activity android:name=".ui.activity.user.SetTradePwdActivity"></activity>
         <!--设置-->
         <activity android:name=".ui.activity.user.SettingActivity"></activity>
+        <!--个人信息-->
+        <activity android:name=".ui.activity.user.PersonInfoActivity"></activity>
 
     </application>
 
