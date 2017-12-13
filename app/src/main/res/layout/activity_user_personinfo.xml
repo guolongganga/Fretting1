@@ -25,6 +25,7 @@
             android:textSize="14sp"/>
 
         <TextView
+            android:id="@+id/name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -53,6 +54,7 @@
             android:textSize="14sp"/>
 
         <TextView
+            android:id="@+id/identity"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -81,6 +83,7 @@
             android:textSize="14sp"/>
 
         <TextView
+            android:id="@+id/accountid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -107,24 +110,30 @@
             android:textColor="@color/color_text_333"
             android:textSize="14sp"/>
 
-        <TextView
+        <EditText
+            android:id="@+id/email"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:background="@android:color/transparent"
+            android:focusable="false"
             android:gravity="right"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
             android:text="256255695@qq.com"
             android:textColor="@color/color_text_333"
             android:textSize="14sp"/>
 
         <TextView
+            android:id="@+id/click_update"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:text="修改"
+            android:text=""
             android:textColor="@color/color_text_333"
-            android:textSize="14sp"/>
+            android:textSize="14sp"
+            android:visibility="gone"/>
 
     </LinearLayout>
 

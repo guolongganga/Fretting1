@@ -59,7 +59,7 @@ public class SettingActivity extends XActivity {
         personinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("个人信息");
+                startActivity(PersonInfoActivity.class);
             }
         });
         phone.setOnClickListener(new View.OnClickListener() {
