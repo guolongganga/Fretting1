@@ -38,6 +38,10 @@
         <activity android:name=".ui.activity.user.SettingActivity"></activity>
         <!--个人信息-->
         <activity android:name=".ui.activity.user.PersonInfoActivity"></activity>
+        <!--变更手机号 信息页-->
+        <activity android:name=".ui.activity.user.PhoneActivity"></activity>
+        <!--变更手机号 更改页-->
+        <activity android:name=".ui.activity.user.PhoneChangeActivity"></activity>
 
     </application>
 

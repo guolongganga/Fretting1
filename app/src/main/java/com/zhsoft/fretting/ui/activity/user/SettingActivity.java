@@ -65,7 +65,7 @@ public class SettingActivity extends XActivity {
         phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("手机号码");
+                startActivity(PhoneActivity.class);
             }
         });
         passwordManager.setOnClickListener(new View.OnClickListener() {
