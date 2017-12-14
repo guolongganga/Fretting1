@@ -34,7 +34,8 @@
         <activity android:name=".ui.activity.user.LoginActivity"></activity>
         <!--注册第一步 手机号-->
         <activity
-            android:name=".ui.activity.user.RegisterFirstActivity"></activity>
+            android:name=".ui.activity.user.RegisterFirstActivity"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
         <!--注册第二步 实名绑卡-->
         <activity android:name=".ui.activity.user.RegisterSecondActivity"></activity>
         <!--注册第三步 设置交易密码页-->
@@ -67,7 +68,6 @@
         <activity android:name=".ui.activity.user.BankCardActivity"></activity>
         <!--更换绑定银行卡-->
         <activity android:name=".ui.activity.user.BankCardChangeActivity"></activity>
-
 
         <!--通用WebView-->
         <activity android:name=".ui.activity.boot.WebPublicActivity"></activity>
