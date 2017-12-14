@@ -21,4 +21,10 @@ public class Constant {
     //32位长度加密Key
     public static final String AESKEY = "0e441613d8a611e784ef6c92bf314e43";
 
+    //WebView标题
+    public static final String WEB_TITLE = BASE_CONSTANT + "web_title";
+
+    //WebView链接
+    public static final String WEB_LINK = BASE_CONSTANT + "web_link";
+
 }
