@@ -38,6 +38,8 @@
         <activity android:name=".ui.activity.user.SettingActivity"></activity>
         <!--个人信息-->
         <activity android:name=".ui.activity.user.PersonInfoActivity"></activity>
+        <!--切换账户-->
+        <activity android:name=".ui.activity.user.SwitchAccountActivity"></activity>
 
         <!--通用WebView-->
         <activity android:name=".ui.activity.boot.WebPublicActivity"></activity>

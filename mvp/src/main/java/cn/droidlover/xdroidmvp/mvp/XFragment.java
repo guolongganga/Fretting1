@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.trello.rxlifecycle2.components.support.RxFragment;
@@ -158,6 +159,24 @@ public abstract class XFragment<P extends IPresent> extends RxFragment implement
             throw new NullPointerException("EditText 对象为空");
         } else {
             return editText.getText().toString();
+        }
+    }
+
+    //获取控件TextView值
+    public String getText(TextView textView) {
+        if(textView == null) {
+            throw new NullPointerException("TextView 对象为空");
+        } else {
+            return textView.getText().toString();
+        }
+    }
+
+    //获取控件TextView值-去掉前后空白
+    public String getTextTrim(TextView textView) {
+        if(textView == null) {
+            throw new NullPointerException("TextView 对象为空");
+        } else {
+            return textView.getText().toString().trim();
         }
     }
 

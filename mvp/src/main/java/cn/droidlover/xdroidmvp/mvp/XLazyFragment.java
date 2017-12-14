@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
 
@@ -113,6 +114,24 @@ public abstract class XLazyFragment<P extends IPresent>
             throw new NullPointerException("EditText 对象为空");
         } else {
             return TextUtils.isEmpty(editText.getText().toString().trim());
+        }
+    }
+
+    //获取控件TextView值
+    public String getText(TextView textView) {
+        if(textView == null) {
+            throw new NullPointerException("TextView 对象为空");
+        } else {
+            return textView.getText().toString();
+        }
+    }
+
+    //获取控件TextView值-去掉前后空白
+    public String getTextTrim(TextView textView) {
+        if(textView == null) {
+            throw new NullPointerException("TextView 对象为空");
+        } else {
+            return textView.getText().toString().trim();
         }
     }
 

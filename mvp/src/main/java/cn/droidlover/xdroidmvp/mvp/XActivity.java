@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
@@ -201,6 +202,24 @@ public abstract class XActivity<P extends IPresent> extends RxAppCompatActivity 
             throw new NullPointerException("EditText 对象为空");
         } else {
             return editText.getText().toString();
+        }
+    }
+
+    //获取控件TextView值
+    public String getText(TextView textView) {
+        if(textView == null) {
+            throw new NullPointerException("TextView 对象为空");
+        } else {
+            return textView.getText().toString();
+        }
+    }
+
+    //获取控件TextView值-去掉前后空白
+    public String getTextTrim(TextView textView) {
+        if(textView == null) {
+            throw new NullPointerException("TextView 对象为空");
+        } else {
+            return textView.getText().toString().trim();
         }
     }
 
