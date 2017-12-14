@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
@@ -110,7 +112,10 @@ public class SettingActivity extends XActivity {
         aboutUs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("关于我们");
+                Bundle bundle = new Bundle();
+                bundle.putInt(Constant.WEB_TITLE, R.string.user_about_us);
+                bundle.putString(Constant.WEB_LINK, "https://www.baidu.com/?tn=96928074_hao_pg");
+                startActivity(WebPublicActivity.class, bundle);
             }
         });
         changeUser.setOnClickListener(new View.OnClickListener() {
