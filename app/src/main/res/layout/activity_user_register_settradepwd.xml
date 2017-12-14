@@ -50,6 +50,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/btn_finish"
         style="@style/common_blue_button"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"

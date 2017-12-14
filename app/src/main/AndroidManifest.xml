@@ -32,10 +32,15 @@
         <activity android:name=".ui.activity.boot.WelcomeActivity"></activity>
         <!--登录页-->
         <activity android:name=".ui.activity.user.LoginActivity"></activity>
-        <!--注册页-->
-        <activity android:name=".ui.activity.user.RegisterFirstActivity"></activity>
-        <!--设置交易密码页-->
-        <activity android:name=".ui.activity.user.SetTradePwdActivity"></activity>
+        <!--注册第一步 手机号-->
+        <activity
+            android:name=".ui.activity.user.RegisterFirstActivity"></activity>
+        <!--注册第二步 实名绑卡-->
+        <activity android:name=".ui.activity.user.RegisterSecondActivity"></activity>
+        <!--注册第三步 设置交易密码页-->
+        <activity android:name=".ui.activity.user.RegisterSetTradePwdActivity"></activity>
+        <!--注册成功-->
+        <activity android:name=".ui.activity.user.RegisterSuccessActivity"></activity>
         <!--设置-->
         <activity android:name=".ui.activity.user.SettingActivity"></activity>
         <!--个人信息-->

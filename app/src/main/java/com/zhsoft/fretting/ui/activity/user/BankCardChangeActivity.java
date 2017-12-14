@@ -69,8 +69,13 @@ public class BankCardChangeActivity extends XActivity {
         getVerifyCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (!checkInput()) {
+                String phoneNumber = phone.getText().toString().trim();
+                if (TextUtils.isEmpty(phoneNumber)) {
+                    showToast("预留手机号码不能为空");
+                    return;
+                }
+                if (phoneNumber.length() < 11) {
+                    showToast("请输入正确的手机号码");
                     return;
                 }
 
@@ -86,10 +91,23 @@ public class BankCardChangeActivity extends XActivity {
             @Override
             public void onClick(View view) {
 
-                if (!checkInput()) {
+                String phoneNumber = phone.getText().toString().trim();
+                if (TextUtils.isEmpty(bankName.getText().toString())) {
+                    showToast("请选择银行名称");
                     return;
                 }
-
+                if (TextUtils.isEmpty(banknumber.getText().toString())) {
+                    showToast("银行卡号不能为空");
+                    return;
+                }
+                if (TextUtils.isEmpty(phoneNumber)) {
+                    showToast("预留手机号码不能为空");
+                    return;
+                }
+                if (phoneNumber.length() < 11) {
+                    showToast("请输入正确的手机号码");
+                    return;
+                }
                 if (TextUtils.isEmpty(msgCode.getText().toString())) {
                     showToast("验证码不能为空");
                     return;
@@ -100,27 +118,5 @@ public class BankCardChangeActivity extends XActivity {
         });
 
     }
-
-    private boolean checkInput() {
-        String phoneNumber = phone.getText().toString().trim();
-        if (TextUtils.isEmpty(bankName.getText().toString())) {
-            showToast("请选择银行名称");
-            return false;
-        }
-        if (TextUtils.isEmpty(banknumber.getText().toString())) {
-            showToast("银行卡号不能为空");
-            return false;
-        }
-        if (TextUtils.isEmpty(phoneNumber)) {
-            showToast("预留手机号码不能为空");
-            return false;
-        }
-        if (phoneNumber.length() < 11) {
-            showToast("请输入正确的手机号码");
-            return false;
-        }
-        return true;
-    }
-
 
 }

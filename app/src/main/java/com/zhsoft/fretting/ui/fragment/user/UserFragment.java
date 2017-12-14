@@ -2,29 +2,23 @@ package com.zhsoft.fretting.ui.fragment.user;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.zhsoft.fretting.MainActivity;
 import com.zhsoft.fretting.R;
-import com.zhsoft.fretting.model.BaseModel;
 import com.zhsoft.fretting.model.Happ;
 import com.zhsoft.fretting.model.TaetModel;
 import com.zhsoft.fretting.present.UserPresent;
 import com.zhsoft.fretting.ui.activity.user.LoginActivity;
 import com.zhsoft.fretting.ui.activity.user.RegisterFirstActivity;
-import com.zhsoft.fretting.ui.activity.user.SetTradePwdActivity;
 import com.zhsoft.fretting.ui.activity.user.SettingActivity;
 
 import java.util.List;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
-import cn.droidlover.xdroidmvp.utils.EncryptDecrypt;
 
 /**
  * 作者：sunnyzeng on 2017/12/5

@@ -8,6 +8,16 @@
 
     <include layout="@layout/layout_head"/>
 
+    <!--<ScrollView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:scrollbars="vertical">-->
+
+    <!--<LinearLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:orientation="vertical">-->
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="48dp"
@@ -26,6 +36,7 @@
             android:textSize="@dimen/text_size_14"/>
 
         <EditText
+            android:id="@+id/phone_number"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -160,6 +171,7 @@
             android:textSize="@dimen/text_size_14"/>
 
         <EditText
+            android:id="@+id/msg_code"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -186,6 +198,7 @@
         android:gravity="center_vertical">
 
         <TextView
+            android:id="@+id/to_login"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -194,6 +207,7 @@
             android:textSize="@dimen/text_size_14"/>
 
         <TextView
+            android:id="@+id/message_fail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -204,8 +218,12 @@
     </RelativeLayout>
 
     <Button
+        android:id="@+id/btn_next"
         style="@style/common_blue_button"
+        android:layout_marginBottom="50dp"
         android:text="下一步"/>
+    <!--</LinearLayout>-->
+    <!--</ScrollView>-->
 
 
 </LinearLayout>
