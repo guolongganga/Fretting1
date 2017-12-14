@@ -27,12 +27,7 @@ public class FundFragment extends XFragment {
 
     @Override
     public void initEvents() {
-        tvFund.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(SwitchAccountActivity.class);
-            }
-        });
+
     }
 
     @Override

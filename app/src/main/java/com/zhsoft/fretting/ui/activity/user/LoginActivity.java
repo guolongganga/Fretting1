@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.present.user.LoginPresent;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
@@ -18,7 +19,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  * 描述：
  */
 
-public class LoginActivity extends XActivity {
+public class LoginActivity extends XActivity<LoginPresent>{
     @BindView(R.id.head_back) ImageButton headBack;
     @BindView(R.id.head_title) TextView headTitle;
     @BindView(R.id.head_right) Button headRight;
@@ -34,13 +35,14 @@ public class LoginActivity extends XActivity {
     }
 
     @Override
-    public Object newP() {
-        return null;
+    public LoginPresent newP() {
+        return new LoginPresent();
     }
 
     @Override
     public void initData(Bundle bundle) {
         initView();
+
     }
 
     private void initView() {
@@ -79,10 +81,15 @@ public class LoginActivity extends XActivity {
                     return;
                 }
                 //TODO 登录接口
-                showToast("登录接口");
+//                showToast("登录接口");
+                getP().login(username.getText().toString(),password.getText().toString());
+
             }
         });
     }
 
 
+    public void showData(Object data) {
+        showToast(data.toString());
+    }
 }

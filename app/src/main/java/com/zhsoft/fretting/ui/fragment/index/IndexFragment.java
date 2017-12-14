@@ -29,15 +29,15 @@ public class IndexFragment extends XFragment {
 
     @Override
     public void initEvents() {
-        tvDate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putInt(Constant.WEB_TITLE, R.string.app_name);
-                bundle.putString(Constant.WEB_LINK, "https://www.baidu.com/?tn=96928074_hao_pg");
-                startActivity(WebPublicActivity.class, bundle);
-            }
-        });
+//        tvDate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Bundle bundle = new Bundle();
+//                bundle.putInt(Constant.WEB_TITLE, R.string.app_name);
+//                bundle.putString(Constant.WEB_LINK, "https://www.baidu.com/?tn=96928074_hao_pg");
+//                startActivity(WebPublicActivity.class, bundle);
+//            }
+//        });
     }
 
     @Override

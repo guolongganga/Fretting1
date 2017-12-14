@@ -120,7 +120,7 @@ public class SettingActivity extends XActivity {
         changeUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("切换账户");
+                startActivity(SwitchAccountActivity.class);
             }
         });
         exit.setOnClickListener(new View.OnClickListener() {

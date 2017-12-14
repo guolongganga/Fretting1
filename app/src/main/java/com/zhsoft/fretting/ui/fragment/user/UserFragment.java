@@ -102,6 +102,8 @@ public class UserFragment extends XFragment<UserPresent> {
     public void onResume() {
         super.onResume();
         if(isLogin){
+            llLogout.setVisibility(View.GONE);
+        }else{
             llLogout.setVisibility(View.VISIBLE);
         }
     }
