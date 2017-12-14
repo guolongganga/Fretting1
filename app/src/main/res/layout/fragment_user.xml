@@ -240,6 +240,7 @@
             </LinearLayout>
 
         </LinearLayout>
+
     </LinearLayout>
 
     <!--<include layout="@layout/dialog_logout"/>-->
@@ -251,6 +252,7 @@
         android:layout_marginTop="@dimen/dimen_66"
         android:background="@color/color_80696969"
         android:clickable="true"
+        android:visibility="gone"
         android:gravity="center"
         android:orientation="vertical">
 

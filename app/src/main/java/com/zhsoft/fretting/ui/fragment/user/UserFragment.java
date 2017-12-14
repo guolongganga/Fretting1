@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
@@ -34,6 +35,7 @@ public class UserFragment extends XFragment<UserPresent> {
     @BindView(R.id.login) Button login;
     @BindView(R.id.register) Button register;
     @BindView(R.id.self_choose) ImageView selfChoose;
+    @BindView(R.id.ll_logout) LinearLayout llLogout;
 
     private boolean isLogin = false;//未登录
 
@@ -96,4 +98,11 @@ public class UserFragment extends XFragment<UserPresent> {
         list.get(0);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        if(isLogin){
+            llLogout.setVisibility(View.VISIBLE);
+        }
+    }
 }
