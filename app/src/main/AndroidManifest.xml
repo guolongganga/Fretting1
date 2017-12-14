@@ -56,9 +56,14 @@
         <activity android:name=".ui.activity.user.FindPwdTradeFirstActivity"></activity>
         <!--找回 交易 密码第二步-->
         <activity android:name=".ui.activity.user.FindPwdTradeSecondActivity"></activity>
+        <!--我的银行卡-->
+        <activity android:name=".ui.activity.user.BankCardActivity"></activity>
+        <!--更换绑定银行卡-->
+        <activity android:name=".ui.activity.user.BankCardChangeActivity"></activity>
 
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
 </manifest>
