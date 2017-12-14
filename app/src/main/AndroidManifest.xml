@@ -61,6 +61,9 @@
         <!--更换绑定银行卡-->
         <activity android:name=".ui.activity.user.BankCardChangeActivity"></activity>
 
+        <!--通用WebView-->
+        <activity android:name=".ui.activity.boot.WebPublicActivity"></activity>
+
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>

@@ -12,8 +12,8 @@
     <color name="color_divider">#eeeeee</color>
 
     <!--导航栏字体颜色 主色调-->
-    <color name="color_main">#ff3366</color>
-    <color name="color_main_tint">#f56f90</color>
+    <color name="color_main">#2877D3</color>
+    <color name="color_main_tint">#6CA7ED</color>
 
     <color name="color_f7182d">#f7182d</color>
     <color name="color_666666">#666666</color>
