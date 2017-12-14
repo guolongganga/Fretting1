@@ -56,7 +56,6 @@ public class SettingActivity extends XActivity {
     }
 
     private void initview() {
-        headBack.setVisibility(View.VISIBLE);
         headTitle.setText("设置");
     }
 

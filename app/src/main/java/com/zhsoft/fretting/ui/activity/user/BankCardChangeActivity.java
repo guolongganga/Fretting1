@@ -47,7 +47,6 @@ public class BankCardChangeActivity extends XActivity {
     }
 
     private void initView() {
-        headBack.setVisibility(View.VISIBLE);
         headTitle.setText("我的银行卡");
     }
 

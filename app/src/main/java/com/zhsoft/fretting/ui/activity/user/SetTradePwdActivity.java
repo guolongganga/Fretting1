@@ -35,7 +35,6 @@ public class SetTradePwdActivity extends XActivity {
 
     @Override
     public void initData(Bundle bundle) {
-        headBack.setVisibility(View.VISIBLE);
         headTitle.setText("基金开户");
         ppePwd.initStyle(R.drawable.edit_num_bg, 6, 0.33f, R.color.color999999, R.color.color999999, 20);
         ppePwdAgain.initStyle(R.drawable.edit_num_bg, 6, 0.33f, R.color.color999999, R.color.color999999, 20);

@@ -14,21 +14,23 @@ import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
- * 作者：sunnyzeng on 2017/12/13 18:18
+ * 作者：sunnyzeng on 2017/12/14 11:46
  * 描述：
  */
 
-public class FindPwdTradeSecondActivity extends XActivity {
+public class LoginActivity extends XActivity {
     @BindView(R.id.head_back) ImageButton headBack;
     @BindView(R.id.head_title) TextView headTitle;
     @BindView(R.id.head_right) Button headRight;
+    @BindView(R.id.username) EditText username;
     @BindView(R.id.password) EditText password;
-    @BindView(R.id.password_again) EditText passwordAgain;
-    @BindView(R.id.btn_save) Button btnSave;
+    @BindView(R.id.register) TextView register;
+    @BindView(R.id.find_password) TextView findPassword;
+    @BindView(R.id.btn_next) Button btnNext;
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_user_findpwd_second_trade;
+        return R.layout.activity_user_login;
     }
 
     @Override
@@ -42,45 +44,45 @@ public class FindPwdTradeSecondActivity extends XActivity {
     }
 
     private void initView() {
-        headTitle.setText("找回交易密码");
-
+        headTitle.setText("登录");
     }
 
     @Override
     public void initEvents() {
-
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
-
-        btnSave.setOnClickListener(new View.OnClickListener() {
+        register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String pwd = password.getText().toString().trim();
-                String againpwd = passwordAgain.getText().toString().trim();
-                if (TextUtils.isEmpty(pwd)) {
-                    showToast("新交易密码不能为空");
+                startActivity(RegisterFirstActivity.class);
+            }
+        });
+        findPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(FindPwdLoginFirstActivity.class);
+            }
+        });
+        btnNext.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (TextUtils.isEmpty(username.getText().toString())) {
+                    showToast("用户名不能为空");
                     return;
                 }
-                if (pwd.length() < 6) {
-                    showToast("请输入正确的新交易密码");
+                if (TextUtils.isEmpty(password.getText().toString())) {
+                    showToast("密码不能为空");
                     return;
                 }
-                if (TextUtils.isEmpty(againpwd)) {
-                    showToast("再次输入交易密码不能为空");
-                    return;
-                }
-                if (!pwd.equals(againpwd)) {
-                    showToast("两次密码不一致");
-                    return;
-                }
-                //TODO 请求修改交易密码接口
-                showToast("修改交易密码");
-//                finish();
+                //TODO 登录接口
+                showToast("登录接口");
             }
         });
     }
+
+
 }

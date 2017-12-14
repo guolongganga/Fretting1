@@ -31,12 +31,13 @@
             android:textSize="@dimen/text_size_14"/>
 
         <EditText
+            android:id="@+id/username"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@null"
             android:hint="请输入注册手机号/身份证号"
-            android:inputType="number"
+            android:inputType="text"
             android:maxLength="11"
             android:singleLine="true"
             android:textColorHint="@color/color_696969"
@@ -101,6 +102,7 @@
         android:gravity="center_vertical">
 
         <TextView
+            android:id="@+id/register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
@@ -109,6 +111,7 @@
             android:textSize="@dimen/text_size_14"/>
 
         <TextView
+            android:id="@+id/find_password"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
@@ -119,8 +122,9 @@
     </RelativeLayout>
 
     <Button
+        android:id="@+id/btn_next"
         style="@style/common_blue_button"
-        android:text="下一步"/>
+        android:text="登 录"/>
 
 
 </LinearLayout>

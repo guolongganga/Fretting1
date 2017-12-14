@@ -50,7 +50,6 @@ public class ChangeTradePwdActivity extends XActivity {
     }
 
     private void initView() {
-        headBack.setVisibility(View.VISIBLE);
         headTitle.setText("变更交易密码");
     }
 

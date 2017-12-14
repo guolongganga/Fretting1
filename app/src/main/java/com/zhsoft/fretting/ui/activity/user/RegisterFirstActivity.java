@@ -33,7 +33,6 @@ public class RegisterFirstActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        headBack.setVisibility(View.VISIBLE);
         headTitle.setText("基金开户");
 
     }

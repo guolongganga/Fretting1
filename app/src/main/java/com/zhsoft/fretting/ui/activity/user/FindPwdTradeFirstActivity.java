@@ -47,7 +47,6 @@ public class FindPwdTradeFirstActivity extends XActivity {
     }
 
     private void initView() {
-        headBack.setVisibility(View.VISIBLE);
         headTitle.setText("找回交易密码");
     }
 

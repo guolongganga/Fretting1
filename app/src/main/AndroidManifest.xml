@@ -30,6 +30,8 @@
 
         <!--引导页-->
         <activity android:name=".ui.activity.boot.WelcomeActivity"></activity>
+        <!--登录页-->
+        <activity android:name=".ui.activity.user.LoginActivity"></activity>
         <!--注册页-->
         <activity android:name=".ui.activity.user.RegisterFirstActivity"></activity>
         <!--设置交易密码页-->
@@ -60,6 +62,7 @@
         <activity android:name=".ui.activity.user.BankCardActivity"></activity>
         <!--更换绑定银行卡-->
         <activity android:name=".ui.activity.user.BankCardChangeActivity"></activity>
+
 
         <!--通用WebView-->
         <activity android:name=".ui.activity.boot.WebPublicActivity"></activity>

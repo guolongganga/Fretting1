@@ -42,7 +42,6 @@ public class FindPwdLoginSecondActivity extends XActivity {
     }
 
     private void initView() {
-        headBack.setVisibility(View.VISIBLE);
         headTitle.setText("找回登录密码");
 
     }

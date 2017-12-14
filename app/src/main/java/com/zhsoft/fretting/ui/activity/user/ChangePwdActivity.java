@@ -40,7 +40,6 @@ public class ChangePwdActivity extends XActivity {
     }
 
     private void initView() {
-        headBack.setVisibility(View.VISIBLE);
         headTitle.setText("变更密码");
 
     }

@@ -42,7 +42,6 @@ public class PhoneActivity extends XActivity {
     }
 
     private void initView() {
-        headBack.setVisibility(View.VISIBLE);
         headTitle.setText("变更手机号");
     }
 

@@ -47,7 +47,6 @@ public class ChangeLoginPwdActivity extends XActivity {
     }
 
     private void initView() {
-        headBack.setVisibility(View.VISIBLE);
         headTitle.setText("变更登录密码");
     }
 
