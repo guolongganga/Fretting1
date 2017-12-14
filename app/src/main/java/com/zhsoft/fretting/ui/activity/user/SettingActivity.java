@@ -1,5 +1,7 @@
 package com.zhsoft.fretting.ui.activity.user;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -33,7 +35,10 @@ public class SettingActivity extends XActivity {
     @BindView(R.id.change_user) TextView changeUser;
     @BindView(R.id.exit) Button exit;
 
+    private static final String PHONE_NUMBER = "13717832879";
+
     @Override
+
     public int getLayoutId() {
         return R.layout.activity_user_setting;
     }
@@ -65,19 +70,19 @@ public class SettingActivity extends XActivity {
         phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("手机号码");
+                startActivity(PhoneActivity.class);
             }
         });
         passwordManager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("密码管理");
+                startActivity(ChangePwdActivity.class);
             }
         });
         bankcard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("银行卡号");
+                startActivity(BankCardActivity.class);
             }
         });
         riskTest.setOnClickListener(new View.OnClickListener() {
@@ -89,7 +94,17 @@ public class SettingActivity extends XActivity {
         callAgent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("客服电话");
+                //获取文本框中的电话号码值
+//            String number = phoneNumber.getText().toString();
+
+                //掉用拨号权限 新建一个意图
+                Intent intent = new Intent();
+                //在把意图添加给操作系统时，操作系统会自动为intent添加类别，所以可省略
+                intent.setAction(Intent.ACTION_CALL);
+                intent.setData(Uri.parse("tel:" + PHONE_NUMBER));
+                //将意图添加给操作系统执行
+                startActivity(intent);
+
             }
         });
         aboutUs.setOnClickListener(new View.OnClickListener() {

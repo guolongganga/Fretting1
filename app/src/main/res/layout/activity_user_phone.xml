@@ -8,12 +8,14 @@
     <include layout="@layout/layout_head"/>
 
     <ImageView
+        android:id="@+id/img_sign"
         android:layout_width="300dp"
         android:layout_height="150dp"
         android:layout_marginTop="50dp"
         android:src="@mipmap/ic_launcher"/>
 
     <TextView
+        android:id="@+id/phone_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
@@ -22,6 +24,7 @@
         android:textSize="@dimen/text_size_14"/>
 
     <Button
+        android:id="@+id/btn_change"
         style="@style/common_blue_button"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"

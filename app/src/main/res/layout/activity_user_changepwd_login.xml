@@ -11,6 +11,14 @@
         android:layout_width="match_parent"
         android:layout_height="30dp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_15"
+        android:text="登录密码为8-16位数字、字母、特殊字符等"
+        android:textColor="@color/color_666666"
+        android:textSize="@dimen/text_size_12"/>
+
     <include layout="@layout/layout_divider_horizontal"/>
 
     <LinearLayout
@@ -104,6 +112,7 @@
     <include layout="@layout/layout_divider_horizontal"/>
 
     <Button
+        android:id="@+id/btn_save"
         style="@style/common_blue_button"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"

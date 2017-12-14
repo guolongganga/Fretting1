@@ -38,9 +38,32 @@
         <activity android:name=".ui.activity.user.SettingActivity"></activity>
         <!--个人信息-->
         <activity android:name=".ui.activity.user.PersonInfoActivity"></activity>
+        <!--变更手机号 信息页-->
+        <activity android:name=".ui.activity.user.PhoneActivity"></activity>
+        <!--变更手机号 更改页-->
+        <activity android:name=".ui.activity.user.PhoneChangeActivity"></activity>
+        <!--变更密码-->
+        <activity android:name=".ui.activity.user.ChangePwdActivity"></activity>
+        <!--变更登录密码-->
+        <activity android:name=".ui.activity.user.ChangeLoginPwdActivity"></activity>
+        <!--变更交易密码-->
+        <activity android:name=".ui.activity.user.ChangeTradePwdActivity"></activity>
+        <!--找回 登录 密码第一步-->
+        <activity android:name=".ui.activity.user.FindPwdLoginFirstActivity"></activity>
+        <!--找回 登录 密码第二步-->
+        <activity android:name=".ui.activity.user.FindPwdLoginSecondActivity"></activity>
+        <!--找回 交易 密码第一步-->
+        <activity android:name=".ui.activity.user.FindPwdTradeFirstActivity"></activity>
+        <!--找回 交易 密码第二步-->
+        <activity android:name=".ui.activity.user.FindPwdTradeSecondActivity"></activity>
+        <!--我的银行卡-->
+        <activity android:name=".ui.activity.user.BankCardActivity"></activity>
+        <!--更换绑定银行卡-->
+        <activity android:name=".ui.activity.user.BankCardChangeActivity"></activity>
 
     </application>
 
     <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
 </manifest>
