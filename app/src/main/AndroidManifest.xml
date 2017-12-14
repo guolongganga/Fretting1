@@ -48,6 +48,14 @@
         <activity android:name=".ui.activity.user.ChangeLoginPwdActivity"></activity>
         <!--变更交易密码-->
         <activity android:name=".ui.activity.user.ChangeTradePwdActivity"></activity>
+        <!--找回 登录 密码第一步-->
+        <activity android:name=".ui.activity.user.FindPwdLoginFirstActivity"></activity>
+        <!--找回 登录 密码第二步-->
+        <activity android:name=".ui.activity.user.FindPwdLoginSecondActivity"></activity>
+        <!--找回 交易 密码第一步-->
+        <activity android:name=".ui.activity.user.FindPwdTradeFirstActivity"></activity>
+        <!--找回 交易 密码第二步-->
+        <activity android:name=".ui.activity.user.FindPwdTradeSecondActivity"></activity>
 
     </application>
 
