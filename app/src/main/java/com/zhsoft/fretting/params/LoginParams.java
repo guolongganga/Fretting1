@@ -5,58 +5,25 @@ package com.zhsoft.fretting.params;
  * 描述：
  */
 
-public class LoginParams {
+public class LoginParams extends CommonReqData<LoginParams> {
 
-    private String token;
-    private String userId;
-    private LoginP data;
+    private String username;
+    private String password;
 
-    public LoginP getData() {
-        return data;
+    public String getUsername() {
+        return username;
     }
 
-    public void setData(LoginP data) {
-        this.data = data;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
-
-    public String getToken() {
-        return token;
+    public String getPassword() {
+        return password;
     }
 
-    public void setToken(String token) {
-        this.token = token;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-
-    public class LoginP {
-        private String username;
-        private String password;
-
-        public String getUsername() {
-            return username;
-        }
-
-        public void setUsername(String username) {
-            this.username = username;
-        }
-
-        public String getPassword() {
-            return password;
-        }
-
-        public void setPassword(String password) {
-            this.password = password;
-        }
-
+    public void setPassword(String password) {
+        this.password = password;
     }
 
 

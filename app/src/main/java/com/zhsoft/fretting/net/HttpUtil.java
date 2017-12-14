@@ -28,6 +28,6 @@ public interface HttpUtil {
     //登录
     @Headers("apptype:Android")
     @POST(test_test)
-    Flowable<BaseModel> login(@Body LoginParams loginParams);
+    Flowable<BaseModel> login(@Body CommonReqData reqData);
 
 }

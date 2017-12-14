@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.zhsoft.fretting.model.BaseModel;
 import com.zhsoft.fretting.net.Api;
+import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.params.LoginParams;
 import com.zhsoft.fretting.ui.activity.user.LoginActivity;
 
@@ -21,25 +22,15 @@ import cn.droidlover.xdroidmvp.net.XApi;
 public class LoginPresent extends XPresent<LoginActivity> {
     public void login(String username, String password) {
 
+        CommonReqData reqData = new CommonReqData();
+
         LoginParams loginParams = new LoginParams();
-        LoginParams.LoginP loginP = loginParams.new LoginP();
-        loginP.setUsername(username);
-        loginP.setPassword(password);
-        loginParams.setData(loginP);
+        loginParams.setUsername(username);
+        loginParams.setPassword(password);
+        reqData.setData(loginParams);
 
-//        LoginParams.LoginP loginP = loginParams.new LoginP();
-//        loginP.setPassword(password);
-//        loginP.setUsername(username);
-//        loginParams.setData(loginParams);
-//        loginParams.getData().setUsername(username);
-//        loginParams.getData().setPassword(password);
-
-        //loginParams.setData(loginParams);
-        //loginParams.get.setUsername(username);
-        //loginParams.getData().setPassword(password);
-//        loginParams.setData(loginParams);
         Api.getApi()
-                .login(loginParams)
+                .login(reqData)
                 .compose(XApi.<BaseModel>getApiTransformer())
                 .compose(XApi.<BaseModel>getScheduler())
                 .compose(getV().<BaseModel>bindToLifecycle())
