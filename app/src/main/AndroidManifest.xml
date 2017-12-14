@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.zhsoft.fretting">
+          xmlns:tools="http://schemas.android.com/tools"
+          package="com.zhsoft.fretting">
 
     <application
         android:name=".App"
@@ -22,22 +22,52 @@
             android:name=".ui.activity.boot.StartActivity"
             android:theme="@style/NoTitle_FullScreen">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
 
         <!--引导页-->
         <activity android:name=".ui.activity.boot.WelcomeActivity"></activity>
-        <!--注册页-->
-        <activity android:name=".ui.activity.user.RegisterFirstActivity"></activity>
-        <!--设置交易密码页-->
-        <activity android:name=".ui.activity.user.SetTradePwdActivity"></activity>
+        <!--登录页-->
+        <activity android:name=".ui.activity.user.LoginActivity"></activity>
+        <!--注册第一步 手机号-->
+        <activity
+            android:name=".ui.activity.user.RegisterFirstActivity"></activity>
+        <!--注册第二步 实名绑卡-->
+        <activity android:name=".ui.activity.user.RegisterSecondActivity"></activity>
+        <!--注册第三步 设置交易密码页-->
+        <activity android:name=".ui.activity.user.RegisterSetTradePwdActivity"></activity>
+        <!--注册成功-->
+        <activity android:name=".ui.activity.user.RegisterSuccessActivity"></activity>
         <!--设置-->
         <activity android:name=".ui.activity.user.SettingActivity"></activity>
         <!--个人信息-->
         <activity android:name=".ui.activity.user.PersonInfoActivity"></activity>
+        <!--变更手机号 信息页-->
+        <activity android:name=".ui.activity.user.PhoneActivity"></activity>
+        <!--变更手机号 更改页-->
+        <activity android:name=".ui.activity.user.PhoneChangeActivity"></activity>
+        <!--变更密码-->
+        <activity android:name=".ui.activity.user.ChangePwdActivity"></activity>
+        <!--变更登录密码-->
+        <activity android:name=".ui.activity.user.ChangeLoginPwdActivity"></activity>
+        <!--变更交易密码-->
+        <activity android:name=".ui.activity.user.ChangeTradePwdActivity"></activity>
+        <!--找回 登录 密码第一步-->
+        <activity android:name=".ui.activity.user.FindPwdLoginFirstActivity"></activity>
+        <!--找回 登录 密码第二步-->
+        <activity android:name=".ui.activity.user.FindPwdLoginSecondActivity"></activity>
+        <!--找回 交易 密码第一步-->
+        <activity android:name=".ui.activity.user.FindPwdTradeFirstActivity"></activity>
+        <!--找回 交易 密码第二步-->
+        <activity android:name=".ui.activity.user.FindPwdTradeSecondActivity"></activity>
+        <!--我的银行卡-->
+        <activity android:name=".ui.activity.user.BankCardActivity"></activity>
+        <!--更换绑定银行卡-->
+        <activity android:name=".ui.activity.user.BankCardChangeActivity"></activity>
+
         <!--切换账户-->
         <activity android:name=".ui.activity.user.SwitchAccountActivity"></activity>
 
@@ -46,6 +76,7 @@
 
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.CALL_PHONE"/>
 
 </manifest>

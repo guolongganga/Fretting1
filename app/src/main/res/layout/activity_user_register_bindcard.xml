@@ -43,6 +43,7 @@
                     android:textSize="@dimen/text_size_14"/>
 
                 <EditText
+                    android:id="@+id/user_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -76,6 +77,7 @@
                     android:textSize="@dimen/text_size_14"/>
 
                 <EditText
+                    android:id="@+id/identity"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -109,6 +111,7 @@
                     android:textSize="@dimen/text_size_14"/>
 
                 <EditText
+                    android:id="@+id/email"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -134,6 +137,7 @@
                 android:textColor="@color/color_696969"/>
 
             <LinearLayout
+                android:id="@+id/ll_choose_bank"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:background="@color/white"
@@ -150,13 +154,15 @@
                     android:textSize="@dimen/text_size_14"/>
 
                 <TextView
+                    android:id="@+id/banck_name"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
                     android:background="@null"
                     android:gravity="center_vertical"
-                    android:text="请选择"
-                    android:textColor="@color/color_696969"
+                    android:hint="请选择"
+                    android:textColorHint="@color/color_696969"
+                    android:textColor="@color/color_text_333"
                     android:textSize="@dimen/text_size_14"/>
 
                 <ImageView
@@ -185,6 +191,7 @@
                     android:textSize="@dimen/text_size_14"/>
 
                 <EditText
+                    android:id="@+id/banknumber"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -218,6 +225,7 @@
                     android:textSize="@dimen/text_size_14"/>
 
                 <EditText
+                    android:id="@+id/phone"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -251,6 +259,7 @@
                     android:textSize="@dimen/text_size_14"/>
 
                 <EditText
+                    android:id="@+id/msg_code"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -286,7 +295,6 @@
                     android:layout_gravity="center"
                     android:src="@drawable/register_iv_select"/>
 
-
                 <TextView
                     android:id="@+id/register_service"
                     android:layout_width="match_parent"
@@ -300,6 +308,7 @@
             </LinearLayout>
 
             <Button
+                android:id="@+id/btn_next"
                 style="@style/common_blue_button"
                 android:text="下一步"/>
 

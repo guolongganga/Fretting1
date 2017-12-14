@@ -2,27 +2,23 @@ package com.zhsoft.fretting.ui.fragment.user;
 
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.LinearLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.zhsoft.fretting.MainActivity;
 import com.zhsoft.fretting.R;
-import com.zhsoft.fretting.model.BaseModel;
 import com.zhsoft.fretting.model.Happ;
 import com.zhsoft.fretting.model.TaetModel;
 import com.zhsoft.fretting.present.UserPresent;
+import com.zhsoft.fretting.ui.activity.user.LoginActivity;
 import com.zhsoft.fretting.ui.activity.user.RegisterFirstActivity;
-import com.zhsoft.fretting.ui.activity.user.SetTradePwdActivity;
 import com.zhsoft.fretting.ui.activity.user.SettingActivity;
 
 import java.util.List;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
-import cn.droidlover.xdroidmvp.utils.EncryptDecrypt;
 
 /**
  * 作者：sunnyzeng on 2017/12/5
@@ -31,16 +27,17 @@ import cn.droidlover.xdroidmvp.utils.EncryptDecrypt;
 
 public class UserFragment extends XFragment<UserPresent> {
 
-    //    @BindView(R.id.mytext) TextView mytext;
+    @BindView(R.id.head_back) ImageButton headBack;
     @BindView(R.id.head_title) TextView headTitle;
     @BindView(R.id.head_right) Button headRight;
-//    @BindView(R.id.ll_logout) LinearLayout llLogout;
-//    @BindView(R.id.register) Button register;
+    @BindView(R.id.login) Button login;
+    @BindView(R.id.register) Button register;
 
     private boolean isLogin = false;//未登录
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        headBack.setVisibility(View.GONE);
         headTitle.setText("我的");
         headRight.setText("设置");
         headRight.setVisibility(View.VISIBLE);
@@ -50,16 +47,23 @@ public class UserFragment extends XFragment<UserPresent> {
 
     @Override
     public void initEvents() {
-//        register.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(RegisterFirstActivity.class);
-//            }
-//        });
+
         headRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(SettingActivity.class);
+            }
+        });
+        login.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(LoginActivity.class);
+            }
+        });
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(RegisterFirstActivity.class);
             }
         });
     }
@@ -82,17 +86,6 @@ public class UserFragment extends XFragment<UserPresent> {
     public void showData(TaetModel data) {
         List<Happ> list = data.getDictData();
         list.get(0);
-//        mytext.setText(data.getDictData().size() + "----" + list.get(0).getDictDesc());
     }
 
-//    @Override
-//    public void onResume() {
-//        super.onResume();
-//        if (isLogin) {
-//            llLogout.setVisibility(View.GONE);
-//        } else {
-//            llLogout.setVisibility(View.VISIBLE);
-//        }
-//
-//    }
 }

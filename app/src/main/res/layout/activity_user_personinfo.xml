@@ -120,7 +120,7 @@
             android:gravity="right"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:text="256255695@qq.com"
+            android:text=""
             android:textColor="@color/color_text_333"
             android:textSize="14sp"/>
 

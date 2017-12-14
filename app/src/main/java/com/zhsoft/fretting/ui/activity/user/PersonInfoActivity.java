@@ -45,7 +45,6 @@ public class PersonInfoActivity extends XActivity {
     }
 
     private void initView() {
-        headBack.setVisibility(View.VISIBLE);
         headTitle.setText("个人信息");
         headRight.setVisibility(View.VISIBLE);
         headRight.setText("编辑");

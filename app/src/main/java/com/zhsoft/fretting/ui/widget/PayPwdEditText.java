@@ -70,7 +70,7 @@ public class PayPwdEditText extends RelativeLayout{
     {
         editText = new EditText(context);
         editText.setBackgroundResource(bgcolor);
-        editText.setCursorVisible(false);
+//        editText.setCursorVisible(true);
         editText.setTextSize(0);
         editText.setInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD | InputType.TYPE_CLASS_NUMBER);
         editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(pwdlength)});
