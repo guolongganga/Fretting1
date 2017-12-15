@@ -8,6 +8,11 @@ package com.zhsoft.fretting.constant;
 public class Constant {
 
     public static final String BASE_CONSTANT = "fretting_";
+    //token 登录标识
+    public static final String TOKEN = BASE_CONSTANT + "token";
+
+    //userId 用户编号
+    public static final String USERID = BASE_CONSTANT + "userId";
 
     //用户名
     public static final String USER_NAME = BASE_CONSTANT + "user_name";

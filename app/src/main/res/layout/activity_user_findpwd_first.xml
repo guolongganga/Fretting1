@@ -79,6 +79,7 @@
 
         <ImageView
             android:id="@+id/image"
+            android:src="@mipmap/ic_launcher"
             android:layout_width="65dp"
             android:layout_height="25dp"
             />

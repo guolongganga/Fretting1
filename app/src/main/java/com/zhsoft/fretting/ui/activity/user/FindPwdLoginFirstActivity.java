@@ -10,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.present.user.FindPwdLoginFirstPresent;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
 
 import butterknife.BindView;
+import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
@@ -20,7 +22,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  * 描述：找回登录密码第一步
  */
 
-public class FindPwdLoginFirstActivity extends XActivity {
+public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresent> {
     @BindView(R.id.head_back) ImageButton headBack;
     @BindView(R.id.head_title) TextView headTitle;
     @BindView(R.id.head_right) Button headRight;
@@ -31,18 +33,21 @@ public class FindPwdLoginFirstActivity extends XActivity {
     @BindView(R.id.get_verify_code) CountdownButton getVerifyCode;
     @BindView(R.id.btn_next) Button btnNext;
 
+    private HttpLoadingDialog httpLoadingDialog;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_user_findpwd_first;
     }
 
     @Override
-    public Object newP() {
-        return null;
+    public FindPwdLoginFirstPresent newP() {
+        return new FindPwdLoginFirstPresent();
     }
 
     @Override
     public void initData(Bundle bundle) {
+        httpLoadingDialog = new HttpLoadingDialog(context);
         initView();
     }
 
@@ -67,9 +72,15 @@ public class FindPwdLoginFirstActivity extends XActivity {
         getVerifyCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String phoneNumber = phone.getText().toString().trim();
-                String imgcode = imageCode.getText().toString().trim();
-                if (TextUtils.isEmpty(phoneNumber)) {
+                String phoneNumber = getText(phone);
+                String imgcode = getText(imageCode);
+
+                //表单验证
+                if (noNetWork()) {
+                    showNetWorkError();
+                    return;
+                }
+                if (!isNotEmpty(phoneNumber)) {
                     showToast("手机号码不能为空");
                     return;
                 }
@@ -77,7 +88,7 @@ public class FindPwdLoginFirstActivity extends XActivity {
                     showToast("请输入正确的手机号码");
                     return;
                 }
-                if (TextUtils.isEmpty(imgcode)) {
+                if (!isNotEmpty(imgcode)) {
                     showToast("图形验证码不能为空");
                     return;
                 }
@@ -93,10 +104,16 @@ public class FindPwdLoginFirstActivity extends XActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String phoneNumber = phone.getText().toString().trim();
-                String imgcode = imageCode.getText().toString().trim();
-                String messageCode = msgCode.getText().toString().trim();
-                if (TextUtils.isEmpty(phoneNumber)) {
+                String phoneNumber = getText(phone);
+                String imgcode = getText(imageCode);
+                String messageCode = getText(msgCode);
+
+                //表单验证
+                if (noNetWork()) {
+                    showNetWorkError();
+                    return;
+                }
+                if (!isNotEmpty(phoneNumber)) {
                     showToast("手机号码不能为空");
                     return;
                 }
@@ -104,20 +121,39 @@ public class FindPwdLoginFirstActivity extends XActivity {
                     showToast("请输入正确的手机号码");
                     return;
                 }
-                if (TextUtils.isEmpty(imgcode)) {
+                if (!isNotEmpty(imgcode)) {
                     showToast("图形验证码不能为空");
                     return;
                 }
-                if (TextUtils.isEmpty(messageCode)) {
+                if (!isNotEmpty(messageCode)) {
                     showToast("短信验证码不能为空");
                     return;
                 }
-                startActivity(FindPwdLoginSecondActivity.class);
+                httpLoadingDialog.visible("加载中...");
+                getP().findPassword(phoneNumber, messageCode);
+
             }
         });
 
 
-
     }
 
+
+    /**
+     * 请求失败
+     */
+    public void requestFail() {
+        httpLoadingDialog.dismiss();
+    }
+
+    /**
+     * 手机和验证码验证成功
+     *
+     * @param data
+     */
+    public void disposeUpdateResult(Object data) {
+        httpLoadingDialog.dismiss();
+        startActivity(FindPwdLoginSecondActivity.class);
+        finish();
+    }
 }

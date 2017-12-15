@@ -30,7 +30,7 @@
         <item name="android:textSize">@dimen/text_size_14</item>
         <item name="android:gravity">center</item>
     </style>
-
+    <!--蓝色圆角按钮-->
     <style name="common_blue_button">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">45dp</item>
@@ -42,8 +42,7 @@
         <item name="android:textSize">@dimen/text_size_14</item>
         <item name="android:gravity">center</item>
     </style>
-
-
+    <!--用户设置 横条-->
     <style name="user_setting_line">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dimen_48</item>

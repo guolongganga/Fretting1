@@ -10,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
+import com.zhsoft.fretting.utils.RuntimeHelper;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
@@ -126,6 +128,13 @@ public class SettingActivity extends XActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                App.getSharedPref().putString(Constant.USERID, "");
+                App.getSharedPref().putString(Constant.TOKEN, "");
+                App.getSharedPref().putString(Constant.USER_NAME, "");
+
+                RuntimeHelper.getInstance().setLogin(false);
+
+                //TODO 更新登录状态
                 showToast("安全退出");
             }
         });
