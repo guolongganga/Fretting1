@@ -7,55 +7,55 @@ import com.zhsoft.fretting.model.LoginModel;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.params.LoginParams;
-import com.zhsoft.fretting.ui.activity.user.LoginActivity;
+import com.zhsoft.fretting.params.RegisterFirstParams;
+import com.zhsoft.fretting.ui.activity.user.RegisterFirstActivity;
 
 import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XPresent;
 import cn.droidlover.xdroidmvp.net.ApiSubscriber;
 import cn.droidlover.xdroidmvp.net.NetError;
 import cn.droidlover.xdroidmvp.net.XApi;
-import cn.droidlover.xdroidmvp.widget.ToastUtils;
 
 /**
- * 作者：sunnyzeng on 2017/12/14 18:08
+ * 作者：sunnyzeng on 2017/12/15 15:43
  * 描述：
  */
 
-public class LoginPresent extends XPresent<LoginActivity> {
+public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
 
     /**
-     * 登录
-     * @param username 用户名
+     * 注册
+     * @param mobile_tel 手机号码
      * @param password 密码
      */
-    public void login(String username, String password) {
+    public void register(String mobile_tel, String password) {
 
         CommonReqData reqData = new CommonReqData();
 
-        LoginParams loginParams = new LoginParams();
-        loginParams.setUsername(username);
-        loginParams.setPassword(password);
-        reqData.setData(loginParams);
+        RegisterFirstParams params = new RegisterFirstParams();
+        params.setMobile_tel(mobile_tel);
+        params.setPassword(password);
+        reqData.setData(params);
 
         Api.getApi()
-                .login(reqData)
-                .compose(XApi.<BaseModel<LoginModel>>getApiTransformer())
-                .compose(XApi.<BaseModel<LoginModel>>getScheduler())
-                .compose(getV().<BaseModel<LoginModel>>bindToLifecycle())
-                .subscribe(new ApiSubscriber<BaseModel<LoginModel>>() {
+                .register(reqData)
+                .compose(XApi.<BaseModel>getApiTransformer())
+                .compose(XApi.<BaseModel>getScheduler())
+                .compose(getV().<BaseModel>bindToLifecycle())
+                .subscribe(new ApiSubscriber<BaseModel>() {
                     @Override
                     protected void onFail(NetError error) {
                         error.printStackTrace();
-                        getV().loginFail();
+                        getV().requestFail();
                     }
 
                     @Override
-                    public void onNext(BaseModel<LoginModel> model) {
+                    public void onNext(BaseModel model) {
                         if (model != null && model.getStatus() == 200) {
                             Log.e("hahah", "访问成功");
-                            getV().showData(model.getData());
+                            getV().commitSuccess(model.getData());
                         } else {
-                            getV().loginFail();
+                            getV().requestFail();
                             getV().showToast(model.getMessage());
                             XLog.e("返回数据为空");
                         }
@@ -63,5 +63,4 @@ public class LoginPresent extends XPresent<LoginActivity> {
                 });
 
     }
-
 }

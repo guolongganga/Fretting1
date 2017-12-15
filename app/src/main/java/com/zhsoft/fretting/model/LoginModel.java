@@ -6,9 +6,18 @@ package com.zhsoft.fretting.model;
  * {"data":"","token":"c9a3ce92cf3d4b6994cc4bf0bfba3598","userId":"135884f8144a4ed3b9b326c8f3459976"},"message":"成功","status":200}
  */
 
-public class LoginModel extends BaseModel<LoginModel> {
+public class LoginModel {
+    private String data;
     private String token;
     private String userId;
+
+    public String getData() {
+        return data;
+    }
+
+    public void setData(String data) {
+        this.data = data;
+    }
 
     public String getToken() {
         return token;

@@ -14,8 +14,14 @@ public class HttpContent {
     public static final String test_test = "noPermission/testCache";
     /** 登录 */
     public static final String user_login = "noPermission/login";
-    /** 找回密码 */
-    public static final String user_find_password = "noPermission/password/check";
+    /** 找回登录密码 第一步*/
+    public static final String password_check = "noPermission/password/check";
+    /** 找回登录密码 第二步*/
+    public static final String password_reset = "/noPermission/password/reset";
+    /** 注册 */
+    public static final String user_register = "noPermission/regist";
+    /** 银行列表 */
+    public static final String common_bank_list = "noPermission/c401SelectBank";
 
 
 }
