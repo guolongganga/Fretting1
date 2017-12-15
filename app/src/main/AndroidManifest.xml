@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.zhsoft.fretting">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.zhsoft.fretting">
 
     <application
         android:name=".App"
@@ -22,9 +22,9 @@
             android:name=".ui.activity.boot.StartActivity"
             android:theme="@style/NoTitle_FullScreen">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -33,9 +33,7 @@
         <!--登录页-->
         <activity android:name=".ui.activity.user.LoginActivity"></activity>
         <!--注册第一步 手机号-->
-        <activity
-            android:name=".ui.activity.user.RegisterFirstActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+        <activity android:name=".ui.activity.user.RegisterFirstActivity"></activity>
         <!--注册第二步 实名绑卡-->
         <activity android:name=".ui.activity.user.RegisterSecondActivity"></activity>
         <!--注册第三步 设置交易密码页-->
@@ -77,7 +75,7 @@
 
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
 </manifest>

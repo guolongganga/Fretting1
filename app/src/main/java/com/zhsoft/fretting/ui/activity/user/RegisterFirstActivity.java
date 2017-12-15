@@ -10,9 +10,9 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
+import com.zhsoft.fretting.widget.ChenJingET;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
@@ -45,13 +45,12 @@ public class RegisterFirstActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        ChenJingET.assistActivity(context);
         headTitle.setText("基金开户");
-
     }
 
     @Override
     public void initEvents() {
-
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
