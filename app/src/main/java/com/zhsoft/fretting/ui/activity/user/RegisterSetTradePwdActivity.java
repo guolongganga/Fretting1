@@ -10,22 +10,30 @@ import android.widget.Toast;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.ui.widget.PayPwdEditText;
+import com.zhsoft.fretting.widget.ChenJingET;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
  * 作者：sunnyzeng on 2017/12/12 18:44
- * 描述：
+ * 描述：基金开户 设置交易密码
  */
 
 public class RegisterSetTradePwdActivity extends XActivity {
+    /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
+    /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
+    /** 交易密码 */
     @BindView(R.id.ppe_pwd) PayPwdEditText ppePwd;
+    /** 再次交易密码 */
     @BindView(R.id.ppe_pwd_again) PayPwdEditText ppePwdAgain;
+    /** 完成按钮 */
     @BindView(R.id.btn_finish) Button btnFinish;
+    /** 交易密码 号码 */
     private String password;
+    /** 再次交易密码 号码 */
     private String passwordAgain;
 
     @Override
@@ -40,7 +48,11 @@ public class RegisterSetTradePwdActivity extends XActivity {
 
     @Override
     public void initData(Bundle bundle) {
+        //解决键盘弹出遮挡不滚动问题
+        ChenJingET.assistActivity(context);
+        //设置标题
         headTitle.setText("基金开户");
+        //初始化交易密码输入框的样式
         ppePwd.initStyle(R.drawable.edit_num_bg, 6, 0.33f, R.color.color999999, R.color.color999999, 20);
         ppePwdAgain.initStyle(R.drawable.edit_num_bg, 6, 0.33f, R.color.color999999, R.color.color999999, 20);
 
@@ -67,7 +79,7 @@ public class RegisterSetTradePwdActivity extends XActivity {
             public void onFinish(String str) {//密码输入完后的回调
                 passwordAgain = str;
                 showToast(str);
-                if (TextUtils.isEmpty(password)) {
+                if (!isNotEmpty(password)) {
                     showToast("请输入第一遍交易密码");
                     return;
                 }
@@ -78,11 +90,16 @@ public class RegisterSetTradePwdActivity extends XActivity {
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (TextUtils.isEmpty(password)) {
+                //表单验证
+                if (noNetWork()) {
+                    showNetWorkError();
+                    return;
+                }
+                if (!isNotEmpty(password)) {
                     showToast("请输入第一遍交易密码");
                     return;
                 }
-                if (TextUtils.isEmpty(passwordAgain)) {
+                if (!isNotEmpty(passwordAgain)) {
                     showToast("请输入第二遍交易密码");
                     return;
                 }

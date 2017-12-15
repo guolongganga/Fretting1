@@ -21,24 +21,34 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
  * 作者：sunnyzeng on 2017/12/12 19:50
- * 描述：
+ * 描述：设置页面
  */
 
 public class SettingActivity extends XActivity {
+    /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
+    /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
-    @BindView(R.id.head_right) Button headRight;
+    /** 个人信息 */
     @BindView(R.id.personinfo) TextView personinfo;
+    /** 手机号码 */
     @BindView(R.id.phone) TextView phone;
+    /** 密码管理 */
     @BindView(R.id.password_manager) TextView passwordManager;
+    /** 银行卡号 */
     @BindView(R.id.bankcard) TextView bankcard;
-    @BindView(R.id.icon_arrow) ImageView iconArrow;
+    /** 风险等级测评 */
     @BindView(R.id.risk_test) LinearLayout riskTest;
+    /** 客服电话 */
     @BindView(R.id.call_agent) TextView callAgent;
+    /** 关于我们 */
     @BindView(R.id.about_us) TextView aboutUs;
+    /** 切换账户 */
     @BindView(R.id.change_user) TextView changeUser;
+    /** 安全退出 */
     @BindView(R.id.exit) Button exit;
 
+    /** 客服电话 */
     private static final String PHONE_NUMBER = "13717832879";
 
     @Override

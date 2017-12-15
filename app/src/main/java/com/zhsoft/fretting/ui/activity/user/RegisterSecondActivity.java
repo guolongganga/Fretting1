@@ -15,6 +15,7 @@ import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.present.user.RegisterSecondPresent;
 import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
+import com.zhsoft.fretting.widget.ChenJingET;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
@@ -23,26 +24,40 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
 /**
  * 作者：sunnyzeng on 2017/12/14 13:54
  * <p>
- * 描述：基金开户第二部 绑定银行卡
+ * 描述：基金开户 第二步 绑定银行卡
  */
 
 public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
+    /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
+    /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
-    @BindView(R.id.head_right) Button headRight;
+    /** 用户名 */
     @BindView(R.id.user_name) EditText userName;
+    /** 身份证号 */
     @BindView(R.id.identity) EditText identity;
+    /** 邮件 */
     @BindView(R.id.email) EditText email;
+    /** 银行名称 */
     @BindView(R.id.banck_name) TextView banckName;
+    /** 选择银行 */
     @BindView(R.id.ll_choose_bank) LinearLayout llChooseBank;
+    /** 银行卡号 */
     @BindView(R.id.banknumber) EditText banknumber;
+    /** 手机号码 */
     @BindView(R.id.phone) EditText phone;
+    /** 短信验证码 */
     @BindView(R.id.msg_code) EditText msgCode;
+    /** 获取验证码 */
     @BindView(R.id.get_verify_code) CountdownButton getVerifyCode;
+    /** 勾选框 */
     @BindView(R.id.register_service_select) ImageView registerServiceSelect;
+    /** 注册协议 */
     @BindView(R.id.register_service) TextView registerService;
+    /** 下一步按钮 */
     @BindView(R.id.btn_next) Button btnNext;
 
+    /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
 
     @Override
@@ -57,7 +72,10 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
 
     @Override
     public void initData(Bundle bundle) {
+        //解决键盘弹出遮挡不滚动问题
+        ChenJingET.assistActivity(context);
         httpLoadingDialog = new HttpLoadingDialog(context);
+        //设置标题
         headTitle.setText("基金开户");
         registerServiceSelect.setSelected(true);
         //请求银行卡列表
@@ -77,6 +95,11 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
             @Override
             public void onClick(View view) {
                 String strPhone = getText(phone);
+                //表单验证
+                if (noNetWork()) {
+                    showNetWorkError();
+                    return;
+                }
                 //表单验证
                 if (noNetWork()) {
                     showNetWorkError();
@@ -175,11 +198,18 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
         });
     }
 
-
+    /**
+     * 绑定银行卡失败
+     */
     public void requestFail() {
         httpLoadingDialog.dismiss();
     }
 
+    /**
+     * 访问银行卡列表
+     *
+     * @param data
+     */
     public void bankListData(Object data) {
         httpLoadingDialog.dismiss();
 

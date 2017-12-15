@@ -3,15 +3,15 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
-
+    <!--内容页-->
     <FrameLayout
         android:id="@+id/fl_content"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"/>
-
+    <!--分割线-->
     <include layout="@layout/layout_divider_tint"/>
-
+    <!--底部Tab-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -19,7 +19,7 @@
         android:orientation="horizontal"
         android:paddingBottom="@dimen/dimen_5"
         android:paddingTop="@dimen/dimen_5">
-
+        <!--首页tab-->
         <TextView
             android:id="@+id/tv_index"
             android:layout_width="0dp"
@@ -30,7 +30,7 @@
             android:text="首页"
             android:textColor="@color/tab_text_color"
             android:textSize="@dimen/text_size_12"/>
-
+        <!--基金Tab-->
         <TextView
             android:id="@+id/tv_fund"
             android:layout_width="0dp"
@@ -41,7 +41,7 @@
             android:text="基金"
             android:textColor="@color/tab_text_color"
             android:textSize="@dimen/text_size_12"/>
-
+        <!--Tab我的-->
         <TextView
             android:id="@+id/tv_user"
             android:layout_width="0dp"

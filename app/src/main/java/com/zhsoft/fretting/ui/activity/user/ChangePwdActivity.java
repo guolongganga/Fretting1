@@ -14,14 +14,17 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
  * 作者：sunnyzeng on 2017/12/13 13:53
- * 描述：
+ * 描述：变更密码
  */
 
 public class ChangePwdActivity extends XActivity {
+    /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
+    /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
-    @BindView(R.id.head_right) Button headRight;
+    /** 变更登录密码 */
     @BindView(R.id.ll_changepwd_login) LinearLayout llChangepwdLogin;
+    /** 变更交易密码 */
     @BindView(R.id.ll_changepwd_trade) LinearLayout llChangepwdTrade;
 
     @Override
@@ -36,12 +39,8 @@ public class ChangePwdActivity extends XActivity {
 
     @Override
     public void initData(Bundle bundle) {
-        initView();
-    }
-
-    private void initView() {
+        //设置标题
         headTitle.setText("变更密码");
-
     }
 
     @Override

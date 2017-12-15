@@ -1,122 +1,136 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
-    <!--变更密码-登录密码-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+    <!--标题-->
     <include layout="@layout/layout_head"/>
-
-    <View
+    <!--变更密码-登录密码-->
+    <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="30dp"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="66dp"
+        android:scrollbars="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen_15"
-        android:text="登录密码为8-16位数字、字母、特殊字符等"
-        android:textColor="@color/color_666666"
-        android:textSize="@dimen/text_size_12"/>
-
-    <include layout="@layout/layout_divider_horizontal"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/small_margin_size"
-        android:paddingRight="15dp">
-
-        <TextView
-            android:layout_width="125dp"
-            android:layout_height="wrap_content"
-            android:text="新登录密码"
-            android:textColor="@color/color_text_333"
-            android:textSize="@dimen/text_size_14"/>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            app:hintEnabled="false"
-            app:passwordToggleDrawable="@drawable/ck_user_eyes_selector"
-            app:passwordToggleEnabled="true">
-            <!--设置密码-->
-            <EditText
-                android:id="@+id/password"
+            android:orientation="vertical">
+
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
-                android:gravity="center_vertical"
-                android:hint="请输入登录密码"
-                android:inputType="textPassword"
-                android:maxLength="16"
-                android:singleLine="true"
-                android:textColor="@color/color_text_333"
-                android:textColorHint="@color/color_696969"
-                android:textSize="@dimen/text_size_14"/>
+                android:layout_height="30dp"/>
 
-        </android.support.design.widget.TextInputLayout>
+            <!--密码规则-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_15"
+                android:text="登录密码为8-16位数字、字母、特殊字符等"
+                android:textColor="@color/color_666666"
+                android:textSize="@dimen/text_size_12"/>
 
-    </LinearLayout>
-
-    <include layout="@layout/layout_divider_horizontal"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/small_margin_size"
-        android:paddingRight="15dp">
-
-        <TextView
-            android:layout_width="125dp"
-            android:layout_height="wrap_content"
-            android:text="再次输入登录密码"
-            android:textColor="@color/color_text_333"
-            android:textSize="@dimen/text_size_14"/>
-
-        <android.support.design.widget.TextInputLayout
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@android:color/transparent"
-            app:hintEnabled="false"
-            app:passwordToggleDrawable="@drawable/ck_user_eyes_selector"
-            app:passwordToggleEnabled="true">
-            <!--设置密码-->
-            <EditText
-                android:id="@+id/password_again"
+            <include layout="@layout/layout_divider_horizontal"/>
+            <!--新登录密码-->
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@android:color/transparent"
+                android:layout_height="48dp"
+                android:background="@color/white"
                 android:gravity="center_vertical"
-                android:hint="请再次输入登录密码"
-                android:inputType="textPassword"
-                android:maxLength="16"
-                android:singleLine="true"
-                android:textColor="@color/color_text_333"
-                android:textColorHint="@color/color_696969"
-                android:textSize="@dimen/text_size_14"/>
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/small_margin_size"
+                android:paddingRight="15dp">
 
-        </android.support.design.widget.TextInputLayout>
+                <TextView
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:text="新登录密码"
+                    android:textColor="@color/color_text_333"
+                    android:textSize="@dimen/text_size_14"/>
+                <!--小眼睛点击-->
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    app:hintEnabled="false"
+                    app:passwordToggleDrawable="@drawable/ck_user_eyes_selector"
+                    app:passwordToggleEnabled="true">
+                    <!--输入登录密码-->
+                    <EditText
+                        android:id="@+id/password"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:gravity="center_vertical"
+                        android:hint="请输入登录密码"
+                        android:inputType="textPassword"
+                        android:maxLength="16"
+                        android:singleLine="true"
+                        android:textColor="@color/color_text_333"
+                        android:textColorHint="@color/color_696969"
+                        android:textSize="@dimen/text_size_14"/>
 
-    </LinearLayout>
+                </android.support.design.widget.TextInputLayout>
 
-    <include layout="@layout/layout_divider_horizontal"/>
+            </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_save"
-        style="@style/common_blue_button"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="50dp"
-        android:text="保存"/>
+            <include layout="@layout/layout_divider_horizontal"/>
+            <!--再次输入登录密码-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/small_margin_size"
+                android:paddingRight="15dp">
 
-</LinearLayout>
+                <TextView
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:text="再次输入登录密码"
+                    android:textColor="@color/color_text_333"
+                    android:textSize="@dimen/text_size_14"/>
+                <!--小眼睛点击-->
+                <android.support.design.widget.TextInputLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    app:hintEnabled="false"
+                    app:passwordToggleDrawable="@drawable/ck_user_eyes_selector"
+                    app:passwordToggleEnabled="true">
+                    <!--再次输入登录密码-->
+                    <EditText
+                        android:id="@+id/password_again"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/transparent"
+                        android:gravity="center_vertical"
+                        android:hint="请再次输入登录密码"
+                        android:inputType="textPassword"
+                        android:maxLength="16"
+                        android:singleLine="true"
+                        android:textColor="@color/color_text_333"
+                        android:textColorHint="@color/color_696969"
+                        android:textSize="@dimen/text_size_14"/>
+
+                </android.support.design.widget.TextInputLayout>
+
+            </LinearLayout>
+
+            <include layout="@layout/layout_divider_horizontal"/>
+            <!--保存按钮-->
+            <Button
+                android:id="@+id/btn_save"
+                style="@style/common_blue_button"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="50dp"
+                android:text="保存"/>
+
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

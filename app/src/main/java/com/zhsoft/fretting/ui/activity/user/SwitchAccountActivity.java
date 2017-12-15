@@ -19,28 +19,29 @@ import cn.droidlover.xrecyclerview.XRecyclerView;
 
 /**
  * 作者：sunnyzeng on 2017/12/14 15:51
- * 描述：
+ * 描述：切换账户页面
  */
 
 public class SwitchAccountActivity extends XActivity<SwitchAccountPresent> {
 
-    //返回
+    /** 返回 */
     @BindView(R.id.rl_back)
     RelativeLayout rlBack;
-    //编辑
+    /** 编辑 */
     @BindView(R.id.tv_compile)
     TextView tvCompile;
-    //展示所有账户
+    /** 展示所有账户 */
     @BindView(R.id.xrv_account)
     XRecyclerView xRecyclerView;
-    //添加账户
+    /** 添加账户 */
     @BindView(R.id.tv_add_account)
     TextView tvAddAccount;
 
     private SwitchAccountRecycleAdapter adapter;
-    private List<String> datas;//数据源
-
-    private int isSelector;//可得到当前选中的账号
+    /** 数据源 */
+    private List<String> datas;
+    /** 可得到当前选中的账号 */
+    private int isSelector;
 
     @Override
     public int getLayoutId() {

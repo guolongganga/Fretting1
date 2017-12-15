@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.present.user.FindPwdLoginSecondPresent;
+import com.zhsoft.fretting.widget.ChenJingET;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
@@ -19,19 +20,26 @@ import cn.droidlover.xdroidmvp.router.Router;
 
 /**
  * 作者：sunnyzeng on 2017/12/13 18:18
- * 描述：
+ * 描述：找回登录密码 第二步
  */
 
 public class FindPwdLoginSecondActivity extends XActivity<FindPwdLoginSecondPresent> {
+    /** 传递phone */
     private static final String PHONE = "phone";
+    /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
+    /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
-    @BindView(R.id.head_right) Button headRight;
+    /** 密码 */
     @BindView(R.id.password) EditText password;
+    /** 再次输入密码 */
     @BindView(R.id.password_again) EditText passwordAgain;
+    /** 保存按钮 */
     @BindView(R.id.btn_save) Button btnSave;
 
+    /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
+    /** 开户手机号 */
     private String mPhone;
 
     @Override
@@ -46,7 +54,10 @@ public class FindPwdLoginSecondActivity extends XActivity<FindPwdLoginSecondPres
 
     @Override
     public void initData(Bundle bundle) {
+        //解决键盘弹出遮挡不滚动问题
+        ChenJingET.assistActivity(context);
         httpLoadingDialog = new HttpLoadingDialog(context);
+        //设置标题
         headTitle.setText("找回登录密码");
         mPhone = getIntent().getStringExtra(PHONE);
     }
@@ -67,6 +78,11 @@ public class FindPwdLoginSecondActivity extends XActivity<FindPwdLoginSecondPres
             public void onClick(View view) {
                 String pwdnumbe = getText(password);
                 String pwdAgainnumbe = getText(passwordAgain);
+                //表单验证
+                if (noNetWork()) {
+                    showNetWorkError();
+                    return;
+                }
                 if (!isNotEmpty(pwdnumbe)) {
                     showToast("新登录密码不能为空");
                     return;
@@ -97,11 +113,19 @@ public class FindPwdLoginSecondActivity extends XActivity<FindPwdLoginSecondPres
                 .launch();
     }
 
+    /**
+     * 找回登录密码失败
+     */
     public void requestFail() {
         httpLoadingDialog.dismiss();
         showToast("找回登录密码失败");
     }
 
+    /**
+     * 找回登录密码成功
+     *
+     * @param data
+     */
     public void requestSuccess(Object data) {
         httpLoadingDialog.dismiss();
         showToast("找回登录密码成功");

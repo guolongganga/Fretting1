@@ -18,7 +18,7 @@ import cn.droidlover.xdroidmvp.widget.ToastUtils;
 
 /**
  * 作者：sunnyzeng on 2017/12/14 18:08
- * 描述：
+ * 描述：登录Present
  */
 
 public class LoginPresent extends XPresent<LoginActivity> {

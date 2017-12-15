@@ -6,25 +6,30 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
-import com.zhsoft.fretting.MainActivity;
+import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.R;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
  * 作者：sunnyzeng on 2017/12/14 15:06
- * 描述：
+ * 描述：注册成功页面
  */
 
 public class RegisterSuccessActivity extends XActivity {
+
+    /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
+    /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
-    @BindView(R.id.head_right) Button headRight;
+    /** 姓名 */
     @BindView(R.id.name) TextView name;
+    /** 身份证号 */
     @BindView(R.id.identity) TextView identity;
+    /** 完成按钮 */
     @BindView(R.id.btn_finish) Button btnFinish;
+    /** 风险测评 */
     @BindView(R.id.risk_test) Button riskTest;
 
     @Override

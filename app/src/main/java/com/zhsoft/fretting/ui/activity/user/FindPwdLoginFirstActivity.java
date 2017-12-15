@@ -1,8 +1,6 @@
 package com.zhsoft.fretting.ui.activity.user;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +11,7 @@ import android.widget.TextView;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.present.user.FindPwdLoginFirstPresent;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
+import com.zhsoft.fretting.widget.ChenJingET;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
@@ -24,16 +23,24 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  */
 
 public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresent> {
+    /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
+    /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
-    @BindView(R.id.head_right) Button headRight;
+    /** 手机号码 */
     @BindView(R.id.phone) EditText phone;
+    /** 图片验证码 */
     @BindView(R.id.image_code) EditText imageCode;
+    /** 图片 */
     @BindView(R.id.image) ImageView image;
+    /** 短信验证码 */
     @BindView(R.id.msg_code) EditText msgCode;
+    /** 获取短信验证码 */
     @BindView(R.id.get_verify_code) CountdownButton getVerifyCode;
+    /** 下一步按钮 */
     @BindView(R.id.btn_next) Button btnNext;
 
+    /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
 
     @Override
@@ -48,11 +55,10 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
 
     @Override
     public void initData(Bundle bundle) {
+        //解决键盘弹出遮挡不滚动问题
+        ChenJingET.assistActivity(context);
         httpLoadingDialog = new HttpLoadingDialog(context);
-        initView();
-    }
-
-    private void initView() {
+        //设置标题
         headTitle.setText("找回登录密码");
     }
 
@@ -130,6 +136,7 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
                     showToast("短信验证码不能为空");
                     return;
                 }
+                //显示加载框
                 httpLoadingDialog.visible("加载中...");
                 getP().findCheckPassword(phoneNumber, messageCode);
 
@@ -145,6 +152,7 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
      */
     public void requestFail() {
         httpLoadingDialog.dismiss();
+        showToast("验证失败");
     }
 
     /**
@@ -156,7 +164,7 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
         httpLoadingDialog.dismiss();
 
         //传递电话号码
-        FindPwdLoginSecondActivity.launch(this,getText(phone));
+        FindPwdLoginSecondActivity.launch(this, getText(phone));
 
         finish();
     }

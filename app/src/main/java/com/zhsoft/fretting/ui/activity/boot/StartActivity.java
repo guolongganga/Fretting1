@@ -6,7 +6,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 
 import com.zhsoft.fretting.App;
-import com.zhsoft.fretting.MainActivity;
+import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 

@@ -20,7 +20,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
  * 作者：sunnyzeng on 2017/12/11 17:35
- * 描述：注册第一步界面
+ * 描述：基金开户 第一步界面
  */
 
 public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
@@ -83,6 +83,11 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
             @Override
             public void onClick(View view) {
                 String phone = phoneNumber.getText().toString();
+                //表单验证
+                if (noNetWork()) {
+                    showNetWorkError();
+                    return;
+                }
                 if (TextUtils.isEmpty(phone)) {
                     showToast("手机号码不能为空");
                     return;
@@ -104,6 +109,11 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
                 String pwd = getText(password);
                 String pwdagain = getText(passwordAgain);
                 String code = getText(msgCode);
+                //表单验证
+                if (noNetWork()) {
+                    showNetWorkError();
+                    return;
+                }
                 if (!isNotEmpty(phone)) {
                     showToast("手机号码不能为空");
                     return;

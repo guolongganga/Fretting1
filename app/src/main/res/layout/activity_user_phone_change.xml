@@ -1,95 +1,109 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical">
-    <!--变更手机号 更换手机号-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
+    <!--标题-->
     <include layout="@layout/layout_head"/>
-
-    <View
+    <!--变更手机号 更换手机号-->
+    <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
-        android:layout_height="30dp"/>
+        android:layout_height="match_parent"
+        android:layout_marginTop="66dp"
+        android:scrollbars="vertical">
 
-    <include layout="@layout/layout_divider_horizontal"/>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/small_margin_size"
-        android:paddingRight="15dp">
-
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:text="手机号"
-            android:textColor="@color/color_text_333"
-            android:textSize="@dimen/text_size_14"/>
-
-        <EditText
-            android:id="@+id/phone_number"
-            android:layout_width="0dp"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@null"
-            android:hint="请输入变更后的手机号"
-            android:inputType="number"
-            android:maxLength="11"
-            android:singleLine="true"
-            android:textColorHint="@color/color_696969"
-            android:textSize="@dimen/text_size_14"
-            />
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="30dp"/>
 
-    <include layout="@layout/layout_divider_horizontal"/>
+            <include layout="@layout/layout_divider_horizontal"/>
+            <!--手机号-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/small_margin_size"
+                android:paddingRight="15dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="@dimen/small_margin_size"
-        android:paddingRight="15dp">
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="手机号"
+                    android:textColor="@color/color_text_333"
+                    android:textSize="@dimen/text_size_14"/>
+                <!--请输入变更后的手机号-->
+                <EditText
+                    android:id="@+id/phone_number"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="请输入变更后的手机号"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:singleLine="true"
+                    android:textColorHint="@color/color_696969"
+                    android:textSize="@dimen/text_size_14"
+                    />
 
-        <TextView
-            android:layout_width="70dp"
-            android:layout_height="wrap_content"
-            android:text="验证码"
-            android:textColor="@color/color_text_333"
-            android:textSize="@dimen/text_size_14"/>
+            </LinearLayout>
 
-        <EditText
-            android:id="@+id/verify_code"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="@null"
-            android:hint="请输入验证码"
-            android:inputType="number"
-            android:maxLength="11"
-            android:singleLine="true"
-            android:textColorHint="@color/color_696969"
-            android:textSize="@dimen/text_size_14"
-            />
+            <include layout="@layout/layout_divider_horizontal"/>
+            <!--验证码-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:background="@color/white"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="@dimen/small_margin_size"
+                android:paddingRight="15dp">
 
-        <com.zhsoft.fretting.ui.widget.CountdownButton
-            android:id="@+id/get_verify_code"
-            style="@style/AppTheme.Button_send_code"/>
+                <TextView
+                    android:layout_width="70dp"
+                    android:layout_height="wrap_content"
+                    android:text="验证码"
+                    android:textColor="@color/color_text_333"
+                    android:textSize="@dimen/text_size_14"/>
+                <!--请输入验证码-->
+                <EditText
+                    android:id="@+id/verify_code"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:hint="请输入验证码"
+                    android:inputType="number"
+                    android:maxLength="11"
+                    android:singleLine="true"
+                    android:textColorHint="@color/color_696969"
+                    android:textSize="@dimen/text_size_14"
+                    />
 
-    </LinearLayout>
+                <com.zhsoft.fretting.ui.widget.CountdownButton
+                    android:id="@+id/get_verify_code"
+                    style="@style/AppTheme.Button_send_code"/>
 
-    <include layout="@layout/layout_divider_horizontal"/>
+            </LinearLayout>
 
-    <Button
-        android:id="@+id/btn_save"
-        style="@style/common_blue_button"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="30dp"
-        android:layout_marginRight="30dp"
-        android:layout_marginTop="50dp"
-        android:text="保存"/>
-</LinearLayout>
+            <include layout="@layout/layout_divider_horizontal"/>
+            <!--保存-->
+            <Button
+                android:id="@+id/btn_save"
+                style="@style/common_blue_button"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="50dp"
+                android:text="保存"/>
+        </LinearLayout>
+    </ScrollView>
+</FrameLayout>

@@ -17,20 +17,30 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
  * 作者：sunnyzeng on 2017/12/13 10:13
- * 描述：
+ * 描述：个人信息
  */
 
 public class PersonInfoActivity extends XActivity {
+    /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
+    /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
+    /** 设置按钮 */
     @BindView(R.id.head_right) Button headRight;
+    /** 用户名 */
     @BindView(R.id.name) TextView name;
+    /** 身份证号 */
     @BindView(R.id.identity) TextView identity;
+    /** 账户编号 */
     @BindView(R.id.accountid) TextView accountid;
+    /** 邮箱 */
     @BindView(R.id.email) EditText email;
+    /** 编辑按钮 */
     @BindView(R.id.click_update) TextView clickUpdate;
 
+    /** 用户编号 */
     String userId;
+    /** 登录标识 */
     String token;
 
     @Override
@@ -45,22 +55,19 @@ public class PersonInfoActivity extends XActivity {
 
     @Override
     public void initData(Bundle bundle) {
-        initView();
-
-    }
-
-    private void initView() {
+        //获取用户缓存的userid 和 token
         userId = App.getSharedPref().getString(Constant.USERID, "");
         token = App.getSharedPref().getString(Constant.TOKEN, "");
+        //设置标题
         headTitle.setText("个人信息");
         headRight.setVisibility(View.VISIBLE);
         headRight.setText("编辑");
-        if (TextUtils.isEmpty(email.getText().toString().trim())) {
+        if (!isNotEmpty(getText(email))) {
             clickUpdate.setVisibility(View.VISIBLE);
             clickUpdate.setText("去填写");
         }
-    }
 
+    }
 
     @Override
     public void initEvents() {

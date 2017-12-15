@@ -14,15 +14,19 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
  * 作者：sunnyzeng on 2017/12/13 11:53
- * 描述：
+ * 描述：我的手机号页面
  */
 
 public class PhoneActivity extends XActivity {
+    /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
+    /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
-    @BindView(R.id.head_right) Button headRight;
+    /** 图片 */
     @BindView(R.id.img_sign) ImageView imgSign;
+    /** 电话号码 */
     @BindView(R.id.phone_number) TextView phoneNumber;
+    /** 更改电话号码 */
     @BindView(R.id.btn_change) Button btnChange;
 
     @Override
@@ -37,12 +41,8 @@ public class PhoneActivity extends XActivity {
 
     @Override
     public void initData(Bundle bundle) {
-        initView();
-
-    }
-
-    private void initView() {
         headTitle.setText("变更手机号");
+
     }
 
     @Override
