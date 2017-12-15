@@ -3,12 +3,12 @@ package com.zhsoft.fretting.present.user;
 import android.util.Log;
 
 import com.zhsoft.fretting.model.BaseModel;
-import com.zhsoft.fretting.model.LoginModel;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.params.FindPwdFirstParams;
-import com.zhsoft.fretting.params.LoginParams;
+import com.zhsoft.fretting.params.FindPwdSecondParams;
 import com.zhsoft.fretting.ui.activity.user.FindPwdLoginFirstActivity;
+import com.zhsoft.fretting.ui.activity.user.FindPwdLoginSecondActivity;
 
 import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XPresent;
@@ -21,26 +21,25 @@ import cn.droidlover.xdroidmvp.net.XApi;
  * 描述：
  */
 
-public class FindPwdLoginFirstPresent extends XPresent<FindPwdLoginFirstActivity> {
+public class FindPwdLoginSecondPresent extends XPresent<FindPwdLoginSecondActivity> {
 
     /**
-     * 找回密码
+     * 找回密码 第二步
      *
-     * @param phone        用户名
-     * @param validateCode 密码
-     *                     "phone":"15032269871","validateCode":"1234"
+     * @param password 密码
      */
-    public void findCheckPassword(String phone, String validateCode) {
+    public void findPassword(String phone, String password, String repetPassword) {
 
         CommonReqData reqData = new CommonReqData();
 
-        FindPwdFirstParams params = new FindPwdFirstParams();
+        FindPwdSecondParams params = new FindPwdSecondParams();
         params.setPhone(phone);
-        params.setValidateCode(validateCode);
+        params.setPassword(password);
+        params.setRepetPassword(repetPassword);
         reqData.setData(params);
 
         Api.getApi()
-                .findPasswordCheck(reqData)
+                .findPasswordReset(reqData)
                 .compose(XApi.<BaseModel>getApiTransformer())
                 .compose(XApi.<BaseModel>getScheduler())
                 .compose(getV().<BaseModel>bindToLifecycle())
@@ -55,7 +54,7 @@ public class FindPwdLoginFirstPresent extends XPresent<FindPwdLoginFirstActivity
                     public void onNext(BaseModel model) {
                         if (model != null && model.getStatus() == 200) {
                             Log.e("hahah", "访问成功");
-                            getV().disposeUpdateResult(model.getData());
+                            getV().requestSuccess(model.getData());
                         } else {
                             getV().requestFail();
                             getV().showToast(model.getMessage());

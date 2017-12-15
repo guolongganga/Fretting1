@@ -9,10 +9,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.present.user.RegisterFirstPresent;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
@@ -20,7 +22,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  * 描述：注册第一步界面
  */
 
-public class RegisterFirstActivity extends XActivity {
+public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
     @BindView(R.id.head_back) ImageButton headBack;
     @BindView(R.id.head_title) TextView headTitle;
     @BindView(R.id.get_verify_code) CountdownButton getVerifyCode;
@@ -32,6 +34,7 @@ public class RegisterFirstActivity extends XActivity {
     @BindView(R.id.to_login) TextView toLogin;
     @BindView(R.id.message_fail) TextView messageFail;
     @BindView(R.id.btn_next) Button btnNext;
+    private HttpLoadingDialog httpLoadingDialog;
 
     @Override
     public int getLayoutId() {
@@ -39,12 +42,13 @@ public class RegisterFirstActivity extends XActivity {
     }
 
     @Override
-    public Object newP() {
-        return null;
+    public RegisterFirstPresent newP() {
+        return new RegisterFirstPresent();
     }
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        httpLoadingDialog = new HttpLoadingDialog(context);
         headTitle.setText("基金开户");
 
     }
@@ -94,47 +98,55 @@ public class RegisterFirstActivity extends XActivity {
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String phone = phoneNumber.getText().toString();
-                String pwd = password.getText().toString();
-                String pwdagain = passwordAgain.getText().toString();
-                if (TextUtils.isEmpty(phone)) {
+                String phone = getText(phoneNumber);
+                String pwd = getText(password);
+                String pwdagain = getText(passwordAgain);
+                String code = getText(msgCode);
+                if (!isNotEmpty(phone)) {
                     showToast("手机号码不能为空");
                     return;
                 }
-
                 if (phone.length() < 11) {
                     showToast("请输入正确的手机号码");
                     return;
                 }
-
-                if (TextUtils.isEmpty(pwd)) {
+                if (!isNotEmpty(pwd)) {
                     showToast("登录密码不能为空");
                 }
-                if (TextUtils.isEmpty(pwd)) {
+                if (!isNotEmpty(pwd)) {
                     showToast("登录密码不能为空");
                 }
                 if (pwd.length() < 8) {
                     showToast("登录密码为8-16位数字、字母、特殊字符等");
                     return;
                 }
-                if (TextUtils.isEmpty(pwdagain)) {
+                if (!isNotEmpty(pwdagain)) {
                     showToast("登录密码不能为空");
                 }
                 if (pwdagain.length() < 8) {
                     showToast("登录密码为8-16位数字、字母、特殊字符等");
                     return;
                 }
-
-                if (TextUtils.isEmpty(msgCode.getText().toString())) {
+                if (!isNotEmpty(code)) {
                     //注册第一步
                     showToast("验证码不能为空");
                     return;
                 }
                 //TODO 下一步
-                startActivity(RegisterSecondActivity.class);
+                httpLoadingDialog.visible("加载中...");
+                getP().register(phone, pwd);
+
 
             }
         });
     }
 
+    public void requestFail() {
+        httpLoadingDialog.dismiss();
+    }
+
+    public void commitSuccess(Object data) {
+        httpLoadingDialog.dismiss();
+        startActivity(RegisterSecondActivity.class);
+    }
 }

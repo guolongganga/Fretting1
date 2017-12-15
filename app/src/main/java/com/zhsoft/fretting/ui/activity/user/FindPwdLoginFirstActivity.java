@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.ui.activity.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -130,7 +131,7 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
                     return;
                 }
                 httpLoadingDialog.visible("加载中...");
-                getP().findPassword(phoneNumber, messageCode);
+                getP().findCheckPassword(phoneNumber, messageCode);
 
             }
         });
@@ -153,7 +154,10 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
      */
     public void disposeUpdateResult(Object data) {
         httpLoadingDialog.dismiss();
-        startActivity(FindPwdLoginSecondActivity.class);
+
+        //传递电话号码
+        FindPwdLoginSecondActivity.launch(this,getText(phone));
+
         finish();
     }
 }
