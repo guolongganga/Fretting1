@@ -8,7 +8,9 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.constant.Constant;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
@@ -28,6 +30,9 @@ public class PersonInfoActivity extends XActivity {
     @BindView(R.id.email) EditText email;
     @BindView(R.id.click_update) TextView clickUpdate;
 
+    String userId;
+    String token;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_user_personinfo;
@@ -45,6 +50,8 @@ public class PersonInfoActivity extends XActivity {
     }
 
     private void initView() {
+        userId = App.getSharedPref().getString(Constant.USERID, "");
+        token = App.getSharedPref().getString(Constant.TOKEN, "");
         headTitle.setText("个人信息");
         headRight.setVisibility(View.VISIBLE);
         headRight.setText("编辑");

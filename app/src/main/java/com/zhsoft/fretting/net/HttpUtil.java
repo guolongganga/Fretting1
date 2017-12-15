@@ -1,10 +1,9 @@
 package com.zhsoft.fretting.net;
 
 import com.zhsoft.fretting.model.BaseModel;
-import com.zhsoft.fretting.model.Resp;
+import com.zhsoft.fretting.model.LoginModel;
 import com.zhsoft.fretting.model.TaetModel;
 import com.zhsoft.fretting.params.CommonReqData;
-import com.zhsoft.fretting.params.LoginParams;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
@@ -12,6 +11,8 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 import static com.zhsoft.fretting.net.HttpContent.test_test;
+import static com.zhsoft.fretting.net.HttpContent.user_find_password;
+import static com.zhsoft.fretting.net.HttpContent.user_login;
 
 /**
  * Created by ${Yis}
@@ -27,7 +28,12 @@ public interface HttpUtil {
 
     //登录
     @Headers("apptype:Android")
-    @POST(test_test)
-    Flowable<BaseModel> login(@Body CommonReqData reqData);
+    @POST(user_login)
+    Flowable<LoginModel> login(@Body CommonReqData reqData);
+
+    //登录
+    @Headers("apptype:Android")
+    @POST(user_find_password)
+    Flowable<BaseModel> findPassword(@Body CommonReqData reqData);
 
 }

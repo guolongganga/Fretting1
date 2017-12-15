@@ -35,7 +35,8 @@
         <!--注册第一步 手机号-->
         <activity
             android:name=".ui.activity.user.RegisterFirstActivity"
-            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+            android:windowSoftInputMode="adjustResize"
+            ></activity>
         <!--注册第二步 实名绑卡-->
         <activity android:name=".ui.activity.user.RegisterSecondActivity"></activity>
         <!--注册第三步 设置交易密码页-->

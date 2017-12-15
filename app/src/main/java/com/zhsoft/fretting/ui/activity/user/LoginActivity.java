@@ -8,10 +8,16 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.zhsoft.fretting.App;
+import com.zhsoft.fretting.MainActivity;
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.model.LoginModel;
 import com.zhsoft.fretting.present.user.LoginPresent;
+import com.zhsoft.fretting.utils.RuntimeHelper;
 
 import butterknife.BindView;
+import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
@@ -19,7 +25,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  * 描述：
  */
 
-public class LoginActivity extends XActivity<LoginPresent>{
+public class LoginActivity extends XActivity<LoginPresent> {
     @BindView(R.id.head_back) ImageButton headBack;
     @BindView(R.id.head_title) TextView headTitle;
     @BindView(R.id.head_right) Button headRight;
@@ -28,6 +34,8 @@ public class LoginActivity extends XActivity<LoginPresent>{
     @BindView(R.id.register) TextView register;
     @BindView(R.id.find_password) TextView findPassword;
     @BindView(R.id.btn_next) Button btnNext;
+
+    private HttpLoadingDialog httpLoadingDialog;
 
     @Override
     public int getLayoutId() {
@@ -41,6 +49,7 @@ public class LoginActivity extends XActivity<LoginPresent>{
 
     @Override
     public void initData(Bundle bundle) {
+        httpLoadingDialog = new HttpLoadingDialog(context);
         initView();
 
     }
@@ -72,24 +81,54 @@ public class LoginActivity extends XActivity<LoginPresent>{
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (TextUtils.isEmpty(username.getText().toString())) {
+                String strname = getText(username);
+                String strpwd = getText(password);
+
+                //表单验证
+                if (noNetWork()) {
+                    showNetWorkError();
+                    return;
+                }
+                if (!isNotEmpty(strname)) {
                     showToast("用户名不能为空");
                     return;
                 }
-                if (TextUtils.isEmpty(password.getText().toString())) {
+                if (!isNotEmpty(strpwd)) {
                     showToast("密码不能为空");
                     return;
                 }
                 //TODO 登录接口
 //                showToast("登录接口");
-                getP().login(username.getText().toString(),password.getText().toString());
+                //请求登录接口
+                httpLoadingDialog.visible("登录中...");
+                getP().login(strname, strpwd);
 
             }
         });
     }
 
 
-    public void showData(Object data) {
-        showToast(data.toString());
+    public void showData(LoginModel model) {
+        showToast("userID" + model.getUserId() + "，token=" + model.getToken());
+        httpLoadingDialog.dismiss();
+        showToast("登录成功");
+
+        App.getSharedPref().putString(Constant.USERID, model.getUserId());
+        App.getSharedPref().putString(Constant.TOKEN, model.getToken());
+        App.getSharedPref().putString(Constant.USER_NAME, getText(username));
+
+        //全局变量设置为登录状态
+        RuntimeHelper.getInstance().setLogin(true);
+
+        startActivity(MainActivity.class);
+        finish();
+
+    }
+
+    /**
+     * 登录失败 关闭掉dialog
+     */
+    public void loginFail() {
+        httpLoadingDialog.dismiss();
     }
 }

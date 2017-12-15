@@ -3,7 +3,7 @@ package com.zhsoft.fretting.net;
 import cn.droidlover.xdroidmvp.net.XApi;
 
 /**
- * Created by wanglei on 2016/12/31.
+ * Created by sunnyzeng on 2016/12/04.
  */
 
 public class Api {
