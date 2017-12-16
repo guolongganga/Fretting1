@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <color name="white">#ffffff</color>
+    <color name="black">#ff000000</color>
 
     <!--默认浅戏线颜色-->
     <color name="color_e7e7e7">#e7e7e7</color>
@@ -14,6 +15,7 @@
     <!--导航栏字体颜色 主色调-->
     <color name="color_main">#2877D3</color>
     <color name="color_main_tint">#6CA7ED</color>
+    <color name="color_1862b7">#1862B7</color>
 
     <color name="color_f7182d">#f7182d</color>
     <color name="color_666666">#666666</color>
