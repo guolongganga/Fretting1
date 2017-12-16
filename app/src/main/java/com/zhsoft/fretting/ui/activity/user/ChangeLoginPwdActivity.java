@@ -9,13 +9,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.widget.ChenJingET;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
  * 作者：sunnyzeng on 2017/12/13 13:58
- * 描述：
+ * 描述：变更登录密码
  */
 
 public class ChangeLoginPwdActivity extends XActivity {
@@ -42,13 +43,13 @@ public class ChangeLoginPwdActivity extends XActivity {
 
     @Override
     public void initData(Bundle bundle) {
-        initView();
-
-    }
-
-    private void initView() {
+        //解决键盘弹出遮挡不滚动问题
+        ChenJingET.assistActivity(context);
+        //设置标题
         headTitle.setText("变更登录密码");
+
     }
+
 
     @Override
     public void initEvents() {
@@ -61,9 +62,15 @@ public class ChangeLoginPwdActivity extends XActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String pwdnumbe = password.getText().toString();
-                String pwdAgainnumbe = passwordAgain.getText().toString();
-                if (TextUtils.isEmpty(pwdnumbe)) {
+                String pwdnumbe = getText(password);
+                String pwdAgainnumbe = getText(passwordAgain);
+
+                //表单验证
+                if (noNetWork()) {
+                    showNetWorkError();
+                    return;
+                }
+                if (!isNotEmpty(pwdnumbe)) {
                     showToast("新登录密码不能为空");
                     return;
                 }
@@ -71,7 +78,7 @@ public class ChangeLoginPwdActivity extends XActivity {
                     showToast("登录密码为8-16位数字、字母、特殊字符等");
                     return;
                 }
-                if (TextUtils.isEmpty(pwdAgainnumbe)) {
+                if (!isNotEmpty(pwdAgainnumbe)) {
                     showToast("再次输入登录密码不能为空");
                     return;
                 }

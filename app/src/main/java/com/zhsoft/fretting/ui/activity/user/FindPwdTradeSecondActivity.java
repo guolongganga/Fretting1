@@ -9,22 +9,31 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.widget.ChenJingET;
 
 import butterknife.BindView;
+import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
  * 作者：sunnyzeng on 2017/12/13 18:18
- * 描述：
+ * 描述：找回交易密码 第二步
  */
 
 public class FindPwdTradeSecondActivity extends XActivity {
+    /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
+    /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
-    @BindView(R.id.head_right) Button headRight;
+    /** 密码 */
     @BindView(R.id.password) EditText password;
+    /** 再次输入密码 */
     @BindView(R.id.password_again) EditText passwordAgain;
+    /** 保存按钮 */
     @BindView(R.id.btn_save) Button btnSave;
+
+    /** 加载框 */
+    private HttpLoadingDialog httpLoadingDialog;
 
     @Override
     public int getLayoutId() {
@@ -42,6 +51,10 @@ public class FindPwdTradeSecondActivity extends XActivity {
     }
 
     private void initView() {
+        //解决键盘弹出遮挡不滚动问题
+        ChenJingET.assistActivity(context);
+        httpLoadingDialog = new HttpLoadingDialog(context);
+        //设置标题
         headTitle.setText("找回交易密码");
 
     }
@@ -59,9 +72,14 @@ public class FindPwdTradeSecondActivity extends XActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String pwd = password.getText().toString().trim();
-                String againpwd = passwordAgain.getText().toString().trim();
-                if (TextUtils.isEmpty(pwd)) {
+                String pwd = getText(password);
+                String againpwd = getText(passwordAgain);
+                //表单验证
+                if (noNetWork()) {
+                    showNetWorkError();
+                    return;
+                }
+                if (!isNotEmpty(pwd)) {
                     showToast("新交易密码不能为空");
                     return;
                 }
@@ -69,7 +87,7 @@ public class FindPwdTradeSecondActivity extends XActivity {
                     showToast("请输入正确的新交易密码");
                     return;
                 }
-                if (TextUtils.isEmpty(againpwd)) {
+                if (!isNotEmpty(againpwd)) {
                     showToast("再次输入交易密码不能为空");
                     return;
                 }

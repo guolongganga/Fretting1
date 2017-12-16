@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
-import com.zhsoft.fretting.MainActivity;
+import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.ui.adapter.boot.WelcomeViewpagerAdapter;
 

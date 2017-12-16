@@ -9,6 +9,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.widget.ChenJingET;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
@@ -46,12 +47,12 @@ public class ChangeTradePwdActivity extends XActivity {
 
     @Override
     public void initData(Bundle bundle) {
-        initView();
-    }
-
-    private void initView() {
+        //解决键盘弹出遮挡不滚动问题
+        ChenJingET.assistActivity(context);
+        //设置标题
         headTitle.setText("变更交易密码");
     }
+
 
     @Override
     public void initEvents() {
@@ -70,10 +71,10 @@ public class ChangeTradePwdActivity extends XActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String oldpwd = oldpassword.getText().toString().trim();
-                String pwd = password.getText().toString().trim();
-                String againpwd = passwordAgain.getText().toString().trim();
-                if (TextUtils.isEmpty(oldpwd)) {
+                String oldpwd = getText(oldpassword);
+                String pwd = getText(password);
+                String againpwd = getText(passwordAgain);
+                if (!isNotEmpty(oldpwd)) {
                     showToast("旧交易密码不能为空");
                     return;
                 }
@@ -81,7 +82,7 @@ public class ChangeTradePwdActivity extends XActivity {
                     showToast("请输入正确的旧交易密码");
                     return;
                 }
-                if (TextUtils.isEmpty(pwd)) {
+                if (!isNotEmpty(pwd)) {
                     showToast("新交易密码不能为空");
                     return;
                 }
@@ -89,7 +90,7 @@ public class ChangeTradePwdActivity extends XActivity {
                     showToast("请输入正确的新交易密码");
                     return;
                 }
-                if (TextUtils.isEmpty(againpwd)) {
+                if (!isNotEmpty(againpwd)) {
                     showToast("再次输入交易密码不能为空");
                     return;
                 }

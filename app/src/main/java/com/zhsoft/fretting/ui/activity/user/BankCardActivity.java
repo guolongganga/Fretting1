@@ -15,15 +15,21 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
  * 作者：sunnyzeng on 2017/12/14 10:07
- * 描述：
+ * 描述：我的银行卡页面
  */
 
 public class BankCardActivity extends XActivity {
+    /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
+    /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
+    /** 银行图标 */
     @BindView(R.id.image_banck) ImageView imageBanck;
+    /** 银行名称 */
     @BindView(R.id.banck_name) TextView banckName;
+    /** 交易账号 */
     @BindView(R.id.trade_number) TextView tradeNumber;
+    /** 变更银行卡 */
     @BindView(R.id.btn_change) Button btnChange;
 
     @Override
@@ -38,10 +44,6 @@ public class BankCardActivity extends XActivity {
 
     @Override
     public void initData(Bundle bundle) {
-        initView();
-    }
-
-    private void initView() {
         headTitle.setText("我的银行卡");
     }
 

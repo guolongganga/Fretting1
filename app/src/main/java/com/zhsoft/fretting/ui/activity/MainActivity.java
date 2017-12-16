@@ -1,4 +1,4 @@
-package com.zhsoft.fretting;
+package com.zhsoft.fretting.ui.activity;
 
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.TextView;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.ui.fragment.fund.FundFragment;
 import com.zhsoft.fretting.ui.fragment.user.UserFragment;
 import com.zhsoft.fretting.ui.fragment.index.IndexFragment;
@@ -16,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 import cn.droidlover.xdroidmvp.router.Router;
 
@@ -28,18 +28,25 @@ import cn.droidlover.xdroidmvp.router.Router;
 public class MainActivity extends XActivity {
 
     //菜单按钮
+    /** 首页 */
     @BindView(R.id.tv_index)
     TextView tvIndex;
+    /** 基金 */
     @BindView(R.id.tv_fund)
     TextView tvFund;
+    /** 我的 */
     @BindView(R.id.tv_user)
     TextView tvUser;
 
+    /** 碎片集合 */
     private List<Fragment> fragments;
+    /** 碎片 */
     private Fragment fragment;
+    /** 碎片事务 */
     private FragmentTransaction ft;
-    private int currentTab; // 当前Tab页面索引
-
+    /** 当前Tab页面索引 */
+    private int currentTab;
+    /** 底部tab */
     private List<TextView> textViews;
 
     private long firstTime; //用于点击两次返回退出程序
@@ -56,6 +63,7 @@ public class MainActivity extends XActivity {
         textViews.add(tvFund);
         textViews.add(tvUser);
 
+        //默认显示主页
         show(tvIndex, 0);
     }
 
@@ -148,12 +156,19 @@ public class MainActivity extends XActivity {
         return null;
     }
 
+    /**
+     * 跳转
+     * @param activity
+     */
     public static void launch(Activity activity) {
         Router.newIntent(activity)
                 .to(MainActivity.class)
                 .launch();
     }
 
+    /**
+     * 返回按钮
+     */
     @Override
     public void onBackPressed() {
         long secondTime = System.currentTimeMillis();

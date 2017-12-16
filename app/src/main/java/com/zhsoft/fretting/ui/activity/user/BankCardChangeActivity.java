@@ -11,24 +11,34 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
+import com.zhsoft.fretting.widget.ChenJingET;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
  * 作者：sunnyzeng on 2017/12/14 10:13
- * 描述：
+ * 描述：变更银行卡 第二步
  */
 
 public class BankCardChangeActivity extends XActivity {
+    /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
+    /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
+    /** 选择银行 */
     @BindView(R.id.ll_choose_bank) LinearLayout llChooseBank;
+    /** 银行名称 */
     @BindView(R.id.banck_name) TextView bankName;
+    /** 银行卡号 */
     @BindView(R.id.banknumber) EditText banknumber;
+    /** 预留手机号 */
     @BindView(R.id.phone) EditText phone;
+    /** 短信验证码 */
     @BindView(R.id.msg_code) EditText msgCode;
+    /** 获取短信验证码 */
     @BindView(R.id.get_verify_code) CountdownButton getVerifyCode;
+    /** 保存按钮 */
     @BindView(R.id.btn_save) Button btnSave;
 
     @Override
@@ -43,12 +53,12 @@ public class BankCardChangeActivity extends XActivity {
 
     @Override
     public void initData(Bundle bundle) {
-        initView();
-    }
-
-    private void initView() {
+        //解决键盘弹出遮挡不滚动问题
+        ChenJingET.assistActivity(context);
+        //设置标题
         headTitle.setText("我的银行卡");
     }
+
 
     @Override
     public void initEvents() {
@@ -69,8 +79,14 @@ public class BankCardChangeActivity extends XActivity {
         getVerifyCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String phoneNumber = phone.getText().toString().trim();
-                if (TextUtils.isEmpty(phoneNumber)) {
+                String phoneNumber = getText(phone);
+
+                //表单验证
+                if (noNetWork()) {
+                    showNetWorkError();
+                    return;
+                }
+                if (!isNotEmpty(phoneNumber)) {
                     showToast("预留手机号码不能为空");
                     return;
                 }
@@ -91,16 +107,22 @@ public class BankCardChangeActivity extends XActivity {
             @Override
             public void onClick(View view) {
 
-                String phoneNumber = phone.getText().toString().trim();
-                if (TextUtils.isEmpty(bankName.getText().toString())) {
+                String phoneNumber = getText(phone);
+
+                //表单验证
+                if (noNetWork()) {
+                    showNetWorkError();
+                    return;
+                }
+                if (!isNotEmpty(getText(bankName))) {
                     showToast("请选择银行名称");
                     return;
                 }
-                if (TextUtils.isEmpty(banknumber.getText().toString())) {
+                if (!isNotEmpty(getText(banknumber))) {
                     showToast("银行卡号不能为空");
                     return;
                 }
-                if (TextUtils.isEmpty(phoneNumber)) {
+                if (!isNotEmpty(phoneNumber)) {
                     showToast("预留手机号码不能为空");
                     return;
                 }
@@ -108,7 +130,7 @@ public class BankCardChangeActivity extends XActivity {
                     showToast("请输入正确的手机号码");
                     return;
                 }
-                if (TextUtils.isEmpty(msgCode.getText().toString())) {
+                if (!isNotEmpty(getText(msgCode))) {
                     showToast("验证码不能为空");
                     return;
                 }

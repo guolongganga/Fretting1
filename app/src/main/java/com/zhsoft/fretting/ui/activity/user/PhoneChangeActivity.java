@@ -10,23 +10,33 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
+import com.zhsoft.fretting.widget.ChenJingET;
 
 import butterknife.BindView;
+import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
  * 作者：sunnyzeng on 2017/12/13 13:05
- * 描述：
+ * 描述：变更手机号 页面
  */
 
 public class PhoneChangeActivity extends XActivity {
+    /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
+    /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
-    @BindView(R.id.head_right) Button headRight;
+    /** 手机号码 */
     @BindView(R.id.phone_number) EditText phoneNumber;
+    /** 验证码 */
     @BindView(R.id.verify_code) EditText verifyCode;
+    /** 获取验证码 */
     @BindView(R.id.get_verify_code) CountdownButton getVerifyCode;
+    /** 保存按钮 */
     @BindView(R.id.btn_save) Button btnSave;
+
+    /** 加载框 */
+    private HttpLoadingDialog httpLoadingDialog;
 
     @Override
     public int getLayoutId() {
@@ -40,12 +50,13 @@ public class PhoneChangeActivity extends XActivity {
 
     @Override
     public void initData(Bundle bundle) {
-        initView();
-    }
-
-    private void initView() {
+        //解决键盘弹出遮挡不滚动问题
+        ChenJingET.assistActivity(context);
+        httpLoadingDialog = new HttpLoadingDialog(context);
+        //设置标题
         headTitle.setText("变更手机号");
     }
+
 
     @Override
     public void initEvents() {
@@ -62,12 +73,16 @@ public class PhoneChangeActivity extends XActivity {
         getVerifyCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (TextUtils.isEmpty(phoneNumber.getText().toString())) {
+                //表单验证
+                if (noNetWork()) {
+                    showNetWorkError();
+                    return;
+                }
+                if (!isNotEmpty(getText(phoneNumber))) {
                     showToast("手机号码不能为空");
                     return;
                 }
-                if (phoneNumber.getText().toString().length() < 11) {
+                if (getText(phoneNumber).length() < 11) {
                     showToast("请输入正确的手机号码");
                     return;
                 }
@@ -81,16 +96,20 @@ public class PhoneChangeActivity extends XActivity {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                if (TextUtils.isEmpty(phoneNumber.getText().toString())) {
+                //表单验证
+                if (noNetWork()) {
+                    showNetWorkError();
+                    return;
+                }
+                if (!isNotEmpty(getText(phoneNumber))) {
                     showToast("手机号码不能为空");
                     return;
                 }
-                if (phoneNumber.getText().toString().length() < 11) {
+                if (getText(phoneNumber).length() < 11) {
                     showToast("请输入正确的手机号码");
                     return;
                 }
-                if (TextUtils.isEmpty(verifyCode.getText().toString())) {
+                if (!isNotEmpty(getText(verifyCode))) {
                     showToast("验证码不能为空");
                     return;
                 }
