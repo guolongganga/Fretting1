@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.fragment.fund.FundFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <!-- TODO: Update blank fragmactivity_bank_listyout -->
     <TextView
         android:id="@+id/tv_fund"
         android:layout_gravity="center"

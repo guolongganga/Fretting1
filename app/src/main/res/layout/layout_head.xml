@@ -33,9 +33,19 @@
         android:layout_alignParentRight="true"
         android:background="@android:color/transparent"
         android:scaleType="center"
-        android:src="@mipmap/icon_back"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_14"
+        android:visibility="gone"
+        />
+
+    <ImageButton
+        android:id="@+id/head_set"
+        android:layout_width="45dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/transparent"
+        android:scaleType="center"
+        android:src="@mipmap/icon_user_set"
         android:visibility="gone"
         />
 

@@ -55,6 +55,15 @@
         <item name="android:textColor">@color/color_text_333</item>
         <item name="android:textSize">14sp</item>
     </style>
-
+    <!--用户已登录界面 自选，定投，交易查询，分红，撤单-->
+    <style name="user_text_top_image">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:drawablePadding">@dimen/dimen_5</item>
+        <item name="android:textColor">@color/color_text_333</item>
+        <item name="android:textSize">12sp</item>
+    </style>
 
 </resources>
