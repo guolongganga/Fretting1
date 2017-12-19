@@ -34,8 +34,11 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
 public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
     /** 传递银行列表数据 */
     private static final String BANK = "bank";
+    /** 跳转到银行列表请求码 */
     private static final int TOBANKLIST = 100;
+    /** 从银行列表返回来的结果码 */
     private static final int RESULT_CODE = 200;
+    /** 选择的银行信息 传递标识 */
     private static final String CHOOSE_BANCK = "choosebank";
     /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
@@ -68,7 +71,7 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
 
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
-
+    /** 银行集合 */
     private ArrayList<BankResp> listResps;
 
     @Override
@@ -194,8 +197,8 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
             public void onClick(View view) {
                 //TODO 选择银行
                 Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList(BANK,listResps);
-                startActivity(BankListActivity.class,bundle,TOBANKLIST);
+                bundle.putParcelableArrayList(BANK, listResps);
+                startActivity(BankListActivity.class, bundle, TOBANKLIST);
 
             }
         });
@@ -235,7 +238,7 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == RESULT_CODE && requestCode == TOBANKLIST){
+        if (resultCode == RESULT_CODE && requestCode == TOBANKLIST) {
             BankResp resp = data.getParcelableExtra(CHOOSE_BANCK);
             banckName.setText(resp.getBankName());
         }
