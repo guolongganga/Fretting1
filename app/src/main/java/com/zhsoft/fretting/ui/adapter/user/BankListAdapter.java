@@ -40,9 +40,10 @@ public class BankListAdapter extends SimpleRecAdapter<BankResp, BankListAdapter.
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        imageLoader.displayImage(data.get(position).getBankImage(), holder.bankImage);
-        holder.bankName.setText(data.get(position).getBankName());
-        holder.bankLimit.setText(data.get(position).getBankLimit());
+        final BankResp resp = data.get(position);
+//        imageLoader.displayImage(data.get(position).getImageUrl(), holder.bankImage);
+        holder.bankName.setText(resp.getBank_name());
+        holder.bankLimit.setText("单笔限额" + resp.getLimit_per_payment() + "万，单日限额" + resp.getLimit_per_day() + "万，单月限额" + resp.getLimit_per_month() + "万");
         if (data.size() - 1 == position) {
             holder.viewLine.setVisibility(View.GONE);
         } else {
@@ -51,7 +52,7 @@ public class BankListAdapter extends SimpleRecAdapter<BankResp, BankListAdapter.
         holder.llContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getRecItemClick().onItemClick(position, data.get(position), ITEM_CLICK, holder);
+                getRecItemClick().onItemClick(position, resp, ITEM_CLICK, holder);
             }
         });
     }

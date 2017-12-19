@@ -8,10 +8,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.App;
+import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.model.LoginModel;
 import com.zhsoft.fretting.present.user.LoginPresent;
 import com.zhsoft.fretting.utils.RuntimeHelper;
 import com.zhsoft.fretting.widget.ChenJingET;
@@ -115,7 +115,7 @@ public class LoginActivity extends XActivity<LoginPresent> {
     /**
      * 登录成功
      */
-    public void showData(LoginModel model) {
+    public void showData(LoginResp model) {
         httpLoadingDialog.dismiss();
 //        showToast("userID" + model.getUserId() + "，token=" + model.getToken());
         showToast("登录成功");

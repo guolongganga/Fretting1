@@ -23,6 +23,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
+import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
@@ -234,13 +235,16 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
         }
 
     }
+//    public void bankListData(Object data) {
+//        XLog.e(data.toString());
+//    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_CODE && requestCode == TOBANKLIST) {
             BankResp resp = data.getParcelableExtra(CHOOSE_BANCK);
-            banckName.setText(resp.getBankName());
+            banckName.setText(resp.getBank_name());
         }
     }
 }

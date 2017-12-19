@@ -2,11 +2,10 @@ package com.zhsoft.fretting.present.user;
 
 import android.util.Log;
 
-import com.zhsoft.fretting.model.BaseModel;
-import com.zhsoft.fretting.model.LoginModel;
+import com.zhsoft.fretting.model.LoginResp;
+import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
-import com.zhsoft.fretting.params.LoginParams;
 import com.zhsoft.fretting.params.RegisterFirstParams;
 import com.zhsoft.fretting.ui.activity.user.RegisterFirstActivity;
 
@@ -25,32 +24,36 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
 
     /**
      * 注册
+     *
      * @param mobile_tel 手机号码
-     * @param password 密码
+     * @param password   密码
      */
-    public void register(String mobile_tel, String password) {
+    public void register(String mobile_tel, String password, String imgCode, String image_code_id) {
 
         CommonReqData reqData = new CommonReqData();
 
         RegisterFirstParams params = new RegisterFirstParams();
         params.setMobile_tel(mobile_tel);
         params.setPassword(password);
+        params.setImage_code(imgCode);
+        params.setImage_code_id(image_code_id);
         reqData.setData(params);
 
         Api.getApi()
                 .register(reqData)
-                .compose(XApi.<BaseModel>getApiTransformer())
-                .compose(XApi.<BaseModel>getScheduler())
-                .compose(getV().<BaseModel>bindToLifecycle())
-                .subscribe(new ApiSubscriber<BaseModel>() {
+                .compose(XApi.<LoginResp>getApiTransformer())
+                .compose(XApi.<LoginResp>getScheduler())
+                .compose(getV().<LoginResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<LoginResp>() {
                     @Override
                     protected void onFail(NetError error) {
                         error.printStackTrace();
                         getV().requestFail();
+                        getV().showToast("注册失败");
                     }
 
                     @Override
-                    public void onNext(BaseModel model) {
+                    public void onNext(LoginResp model) {
                         if (model != null && model.getStatus() == 200) {
                             Log.e("hahah", "访问成功");
                             getV().commitSuccess(model.getData());
@@ -63,4 +66,43 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
                 });
 
     }
+
+    /**
+     * 获取图片验证码
+     */
+    public void getImageCode() {
+        CommonReqData reqData = new CommonReqData();
+        reqData.setData("");
+
+        Api.getApi()
+                .getImageCode(reqData)
+                .compose(XApi.<ImageResp>getApiTransformer())
+                .compose(XApi.<ImageResp>getScheduler())
+                .compose(getV().<ImageResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<ImageResp>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        error.printStackTrace();
+                        getV().requestMessageFail();
+                        getV().showToast("请求图片验证码失败");
+                    }
+
+                    @Override
+                    public void onNext(ImageResp imageResp) {
+                        if (imageResp != null && imageResp.getStatus() == 200) {
+                            if (imageResp.getData() != null) {
+                                getV().getImageCode(imageResp.getData());
+                            }
+
+                        } else {
+                            getV().requestMessageFail();
+                            getV().showToast(imageResp.getMessage());
+                            XLog.e("返回数据为空");
+                        }
+                    }
+                });
+
+
+    }
+
 }
