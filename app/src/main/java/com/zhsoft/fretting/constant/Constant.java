@@ -32,4 +32,7 @@ public class Constant {
     //WebView链接
     public static final String WEB_LINK = BASE_CONSTANT + "web_link";
 
+    //基金页面中的tab名称
+    public static final String FUND_TAB_NAME = BASE_CONSTANT + "fund_tab_name";
+
 }

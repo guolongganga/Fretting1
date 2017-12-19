@@ -66,4 +66,17 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <!--设置TabLayout的字体大小-->
+    <style name="MyTabLayoutTextAppearance" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
+    <style name="MyTabLayoutTextAppearanceInverse" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:textColor">@android:color/holo_red_light</item>
+    </style>
+
+
+
 </resources>
