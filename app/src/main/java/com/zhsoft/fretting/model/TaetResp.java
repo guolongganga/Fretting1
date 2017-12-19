@@ -7,10 +7,10 @@ import java.util.List;
  * 描述：
  */
 
-public class TaetModel extends BaseModel<TaetModel> {
+public class TaetResp extends BaseResp<TaetResp> {
 
     //如果外面data是[] 那么就可以直接在这类里面定义参数了
-    //public class TaetModel extends BaseModel<List<TaetModel>>
+    //public class TaetResp extends BaseResp<List<TaetResp>>
     private String id;
     //TODO 增加dalog弹出框
 

@@ -3,7 +3,7 @@ package com.zhsoft.fretting.model.user;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.zhsoft.fretting.model.BaseModel;
+import com.zhsoft.fretting.model.BaseResp;
 
 import java.util.ArrayList;
 
@@ -21,7 +21,7 @@ import java.util.ArrayList;
  * "limit_per_payment": 50
  */
 
-public class BankResp extends BaseModel<ArrayList<BankResp>> implements Parcelable {
+public class BankResp extends BaseResp<ArrayList<BankResp>> implements Parcelable {
 
     private String bank_name;
     private String bank_no;

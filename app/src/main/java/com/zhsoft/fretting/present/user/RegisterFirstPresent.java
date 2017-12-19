@@ -2,7 +2,7 @@ package com.zhsoft.fretting.present.user;
 
 import android.util.Log;
 
-import com.zhsoft.fretting.model.LoginModel;
+import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
@@ -41,10 +41,10 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
 
         Api.getApi()
                 .register(reqData)
-                .compose(XApi.<LoginModel>getApiTransformer())
-                .compose(XApi.<LoginModel>getScheduler())
-                .compose(getV().<LoginModel>bindToLifecycle())
-                .subscribe(new ApiSubscriber<LoginModel>() {
+                .compose(XApi.<LoginResp>getApiTransformer())
+                .compose(XApi.<LoginResp>getScheduler())
+                .compose(getV().<LoginResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<LoginResp>() {
                     @Override
                     protected void onFail(NetError error) {
                         error.printStackTrace();
@@ -53,7 +53,7 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
                     }
 
                     @Override
-                    public void onNext(LoginModel model) {
+                    public void onNext(LoginResp model) {
                         if (model != null && model.getStatus() == 200) {
                             Log.e("hahah", "访问成功");
                             getV().commitSuccess(model.getData());
@@ -83,7 +83,7 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         error.printStackTrace();
-                        getV().requestFail();
+                        getV().requestMessageFail();
                         getV().showToast("请求图片验证码失败");
                     }
 
@@ -95,7 +95,7 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
                             }
 
                         } else {
-                            getV().requestFail();
+                            getV().requestMessageFail();
                             getV().showToast(imageResp.getMessage());
                             XLog.e("返回数据为空");
                         }

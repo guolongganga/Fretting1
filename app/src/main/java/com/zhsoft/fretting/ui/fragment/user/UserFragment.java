@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.Happ;
-import com.zhsoft.fretting.model.TaetModel;
+import com.zhsoft.fretting.model.TaetResp;
 import com.zhsoft.fretting.model.user.MyFundResp;
 import com.zhsoft.fretting.present.user.UserPresent;
 import com.zhsoft.fretting.ui.activity.user.LoginActivity;
@@ -140,7 +140,7 @@ public class UserFragment extends XFragment<UserPresent> {
         super.onDestroyView();
     }
 
-    public void showData(TaetModel data) {
+    public void showData(TaetResp data) {
         List<Happ> list = data.getDictData();
         list.get(0);
     }

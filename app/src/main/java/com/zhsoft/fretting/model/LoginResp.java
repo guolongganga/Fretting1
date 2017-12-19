@@ -8,7 +8,7 @@ package com.zhsoft.fretting.model;
  * "message":"成功","status":200}
  */
 
-public class LoginModel extends BaseModel<LoginModel> {
+public class LoginResp extends BaseResp<LoginResp> {
     private String token;
     private String userId;
     private String isOpenAccount;

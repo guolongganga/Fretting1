@@ -10,9 +10,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhsoft.fretting.R;
-import com.zhsoft.fretting.model.LoginModel;
+import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.present.user.RegisterFirstPresent;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
@@ -20,7 +19,6 @@ import com.zhsoft.fretting.utils.Base64ImageUtil;
 import com.zhsoft.fretting.widget.ChenJingET;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
@@ -210,7 +208,7 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
      *
      * @param data
      */
-    public void commitSuccess(LoginModel data) {
+    public void commitSuccess(LoginResp data) {
         httpLoadingDialog.dismiss();
         showToast(data.getToken());
         startActivity(RegisterSecondActivity.class);
@@ -231,5 +229,9 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
             Bitmap bitmap = Base64ImageUtil.base64ToBitmap(strimage);
             image.setImageBitmap(bitmap);
         }
+    }
+
+    public void requestMessageFail() {
+        getP().getImageCode();
     }
 }
