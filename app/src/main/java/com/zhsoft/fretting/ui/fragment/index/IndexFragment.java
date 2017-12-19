@@ -26,7 +26,7 @@ import cn.droidlover.xrecyclerview.XRecyclerView;
 
 /**
  * 作者：sunnyzeng on 2017/12/5
- * 描述：主页
+ * 描述：主页1
  */
 
 public class IndexFragment extends XFragment<IndexPresent> {
