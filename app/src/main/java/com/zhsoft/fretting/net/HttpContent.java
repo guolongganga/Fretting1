@@ -22,6 +22,8 @@ public class HttpContent {
     public static final String user_register = "noPermission/regist";
     /** 银行列表 */
     public static final String common_bank_list = "noPermission/c401SelectBank";
+    /** 图片验证码 */
+    public static final String image_code = "noPermission/imageBase64";
 
 
 }

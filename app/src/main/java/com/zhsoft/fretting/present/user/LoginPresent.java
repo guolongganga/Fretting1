@@ -2,8 +2,8 @@ package com.zhsoft.fretting.present.user;
 
 import android.util.Log;
 
-import com.zhsoft.fretting.model.BaseModel;
-import com.zhsoft.fretting.model.LoginModel;
+import com.zhsoft.fretting.model.BaseResp;
+import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.params.LoginParams;
@@ -14,7 +14,6 @@ import cn.droidlover.xdroidmvp.mvp.XPresent;
 import cn.droidlover.xdroidmvp.net.ApiSubscriber;
 import cn.droidlover.xdroidmvp.net.NetError;
 import cn.droidlover.xdroidmvp.net.XApi;
-import cn.droidlover.xdroidmvp.widget.ToastUtils;
 
 /**
  * 作者：sunnyzeng on 2017/12/14 18:08
@@ -39,10 +38,10 @@ public class LoginPresent extends XPresent<LoginActivity> {
 
         Api.getApi()
                 .login(reqData)
-                .compose(XApi.<BaseModel<LoginModel>>getApiTransformer())
-                .compose(XApi.<BaseModel<LoginModel>>getScheduler())
-                .compose(getV().<BaseModel<LoginModel>>bindToLifecycle())
-                .subscribe(new ApiSubscriber<BaseModel<LoginModel>>() {
+                .compose(XApi.<LoginResp>getApiTransformer())
+                .compose(XApi.<LoginResp>getScheduler())
+                .compose(getV().<LoginResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<LoginResp>() {
                     @Override
                     protected void onFail(NetError error) {
                         error.printStackTrace();
@@ -50,7 +49,7 @@ public class LoginPresent extends XPresent<LoginActivity> {
                     }
 
                     @Override
-                    public void onNext(BaseModel<LoginModel> model) {
+                    public void onNext(LoginResp model) {
                         if (model != null && model.getStatus() == 200) {
                             Log.e("hahah", "访问成功");
                             getV().showData(model.getData());
