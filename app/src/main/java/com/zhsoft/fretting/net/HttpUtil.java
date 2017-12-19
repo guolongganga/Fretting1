@@ -3,7 +3,11 @@ package com.zhsoft.fretting.net;
 import com.zhsoft.fretting.model.BaseModel;
 import com.zhsoft.fretting.model.LoginModel;
 import com.zhsoft.fretting.model.TaetModel;
+import com.zhsoft.fretting.model.user.BankResp;
+import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.params.CommonReqData;
+
+import java.util.ArrayList;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
@@ -11,6 +15,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 import static com.zhsoft.fretting.net.HttpContent.common_bank_list;
+import static com.zhsoft.fretting.net.HttpContent.image_code;
 import static com.zhsoft.fretting.net.HttpContent.password_check;
 import static com.zhsoft.fretting.net.HttpContent.password_reset;
 import static com.zhsoft.fretting.net.HttpContent.test_test;
@@ -47,12 +52,17 @@ public interface HttpUtil {
     //注册 第一步 验证手机号
     @Headers("apptype:Android")
     @POST(user_register)
-    Flowable<BaseModel> register(@Body CommonReqData reqData);
+    Flowable<LoginModel> register(@Body CommonReqData reqData);
 
     //请求银行卡列表
     @Headers("apptype:Android")
     @POST(common_bank_list)
-    Flowable<BaseModel> bankList(@Body CommonReqData reqData);
+    Flowable<BankResp> bankList(@Body CommonReqData reqData);
+
+    //图片验证码
+    @Headers("apptype:Android")
+    @POST(image_code)
+    Flowable<ImageResp> getImageCode(@Body CommonReqData reqData);
 
 
 }

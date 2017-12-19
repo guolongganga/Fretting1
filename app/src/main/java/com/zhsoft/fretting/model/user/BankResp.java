@@ -3,45 +3,97 @@ package com.zhsoft.fretting.model.user;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.zhsoft.fretting.model.BaseModel;
+
+import java.util.ArrayList;
+
 /**
  * 作者：sunnyzeng on 2017/12/19 10:21
  * 描述：银行列表
+ * <p>
+ * bank_name": "工商银行",
+ * "bank_no": "002",
+ * "capital_mode": "6",
+ * "detail_fund_way": "00",
+ * "is_support_fast_mode": "1",
+ * "limit_per_day": 200,
+ * "limit_per_month": 500,
+ * "limit_per_payment": 50
  */
 
-public class BankResp implements Parcelable {
+public class BankResp extends BaseModel<ArrayList<BankResp>> implements Parcelable {
 
-    private String bankImage;
-    private String bankName;
-    private String bankLimit;
+    private String bank_name;
+    private String bank_no;
+    private String capital_mode;
+    private String detail_fund_way;
+    private String is_support_fast_mode;
+    private String limit_per_day;
+    private String limit_per_month;
+    private String limit_per_payment;
 
-    public BankResp(String bankImage, String bankName, String bankLimit) {
-        this.bankImage = bankImage;
-        this.bankName = bankName;
-        this.bankLimit = bankLimit;
+    public String getBank_name() {
+        return bank_name;
     }
 
-    public String getBankImage() {
-        return bankImage;
+    public void setBank_name(String bank_name) {
+        this.bank_name = bank_name;
     }
 
-    public void setBankImage(String bankImage) {
-        this.bankImage = bankImage;
+    public String getBank_no() {
+        return bank_no;
     }
 
-    public String getBankName() {
-        return bankName;
+    public void setBank_no(String bank_no) {
+        this.bank_no = bank_no;
     }
 
-    public void setBankName(String bankName) {
-        this.bankName = bankName;
+    public String getCapital_mode() {
+        return capital_mode;
     }
 
-    public String getBankLimit() {
-        return bankLimit;
+    public void setCapital_mode(String capital_mode) {
+        this.capital_mode = capital_mode;
     }
 
-    public void setBankLimit(String bankLimit) {
-        this.bankLimit = bankLimit;
+    public String getDetail_fund_way() {
+        return detail_fund_way;
+    }
+
+    public void setDetail_fund_way(String detail_fund_way) {
+        this.detail_fund_way = detail_fund_way;
+    }
+
+    public String getIs_support_fast_mode() {
+        return is_support_fast_mode;
+    }
+
+    public void setIs_support_fast_mode(String is_support_fast_mode) {
+        this.is_support_fast_mode = is_support_fast_mode;
+    }
+
+    public String getLimit_per_day() {
+        return limit_per_day;
+    }
+
+    public void setLimit_per_day(String limit_per_day) {
+        this.limit_per_day = limit_per_day;
+    }
+
+    public String getLimit_per_month() {
+        return limit_per_month;
+    }
+
+    public void setLimit_per_month(String limit_per_month) {
+        this.limit_per_month = limit_per_month;
+    }
+
+    public String getLimit_per_payment() {
+        return limit_per_payment;
+    }
+
+    public void setLimit_per_payment(String limit_per_payment) {
+        this.limit_per_payment = limit_per_payment;
     }
 
     @Override
@@ -51,18 +103,31 @@ public class BankResp implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.bankImage);
-        dest.writeString(this.bankName);
-        dest.writeString(this.bankLimit);
+        dest.writeString(this.bank_name);
+        dest.writeString(this.bank_no);
+        dest.writeString(this.capital_mode);
+        dest.writeString(this.detail_fund_way);
+        dest.writeString(this.is_support_fast_mode);
+        dest.writeString(this.limit_per_day);
+        dest.writeString(this.limit_per_month);
+        dest.writeString(this.limit_per_payment);
+    }
+
+    public BankResp() {
     }
 
     protected BankResp(Parcel in) {
-        this.bankImage = in.readString();
-        this.bankName = in.readString();
-        this.bankLimit = in.readString();
+        this.bank_name = in.readString();
+        this.bank_no = in.readString();
+        this.capital_mode = in.readString();
+        this.detail_fund_way = in.readString();
+        this.is_support_fast_mode = in.readString();
+        this.limit_per_day = in.readString();
+        this.limit_per_month = in.readString();
+        this.limit_per_payment = in.readString();
     }
 
-    public static final Parcelable.Creator<BankResp> CREATOR = new Parcelable.Creator<BankResp>() {
+    public static final Creator<BankResp> CREATOR = new Creator<BankResp>() {
         @Override
         public BankResp createFromParcel(Parcel source) {
             return new BankResp(source);
