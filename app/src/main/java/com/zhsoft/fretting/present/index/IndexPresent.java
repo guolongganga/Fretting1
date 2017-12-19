@@ -1,6 +1,5 @@
 package com.zhsoft.fretting.present.index;
 
-import com.zhsoft.fretting.model.index.HotNewsResp;
 import com.zhsoft.fretting.model.index.PopularityResp;
 import com.zhsoft.fretting.ui.fragment.index.IndexFragment;
 
@@ -55,16 +54,5 @@ public class IndexPresent extends XPresent<IndexFragment> {
         popularityList.add(resp3);
 
         getV().showPopularity(popularityList);
-
-        //热门资讯伪数据
-        List<HotNewsResp> hotNewsList = new ArrayList<>();
-        for (int i = 0; i < 5; i++) {
-            HotNewsResp hotNewsResp = new HotNewsResp();
-            hotNewsResp.setTitle("A股人均赚2.3万？今年你被平均了吗？A股人均赚2.3万？今年你被平均了吗？");
-            hotNewsResp.setTime("2017/12/8 5:12:00");
-            hotNewsResp.setImg("https://ss3.bdstatic.com/70cFv8Sh_Q1YnxGkpoWK1HF6hhy/it/u=3125826987,499932192&fm=27&gp=0.jpg");
-            hotNewsList.add(hotNewsResp);
-        }
-        getV().showHotNews(hotNewsList);
     }
 }

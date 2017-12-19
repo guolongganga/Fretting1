@@ -45,61 +45,6 @@
             android:background="@color/white"
             android:orientation="vertical">
 
-            <!--每日惊喜、0元够基、定投指南、业绩排行-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_5"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawablePadding="@dimen/dimen_10"
-                    android:drawableTop="@mipmap/ic_launcher"
-                    android:gravity="center"
-                    android:text="每日惊喜"
-                    android:textColor="@color/color_666666" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawablePadding="@dimen/dimen_10"
-                    android:drawableTop="@mipmap/ic_launcher"
-                    android:gravity="center"
-                    android:text="0元够基"
-                    android:textColor="@color/color_666666" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawablePadding="@dimen/dimen_10"
-                    android:drawableTop="@mipmap/ic_launcher"
-                    android:gravity="center"
-                    android:text="定投指南"
-                    android:textColor="@color/color_666666" />
-
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:drawablePadding="@dimen/dimen_10"
-                    android:drawableTop="@mipmap/ic_launcher"
-                    android:gravity="center"
-                    android:text="业绩排行"
-                    android:textColor="@color/color_666666" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_10"
-                android:layout_marginTop="@dimen/dimen_15"
-                android:background="@color/color_e7e7e7" />
-
             <!--轮播banner-->
             <cn.droidlover.xdroidmvp.banner.FlyBanner
                 android:id="@+id/banner"
@@ -123,25 +68,16 @@
                 <View
                     android:layout_width="@dimen/dimen_5"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/dimen_3"
-                    android:layout_marginTop="@dimen/dimen_3"
                     android:background="@color/color_main" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_10"
-                    android:text="利是宝"
-                    android:textColor="@color/black"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:text="明星基金"
+                    android:textColor="@color/color_333333"
                     android:textSize="@dimen/text_size_18" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_10"
-                    android:text="随心存取,最快一秒"
-                    android:textColor="@color/color_666666"
-                    android:textSize="@dimen/text_size_14" />
 
             </LinearLayout>
 
@@ -152,9 +88,9 @@
                 android:paddingBottom="@dimen/dimen_20">
 
                 <RelativeLayout
-                    android:layout_width="@dimen/dimen_0"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_marginLeft="@dimen/dimen_30">
 
                     <TextView
                         android:id="@+id/tv_seven_earnings"
@@ -163,7 +99,7 @@
                         android:layout_centerHorizontal="true"
                         android:text="4.301%"
                         android:textColor="@color/color_f7182d"
-                        android:textSize="@dimen/text_size_24" />
+                        android:textSize="@dimen/text_size_22" />
 
                     <TextView
                         android:id="@+id/tv_qiri"
@@ -172,179 +108,37 @@
                         android:layout_below="@id/tv_seven_earnings"
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/dimen_10"
-                        android:text="七日年化收益率"
+                        android:text="近一年收益率"
                         android:textColor="@color/color_666666"
                         android:textSize="@dimen/text_size_14" />
 
-                    <Button
-                        android:layout_width="@dimen/dimen_120"
-                        android:layout_height="@dimen/dimen_35"
-                        android:layout_below="@id/tv_qiri"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/dimen_20"
-                        android:background="@drawable/shape_index_login"
-                        android:text="@string/login"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/text_size_16" />
 
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:layout_width="@dimen/dimen_0"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1">
+                    android:layout_marginLeft="@dimen/dimen_10">
 
                     <TextView
                         android:id="@+id/tv_wan_earnings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:text="1.1840"
+                        android:text="国泰互联网金鑫股票"
                         android:textColor="@color/color_333333"
-                        android:textSize="@dimen/text_size_24" />
+                        android:textSize="@dimen/text_size_22" />
 
-                    <TextView
-                        android:id="@+id/tv_wanfen"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_wan_earnings"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/dimen_10"
-                        android:text="万份收益(元)"
-                        android:textColor="@color/color_666666"
-                        android:textSize="@dimen/text_size_14" />
 
                     <Button
                         android:layout_width="@dimen/dimen_120"
-                        android:layout_height="@dimen/dimen_35"
-                        android:layout_below="@id/tv_wanfen"
+                        android:layout_height="@dimen/dimen_30"
+                        android:layout_below="@id/tv_wan_earnings"
                         android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/dimen_20"
-                        android:background="@drawable/shape_index_register"
-                        android:text="@string/register"
-                        android:textColor="@color/color_main"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:background="@drawable/index_buy_shape"
+                        android:text="@string/buy"
+                        android:textColor="@color/color_666666"
                         android:textSize="@dimen/text_size_16" />
-
-                </RelativeLayout>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_10"
-                android:background="@color/color_e7e7e7" />
-
-            <!--王牌战基-->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/dimen_15"
-                android:layout_marginLeft="@dimen/dimen_10"
-                android:layout_marginTop="@dimen/dimen_15"
-                android:orientation="horizontal">
-
-                <View
-                    android:layout_width="@dimen/dimen_5"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/dimen_3"
-                    android:layout_marginTop="@dimen/dimen_3"
-                    android:background="@color/color_main" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_10"
-                    android:text="王牌战基"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/text_size_18" />
-
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:paddingBottom="@dimen/dimen_20">
-
-                <RelativeLayout
-                    android:layout_width="@dimen/dimen_0"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/tv_nvshen"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:text="让“女神”帮你赚"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_14" />
-
-                    <TextView
-                        android:id="@+id/tv_nvshen_shouyi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_nvshen"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/dimen_10"
-                        android:text="44.27%"
-                        android:textColor="@color/color_f7182d"
-                        android:textSize="@dimen/text_size_24" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_nvshen_shouyi"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/dimen_10"
-                        android:text="近一年收益率"
-                        android:textColor="@color/color_666666"
-                        android:textSize="@dimen/text_size_14" />
-
-                </RelativeLayout>
-
-                <View
-                    android:layout_width="@dimen/dimen_1"
-                    android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/dimen_10"
-                    android:layout_marginTop="@dimen/dimen_10"
-                    android:background="@color/color_e7e7e7" />
-
-                <RelativeLayout
-                    android:layout_width="@dimen/dimen_0"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1">
-
-                    <TextView
-                        android:id="@+id/tv_chihuo"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_centerHorizontal="true"
-                        android:text="一键投资“吃货”"
-                        android:textColor="@color/black"
-                        android:textSize="@dimen/text_size_14" />
-
-                    <TextView
-                        android:id="@+id/tv_chihuo_shouyi"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_chihuo"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/dimen_10"
-                        android:text="52.40%"
-                        android:textColor="@color/color_f7182d"
-                        android:textSize="@dimen/text_size_24" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@id/tv_chihuo_shouyi"
-                        android:layout_centerHorizontal="true"
-                        android:layout_marginTop="@dimen/dimen_10"
-                        android:text="近一年收益率"
-                        android:textColor="@color/color_666666"
-                        android:textSize="@dimen/text_size_14" />
 
                 </RelativeLayout>
 
@@ -367,14 +161,13 @@
                 <View
                     android:layout_width="@dimen/dimen_5"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/dimen_3"
-                    android:layout_marginTop="@dimen/dimen_3"
                     android:background="@color/color_main" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_5"
                     android:text="微银专题"
                     android:textColor="@color/black"
                     android:textSize="@dimen/text_size_18" />
@@ -436,17 +229,16 @@
                 <View
                     android:layout_width="@dimen/dimen_5"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/dimen_3"
-                    android:layout_marginTop="@dimen/dimen_3"
                     android:background="@color/color_main" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_5"
                     android:layout_weight="1"
                     android:text="人气产品"
-                    android:textColor="@color/black"
+                    android:textColor="@color/color_333333"
                     android:textSize="@dimen/text_size_18" />
 
                 <TextView
@@ -455,7 +247,6 @@
                     android:layout_marginRight="@dimen/dimen_15"
                     android:text="更多 >"
                     android:textColor="@color/color_main" />
-
 
             </LinearLayout>
 
@@ -470,7 +261,7 @@
                 android:layout_marginTop="@dimen/dimen_15"
                 android:background="@color/color_e7e7e7" />
 
-            <!--热门资讯-->
+            <!--指数基金-->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -482,17 +273,136 @@
                 <View
                     android:layout_width="@dimen/dimen_5"
                     android:layout_height="match_parent"
-                    android:layout_marginBottom="@dimen/dimen_3"
-                    android:layout_marginTop="@dimen/dimen_3"
+                    android:background="@color/color_main" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_5"
+                    android:text="指数基金"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/text_size_18" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="@dimen/dimen_20">
+
+                <RelativeLayout
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_nvshen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="股票名称"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <TextView
+                        android:id="@+id/tv_nvshen_shouyi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_nvshen"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:text="收益"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_nvshen_shouyi"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:text="近一年收益率"
+                        android:textColor="@color/color_666666"
+                        android:textSize="@dimen/text_size_14" />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="@dimen/dimen_1"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/dimen_10"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:background="@color/color_e7e7e7" />
+
+                <RelativeLayout
+                    android:layout_width="@dimen/dimen_0"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_chihuo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerHorizontal="true"
+                        android:text="中欧新蓝筹优选”"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/text_size_14" />
+
+                    <TextView
+                        android:id="@+id/tv_chihuo_shouyi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_chihuo"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:text="+45.41%"
+                        android:textColor="@color/color_f7182d"
+                        android:textSize="@dimen/text_size_16" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_chihuo_shouyi"
+                        android:layout_centerHorizontal="true"
+                        android:layout_marginTop="@dimen/dimen_10"
+                        android:text="近一年收益率"
+                        android:textColor="@color/color_666666"
+                        android:textSize="@dimen/text_size_14" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_10"
+                android:background="@color/color_e7e7e7" />
+
+            <!--优选定投-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_15"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_marginTop="@dimen/dimen_15"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="@dimen/dimen_5"
+                    android:layout_height="match_parent"
                     android:background="@color/color_main" />
 
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/dimen_10"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginLeft="@dimen/dimen_5"
                     android:layout_weight="1"
-                    android:text="热门资讯"
-                    android:textColor="@color/black"
+                    android:text="优选定投"
+                    android:textColor="@color/color_333333"
                     android:textSize="@dimen/text_size_18" />
 
                 <TextView
@@ -504,10 +414,48 @@
 
             </LinearLayout>
 
-            <cn.droidlover.xrecyclerview.XRecyclerView
-                android:id="@+id/xrv_hot_news"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="国泰互联网金鑫股票"
+                    android:textColor="@color/color_333333"
+                    android:textSize="@dimen/text_size_24" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:text="48.90%"
+                    android:textColor="@color/color_f7182d"
+                    android:textSize="@dimen/text_size_22" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:text="近一年收益率"
+                    android:textColor="@color/color_666666"
+                    android:textSize="@dimen/text_size_14" />
+
+                <Button
+                    android:layout_width="@dimen/dimen_180"
+                    android:layout_height="@dimen/dimen_35"
+                    android:layout_marginTop="@dimen/dimen_10"
+                    android:background="@drawable/index_invest_bg"
+                    android:text="立即定投"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/text_size_16"
+                    android:textStyle="bold" />
+
+            </LinearLayout>
+
+
         </LinearLayout>
     </ScrollView>
 </RelativeLayout>
