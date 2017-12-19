@@ -14,7 +14,6 @@ import com.zhsoft.fretting.ui.widget.CountdownButton;
 import com.zhsoft.fretting.widget.ChenJingET;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
@@ -145,9 +144,10 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
                     return;
                 }
                 //TODO 下一步
-                httpLoadingDialog.visible("加载中...");
-                getP().register(phone, pwd);
+//                httpLoadingDialog.visible("加载中...");
+//                getP().register(phone, pwd);
 
+                startActivity(RegisterSecondActivity.class);//有接口就去掉
 
             }
         });

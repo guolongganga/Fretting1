@@ -17,7 +17,6 @@ import com.zhsoft.fretting.ui.activity.user.LoginActivity;
 import com.zhsoft.fretting.ui.activity.user.RegisterFirstActivity;
 import com.zhsoft.fretting.ui.activity.user.SettingActivity;
 import com.zhsoft.fretting.ui.adapter.user.MyFundRecyleAdapter;
-import com.zhsoft.fretting.ui.adapter.user.SwitchAccountRecycleAdapter;
 
 import java.util.List;
 
@@ -33,21 +32,34 @@ import cn.droidlover.xrecyclerview.XRecyclerView;
  */
 
 public class UserFragment extends XFragment<UserPresent> {
-
+    /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
+    /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
+    /** 设置 */
     @BindView(R.id.head_set) ImageButton headSet;
+    /** 登录 */
     @BindView(R.id.login) Button login;
+    /** 注册 */
     @BindView(R.id.register) Button register;
+    /** 自选 */
     @BindView(R.id.self_choose) TextView selfChoose;
+    /** 定投 */
     @BindView(R.id.timing) TextView timing;
+    /** 交易查询 */
     @BindView(R.id.transaction) TextView transaction;
+    /** 分红 */
     @BindView(R.id.profit) TextView profit;
+    /** 撤单 */
     @BindView(R.id.remove) TextView remove;
+    /** 未登录界面 */
     @BindView(R.id.ll_logout) LinearLayout llLogout;
+    /** 我的基金列表 */
     @BindView(R.id.xrv_my_fund) XRecyclerView xrvMyFund;
 
-    private boolean isLogin = false;//未登录
+    /** 是否登录标识 */
+    private boolean isLogin = false;
+
 
     @Override
     public void initData(Bundle savedInstanceState) {
@@ -147,7 +159,7 @@ public class UserFragment extends XFragment<UserPresent> {
                 super.onItemClick(position, model, tag, holder);
                 switch (tag) {
                     //点击
-                    case SwitchAccountRecycleAdapter.ITEM_CLICK:
+                    case MyFundRecyleAdapter.ITEM_CLICK:
                         showToast(model.getName());
                         break;
                 }
@@ -156,6 +168,11 @@ public class UserFragment extends XFragment<UserPresent> {
         return adapter;
     }
 
+    /**
+     * 获得我的基金数据
+     *
+     * @param resps
+     */
     public void showMyFund(List<MyFundResp> resps) {
         if (resps != null && resps.size() > 0) {
             getMyFundAdapter().addData(resps);

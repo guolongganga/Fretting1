@@ -1,7 +1,7 @@
 package com.zhsoft.fretting.ui.activity.user;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,10 +12,14 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.model.user.BankResp;
 import com.zhsoft.fretting.present.user.RegisterSecondPresent;
 import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
 import com.zhsoft.fretting.widget.ChenJingET;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
@@ -28,6 +32,11 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  */
 
 public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
+    /** 传递银行列表数据 */
+    private static final String BANK = "bank";
+    private static final int TOBANKLIST = 100;
+    private static final int RESULT_CODE = 200;
+    private static final String CHOOSE_BANCK = "choosebank";
     /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
@@ -59,6 +68,8 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
 
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
+
+    private ArrayList<BankResp> listResps;
 
     @Override
     public int getLayoutId() {
@@ -182,8 +193,10 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
             @Override
             public void onClick(View view) {
                 //TODO 选择银行
-                showToast("选择银行");
-                banckName.setText("招商银行");
+                Bundle bundle = new Bundle();
+                bundle.putParcelableArrayList(BANK,listResps);
+                startActivity(BankListActivity.class,bundle,TOBANKLIST);
+
             }
         });
 
@@ -210,8 +223,21 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
      *
      * @param data
      */
-    public void bankListData(Object data) {
-        httpLoadingDialog.dismiss();
+    public void bankListData(ArrayList<BankResp> data) {
+        if (data != null && data.size() > 0) {
 
+            listResps = data;
+            httpLoadingDialog.dismiss();
+        }
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == RESULT_CODE && requestCode == TOBANKLIST){
+            BankResp resp = data.getParcelableExtra(CHOOSE_BANCK);
+            banckName.setText(resp.getBankName());
+        }
     }
 }
