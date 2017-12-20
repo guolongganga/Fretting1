@@ -8,15 +8,19 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.Happ;
 import com.zhsoft.fretting.model.TaetResp;
 import com.zhsoft.fretting.model.user.MyFundResp;
 import com.zhsoft.fretting.present.user.UserPresent;
 import com.zhsoft.fretting.ui.activity.user.LoginActivity;
 import com.zhsoft.fretting.ui.activity.user.RegisterFirstActivity;
+import com.zhsoft.fretting.ui.activity.user.RegisterSecondActivity;
 import com.zhsoft.fretting.ui.activity.user.SettingActivity;
 import com.zhsoft.fretting.ui.adapter.user.MyFundRecyleAdapter;
+import com.zhsoft.fretting.utils.RuntimeHelper;
 
 import java.util.List;
 
@@ -32,6 +36,7 @@ import cn.droidlover.xrecyclerview.XRecyclerView;
  */
 
 public class UserFragment extends XFragment<UserPresent> {
+    private static final String PHONE = "phone";
     /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
@@ -56,16 +61,29 @@ public class UserFragment extends XFragment<UserPresent> {
     @BindView(R.id.ll_logout) LinearLayout llLogout;
     /** 我的基金列表 */
     @BindView(R.id.xrv_my_fund) XRecyclerView xrvMyFund;
+    /** 去开户 */
+    @BindView(R.id.to_finish_register) Button toFinishRegister;
 
     /** 是否登录标识 */
-    private boolean isLogin = false;
+//    private boolean isLogin = false;
 
+    private String isOpenAccount;
 
     @Override
     public void initData(Bundle savedInstanceState) {
         headBack.setVisibility(View.GONE);
         headTitle.setText("我的");
         headSet.setVisibility(View.VISIBLE);
+
+        isOpenAccount = App.getSharedPref().getString(Constant.IS_OPEN_ACCOUNT, "");
+        //1位未开户  0 位开户
+        if ("0".equals(isOpenAccount)) {
+            toFinishRegister.setVisibility(View.GONE);
+            xrvMyFund.setVisibility(View.VISIBLE);
+        } else {
+            toFinishRegister.setVisibility(View.VISIBLE);
+            xrvMyFund.setVisibility(View.GONE);
+        }
         xrvMyFund.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
         getP().loadTestData();
     }
@@ -80,46 +98,63 @@ public class UserFragment extends XFragment<UserPresent> {
                 startActivity(SettingActivity.class);
             }
         });
+
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(LoginActivity.class);
             }
         });
+
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(RegisterFirstActivity.class);
             }
         });
+
         selfChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showToast("自选");
             }
         });
+
         timing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showToast("定投");
             }
         });
+
         transaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showToast("交易查询");
             }
         });
+
         profit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showToast("分红");
             }
         });
+
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 showToast("撤销");
+            }
+        });
+
+        toFinishRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String strPhone = App.getSharedPref().getString(Constant.USER_NAME, "");
+                Bundle bundle = new Bundle();
+                bundle.putString(PHONE, strPhone);
+                startActivity(RegisterSecondActivity.class, bundle);
             }
         });
 
@@ -182,7 +217,7 @@ public class UserFragment extends XFragment<UserPresent> {
     @Override
     public void onResume() {
         super.onResume();
-        if (isLogin) {
+        if (RuntimeHelper.getInstance().isLogin()) {
             llLogout.setVisibility(View.GONE);
         } else {
             llLogout.setVisibility(View.VISIBLE);

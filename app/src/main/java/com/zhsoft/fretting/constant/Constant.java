@@ -17,6 +17,9 @@ public class Constant {
     //用户名
     public static final String USER_NAME = BASE_CONSTANT + "user_name";
 
+    //是否开户 1位未开户  0 位开户
+    public static final String IS_OPEN_ACCOUNT = BASE_CONSTANT + "is_open_account";
+
     //密码
     public static final String PWD = BASE_CONSTANT + "pwd";
 

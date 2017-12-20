@@ -10,12 +10,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.present.user.RegisterFirstPresent;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
 import com.zhsoft.fretting.utils.Base64ImageUtil;
+import com.zhsoft.fretting.utils.RuntimeHelper;
 import com.zhsoft.fretting.widget.ChenJingET;
 
 import butterknife.BindView;
@@ -28,6 +31,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  */
 
 public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
+    private static final String PHONE = "phone";
     /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
@@ -206,12 +210,26 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
     /**
      * 注册成功
      *
-     * @param data
+     * @param model
      */
-    public void commitSuccess(LoginResp data) {
+    public void commitSuccess(LoginResp model) {
         httpLoadingDialog.dismiss();
-        showToast(data.getToken());
-        startActivity(RegisterSecondActivity.class);
+        showToast(model.getToken());
+
+        //缓存用户userId,token,username,is_open_account
+        App.getSharedPref().putString(Constant.USERID, model.getUserId());
+        App.getSharedPref().putString(Constant.TOKEN, model.getToken());
+        App.getSharedPref().putString(Constant.USER_NAME, getText(phoneNumber));
+        App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, model.getIsOpenAccount());
+
+        //全局变量设置为登录状态
+        RuntimeHelper.getInstance().setLogin(true);
+
+        Bundle bundle = new Bundle();
+        bundle.putString(PHONE, getText(phoneNumber));
+        startActivity(RegisterSecondActivity.class, bundle);
+
+        finish();
     }
 
     /**
@@ -232,6 +250,6 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
     }
 
     public void requestMessageFail() {
-        getP().getImageCode();
+        httpLoadingDialog.dismiss();
     }
 }

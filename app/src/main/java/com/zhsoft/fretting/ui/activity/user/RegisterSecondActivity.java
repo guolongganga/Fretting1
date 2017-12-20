@@ -33,6 +33,8 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  */
 
 public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
+    /** 注册的手机号码 */
+    private static final String PHONE = "phone";
     /** 传递银行列表数据 */
     private static final String BANK = "bank";
     /** 跳转到银行列表请求码 */
@@ -41,6 +43,7 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
     private static final int RESULT_CODE = 200;
     /** 选择的银行信息 传递标识 */
     private static final String CHOOSE_BANCK = "choosebank";
+
     /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
@@ -93,6 +96,8 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
         //设置标题
         headTitle.setText("基金开户");
         registerServiceSelect.setSelected(true);
+        String strPhone = bundle.getString(PHONE);
+        phone.setText(strPhone);
         //请求银行卡列表
         httpLoadingDialog.visible("加载中...");
         getP().getBankList();

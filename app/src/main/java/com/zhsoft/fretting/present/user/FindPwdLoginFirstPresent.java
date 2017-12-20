@@ -16,7 +16,7 @@ import cn.droidlover.xdroidmvp.net.XApi;
 
 /**
  * 作者：sunnyzeng on 2017/12/15 13:43
- * 描述：
+ * 描述：找回登录密码第一步请求
  */
 
 public class FindPwdLoginFirstPresent extends XPresent<FindPwdLoginFirstActivity> {
