@@ -31,6 +31,8 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dimen_15"
+            android:padding="@dimen/dimen_4"
+            android:background="@drawable/shape_blue_line_rect"
             android:text="日涨幅"
             android:textColor="@color/color_333333" />
 

@@ -15,10 +15,13 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.ui.widget.PopShow;
 import com.zhsoft.fretting.ui.widget.PostionSelectPopupWindow;
 import com.zhsoft.fretting.utils.KeyBoardUtils;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -54,6 +57,8 @@ public class PersonInfoActivity extends XActivity {
     @BindView(R.id.iv_selector) ImageView ivSelector;
     /** 国籍 */
     @BindView(R.id.nationality) TextView nationality;
+    /** 选择职业 */
+    @BindView(R.id.linearlayout_duty) LinearLayout linearlayout_duty;
     /** 职业 */
     @BindView(R.id.duty) TextView duty;
     /** 选择地址 */
@@ -183,10 +188,22 @@ public class PersonInfoActivity extends XActivity {
         });
 
 
-        duty.setOnClickListener(new View.OnClickListener() {
+        linearlayout_duty.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("选择职业");
+//                showToast("选择职业");
+                final List<String> list = new ArrayList<>();
+                list.add("金融从业者");
+                list.add("其他");
+                //TODO 有BUG
+                PopShow popShow = new PopShow(context, linearlayout_duty);
+                popShow.showText(list);
+                popShow.setOnClickPop(new PopShow.OnClickPop() {
+                    @Override
+                    public void setRange(int position) {
+                        duty.setText(list.get(position));
+                    }
+                });
             }
         });
 
