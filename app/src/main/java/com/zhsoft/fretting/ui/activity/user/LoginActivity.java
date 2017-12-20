@@ -120,10 +120,11 @@ public class LoginActivity extends XActivity<LoginPresent> {
 //        showToast("userID" + model.getUserId() + "，token=" + model.getToken());
         showToast("登录成功");
 
-        //缓存用户userId,token,username
+        //缓存用户userId,token,username,is_open_account
         App.getSharedPref().putString(Constant.USERID, model.getUserId());
         App.getSharedPref().putString(Constant.TOKEN, model.getToken());
         App.getSharedPref().putString(Constant.USER_NAME, getText(username));
+        App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, model.getIsOpenAccount());
 
         //全局变量设置为登录状态
         RuntimeHelper.getInstance().setLogin(true);

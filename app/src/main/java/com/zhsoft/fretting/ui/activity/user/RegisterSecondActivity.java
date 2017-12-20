@@ -15,15 +15,13 @@ import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.user.BankResp;
 import com.zhsoft.fretting.present.user.RegisterSecondPresent;
 import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
-import com.zhsoft.fretting.ui.widget.CountdownButton;
 import com.zhsoft.fretting.widget.ChenJingET;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
-import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
@@ -33,6 +31,8 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  */
 
 public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
+    /** 注册的手机号码 */
+    private static final String PHONE = "phone";
     /** 传递银行列表数据 */
     private static final String BANK = "bank";
     /** 跳转到银行列表请求码 */
@@ -41,6 +41,7 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
     private static final int RESULT_CODE = 200;
     /** 选择的银行信息 传递标识 */
     private static final String CHOOSE_BANCK = "choosebank";
+
     /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
@@ -59,10 +60,14 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
     @BindView(R.id.banknumber) EditText banknumber;
     /** 手机号码 */
     @BindView(R.id.phone) EditText phone;
-    /** 短信验证码 */
-    @BindView(R.id.msg_code) EditText msgCode;
-    /** 获取验证码 */
-    @BindView(R.id.get_verify_code) CountdownButton getVerifyCode;
+    //    /** 短信验证码 */
+//    @BindView(R.id.msg_code) EditText msgCode;
+//    /** 获取验证码 */
+//    @BindView(R.id.get_verify_code) CountdownButton getVerifyCode;
+    /** 交易密码 */
+    @BindView(R.id.password) EditText password;
+    /** 确认交易密码 */
+    @BindView(R.id.password_again) EditText passwordAgain;
     /** 勾选框 */
     @BindView(R.id.register_service_select) ImageView registerServiceSelect;
     /** 注册协议 */
@@ -93,6 +98,8 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
         //设置标题
         headTitle.setText("基金开户");
         registerServiceSelect.setSelected(true);
+        String strPhone = bundle.getString(PHONE);
+        phone.setText(strPhone);
         //请求银行卡列表
         httpLoadingDialog.visible("加载中...");
         getP().getBankList();
@@ -106,33 +113,33 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
                 finish();
             }
         });
-        getVerifyCode.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String strPhone = getText(phone);
-                //表单验证
-                if (noNetWork()) {
-                    showNetWorkError();
-                    return;
-                }
-                //表单验证
-                if (noNetWork()) {
-                    showNetWorkError();
-                    return;
-                }
-                if (!isNotEmpty(strPhone)) {
-                    showToast("手机号不能为空");
-                    return;
-                }
-                if (strPhone.length() < 11) {
-                    showToast("请输入正确的手机号码");
-                    return;
-                }
-                //TODO 短信验证码
-                getVerifyCode.start();
-
-            }
-        });
+//        getVerifyCode.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String strPhone = getText(phone);
+//                //表单验证
+//                if (noNetWork()) {
+//                    showNetWorkError();
+//                    return;
+//                }
+//                //表单验证
+//                if (noNetWork()) {
+//                    showNetWorkError();
+//                    return;
+//                }
+//                if (!isNotEmpty(strPhone)) {
+//                    showToast("手机号不能为空");
+//                    return;
+//                }
+//                if (strPhone.length() < 11) {
+//                    showToast("请输入正确的手机号码");
+//                    return;
+//                }
+//                //TODO 短信验证码
+//                getVerifyCode.start();
+//
+//            }
+//        });
         btnNext.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -141,7 +148,9 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
                 String strBankName = getText(banckName);
                 String strBanknumber = getText(banknumber);
                 String strPhone = getText(phone);
-                String strMsgCode = getText(msgCode);
+                String strpwd = getText(password);
+                String strpwdAgain = getText(passwordAgain);
+//                String strMsgCode = getText(msgCode);
                 //表单验证
                 if (noNetWork()) {
                     showNetWorkError();
@@ -171,15 +180,31 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
                     showToast("请输入正确的手机号码");
                     return;
                 }
-                if (!isNotEmpty(strMsgCode)) {
-                    showToast("验证码不能为空");
+                if (!isNotEmpty(strpwd)) {
+                    showToast("交易密码不能为空");
+                    return;
                 }
+                if (strpwd.length() < 6) {
+                    showToast("请输入6位纯数字");
+                    return;
+                }
+                if (!isNotEmpty(strpwdAgain)) {
+                    showToast("确认交易密码不能为空");
+                    return;
+                }
+                if (!strpwd.equals(strpwdAgain)) {
+                    showToast("两次密码不一致");
+                    return;
+                }
+//                if (!isNotEmpty(strMsgCode)) {
+//                    showToast("验证码不能为空");
+//                }
                 if (!registerServiceSelect.isSelected()) {
                     showToast("请阅读并同意协议");
                     return;
                 }
-                //TODO 下一步
-                startActivity(RegisterSetTradePwdActivity.class);
+                //TODO 下一步 请求注册接口
+                startActivity(RegisterSuccessActivity.class);
             }
         });
         registerServiceSelect.setOnClickListener(new View.OnClickListener() {
@@ -247,4 +272,5 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
             banckName.setText(resp.getBank_name());
         }
     }
+
 }

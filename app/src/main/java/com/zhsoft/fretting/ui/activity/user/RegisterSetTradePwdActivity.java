@@ -17,7 +17,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
  * 作者：sunnyzeng on 2017/12/12 18:44
- * 描述：基金开户 设置交易密码
+ * 描述：基金开户 设置交易密码 不使用
  */
 
 public class RegisterSetTradePwdActivity extends XActivity {

@@ -84,7 +84,7 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
                     protected void onFail(NetError error) {
                         error.printStackTrace();
                         getV().requestMessageFail();
-                        getV().showToast("请求图片验证码失败");
+                        getV().showToast("请求图片验证码失败，请重试");
                     }
 
                     @Override
