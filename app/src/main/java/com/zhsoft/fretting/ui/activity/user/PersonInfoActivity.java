@@ -1,18 +1,27 @@
 package com.zhsoft.fretting.ui.activity.user;
 
+import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.ui.widget.PostionSelectPopupWindow;
+import com.zhsoft.fretting.utils.KeyBoardUtils;
+
+import java.util.Calendar;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
@@ -21,12 +30,14 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  */
 
 public class PersonInfoActivity extends XActivity {
+    //时间类
+    private Calendar calendar = Calendar.getInstance();
+    //时间选择器
+    private DatePickerDialog timeDialog;
     /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
-    /** 设置按钮 */
-    @BindView(R.id.head_right) Button headRight;
     /** 用户名 */
     @BindView(R.id.name) TextView name;
     /** 身份证号 */
@@ -35,13 +46,35 @@ public class PersonInfoActivity extends XActivity {
     @BindView(R.id.accountid) TextView accountid;
     /** 邮箱 */
     @BindView(R.id.email) EditText email;
-    /** 编辑按钮 */
-    @BindView(R.id.click_update) TextView clickUpdate;
+    /** 性别 */
+    @BindView(R.id.sex) TextView sex;
+    /** 身份证期限 */
+    @BindView(R.id.limit_time) TextView limitTime;
+    /** 选择 永久有效 */
+    @BindView(R.id.iv_selector) ImageView ivSelector;
+    /** 国籍 */
+    @BindView(R.id.nationality) TextView nationality;
+    /** 职业 */
+    @BindView(R.id.duty) TextView duty;
+    /** 选择地址 */
+    @BindView(R.id.linearlayout_area) LinearLayout linearlayoutArea;
+    /** 地址 */
+    @BindView(R.id.address) TextView address;
+    /** 保存按钮 */
+    @BindView(R.id.btn_save) Button btnSave;
+
+//    /** 设置按钮 */
+//    @BindView(R.id.head_right) Button headRight;
+//    /** 编辑按钮 */
+//    @BindView(R.id.click_update) TextView clickUpdate;
 
     /** 用户编号 */
     String userId;
     /** 登录标识 */
     String token;
+
+    private PostionSelectPopupWindow popupWindow;
+
 
     @Override
     public int getLayoutId() {
@@ -60,53 +93,114 @@ public class PersonInfoActivity extends XActivity {
         token = App.getSharedPref().getString(Constant.TOKEN, "");
         //设置标题
         headTitle.setText("个人信息");
-        headRight.setVisibility(View.VISIBLE);
-        headRight.setText("编辑");
-        if (!isNotEmpty(getText(email))) {
-            clickUpdate.setVisibility(View.VISIBLE);
-            clickUpdate.setText("去填写");
-        }
+        ivSelector.setSelected(false);
+//        headRight.setVisibility(View.VISIBLE);
+//        headRight.setText("编辑");
+//        if (!isNotEmpty(getText(email))) {
+//            clickUpdate.setVisibility(View.VISIBLE);
+//            clickUpdate.setText("去填写");
+//        }
+        popupWindow = new PostionSelectPopupWindow(this);
+        popupWindow.setCallBack(new PostionSelectPopupWindow.CallBack() {
+            @Override
+            public void onSelectChange(String name) {
+                address.setText(name);
+            }
+        });
 
     }
 
     @Override
     public void initEvents() {
-        headRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if ("完成".equals(headRight.getText().toString())) {
-                    //TODO 保存邮箱信息
-                    showToast("保存该信息");
-                    //然后设置为不可编辑状态
-                    email.setFocusable(false);
-                    email.setFocusableInTouchMode(false);
-                    headRight.setText("编辑");
-                    clickUpdate.setVisibility(View.GONE);
-                } else if ("编辑".equals(headRight.getText().toString())) {
-                    clickUpdate.setVisibility(View.VISIBLE);
-                    clickUpdate.setText("修改");
+//        headRight.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                if ("完成".equals(headRight.getText().toString())) {
+//                    //TODO 保存邮箱信息
+//                    showToast("保存该信息");
+//                    //然后设置为不可编辑状态
+//                    email.setFocusable(false);
+//                    email.setFocusableInTouchMode(false);
+//                    headRight.setText("编辑");
+//                    clickUpdate.setVisibility(View.GONE);
+//                } else if ("编辑".equals(headRight.getText().toString())) {
+//                    clickUpdate.setVisibility(View.VISIBLE);
+//                    clickUpdate.setText("修改");
+//
+//                }
+//
+//            }
+//        });
 
-                }
-
-            }
-        });
-
-        clickUpdate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                headRight.setText("完成");
-                email.setSelection(email.getText().toString().trim().length());//将光标移至文字末尾
-                email.setFocusableInTouchMode(true);
-                email.setFocusable(true);
-                email.requestFocus();
-            }
-        });
+//        clickUpdate.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                headRight.setText("完成");
+//                email.setSelection(email.getText().toString().trim().length());//将光标移至文字末尾
+//                email.setFocusableInTouchMode(true);
+//                email.setFocusable(true);
+//                email.requestFocus();
+//            }
+//        });
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+
+        limitTime.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //如果未勾选永久有效 就可以选择时间
+                if (!ivSelector.isSelected()) {
+
+                    timeDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+                        @Override
+                        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                            limitTime.setText(year + "/" + (monthOfYear + 1) + "/" + dayOfMonth);
+                        }
+                    }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
+                    timeDialog.show();
+                }
+
+            }
+        });
+
+        ivSelector.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //如果未勾选永久有效 就可以选择时间
+                if (ivSelector.isSelected()) {
+                    ivSelector.setSelected(false);
+                    limitTime.setHint("请选择");
+                } else {
+                    ivSelector.setSelected(true);
+                    limitTime.setHint("");
+                    limitTime.setText("");
+                }
+            }
+        });
+
+
+        duty.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showToast("选择职业");
+            }
+        });
+
+        address.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //关闭当前输入框
+                KeyBoardUtils.closeKeybord(PersonInfoActivity.this);
+                //显示窗口
+                popupWindow.showAtLocation(linearlayoutArea, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
+            }
+        });
+
+
     }
 
 }
