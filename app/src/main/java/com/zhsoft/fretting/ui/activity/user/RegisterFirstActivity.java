@@ -60,6 +60,7 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
     private HttpLoadingDialog httpLoadingDialog;
     /** 图片加载 */
 //    private ImageLoader imageLoader = ImageLoader.getInstance();
+    /** 图片验证码id */
     private String image_code_id;
 
 

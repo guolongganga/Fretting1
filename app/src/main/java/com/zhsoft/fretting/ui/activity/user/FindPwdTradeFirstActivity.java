@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.ui.activity.user;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -10,7 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.model.user.ImageResp;
+import com.zhsoft.fretting.present.user.FindPwdTradeFirstPresent;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
+import com.zhsoft.fretting.utils.Base64ImageUtil;
 import com.zhsoft.fretting.widget.ChenJingET;
 
 import butterknife.BindView;
@@ -22,7 +26,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  * 描述：找回交易密码第一步
  */
 
-public class FindPwdTradeFirstActivity extends XActivity {
+public class FindPwdTradeFirstActivity extends XActivity<FindPwdTradeFirstPresent> {
     /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
@@ -42,6 +46,8 @@ public class FindPwdTradeFirstActivity extends XActivity {
 
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
+    /** 图片验证码id */
+    private String image_code_id;
 
     @Override
     public int getLayoutId() {
@@ -49,8 +55,8 @@ public class FindPwdTradeFirstActivity extends XActivity {
     }
 
     @Override
-    public Object newP() {
-        return null;
+    public FindPwdTradeFirstPresent newP() {
+        return new FindPwdTradeFirstPresent();
     }
 
     @Override
@@ -60,6 +66,9 @@ public class FindPwdTradeFirstActivity extends XActivity {
         httpLoadingDialog = new HttpLoadingDialog(context);
         //设置标题
         headTitle.setText("找回交易密码");
+        //访问图片验证码请求接口
+        httpLoadingDialog.visible();
+        getP().getImageCode();
     }
 
     @Override
@@ -73,7 +82,9 @@ public class FindPwdTradeFirstActivity extends XActivity {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO 获取图片验证码
+                //访问图片验证码请求接口
+                httpLoadingDialog.visible();
+                getP().getImageCode();
             }
         });
         getVerifyCode.setOnClickListener(new View.OnClickListener() {
@@ -136,12 +147,59 @@ public class FindPwdTradeFirstActivity extends XActivity {
                     showToast("短信验证码不能为空");
                     return;
                 }
-                //跳转找回密码第二步
-                startActivity(FindPwdTradeSecondActivity.class);
+                //显示加载框
+                httpLoadingDialog.visible("加载中...");
+                getP().findCheckPassword(phoneNumber, messageCode);
+
+
             }
         });
 
 
+    }
+
+
+    /**
+     * 请求失败
+     */
+    public void requestFail() {
+        httpLoadingDialog.dismiss();
+        showToast("验证失败");
+    }
+
+    /**
+     * 手机和验证码验证成功
+     *
+     * @param data
+     */
+    public void disposeUpdateResult(Object data) {
+        httpLoadingDialog.dismiss();
+
+        ////跳转找回密码第二步 传递电话号码
+        FindPwdTradeSecondActivity.launch(this, getText(phone));
+        finish();
+
+    }
+
+    /**
+     * 获取图片验证码
+     *
+     * @param data
+     */
+    public void getImageCode(ImageResp data) {
+        httpLoadingDialog.dismiss();
+        //获取 图片Base64 字符串
+        String strimage = data.getBase64Image();
+        image_code_id = data.getImageCodeId();
+        if (!TextUtils.isEmpty(strimage)) {
+            //将Base64图片串转换成Bitmap
+            Bitmap bitmap = Base64ImageUtil.base64ToBitmap(strimage);
+            image.setImageBitmap(bitmap);
+        }
+    }
+
+    public void requestMessageFail() {
+        httpLoadingDialog.dismiss();
     }
 
 }

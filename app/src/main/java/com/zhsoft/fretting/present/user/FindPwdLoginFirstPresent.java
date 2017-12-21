@@ -3,6 +3,7 @@ package com.zhsoft.fretting.present.user;
 import android.util.Log;
 
 import com.zhsoft.fretting.model.BaseResp;
+import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.params.FindPwdFirstParams;
@@ -63,4 +64,44 @@ public class FindPwdLoginFirstPresent extends XPresent<FindPwdLoginFirstActivity
                 });
 
     }
+
+    /**
+     * 获取图片验证码
+     */
+    public void getImageCode() {
+        CommonReqData reqData = new CommonReqData();
+        reqData.setData("");
+
+        Api.getApi()
+                .getImageCode(reqData)
+                .compose(XApi.<ImageResp>getApiTransformer())
+                .compose(XApi.<ImageResp>getScheduler())
+                .compose(getV().<ImageResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<ImageResp>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        error.printStackTrace();
+                        getV().requestMessageFail();
+                        getV().showToast("请求图片验证码失败，点击图片重试");
+                    }
+
+                    @Override
+                    public void onNext(ImageResp imageResp) {
+                        if (imageResp != null && imageResp.getStatus() == 200) {
+                            if (imageResp.getData() != null) {
+                                getV().getImageCode(imageResp.getData());
+                            }
+
+                        } else {
+                            getV().requestMessageFail();
+                            getV().showToast(imageResp.getMessage());
+                            XLog.e("返回数据为空");
+                        }
+                    }
+                });
+
+
+    }
+
+
 }

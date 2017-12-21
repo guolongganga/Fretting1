@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="10dp"
         android:layout_marginTop="50dp"
-        android:text="恭喜您申请开户成功！"
+        android:text="@string/user_register_success_congratulation"
         android:textColor="@color/color_text_333"
         android:textSize="@dimen/text_size_16"/>
     <!--姓名-->
@@ -29,7 +29,7 @@
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="姓名"
+            android:text="@string/user_register_success_name"
             android:textColor="@color/color_text_333"
             android:textSize="14sp"/>
 
@@ -59,7 +59,7 @@
             android:layout_width="80dp"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="身份证号"
+            android:text="@string/user_register_success_identity"
             android:textColor="@color/color_text_333"
             android:textSize="14sp"/>
 
@@ -82,7 +82,7 @@
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="50dp"
-        android:text="完成"/>
+        android:text="@string/user_common_finish"/>
 
     <Button
         android:id="@+id/risk_test"
@@ -92,7 +92,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
         android:background="@android:color/transparent"
-        android:text="去做风险等级测评>>"
+        android:text="@string/user_register_success_risk"
         android:textColor="@color/x_blue"
         android:textSize="14dp"/>
 

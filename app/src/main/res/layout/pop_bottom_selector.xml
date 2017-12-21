@@ -17,7 +17,6 @@
     <Button
         android:id="@+id/cancle"
         android:layout_width="match_parent"
-        android:layout_marginTop="@dimen/dimen_20"
         android:layout_marginLeft="@dimen/dimen_10"
         android:layout_marginRight="@dimen/dimen_10"
         android:text="取消"

@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.ui.activity.user;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -14,6 +15,7 @@ import com.zhsoft.fretting.widget.ChenJingET;
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
+import cn.droidlover.xdroidmvp.router.Router;
 
 /**
  * 作者：sunnyzeng on 2017/12/13 18:18
@@ -21,6 +23,8 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  */
 
 public class FindPwdTradeSecondActivity extends XActivity {
+    /** 传递phone */
+    private static final String PHONE = "phone";
     /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
@@ -34,6 +38,8 @@ public class FindPwdTradeSecondActivity extends XActivity {
 
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
+    /** 开户手机号 */
+    private String mPhone;
 
     @Override
     public int getLayoutId() {
@@ -56,7 +62,7 @@ public class FindPwdTradeSecondActivity extends XActivity {
         httpLoadingDialog = new HttpLoadingDialog(context);
         //设置标题
         headTitle.setText("找回交易密码");
-
+        mPhone = getIntent().getStringExtra(PHONE);
     }
 
     @Override
@@ -100,5 +106,12 @@ public class FindPwdTradeSecondActivity extends XActivity {
 //                finish();
             }
         });
+    }
+
+    public static void launch(Activity activity, String phone) {
+        Router.newIntent(activity)
+                .to(FindPwdTradeSecondActivity.class)
+                .putString(PHONE, phone)
+                .launch();
     }
 }

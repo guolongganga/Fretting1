@@ -22,6 +22,9 @@
     <string name="user_common_message_code_hint">请输入短信验证码</string>
     <string name="user_common_send_code">获取验证码</string>
     <string name="user_common_next">下一步</string>
+    <string name="user_common_ten_register"><u>10秒开户>></u></string>
+    <string name="user_common_login">登录</string>
+    <string name="user_common_finish">完成</string>
 
 
     <string name="user_about_us">关于我们</string>
@@ -39,5 +42,16 @@
     <string name="user_register_first_tv_hint_password">登录密码为8-16位数字、字母、特殊字符等</string>
     <string name="user_register_first_choose_account"><u>选择已有账户登录>></u></string>
     <string name="user_register_first_no_message_code"><u>无法收到验证码?</u></string>
+
+    <!--登录-->
+    <string name="user_login_username">用户</string>
+    <string name="user_login_username_hint">请输入注册手机号/身份证号</string>
+    <string name="user_login_forget_password"><u>忘记登录密码</u></string>
+
+    <!--开户成功-->
+    <string name="user_register_success_congratulation">恭喜您申请开户成功！</string>
+    <string name="user_register_success_name">姓名</string>
+    <string name="user_register_success_identity">身份证号</string>
+    <string name="user_register_success_risk"><u>去做风险等级测评>></u></string>
 
 </resources>

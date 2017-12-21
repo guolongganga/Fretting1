@@ -1,6 +1,8 @@
 package com.zhsoft.fretting.ui.activity.user;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,8 +11,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.present.user.FindPwdLoginFirstPresent;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
+import com.zhsoft.fretting.utils.Base64ImageUtil;
 import com.zhsoft.fretting.widget.ChenJingET;
 
 import butterknife.BindView;
@@ -42,6 +46,8 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
 
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
+    /** 图片验证码id */
+    private String image_code_id;
 
     @Override
     public int getLayoutId() {
@@ -60,6 +66,9 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
         httpLoadingDialog = new HttpLoadingDialog(context);
         //设置标题
         headTitle.setText("找回登录密码");
+        //访问图片验证码请求接口
+        httpLoadingDialog.visible();
+        getP().getImageCode();
     }
 
     @Override
@@ -73,7 +82,9 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO 获取图片验证码
+                //访问图片验证码请求接口
+                httpLoadingDialog.visible();
+                getP().getImageCode();
             }
         });
         getVerifyCode.setOnClickListener(new View.OnClickListener() {
@@ -167,5 +178,26 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
         FindPwdLoginSecondActivity.launch(this, getText(phone));
 
         finish();
+    }
+
+    /**
+     * 获取图片验证码
+     *
+     * @param data
+     */
+    public void getImageCode(ImageResp data) {
+        httpLoadingDialog.dismiss();
+        //获取 图片Base64 字符串
+        String strimage = data.getBase64Image();
+        image_code_id = data.getImageCodeId();
+        if (!TextUtils.isEmpty(strimage)) {
+            //将Base64图片串转换成Bitmap
+            Bitmap bitmap = Base64ImageUtil.base64ToBitmap(strimage);
+            image.setImageBitmap(bitmap);
+        }
+    }
+
+    public void requestMessageFail() {
+        httpLoadingDialog.dismiss();
     }
 }

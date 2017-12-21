@@ -56,6 +56,7 @@ public class PostionSelectPopupWindow extends PopupWindow implements OnWheelChan
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mMenuView = inflater.inflate(R.layout.layout_postion_select, null);
+        Button onCancle = (Button) mMenuView.findViewById(R.id.btn_cancle);
         Button onComplete = (Button) mMenuView.findViewById(R.id.btn_complete);
         mViewProvince = (WheelView) mMenuView.findViewById(R.id.id_province);
         mViewCity = (WheelView) mMenuView.findViewById(R.id.id_city);
@@ -63,8 +64,15 @@ public class PostionSelectPopupWindow extends PopupWindow implements OnWheelChan
         mViewProvince.addChangingListener(this);
         mViewCity.addChangingListener(this);
         mViewDistrict.addChangingListener(this);
+        onCancle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dismiss();
+            }
+        });
         onComplete.setOnClickListener(new View.OnClickListener() {
-            @Override public void onClick(View v) {
+            @Override
+            public void onClick(View v) {
                 dismiss();
 
                 int currentItem = mViewDistrict.getCurrentItem();
@@ -203,14 +211,16 @@ public class PostionSelectPopupWindow extends PopupWindow implements OnWheelChan
                 mCitisDatasMap.put(provinceList.get(i).getName(), cityNames);
             }
         } catch (Throwable e) {
-           e.printStackTrace();
-        } finally {
+            e.printStackTrace();
+        }
+        finally {
 
         }
     }
 
 
-    @Override public void onChanged(WheelView wheel, int oldValue, int newValue) {
+    @Override
+    public void onChanged(WheelView wheel, int oldValue, int newValue) {
         if (wheel == mViewProvince) {
             updateCities();
         } else if (wheel == mViewCity) {

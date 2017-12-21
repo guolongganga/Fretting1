@@ -99,7 +99,7 @@ public class FindPwdLoginSecondActivity extends XActivity<FindPwdLoginSecondPres
                     showToast("两次密码不一致");
                     return;
                 }
-                //TODO 请求找回登录密码接口
+                //找回登录密码接口
                 httpLoadingDialog.visible();
                 getP().findPassword(mPhone, pwdnumbe, pwdAgainnumbe);
             }
@@ -130,5 +130,6 @@ public class FindPwdLoginSecondActivity extends XActivity<FindPwdLoginSecondPres
         httpLoadingDialog.dismiss();
         showToast("找回登录密码成功");
         startActivity(LoginActivity.class);
+        finish();
     }
 }

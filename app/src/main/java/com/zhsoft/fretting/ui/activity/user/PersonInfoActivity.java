@@ -18,6 +18,7 @@ import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.ui.widget.PopShow;
 import com.zhsoft.fretting.ui.widget.PostionSelectPopupWindow;
 import com.zhsoft.fretting.utils.KeyBoardUtils;
+import com.zhsoft.fretting.widget.ChenJingET;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -93,6 +94,8 @@ public class PersonInfoActivity extends XActivity {
 
     @Override
     public void initData(Bundle bundle) {
+        //解决键盘弹出遮挡不滚动问题
+        ChenJingET.assistActivity(context);
         //获取用户缓存的userid 和 token
         userId = App.getSharedPref().getString(Constant.USERID, "");
         token = App.getSharedPref().getString(Constant.TOKEN, "");
@@ -192,8 +195,12 @@ public class PersonInfoActivity extends XActivity {
             @Override
             public void onClick(View view) {
 //                showToast("选择职业");
+                //关闭当前输入框
+                KeyBoardUtils.closeKeybord(PersonInfoActivity.this);
                 final List<String> list = new ArrayList<>();
                 list.add("金融从业者");
+                list.add("教师");
+                list.add("程序员");
                 list.add("其他");
                 //TODO 有BUG
                 PopShow popShow = new PopShow(context, linearlayout_duty);
@@ -214,6 +221,14 @@ public class PersonInfoActivity extends XActivity {
                 KeyBoardUtils.closeKeybord(PersonInfoActivity.this);
                 //显示窗口
                 popupWindow.showAtLocation(linearlayoutArea, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
+            }
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showToast("保存");
+
             }
         });
 

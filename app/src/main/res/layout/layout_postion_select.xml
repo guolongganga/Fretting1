@@ -5,16 +5,30 @@
               android:background="@color/white"
               android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="44dp">
 
-    <Button
-        android:id="@+id/btn_complete"
-        android:layout_width="55dp"
-        android:layout_height="44dp"
-        android:layout_gravity="right"
-        android:background="@android:color/transparent"
-        android:text="完成"
-        android:textColor="#017bff"
-        android:textSize="15dp"/>
+        <Button
+            android:id="@+id/btn_cancle"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentLeft="true"
+            android:background="@android:color/transparent"
+            android:text="取消"
+            android:textColor="#017bff"
+            android:textSize="15dp"/>
+
+        <Button
+            android:id="@+id/btn_complete"
+            android:layout_width="55dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:background="@android:color/transparent"
+            android:text="完成"
+            android:textColor="#017bff"
+            android:textSize="15dp"/>
+    </RelativeLayout>
 
     <View
         android:layout_width="match_parent"
