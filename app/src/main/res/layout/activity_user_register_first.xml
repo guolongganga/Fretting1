@@ -61,7 +61,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:text="@string/user_register_first_tv_hint_password"
+                android:text="@string/user_common_tv_hint_password"
                 android:textColor="@color/color_696969"
                 android:textSize="@dimen/text_size_12"/>
             <!--登录密码-->

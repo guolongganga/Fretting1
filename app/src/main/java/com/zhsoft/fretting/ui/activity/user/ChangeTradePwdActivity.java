@@ -31,7 +31,7 @@ public class ChangeTradePwdActivity extends XActivity {
     /** 再次输入交易密码 */
     @BindView(R.id.password_again) EditText passwordAgain;
     /** 重置交易密码 */
-    @BindView(R.id.reset_password) Button resetPassword;
+    @BindView(R.id.reset_password) TextView resetPassword;
     /** 保存 */
     @BindView(R.id.btn_save) Button btnSave;
 

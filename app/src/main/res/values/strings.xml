@@ -25,6 +25,8 @@
     <string name="user_common_ten_register"><u>10秒开户>></u></string>
     <string name="user_common_login">登录</string>
     <string name="user_common_finish">完成</string>
+    <string name="user_common_save">保存</string>
+    <string name="user_common_tv_hint_password">登录密码为8-16位数字、字母、特殊字符等</string>
 
 
     <string name="user_about_us">关于我们</string>
@@ -39,7 +41,6 @@
 
     <!--注册（基金开户 验证手机号）第一步-->
     <string name="user_register_first_tv_hint_phone">此手机号为接收交易通知等</string>
-    <string name="user_register_first_tv_hint_password">登录密码为8-16位数字、字母、特殊字符等</string>
     <string name="user_register_first_choose_account"><u>选择已有账户登录>></u></string>
     <string name="user_register_first_no_message_code"><u>无法收到验证码?</u></string>
 
@@ -53,5 +54,28 @@
     <string name="user_register_success_name">姓名</string>
     <string name="user_register_success_identity">身份证号</string>
     <string name="user_register_success_risk"><u>去做风险等级测评>></u></string>
+
+    <!--变更交易密码-->
+    <string name="user_update_tradepwd">变更交易密码</string>
+    <string name="user_update_tradepwd_old">旧交易密码</string>
+    <string name="user_update_tradepwd_old_hint">请输入旧的交易密码</string>
+    <string name="user_update_tradepwd_new">新交易密码</string>
+    <string name="user_update_tradepwd_new_hint">请输入新的六位纯数字</string>
+    <string name="user_update_tradepwd_new_again">再次输入交易密码</string>
+    <string name="user_update_tradepwd_new_again_hint">请确认新的六位纯数字</string>
+    <string name="user_update_tradepwd_reset"><u>重置交易密码</u></string>
+
+    <!--变更登录密码-->
+    <string name="user_update_loginpwd">变更登录密码</string>
+    <string name="user_update_loginpwd_new">新登录密码</string>
+    <string name="user_update_loginpwd_new_hint">请输入登录密码</string>
+    <string name="user_update_loginpwd_new_again">再次输入登录密码</string>
+    <string name="user_update_loginpwd_new_again_hint">请再次输入登录密码</string>
+
+    <!--变更密码-->
+    <string name="user_update_pwd">变更密码</string>
+    <string name="user_update_pwd_login">登录密码</string>
+    <string name="user_update_pwd_trade">交易密码</string>
+    <string name="user_update_pwd_update"><u>修改></u></string>
 
 </resources>

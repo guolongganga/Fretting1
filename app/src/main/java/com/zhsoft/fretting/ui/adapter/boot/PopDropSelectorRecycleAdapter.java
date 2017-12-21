@@ -56,6 +56,12 @@ public class PopDropSelectorRecycleAdapter extends SimpleRecAdapter<String, PopD
             holder.ivSelector.setVisibility(View.GONE);
         }
 
+        if (data.size() - 1 == position) {
+            holder.viewLine.setVisibility(View.GONE);
+        } else {
+            holder.viewLine.setVisibility(View.VISIBLE);
+        }
+
         holder.rlContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,6 +78,8 @@ public class PopDropSelectorRecycleAdapter extends SimpleRecAdapter<String, PopD
         RelativeLayout rlContent;
         @BindView(R.id.tv_name)
         TextView tvName;
+        @BindView(R.id.view_line)
+        View viewLine;
         @BindView(R.id.iv_selector)
         ImageView ivSelector;
 

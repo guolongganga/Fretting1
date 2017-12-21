@@ -2,10 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rl_content"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:background="@color/white"
-    android:paddingBottom="@dimen/dimen_10"
-    android:paddingTop="@dimen/dimen_10">
+    android:layout_height="45dp"
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/iv_selector"
@@ -13,15 +11,24 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_marginLeft="@dimen/dimen_10"
+        android:layout_centerVertical="true"
         android:src="@mipmap/selector_true" />
 
     <TextView
         android:id="@+id/tv_name"
+        android:layout_centerVertical="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_marginLeft="@dimen/dimen_5"
         android:layout_marginRight="@dimen/dimen_10"
         android:textColor="@color/color_333333" />
+
+    <View
+        android:id="@+id/view_line"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/color_divider"/>
 
 </RelativeLayout>
