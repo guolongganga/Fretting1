@@ -42,7 +42,7 @@ public class UserFragment extends XFragment<UserPresent> {
     /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
     /** 设置 */
-    @BindView(R.id.head_set) ImageButton headSet;
+    @BindView(R.id.head_right_imgbtn) ImageButton headRightImgbtn;
     /** 登录 */
     @BindView(R.id.login) Button login;
     /** 注册 */
@@ -73,7 +73,8 @@ public class UserFragment extends XFragment<UserPresent> {
     public void initData(Bundle savedInstanceState) {
         headBack.setVisibility(View.GONE);
         headTitle.setText("我的");
-        headSet.setVisibility(View.VISIBLE);
+        headRightImgbtn.setVisibility(View.VISIBLE);
+        headRightImgbtn.setImageResource(R.mipmap.icon_user_set);
 
         isOpenAccount = App.getSharedPref().getString(Constant.IS_OPEN_ACCOUNT, "");
         //1位未开户  0 位开户
@@ -92,7 +93,7 @@ public class UserFragment extends XFragment<UserPresent> {
     @Override
     public void initEvents() {
 
-        headSet.setOnClickListener(new View.OnClickListener() {
+        headRightImgbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(SettingActivity.class);

@@ -1,20 +1,14 @@
-package com.zhsoft.fretting.ui.fragment.fund;
+package com.zhsoft.fretting.ui.fragment.index;
 
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.FundResp;
-import com.zhsoft.fretting.present.fund.FundContentPresent;
-import com.zhsoft.fretting.ui.adapter.boot.PopDropSelectorRecycleAdapter;
-import com.zhsoft.fretting.ui.adapter.fund.FundContentRecycleAdapter;
+import com.zhsoft.fretting.present.index.TimingPresent;
+import com.zhsoft.fretting.ui.adapter.index.TimingRecycleAdapter;
 import com.zhsoft.fretting.ui.widget.PopShow;
 
 import java.util.ArrayList;
@@ -23,37 +17,33 @@ import java.util.List;
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
 import cn.droidlover.xrecyclerview.RecyclerAdapter;
-import cn.droidlover.xrecyclerview.RecyclerItemCallback;
 import cn.droidlover.xrecyclerview.XRecyclerContentLayout;
 import cn.droidlover.xrecyclerview.XRecyclerView;
 
 /**
- * Created by ${sunny}
- * data: 2017/12/19
+ * 作者：sunnyzeng on 2017/12/21 17:49
+ * 描述：
  */
 
-public class FundContentFragment extends XFragment<FundContentPresent> {
-
+public class TimingFragment extends XFragment<TimingPresent> {
     @BindView(R.id.tv_range)
     TextView tvRange;
     @BindView(R.id.view_line)
     View viewLine;
     @BindView(R.id.content_layout)
     XRecyclerContentLayout contentLayout;
-
-    private FundContentRecycleAdapter adapter;
-    private List<String> list;
-
     private int isSelector = 0;
+    private TimingRecycleAdapter adapter;
+    private List<String> list;
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_fund_content;
+        return R.layout.fragment_index_timing;
     }
 
     @Override
-    public FundContentPresent newP() {
-        return new FundContentPresent();
+    public TimingPresent newP() {
+        return new TimingPresent();
     }
 
     @Override
@@ -102,7 +92,6 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
             @Override
             public void onClick(View view) {
 
-
                 PopShow popShow = new PopShow(context, viewLine);
                 popShow.showRangeSelector(list, isSelector);
                 popShow.setOnClickPop(new PopShow.OnClickPop() {
@@ -123,7 +112,7 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
      */
     public RecyclerAdapter getAdapter() {
         if (adapter == null) {
-            adapter = new FundContentRecycleAdapter(context);
+            adapter = new TimingRecycleAdapter(context);
         }
         return adapter;
     }
@@ -135,9 +124,12 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
      * @param item
      */
     public void showData(int page, List<FundResp> item) {
+
         list = new ArrayList<>();
-        list.add("一周涨幅");
-        list.add("近期涨幅");
+        list.add("近一年定投收益率");
+        list.add("近两年定投收益率");
+        list.add("近三年定投收益率");
+        list.add("近五年定投收益率");
 
         if (item != null && item.size() > 1) {
             if (page > 1) {
@@ -151,4 +143,6 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
             contentLayout.getRecyclerView().setPage(page, page - 1);
         }
     }
+
+
 }

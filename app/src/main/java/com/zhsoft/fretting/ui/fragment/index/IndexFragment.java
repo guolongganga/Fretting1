@@ -2,10 +2,14 @@ package com.zhsoft.fretting.ui.fragment.index;
 
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.index.PopularityResp;
 import com.zhsoft.fretting.present.index.IndexPresent;
+import com.zhsoft.fretting.ui.activity.index.PopularityActivity;
+import com.zhsoft.fretting.ui.activity.index.TimingActivity;
 import com.zhsoft.fretting.ui.adapter.index.PopularityRecycleAdapter;
 import com.zhsoft.fretting.ui.adapter.user.SwitchAccountRecycleAdapter;
 
@@ -25,12 +29,18 @@ import cn.droidlover.xrecyclerview.XRecyclerView;
 
 public class IndexFragment extends XFragment<IndexPresent> {
 
-    //轮播图
+    /** 轮播图 */
     @BindView(R.id.banner)
     FlyBanner banner;
-    //人气产品
+    /** 人气产品 */
     @BindView(R.id.xrv_popularity)
     XRecyclerView xrvPopularity;
+    /** 人气产品 更多 */
+    @BindView(R.id.popularity_more)
+    TextView popularityMore;
+    /** 优选定投 更多 */
+    @BindView(R.id.timing_more)
+    TextView timingMore;
 
     @Override
     public int getLayoutId() {
@@ -55,6 +65,18 @@ public class IndexFragment extends XFragment<IndexPresent> {
 
     @Override
     public void initEvents() {
+        popularityMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(PopularityActivity.class);
+            }
+        });
+        timingMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(TimingActivity.class);
+            }
+        });
 
     }
 

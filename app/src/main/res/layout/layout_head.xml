@@ -39,14 +39,13 @@
         />
 
     <ImageButton
-        android:id="@+id/head_set"
+        android:id="@+id/head_right_imgbtn"
         android:layout_width="45dp"
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:background="@android:color/transparent"
         android:scaleType="center"
-        android:src="@mipmap/icon_user_set"
-        android:visibility="gone"
+        android:visibility="visible"
         />
 
 </RelativeLayout>

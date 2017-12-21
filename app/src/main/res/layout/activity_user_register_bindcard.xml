@@ -20,13 +20,29 @@
             android:orientation="vertical">
 
             <!--个人信息-->
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_marginLeft="15dp"
-                android:gravity="center_vertical"
-                android:text="个人信息"
-                android:textColor="@color/color_696969"/>
+                android:layout_marginLeft="@dimen/dimen_15"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="@dimen/dimen_5"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/color_main"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:text="个人信息"
+                    android:textColor="@color/color_696969"/>
+
+            </LinearLayout>
+
             <!--姓名-->
             <LinearLayout
                 android:layout_width="match_parent"
@@ -133,13 +149,28 @@
             <include layout="@layout/layout_divider_horizontal"/>
 
             <!--银行卡信息-->
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_marginLeft="15dp"
-                android:gravity="center_vertical"
-                android:text="银行卡信息"
-                android:textColor="@color/color_696969"/>
+                android:layout_marginLeft="@dimen/dimen_15"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="@dimen/dimen_5"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/color_main"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:text="银行卡信息"
+                    android:textColor="@color/color_696969"/>
+
+            </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/ll_choose_bank"
@@ -284,13 +315,28 @@
             <!--</LinearLayout>-->
 
             <!--设置交易密码-->
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="30dp"
-                android:layout_marginLeft="15dp"
-                android:gravity="center_vertical"
-                android:text="设置交易密码"
-                android:textColor="@color/color_696969"/>
+                android:layout_marginLeft="@dimen/dimen_15"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="@dimen/dimen_5"
+                    android:layout_height="match_parent"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/color_main"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
+                    android:gravity="center_vertical"
+                    android:text="设置交易密码"
+                    android:textColor="@color/color_696969"/>
+
+            </LinearLayout>
 
             <include layout="@layout/layout_divider_horizontal"/>
             <!--新交易密码-->

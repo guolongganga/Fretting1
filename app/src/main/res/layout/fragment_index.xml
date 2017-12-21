@@ -242,6 +242,7 @@
                     android:textSize="@dimen/text_size_18" />
 
                 <TextView
+                    android:id="@+id/popularity_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dimen_15"
@@ -406,6 +407,7 @@
                     android:textSize="@dimen/text_size_18" />
 
                 <TextView
+                    android:id="@+id/timing_more"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="@dimen/dimen_15"
@@ -447,7 +449,7 @@
                     android:layout_width="@dimen/dimen_180"
                     android:layout_height="@dimen/dimen_35"
                     android:layout_marginTop="@dimen/dimen_10"
-                    android:background="@drawable/index_invest_bg"
+                    style="@style/common_blue_button"
                     android:text="立即定投"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_16"

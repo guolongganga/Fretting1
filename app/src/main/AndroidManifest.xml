@@ -70,6 +70,10 @@
         <activity android:name=".ui.activity.user.SwitchAccountActivity"></activity>
         <!--银行列表-->
         <activity android:name=".ui.activity.user.BankListActivity"></activity>
+        <!--人气产品 业绩排行-->
+        <activity android:name=".ui.activity.index.PopularityActivity"></activity>
+        <!--优选定投 定投排行-->
+        <activity android:name=".ui.activity.index.TimingActivity"></activity>
 
         <!--通用WebView-->
         <activity android:name=".ui.activity.boot.WebPublicActivity"></activity>
