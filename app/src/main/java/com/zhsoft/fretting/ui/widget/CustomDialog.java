@@ -2,131 +2,192 @@ package com.zhsoft.fretting.ui.widget;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.os.Bundle;
-import android.view.Gravity;
+import android.content.DialogInterface;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.Window;
+import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
-import cn.droidlover.xdroidmvp.widget.ScreenUtil;
+import com.zhsoft.fretting.R;
+
 
 /**
- * 作者：sunnyzeng on 2017/12/12 09:51
- * 描述：
+ * @author ZengSuWa
+ * @Description：
+ * @Company：众鑫贷
+ * @Created time：2016/7/14 13:37
  */
-
 public class CustomDialog extends Dialog {
-    private Context context;
-    private int height, width;
-    private boolean cancelTouchout;
-    private View view;
 
-    private CustomDialog(Builder builder) {
-        super(builder.context);
-        context = builder.context;
-        height = builder.height;
-        width = builder.width;
-        cancelTouchout = builder.cancelTouchout;
-        view = builder.view;
+    public CustomDialog(Context context) {
+        super(context);
     }
 
-
-    private CustomDialog(Builder builder, int resStyle) {
-        super(builder.context, resStyle);
-        context = builder.context;
-        height = builder.height;
-        width = builder.width;
-        cancelTouchout = builder.cancelTouchout;
-        view = builder.view;
+    public CustomDialog(Context context, int theme) {
+        super(context, theme);
     }
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        setContentView(view);
-
-        setCanceledOnTouchOutside(cancelTouchout);
-
-        Window win = getWindow();
-        WindowManager.LayoutParams lp = win.getAttributes();
-        lp.gravity = Gravity.CENTER;
-        lp.height = height;
-        lp.width = width;
-        win.setAttributes(lp);
-    }
-
-    public static final class Builder {
-
+    public static class Builder {
         private Context context;
-        private int height, width;
-        private boolean cancelTouchout;
-        private View view;
-        private int resStyle = -1;
-
+        //        private String title;
+        private String message;
+        private String positiveButtonText;
+        private String negativeButtonText;
+        private View contentView;
+        private OnClickListener positiveButtonClickListener;
+        private OnClickListener negativeButtonClickListener;
 
         public Builder(Context context) {
             this.context = context;
         }
 
-        public Builder view(int resView) {
-            view = LayoutInflater.from(context).inflate(resView, null);
+        public Builder setMessage(String message) {
+            this.message = message;
             return this;
         }
 
-        public Builder heightpx(int val) {
-            height = val;
+        /**
+         * Set the Dialog message from resource
+         *
+         * @param message
+         * @return
+         */
+        public Builder setMessage(int message) {
+            this.message = (String) context.getText(message);
             return this;
         }
 
-        public Builder widthpx(int val) {
-            width = val;
+        /**
+         * Set the Dialog title from resource
+         *
+         * @param title
+         * @return
+         */
+//        public Builder setTitle(int title) {
+//            this.title = (String) context.getText(title);
+//            return this;
+//        }
+
+        /**
+         * Set the Dialog title from String
+         *
+         * @param
+         * @return
+         */
+//
+//        public Builder setTitle(String title) {
+//            this.title = title;
+//            return this;
+//        }
+        public Builder setContentView(View v) {
+            this.contentView = v;
             return this;
         }
 
-        public Builder heightdp(int val) {
-            height = ScreenUtil.dip2px(context, val);
+        /**
+         * Set the positive button resource and it's listener
+         *
+         * @param positiveButtonText
+         * @return
+         */
+        public Builder setPositiveButton(int positiveButtonText,
+                                         OnClickListener listener) {
+            this.positiveButtonText = (String) context
+                    .getText(positiveButtonText);
+            this.positiveButtonClickListener = listener;
             return this;
         }
 
-        public Builder widthdp(int val) {
-            width = ScreenUtil.dip2px(context, val);
+        public Builder setPositiveButton(String positiveButtonText,
+                                         OnClickListener listener) {
+            this.positiveButtonText = positiveButtonText;
+            this.positiveButtonClickListener = listener;
             return this;
         }
 
-        public Builder heightDimenRes(int dimenRes) {
-            height = context.getResources().getDimensionPixelOffset(dimenRes);
+        public Builder setNegativeButton(int negativeButtonText,
+                                         OnClickListener listener) {
+            this.negativeButtonText = (String) context
+                    .getText(negativeButtonText);
+            this.negativeButtonClickListener = listener;
             return this;
         }
 
-        public Builder widthDimenRes(int dimenRes) {
-            width = context.getResources().getDimensionPixelOffset(dimenRes);
-            return this;
-        }
-
-        public Builder style(int resStyle) {
-            this.resStyle = resStyle;
-            return this;
-        }
-
-        public Builder cancelTouchout(boolean val) {
-            cancelTouchout = val;
-            return this;
-        }
-
-        public Builder addViewOnclick(int viewRes,View.OnClickListener listener){
-            view.findViewById(viewRes).setOnClickListener(listener);
+        public Builder setNegativeButton(String negativeButtonText,
+                                         OnClickListener listener) {
+            this.negativeButtonText = negativeButtonText;
+            this.negativeButtonClickListener = listener;
             return this;
         }
 
 
-        public CustomDialog build() {
-            if (resStyle != -1) {
-                return new CustomDialog(this, resStyle);
+        public CustomDialog create() {
+            LayoutInflater inflater = (LayoutInflater) context
+                    .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+            final CustomDialog dialog = new CustomDialog(context, R.style.Dialog);
+            View layout = inflater.inflate(R.layout.dialog_normal_layout, null);
+            dialog.addContentView(layout, new LayoutParams(
+                    LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
+
+
+            if (positiveButtonText != null) {
+                ((Button) layout.findViewById(R.id.positive_button))
+                        .setText(positiveButtonText);
+                if (positiveButtonClickListener != null) {
+                    ((Button) layout.findViewById(R.id.positive_button))
+                            .setOnClickListener(new View.OnClickListener() {
+                                public void onClick(View v) {
+                                    positiveButtonClickListener.onClick(dialog,
+                                            DialogInterface.BUTTON_POSITIVE);
+                                }
+                            });
+                }
             } else {
-                return new CustomDialog(this);
+                // if no confirm button just set the visibility to GONE
+                layout.findViewById(R.id.positive_button).setVisibility(
+                        View.GONE);
             }
+            // set the cancel button
+            if (negativeButtonText != null) {
+                ((Button) layout.findViewById(R.id.negative_button))
+                        .setText(negativeButtonText);
+                if (negativeButtonClickListener != null) {
+                    ((Button) layout.findViewById(R.id.negative_button))
+                            .setOnClickListener(new View.OnClickListener() {
+                                public void onClick(View v) {
+                                    negativeButtonClickListener.onClick(dialog,
+                                            DialogInterface.BUTTON_NEGATIVE);
+                                }
+                            });
+                }
+            } else {
+                // if no confirm button just set the visibility to GONE
+                layout.findViewById(R.id.negative_button).setVisibility(
+                        View.GONE);
+                layout.findViewById(R.id.iv_line).setVisibility(View.GONE);
+            }
+
+            // set the content message
+            if (message != null) {
+                ((TextView) layout.findViewById(R.id.message)).setText(Html.fromHtml(message));
+            } else if (contentView != null) {
+                // if no message set
+                // add the contentView to the dialog body
+                ((LinearLayout) layout.findViewById(R.id.content))
+                        .removeAllViews();
+                ((LinearLayout) layout.findViewById(R.id.content))
+                        .addView(contentView, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
+            }
+            dialog.setContentView(layout);
+            WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+            lp.dimAmount = 0.7f;
+            return dialog;
         }
     }
+
 }

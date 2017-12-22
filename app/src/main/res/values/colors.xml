@@ -19,12 +19,12 @@
     <color name="color_1862b7">#1862B7</color>
 
 
-
     <color name="color_1a7bcd">#1a7bcd</color>
     <color name="color_f6cf47">#f6cf47</color>
     <color name="color_f7182d">#f7182d</color>
     <color name="color_666666">#666666</color>
     <color name="color_333333">#333333</color>
+    <color name="color_3e3e3e">#3e3e3e</color>
     <color name="color_696969">#696969</color>
     <color name="color_80696969">#80696969</color>
     <color name="color_text_333">#333333</color>
@@ -33,5 +33,9 @@
     <color name="color_aaaaaa">#aaaaaa</color>
 
     <color name="province_line_border">#cdcdcd</color>
+    <!--分割线-->
+    <color name="color_line_dividing">#ecedf1</color>
+    <!--弹框背景色-->
+    <color name="color_67">#a0abbb</color>
 
 </resources>

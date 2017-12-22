@@ -32,15 +32,15 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
     /** 注册的手机号码 */
-    private static final String PHONE = "phone";
+//    private static final String PHONE = "phone";
     /** 传递银行列表数据 */
-    private static final String BANK = "bank";
+//    private static final String BANK = "bank";
     /** 跳转到银行列表请求码 */
-    private static final int TOBANKLIST = 100;
+//    private static final int TOBANKLIST = 100;
     /** 从银行列表返回来的结果码 */
-    private static final int RESULT_CODE = 200;
+//    private static final int RESULT_CODE = 200;
     /** 选择的银行信息 传递标识 */
-    private static final String CHOOSE_BANCK = "choosebank";
+//    private static final String CHOOSE_BANCK = "choosebank";
 
     /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
@@ -98,11 +98,11 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
         //设置标题
         headTitle.setText("基金开户");
         registerServiceSelect.setSelected(true);
-        String strPhone = bundle.getString(PHONE);
+        String strPhone = bundle.getString(Constant.PHONE);
         phone.setText(strPhone);
         //请求银行卡列表
-        httpLoadingDialog.visible("加载中...");
-        getP().getBankList();
+//        httpLoadingDialog.visible("加载中...");
+//        getP().getBankList();
     }
 
     @Override
@@ -222,9 +222,9 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
             @Override
             public void onClick(View view) {
                 //TODO 选择银行
-                Bundle bundle = new Bundle();
-                bundle.putParcelableArrayList(BANK, listResps);
-                startActivity(BankListActivity.class, bundle, TOBANKLIST);
+//                Bundle bundle = new Bundle();
+//                bundle.putParcelableArrayList(BANK, listResps);
+                startActivity(BankListActivity.class, Constant.TO_BANKLIST);
 
             }
         });
@@ -241,34 +241,33 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
     }
 
     /**
-     * 绑定银行卡失败
+     * 访问银行卡列表失败
      */
-    public void requestFail() {
-        httpLoadingDialog.dismiss();
-    }
+//    public void requestFail() {
+//        httpLoadingDialog.dismiss();
+//    }
 
     /**
      * 访问银行卡列表
      *
      * @param data
      */
-    public void bankListData(ArrayList<BankResp> data) {
-        if (data != null && data.size() > 0) {
-
-            listResps = data;
-            httpLoadingDialog.dismiss();
-        }
-
-    }
+//    public void bankListData(ArrayList<BankResp> data) {
+//        if (data != null && data.size() > 0) {
+//
+//            listResps = data;
+//            httpLoadingDialog.dismiss();
+//        }
+//
+//    }
 //    public void bankListData(Object data) {
 //        XLog.e(data.toString());
 //    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == RESULT_CODE && requestCode == TOBANKLIST) {
-            BankResp resp = data.getParcelableExtra(CHOOSE_BANCK);
+        if (resultCode == Constant.BANKLIST_RESULT_CODE && requestCode == Constant.TO_BANKLIST) {
+            BankResp resp = data.getParcelableExtra(Constant.CHOOSE_BANCK);
             banckName.setText(resp.getBank_name());
         }
     }

@@ -38,4 +38,15 @@ public class Constant {
     //基金页面中的tab名称
     public static final String FUND_TAB_NAME = BASE_CONSTANT + "fund_tab_name";
 
+    //跳转银行列表requestcode
+    public static final int TO_BANKLIST = 100;
+
+    //银行卡列表选择之后回到之前页面 resultcode
+    public static final int BANKLIST_RESULT_CODE = 200;
+
+    //选择的银行
+    public static final String CHOOSE_BANCK = BASE_CONSTANT + "";
+
+    //注册传递电话号码
+    public static final String PHONE = BASE_CONSTANT + "phone";
 }

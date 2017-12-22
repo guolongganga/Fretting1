@@ -7,13 +7,16 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.user.BankResp;
+import com.zhsoft.fretting.present.user.BankListPresent;
 import com.zhsoft.fretting.ui.adapter.user.BankListAdapter;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
+import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 import cn.droidlover.xrecyclerview.RecyclerItemCallback;
 import cn.droidlover.xrecyclerview.XRecyclerView;
@@ -23,11 +26,11 @@ import cn.droidlover.xrecyclerview.XRecyclerView;
  * 描述：银行列表
  */
 
-public class BankListActivity extends XActivity {
+public class BankListActivity extends XActivity<BankListPresent> {
     /** 传递银行列表数据 */
-    private static final String BANK = "bank";
-    private static final String CHOOSE_BANCK = "choosebank";
-    private static final int RESULT_CODE = 200;
+//    private static final String BANK = "bank";
+//    private static final String CHOOSE_BANCK = "choosebank";
+//    private static final int RESULT_CODE = 200;
     /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
@@ -35,7 +38,7 @@ public class BankListActivity extends XActivity {
     /** 银行列表 */
     @BindView(R.id.xrv_bank_list) XRecyclerView xrvBankList;
 
-    private ArrayList<BankResp> listResps;
+    private HttpLoadingDialog httpLoadingDialog;
 
     @Override
     public int getLayoutId() {
@@ -43,18 +46,19 @@ public class BankListActivity extends XActivity {
     }
 
     @Override
-    public Object newP() {
-        return null;
+    public BankListPresent newP() {
+        return new BankListPresent();
     }
 
     @Override
     public void initData(Bundle bundle) {
         headTitle.setText("基金开户");
         xrvBankList.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
-        listResps = bundle.getParcelableArrayList(BANK);
-        if (listResps != null && listResps.size() > 0) {
-            getBankListAdapter().addData(listResps);
-        }
+        httpLoadingDialog = new HttpLoadingDialog(context);
+        //请求银行卡列表
+        httpLoadingDialog.visible("加载中...");
+        getP().getBankList();
+
     }
 
     @Override
@@ -84,8 +88,8 @@ public class BankListActivity extends XActivity {
                     //点击
                     case BankListAdapter.ITEM_CLICK:
                         Intent intent = new Intent();
-                        intent.putExtra(CHOOSE_BANCK, model);
-                        setResult(RESULT_CODE, intent);
+                        intent.putExtra(Constant.CHOOSE_BANCK, model);
+                        setResult(Constant.BANKLIST_RESULT_CODE, intent);
                         finish();
 //                        showToast(model.getBankName());
                         break;
@@ -95,5 +99,25 @@ public class BankListActivity extends XActivity {
         return adapter;
     }
 
+
+    /**
+     * 绑定银行卡失败
+     */
+    public void requestFail() {
+        httpLoadingDialog.dismiss();
+    }
+
+    /**
+     * 访问银行卡列表
+     *
+     * @param data
+     */
+    public void bankListData(ArrayList<BankResp> data) {
+        httpLoadingDialog.dismiss();
+        if (data != null && data.size() > 0) {
+            getBankListAdapter().addData(data);
+        }
+
+    }
 
 }

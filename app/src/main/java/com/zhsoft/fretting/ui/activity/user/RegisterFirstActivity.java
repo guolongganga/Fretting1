@@ -31,7 +31,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  */
 
 public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
-    private static final String PHONE = "phone";
+//    private static final String PHONE = "phone";
     /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
@@ -116,6 +116,7 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
         image.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //图片验证码接口
                 httpLoadingDialog.visible();
                 getP().getImageCode();
             }
@@ -125,6 +126,7 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
             @Override
             public void onClick(View view) {
                 String phone = phoneNumber.getText().toString();
+                String imgcode = getText(imageCode);
                 //表单验证
                 if (noNetWork()) {
                     showNetWorkError();
@@ -138,12 +140,14 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
                     showToast("请输入正确的手机号码");
                     return;
                 }
-                if (!isNotEmpty(getText(imageCode))) {
+                if (!isNotEmpty(imgcode)) {
                     showToast("图片验证码不能为空");
                     return;
                 }
 
                 getVerifyCode.start();
+                //TODO 获取短信验证码
+                getP().getMessageCode(phone, imgcode, image_code_id);
 
             }
         });
@@ -194,7 +198,7 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
                     showToast("验证码不能为空");
                     return;
                 }
-                //TODO 下一步
+                //TODO 注册接口 缺少短信验证码
                 httpLoadingDialog.visible("加载中...");
                 getP().register(phone, pwd, imgcode, image_code_id);
 
@@ -227,7 +231,7 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
         RuntimeHelper.getInstance().setLogin(true);
 
         Bundle bundle = new Bundle();
-        bundle.putString(PHONE, getText(phoneNumber));
+        bundle.putString(Constant.PHONE, getText(phoneNumber));
         startActivity(RegisterSecondActivity.class, bundle);
 
         finish();

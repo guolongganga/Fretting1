@@ -6,6 +6,7 @@ import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
+import com.zhsoft.fretting.params.MessageCodeParams;
 import com.zhsoft.fretting.params.RegisterFirstParams;
 import com.zhsoft.fretting.ui.activity.user.RegisterFirstActivity;
 
@@ -102,7 +103,21 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
                     }
                 });
 
-
     }
 
+    /**
+     * 获取短信验证码
+     *
+     * @param phone
+     */
+    public void getMessageCode(String phone, String imgCode, String image_code_id) {
+        CommonReqData reqData = new CommonReqData();
+        MessageCodeParams params = new MessageCodeParams();
+        params.setPhone(phone);
+        params.setImage_code(imgCode);
+        params.setImage_code_id(image_code_id);
+        reqData.setData(params);
+
+        //
+    }
 }

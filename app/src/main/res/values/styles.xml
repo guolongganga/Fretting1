@@ -20,6 +20,14 @@
         <item name="android:windowIsTranslucent">false</item>
     </style>
 
+    <!--弹出框-->
+    <style name="Dialog" parent="android:style/Theme.Dialog">
+        <item name="android:background">#00000000</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
     <!-- 发送验证码 -->
     <style name="AppTheme.Button_send_code">
         <item name="android:layout_width">wrap_content</item>
@@ -30,6 +38,7 @@
         <item name="android:textSize">@dimen/text_size_14</item>
         <item name="android:gravity">center</item>
     </style>
+
     <!--蓝色圆角按钮-->
     <style name="common_blue_button">
         <item name="android:layout_width">match_parent</item>
@@ -43,6 +52,7 @@
         <item name="android:textSize">@dimen/text_size_14</item>
         <item name="android:gravity">center</item>
     </style>
+
     <!--用户设置 横条-->
     <style name="user_setting_line">
         <item name="android:layout_width">match_parent</item>
@@ -55,6 +65,7 @@
         <item name="android:textColor">@color/color_text_333</item>
         <item name="android:textSize">14sp</item>
     </style>
+
     <!--用户已登录界面 自选，定投，交易查询，分红，撤单-->
     <style name="user_text_top_image">
         <item name="android:layout_width">0dp</item>
@@ -77,8 +88,7 @@
         <item name="android:textColor">@android:color/holo_red_light</item>
     </style>
 
-
-
+    <!--弹出地址和职务选择器动画-->
     <style name="AnimBottom" mce_bogus="1" parent="android:Animation">
         <item name="android:windowEnterAnimation">@anim/bottom_enter</item>
         <item name="android:windowExitAnimation">@anim/bottom_exit</item>
