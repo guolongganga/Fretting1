@@ -6,9 +6,13 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.ui.adapter.boot.PopBottomSelectorRecycleAdapter;
@@ -39,7 +43,7 @@ public class PopShow {
     /**
      * 涨幅选择
      */
-    public void showRangeSelector(final List<String> list,int isSelector) {
+    public void showRangeSelector(final List<String> list, int isSelector) {
         //设置contentView
         View contentView = LayoutInflater.from(activity).inflate(R.layout.pop_drop_selector, null);
         final PopupWindow mPopWindow = new PopupWindow(contentView,
@@ -78,6 +82,7 @@ public class PopShow {
 
     /**
      * 纯数字显示 在底部
+     *
      * @param list
      */
     public void showText(final List<String> list) {
@@ -122,8 +127,9 @@ public class PopShow {
                 }
             }
         });
-        mPopWindow.showAtLocation(view, Gravity.CENTER| Gravity.BOTTOM,0,0);
+        mPopWindow.showAtLocation(view, Gravity.CENTER | Gravity.BOTTOM, 0, 0);
     }
+
 
     public OnClickPop onClickPop;
 
@@ -134,5 +140,4 @@ public class PopShow {
     public interface OnClickPop {
         void setRange(int position);
     }
-
 }

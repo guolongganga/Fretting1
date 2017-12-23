@@ -10,6 +10,7 @@ import com.zhsoft.fretting.params.MessageCodeParams;
 import com.zhsoft.fretting.params.RegisterFirstParams;
 import com.zhsoft.fretting.ui.activity.user.RegisterFirstActivity;
 
+import cn.droidlover.xdroidmvp.imageloader.ILFactory;
 import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XPresent;
 import cn.droidlover.xdroidmvp.net.ApiSubscriber;
@@ -72,36 +73,36 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
      * 获取图片验证码
      */
     public void getImageCode() {
-        CommonReqData reqData = new CommonReqData();
-        reqData.setData("");
-
-        Api.getApi()
-                .getImageCode(reqData)
-                .compose(XApi.<ImageResp>getApiTransformer())
-                .compose(XApi.<ImageResp>getScheduler())
-                .compose(getV().<ImageResp>bindToLifecycle())
-                .subscribe(new ApiSubscriber<ImageResp>() {
-                    @Override
-                    protected void onFail(NetError error) {
-                        error.printStackTrace();
-                        getV().requestMessageFail();
-                        getV().showToast("请求图片验证码失败，点击图片重试");
-                    }
-
-                    @Override
-                    public void onNext(ImageResp imageResp) {
-                        if (imageResp != null && imageResp.getStatus() == 200) {
-                            if (imageResp.getData() != null) {
-                                getV().getImageCode(imageResp.getData());
-                            }
-
-                        } else {
-                            getV().requestMessageFail();
-                            getV().showToast(imageResp.getMessage());
-                            XLog.e("返回数据为空");
-                        }
-                    }
-                });
+        //假装成功了
+        ImageResp data = new ImageResp();
+        getV().getImageCodeSuccess(data);
+//        CommonReqData reqData = new CommonReqData();
+//        reqData.setData("");
+//
+//        Api.getApi()
+//                .getImageCode(reqData)
+//                .compose(XApi.<ImageResp>getApiTransformer())
+//                .compose(XApi.<ImageResp>getScheduler())
+//                .compose(getV().<ImageResp>bindToLifecycle())
+//                .subscribe(new ApiSubscriber<ImageResp>() {
+//                    @Override
+//                    protected void onFail(NetError error) {
+//                        getV().getImageCodeFail();
+//                    }
+//
+//                    @Override
+//                    public void onNext(ImageResp imageResp) {
+//                        if (imageResp != null && imageResp.getStatus() == 200) {
+//                            if (imageResp.getData() != null) {
+//                                getV().getImageCodeSuccess(imageResp.getData());
+//                            }
+//                        } else {
+//                            getV().getImageCodeFail();
+//                            getV().showToast(imageResp.getMessage());
+//                            XLog.e("返回数据为空");
+//                        }
+//                    }
+//                });
 
     }
 
@@ -119,5 +120,11 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
         reqData.setData(params);
 
         //
+        int code = Integer.parseInt(imgCode);
+        if (code == 2907) {
+            getV().requestImageCodeSuccess();
+        } else {
+            getV().requestImageCodeFail();
+        }
     }
 }
