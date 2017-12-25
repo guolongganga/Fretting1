@@ -2,15 +2,16 @@ package com.zhsoft.fretting.present.user;
 
 import android.util.Log;
 
+import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.model.user.ImageResp;
+import com.zhsoft.fretting.model.user.PhoneCodeResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
-import com.zhsoft.fretting.params.MessageCodeParams;
+import com.zhsoft.fretting.params.PhoneCodeParams;
 import com.zhsoft.fretting.params.RegisterFirstParams;
 import com.zhsoft.fretting.ui.activity.user.RegisterFirstActivity;
 
-import cn.droidlover.xdroidmvp.imageloader.ILFactory;
 import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XPresent;
 import cn.droidlover.xdroidmvp.net.ApiSubscriber;
@@ -30,15 +31,14 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
      * @param mobile_tel 手机号码
      * @param password   密码
      */
-    public void register(String mobile_tel, String password, String imgCode, String image_code_id) {
+    public void register(String mobile_tel, String password, String code) {
 
         CommonReqData reqData = new CommonReqData();
 
         RegisterFirstParams params = new RegisterFirstParams();
         params.setMobile_tel(mobile_tel);
         params.setPassword(password);
-        params.setImage_code(imgCode);
-        params.setImage_code_id(image_code_id);
+        params.setMessageCode(code);
         reqData.setData(params);
 
         Api.getApi()
@@ -74,35 +74,35 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
      */
     public void getImageCode() {
         //假装成功了
-        ImageResp data = new ImageResp();
-        getV().getImageCodeSuccess(data);
-//        CommonReqData reqData = new CommonReqData();
-//        reqData.setData("");
-//
-//        Api.getApi()
-//                .getImageCode(reqData)
-//                .compose(XApi.<ImageResp>getApiTransformer())
-//                .compose(XApi.<ImageResp>getScheduler())
-//                .compose(getV().<ImageResp>bindToLifecycle())
-//                .subscribe(new ApiSubscriber<ImageResp>() {
-//                    @Override
-//                    protected void onFail(NetError error) {
-//                        getV().getImageCodeFail();
-//                    }
-//
-//                    @Override
-//                    public void onNext(ImageResp imageResp) {
-//                        if (imageResp != null && imageResp.getStatus() == 200) {
-//                            if (imageResp.getData() != null) {
-//                                getV().getImageCodeSuccess(imageResp.getData());
-//                            }
-//                        } else {
-//                            getV().getImageCodeFail();
-//                            getV().showToast(imageResp.getMessage());
-//                            XLog.e("返回数据为空");
-//                        }
-//                    }
-//                });
+//        ImageResp data = new ImageResp();
+//        getV().getImageCodeSuccess(data);
+        CommonReqData reqData = new CommonReqData();
+        reqData.setData("");
+
+        Api.getApi()
+                .getImageCode(reqData)
+                .compose(XApi.<ImageResp>getApiTransformer())
+                .compose(XApi.<ImageResp>getScheduler())
+                .compose(getV().<ImageResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<ImageResp>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        getV().getImageCodeFail();
+                    }
+
+                    @Override
+                    public void onNext(ImageResp imageResp) {
+                        if (imageResp != null && imageResp.getStatus() == 200) {
+                            if (imageResp.getData() != null) {
+                                getV().getImageCodeSuccess(imageResp.getData());
+                            }
+                        } else {
+                            getV().getImageCodeFail();
+                            getV().showToast(imageResp.getMessage());
+                            XLog.e("返回数据为空");
+                        }
+                    }
+                });
 
     }
 
@@ -112,19 +112,41 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
      * @param phone
      */
     public void getMessageCode(String phone, String imgCode, String image_code_id) {
-        CommonReqData reqData = new CommonReqData();
-        MessageCodeParams params = new MessageCodeParams();
-        params.setPhone(phone);
+        final CommonReqData reqData = new CommonReqData();
+        PhoneCodeParams params = new PhoneCodeParams();
+        params.setPhoneNo(phone);
         params.setImage_code(imgCode);
         params.setImage_code_id(image_code_id);
         reqData.setData(params);
 
+        Api.getApi().getPhoneCode(reqData)
+                .compose(XApi.<BaseResp<String>>getApiTransformer())
+                .compose(XApi.<BaseResp<String>>getScheduler())
+                .compose(getV().<BaseResp<String>>bindToLifecycle())
+                .subscribe(new ApiSubscriber<BaseResp<String>>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        getV().requestPhoneCodeFail();
+                    }
+
+                    @Override
+                    public void onNext(BaseResp<String> resp) {
+                        if (resp != null && resp.getStatus() == 200) {
+                            getV().requestPhoneCodeSuccess(resp.getData());
+                        } else {
+                            getV().requestPhoneCodeFail();
+                            getV().showToast(resp.getMessage());
+                            XLog.e("返回数据为空");
+                        }
+                    }
+                });
+
         //
-        int code = Integer.parseInt(imgCode);
-        if (code == 2907) {
-            getV().requestImageCodeSuccess();
-        } else {
-            getV().requestImageCodeFail();
-        }
+//        int code = Integer.parseInt(imgCode);
+//        if (false) {
+//            getV().requestImageCodeSuccess();
+//        } else {
+//            getV().requestImageCodeFail();
+//        }
     }
 }

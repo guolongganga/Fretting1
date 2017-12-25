@@ -49,4 +49,11 @@ public class Constant {
 
     //注册传递电话号码
     public static final String PHONE = BASE_CONSTANT + "phone";
+
+    //注册成功传递姓名
+    public static final String NAME = BASE_CONSTANT + "name";
+
+    //注册成功传递身份证号
+    public static final String CERT_NO = BASE_CONSTANT + "cert_no";
+
 }

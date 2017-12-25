@@ -33,7 +33,7 @@ public class CustomDialog extends Dialog {
 
     public static class Builder {
         private Context context;
-        //        private String title;
+        private String title;
         private String message;
         private String positiveButtonText;
         private String negativeButtonText;
@@ -67,10 +67,10 @@ public class CustomDialog extends Dialog {
          * @param title
          * @return
          */
-//        public Builder setTitle(int title) {
-//            this.title = (String) context.getText(title);
-//            return this;
-//        }
+        public Builder setTitle(int title) {
+            this.title = (String) context.getText(title);
+            return this;
+        }
 
         /**
          * Set the Dialog title from String
@@ -78,11 +78,12 @@ public class CustomDialog extends Dialog {
          * @param
          * @return
          */
-//
-//        public Builder setTitle(String title) {
-//            this.title = title;
-//            return this;
-//        }
+
+        public Builder setTitle(String title) {
+            this.title = title;
+            return this;
+        }
+
         public Builder setContentView(View v) {
             this.contentView = v;
             return this;
@@ -170,6 +171,12 @@ public class CustomDialog extends Dialog {
                 layout.findViewById(R.id.negative_button).setVisibility(
                         View.GONE);
                 layout.findViewById(R.id.iv_line).setVisibility(View.GONE);
+            }
+            if (title != null) {
+                ((TextView) layout.findViewById(R.id.title)).setText(title);
+            } else {
+                layout.findViewById(R.id.title).setVisibility(View.GONE);
+                layout.findViewById(R.id.line_title).setVisibility(View.GONE);
             }
 
             // set the content message

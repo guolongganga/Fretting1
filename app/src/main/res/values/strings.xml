@@ -43,6 +43,7 @@
     <string name="user_register_first_tv_hint_phone">此手机号为接收交易通知等</string>
     <string name="user_register_first_choose_account"><u>选择已有账户登录>></u></string>
     <string name="user_register_first_no_message_code"><u>无法收到验证码?</u></string>
+    <string name="user_register_first_no_message_code_hint">1.网络通讯异常可能会造成短信丢失，请重新获取或稍后再试;\n2.请核实手机是否欠费停机，或者屏蔽了系统短信</string>
 
     <!--登录-->
     <string name="user_login_username">用户</string>

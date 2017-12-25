@@ -69,7 +69,7 @@
 //     */
 //    public void getMessageCode(String phone, String imgCode, String image_code_id,ISuccessDataLoadView dataLoadView) {
 //        CommonReqData reqData = new CommonReqData();
-//        MessageCodeParams params = new MessageCodeParams();
+//        PhoneCodeParams params = new PhoneCodeParams();
 //        params.setPhone(phone);
 //        params.setImage_code(imgCode);
 //        params.setImage_code_id(image_code_id);

@@ -5,6 +5,7 @@ import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.model.TaetResp;
 import com.zhsoft.fretting.model.user.BankResp;
 import com.zhsoft.fretting.model.user.ImageResp;
+import com.zhsoft.fretting.model.user.PhoneCodeResp;
 import com.zhsoft.fretting.params.CommonReqData;
 
 import io.reactivex.Flowable;
@@ -14,8 +15,10 @@ import retrofit2.http.POST;
 
 import static com.zhsoft.fretting.net.HttpContent.common_bank_list;
 import static com.zhsoft.fretting.net.HttpContent.image_code;
+import static com.zhsoft.fretting.net.HttpContent.open_account;
 import static com.zhsoft.fretting.net.HttpContent.password_check;
 import static com.zhsoft.fretting.net.HttpContent.password_reset;
+import static com.zhsoft.fretting.net.HttpContent.phone_code;
 import static com.zhsoft.fretting.net.HttpContent.test_test;
 import static com.zhsoft.fretting.net.HttpContent.user_login;
 import static com.zhsoft.fretting.net.HttpContent.user_register;
@@ -62,5 +65,13 @@ public interface HttpUtil {
     @POST(image_code)
     Flowable<ImageResp> getImageCode(@Body CommonReqData reqData);
 
+    //短信验证码
+    @Headers("apptype:Android")
+    @POST(phone_code)
+    Flowable<BaseResp<String>> getPhoneCode(@Body CommonReqData reqData);
+
+    @Headers("apptype:Android")
+    @POST(open_account)
+    Flowable<BaseResp<String>> openAccount(@Body CommonReqData reqData);
 
 }

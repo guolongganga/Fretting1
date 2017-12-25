@@ -17,9 +17,9 @@ import java.util.TimerTask;
  * @author MiaoWenHai
  */
 public class CountdownButton extends Button {
-    /** 开始倒计时60秒从新发送短信 */
+    /** 开始倒计时120秒从新发送短信 */
     private final int COUNT_DOWN_START = 1;
-    private int countdown = 59;
+    private int countdown = 119;
     private boolean isCancel;
     private Timer timer;
 
@@ -42,7 +42,7 @@ public class CountdownButton extends Button {
                 isCancel = true;
             }
         } else {
-            countdown = 59;
+            countdown = 119;
             //恢复按钮状态
             this.setEnabled(true);
             this.setText("重新获取验证码");

@@ -10,6 +10,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.user.BankResp;
@@ -20,7 +21,6 @@ import com.zhsoft.fretting.widget.ChenJingET;
 import java.util.ArrayList;
 
 import butterknife.BindView;
-import butterknife.ButterKnife;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
@@ -73,12 +73,20 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
     /** 注册协议 */
     @BindView(R.id.register_service) TextView registerService;
     /** 下一步按钮 */
-    @BindView(R.id.btn_next) Button btnNext;
+    @BindView(R.id.btn_save) Button btnSave;
 
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
-    /** 银行集合 */
-    private ArrayList<BankResp> listResps;
+//    /** 银行集合 */
+//    private ArrayList<BankResp> listResps;
+    /** 已选择的银行 */
+    private BankResp bankResp;
+    /** 用户编号 */
+    private String userId;
+    /** 登录标识 */
+    private String token;
+    /** 注册的手机号 */
+    private String strPhone;
 
     @Override
     public int getLayoutId() {
@@ -98,7 +106,11 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
         //设置标题
         headTitle.setText("基金开户");
         registerServiceSelect.setSelected(true);
-        String strPhone = bundle.getString(Constant.PHONE);
+//        String strPhone = bundle.getString(Constant.PHONE);
+        //获取用户缓存的userid 和 token
+        userId = App.getSharedPref().getString(Constant.USERID, "");
+        token = App.getSharedPref().getString(Constant.TOKEN, "");
+        strPhone = App.getSharedPref().getString(Constant.USER_NAME, "");
         phone.setText(strPhone);
         //请求银行卡列表
 //        httpLoadingDialog.visible("加载中...");
@@ -140,7 +152,7 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
 //
 //            }
 //        });
-        btnNext.setOnClickListener(new View.OnClickListener() {
+        btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String strUsername = getText(userName);
@@ -204,7 +216,10 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
                     return;
                 }
                 //TODO 下一步 请求注册接口
-                startActivity(RegisterSuccessActivity.class);
+                httpLoadingDialog.visible("开户中...");
+                httpLoadingDialog.setCanceledOnKeyBack();
+                getP().openAccount(userId, token, strUsername, strIdentity, getText(email), bankResp, strBanknumber, strPhone, strpwd);
+//                startActivity(RegisterSuccessActivity.class);
             }
         });
         registerServiceSelect.setOnClickListener(new View.OnClickListener() {
@@ -267,9 +282,31 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Constant.BANKLIST_RESULT_CODE && requestCode == Constant.TO_BANKLIST) {
-            BankResp resp = data.getParcelableExtra(Constant.CHOOSE_BANCK);
-            banckName.setText(resp.getBank_name());
+            bankResp = data.getParcelableExtra(Constant.CHOOSE_BANCK);
+            banckName.setText(bankResp.getBank_name());
         }
     }
 
+    /**
+     * 开户失败
+     */
+    public void requestOpenAccountFail() {
+        httpLoadingDialog.dismiss();
+        showToast("开户失败");
+    }
+
+    /**
+     * 开户成功
+     */
+    public void requestOpenAccountSuccess(String data) {
+        httpLoadingDialog.dismiss();
+        showToast(data);
+        Bundle bundle = new Bundle();
+        //姓名
+        bundle.putString(Constant.NAME, getText(userName));
+        //身份证号
+        bundle.putString(Constant.CERT_NO, getText(identity));
+        startActivity(RegisterSuccessActivity.class, bundle);
+        finish();
+    }
 }

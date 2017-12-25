@@ -1,14 +1,18 @@
 package com.zhsoft.fretting.ui.activity.user;
 
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -24,8 +28,10 @@ import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.model.user.ImageResp;
+import com.zhsoft.fretting.model.user.PhoneCodeResp;
 import com.zhsoft.fretting.present.user.RegisterFirstPresent;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
+import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.ui.widget.PopShow;
 import com.zhsoft.fretting.utils.Base64ImageUtil;
 import com.zhsoft.fretting.utils.RuntimeHelper;
@@ -108,6 +114,8 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
      * 图片验证码id
      */
     private String image_code_id;
+    /** 短信验证码 */
+    private String messageCode;
 
     //验证码pop
     PopupWindow mPopWindow;
@@ -119,6 +127,8 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
     TextView tvRefresh;
     //输入验证码
     EditText etCode;
+
+    private CustomDialog customDialog;
 
 
     @Override
@@ -166,7 +176,20 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
         messageFail.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("收不到短信验证码");
+
+                if (customDialog == null) {
+                    customDialog = new CustomDialog
+                            .Builder(context)
+                            .setTitle("无法收到短信验证码")
+                            .setMessage(R.string.user_register_first_no_message_code_hint)
+                            .setPositiveButton("我知道了", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    customDialog.dismiss();
+                                }
+                            }).create();
+                }
+                customDialog.show();
             }
         });
 
@@ -184,6 +207,8 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
             public void onClick(View view) {
 
                 String phone = phoneNumber.getText().toString();
+                String pwd = getText(password);
+                String pwdagain = getText(passwordAgain);
 
                 //表单验证通过才弹出pop
                 if (noNetWork()) {
@@ -198,12 +223,28 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
                     showToast("请输入正确的手机号码");
                     return;
                 }
+                if (!isNotEmpty(pwd)) {
+                    showToast("登录密码不能为空");
+                    return;
+                }
+                if (pwd.length() < 8) {
+                    showToast("登录密码为8-16位数字、字母、特殊字符等");
+                    return;
+                }
+                if (!isNotEmpty(pwdagain)) {
+                    showToast("确认登录密码不能为空");
+                    return;
+                }
+                if (!pwd.equals(pwdagain)) {
+                    showToast("两次密码不一致");
+                    return;
+                }
 //                if (!isNotEmpty(imgcode)) {
 //                    showToast("图片验证码不能为空");
 //                    return;
 //                }
 
-                //TODO 获取短信验证码
+                //获取图片验证码
                 //getP().getMessageCode(phone, imgcode, image_code_id);
                 showImageCode(phone);
             }
@@ -232,19 +273,18 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
                 }
                 if (!isNotEmpty(pwd)) {
                     showToast("登录密码不能为空");
-                }
-                if (!isNotEmpty(pwd)) {
-                    showToast("登录密码不能为空");
+                    return;
                 }
                 if (pwd.length() < 8) {
                     showToast("登录密码为8-16位数字、字母、特殊字符等");
                     return;
                 }
                 if (!isNotEmpty(pwdagain)) {
-                    showToast("登录密码不能为空");
+                    showToast("确认登录密码不能为空");
+                    return;
                 }
-                if (pwdagain.length() < 8) {
-                    showToast("登录密码为8-16位数字、字母、特殊字符等");
+                if (!pwd.equals(pwdagain)) {
+                    showToast("两次密码不一致");
                     return;
                 }
 //                if (!isNotEmpty(imgcode)) {
@@ -256,9 +296,13 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
                     showToast("验证码不能为空");
                     return;
                 }
-                //TODO 注册接口 缺少短信验证码
+//                if(!code.equals(messageCode)){
+//                    showToast("短信验证码不正确");
+//                }
+                //注册接口 短信验证码
                 httpLoadingDialog.visible("加载中...");
-//                getP().register(phone, pwd, imgcode, image_code_id);
+                httpLoadingDialog.setCanceledOnKeyBack();
+                getP().register(phone, pwd, code);
 
 //                startActivity(RegisterSecondActivity.class);//有接口就去掉
 
@@ -303,16 +347,16 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
     public void getImageCodeSuccess(ImageResp data) {
         httpLoadingDialog.dismiss();
         //获取 图片Base64 字符串
-//        String strimage = data.getBase64Image();
+        String strimage = data.getBase64Image();
         image_code_id = data.getImageCodeId();
-//        if (!TextUtils.isEmpty(strimage)) {
-//            //将Base64图片串转换成Bitmap
-//            Bitmap bitmap = Base64ImageUtil.base64ToBitmap(strimage);
-//            //image.setImageBitmap(bitmap);
-//        }
+        if (!TextUtils.isEmpty(strimage)) {
+            //将Base64图片串转换成Bitmap
+            Bitmap bitmap = Base64ImageUtil.base64ToBitmap(strimage);
+            ivCode.setImageBitmap(bitmap);
+        }
 
         //获取验证码成功就显示
-        imageLoader.displayImage("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514031909051&di=8ed9e18b1cc42840143e19f0f2bc8976&imgtype=0&src=http%3A%2F%2Freso2.yiihuu.com%2F1331436-z.jpg",ivCode);
+//        imageLoader.displayImage("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514031909051&di=8ed9e18b1cc42840143e19f0f2bc8976&imgtype=0&src=http%3A%2F%2Freso2.yiihuu.com%2F1331436-z.jpg", ivCode);
 
 //        ILFactory.getLoader().loadNet(ivCode, "", null);
 
@@ -323,7 +367,7 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
      * 获取图片验证码成功失败
      */
     public void getImageCodeFail() {
-        showToast("请求验证码失败...");
+        showToast("请求图片验证码失败...");
     }
 
 
@@ -340,6 +384,10 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
         //外部是否可以点击
         mPopWindow.setBackgroundDrawable(new BitmapDrawable());
         mPopWindow.setOutsideTouchable(true);
+
+        //解决popupwindow中弹出输入法被遮挡问题
+        mPopWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        mPopWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
 
         FrameLayout flContent = contentView.findViewById(R.id.fl_content);
         flContent.getBackground().setAlpha(150);
@@ -395,9 +443,10 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
     }
 
     /**
-     * 请求图片验证码成功
+     * 请求短信验证码成功
      */
-    public void requestImageCodeSuccess() {
+    public void requestPhoneCodeSuccess(String data) {
+//        messageCode = data.getMessageCode();
         //关闭pop，
         mPopWindow.dismiss();
         //开始倒计时
@@ -405,10 +454,11 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
     }
 
     /**
-     * 请求图片验证码失败
+     * 请求短信验证码失败
      */
-    public void requestImageCodeFail() {
+    public void requestPhoneCodeFail() {
         //获取失败的原因
         showToast("后台那家伙说你输错验证码了...老铁");
     }
+
 }

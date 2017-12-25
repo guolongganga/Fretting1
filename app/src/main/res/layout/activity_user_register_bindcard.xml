@@ -67,8 +67,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:hint="请输入姓名"
-                    android:inputType="number"
-                    android:maxLength="11"
+                    android:inputType="text"
                     android:singleLine="true"
                     android:textColorHint="@color/color_696969"
                     android:textSize="@dimen/text_size_14"
@@ -102,8 +101,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:hint="请输入身份证号"
-                    android:inputType="number"
-                    android:maxLength="11"
+                    android:inputType="text"
                     android:singleLine="true"
                     android:textColorHint="@color/color_696969"
                     android:textSize="@dimen/text_size_14"
@@ -137,8 +135,7 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:hint="请输入邮箱"
-                    android:inputType="number"
-                    android:maxLength="11"
+                    android:inputType="text"
                     android:singleLine="true"
                     android:textColorHint="@color/color_696969"
                     android:textSize="@dimen/text_size_14"
@@ -234,7 +231,6 @@
                     android:background="@null"
                     android:hint="请输入银行卡号"
                     android:inputType="number"
-                    android:maxLength="11"
                     android:singleLine="true"
                     android:textColorHint="@color/color_696969"
                     android:textSize="@dimen/text_size_14"
@@ -456,8 +452,6 @@
                     android:textColor="@color/color_f7182d"/>
 
             </LinearLayout>
-
-            <include layout="@layout/layout_divider_horizontal"/>
 
             <!--下一步-->
             <Button

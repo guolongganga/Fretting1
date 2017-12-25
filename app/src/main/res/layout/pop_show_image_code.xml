@@ -16,10 +16,9 @@
 
         <ImageView
             android:id="@+id/iv_close"
-            android:layout_width="wrap_content"
+            android:layout_width="45dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/dimen_15"
-            android:src="@mipmap/selector_true" />
+            android:src="@mipmap/icon_user_close" />
 
 
         <TextView
@@ -63,7 +62,7 @@
             android:layout_marginRight="@dimen/dimen_25"
             android:layout_marginTop="@dimen/dimen_15"
             android:background="@drawable/pop_image_code_shape"
-            android:cursorVisible="false"
+            android:cursorVisible="true"
             android:gravity="center_vertical"
             android:hint="请输入验证码"
             android:maxLength="4"

@@ -6,6 +6,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.R;
 
@@ -31,6 +32,10 @@ public class RegisterSuccessActivity extends XActivity {
     @BindView(R.id.btn_finish) Button btnFinish;
     /** 风险测评 */
     @BindView(R.id.risk_test) Button riskTest;
+    /** 用户姓名 */
+    private String username;
+    /** 用户身份证号 */
+    private String certNo;
 
     @Override
     public int getLayoutId() {
@@ -46,6 +51,11 @@ public class RegisterSuccessActivity extends XActivity {
     public void initData(Bundle bundle) {
         headTitle.setText("基金开户");
         //TODO 获取用户名和身份证号
+        username = bundle.getString(Constant.NAME, "");
+        certNo = bundle.getString(Constant.CERT_NO, "");
+
+        name.setText(username);
+        identity.setText(certNo);
 
     }
 
@@ -61,6 +71,7 @@ public class RegisterSuccessActivity extends XActivity {
             @Override
             public void onClick(View view) {
                 startActivity(MainActivity.class);
+                finish();
             }
         });
         riskTest.setOnClickListener(new View.OnClickListener() {

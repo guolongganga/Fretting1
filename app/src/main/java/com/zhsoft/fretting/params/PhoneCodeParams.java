@@ -5,17 +5,17 @@ package com.zhsoft.fretting.params;
  * 描述：短信验证码接口参数
  */
 
-public class MessageCodeParams extends CommonReqData<MessageCodeParams> {
-    private String phone;
+public class PhoneCodeParams extends CommonReqData<PhoneCodeParams> {
+    private String phoneNo;
     private String image_code;
     private String image_code_id;
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneNo() {
+        return phoneNo;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setPhoneNo(String phoneNo) {
+        this.phoneNo = phoneNo;
     }
 
     public String getImage_code() {
