@@ -30,6 +30,7 @@ import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.model.user.PhoneCodeResp;
 import com.zhsoft.fretting.present.user.RegisterFirstPresent;
+import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.ui.widget.PopShow;
@@ -162,6 +163,7 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                startActivity(MainActivity.class);
                 finish();
             }
         });

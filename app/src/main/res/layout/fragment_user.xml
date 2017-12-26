@@ -8,164 +8,171 @@
 
     <include layout="@layout/layout_head"/>
 
-    <LinearLayout
+    <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/dimen_66"
-        android:background="@color/white"
-        android:orientation="vertical"
-        android:visibility="visible">
+        android:layout_marginTop="66dp"
+        android:scrollbars="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:text="总资产（元）"
-                android:textColor="@color/color_696969"
-                android:textSize="@dimen/text_size_18"/>
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="1000.01"
-                android:textColor="@color/color_text_333"
-                android:textSize="@dimen/text_size_18"/>
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <LinearLayout
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:gravity="center_horizontal"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20"
+                    android:text="总资产（元）"
+                    android:textColor="@color/color_696969"
+                    android:textSize="@dimen/text_size_18"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1000.01"
+                    android:textColor="@color/color_text_333"
+                    android:textSize="@dimen/text_size_18"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:paddingRight="@dimen/dimen_15">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="昨日收益(元)"
+                            android:textColor="@color/color_696969"
+                            android:textSize="@dimen/text_size_14"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_5"
+                            android:text="1.00"
+                            android:textColor="@color/color_696969"
+                            android:textSize="@dimen/text_size_14"
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_horizontal"
+                        android:orientation="vertical"
+                        android:paddingLeft="@dimen/dimen_15">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="(12/04)累计收益(元)"
+                            android:textColor="@color/color_696969"
+                            android:textSize="@dimen/text_size_14"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="@dimen/dimen_5"
+                            android:text="100.00"
+                            android:textColor="@color/color_696969"
+                            android:textSize="@dimen/text_size_14"
+                            />
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+            <!--快速入口-->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:gravity="center_vertical"
                 android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:paddingRight="@dimen/dimen_15">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="昨日收益(元)"
-                        android:textColor="@color/color_696969"
-                        android:textSize="@dimen/text_size_14"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_5"
-                        android:text="1.00"
-                        android:textColor="@color/color_696969"
-                        android:textSize="@dimen/text_size_14"
-                        />
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:gravity="center_horizontal"
-                    android:orientation="vertical"
-                    android:paddingLeft="@dimen/dimen_15">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="(12/04)累计收益(元)"
-                        android:textColor="@color/color_696969"
-                        android:textSize="@dimen/text_size_14"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/dimen_5"
-                        android:text="100.00"
-                        android:textColor="@color/color_696969"
-                        android:textSize="@dimen/text_size_14"
-                        />
-                </LinearLayout>
+                <!--自选-->
+                <TextView
+                    android:id="@+id/self_choose"
+                    style="@style/user_text_top_image"
+                    android:drawableTop="@mipmap/icon_find_want_one"
+                    android:text="自选"/>
+                <!--定投-->
+                <TextView
+                    android:id="@+id/timing"
+                    style="@style/user_text_top_image"
+                    android:drawableTop="@mipmap/icon_my_benefit"
+                    android:text="定投"/>
+                <!--交易查询-->
+                <TextView
+                    android:id="@+id/transaction"
+                    style="@style/user_text_top_image"
+                    android:drawableTop="@mipmap/icon_my_coupon"
+                    android:text="交易查询"/>
+                <!--分红-->
+                <TextView
+                    android:id="@+id/profit"
+                    style="@style/user_text_top_image"
+                    android:drawableTop="@mipmap/icon_my_crash"
+                    android:text="分红"/>
+                <!--撤单-->
+                <TextView
+                    android:id="@+id/remove"
+                    style="@style/user_text_top_image"
+                    android:drawableTop="@mipmap/icon_my_learn"
+                    android:text="撤单"/>
 
             </LinearLayout>
-        </LinearLayout>
-        <!--快速入口-->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:layout_marginTop="@dimen/dimen_10"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
-            <!--自选-->
+            <!--分割线-->
+            <include layout="@layout/layout_divider_horizontal"/>
+
             <TextView
-                android:id="@+id/self_choose"
-                style="@style/user_text_top_image"
-                android:drawableTop="@mipmap/icon_find_want_one"
-                android:text="自选"/>
-            <!--定投-->
-            <TextView
-                android:id="@+id/timing"
-                style="@style/user_text_top_image"
-                android:drawableTop="@mipmap/icon_my_benefit"
-                android:text="定投"/>
-            <!--交易查询-->
-            <TextView
-                android:id="@+id/transaction"
-                style="@style/user_text_top_image"
-                android:drawableTop="@mipmap/icon_my_coupon"
-                android:text="交易查询"/>
-            <!--分红-->
-            <TextView
-                android:id="@+id/profit"
-                style="@style/user_text_top_image"
-                android:drawableTop="@mipmap/icon_my_crash"
-                android:text="分红"/>
-            <!--撤单-->
-            <TextView
-                android:id="@+id/remove"
-                style="@style/user_text_top_image"
-                android:drawableTop="@mipmap/icon_my_learn"
-                android:text="撤单"/>
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="20dp"
+                android:text="我的持仓基金"
+                android:textColor="@color/color_696969"
+                android:textSize="14sp"/>
+
+            <include layout="@layout/layout_divider_horizontal"/>
+
+            <Button
+                android:id="@+id/to_finish_register"
+                style="@style/common_blue_button"
+                android:layout_width="150dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dimen_70"
+                android:text="您还未开户，去开户"
+                android:visibility="gone"
+                />
+
+            <!--我的基金-->
+            <cn.droidlover.xrecyclerview.XRecyclerView
+                android:id="@+id/xrv_my_fund"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
         </LinearLayout>
-        <!--分割线-->
-        <include layout="@layout/layout_divider_horizontal"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:layout_marginLeft="15dp"
-            android:layout_marginTop="20dp"
-            android:text="我的基金"
-            android:textColor="@color/color_696969"
-            android:textSize="14sp"/>
-
-        <include layout="@layout/layout_divider_horizontal"/>
-
-        <Button
-            android:id="@+id/to_finish_register"
-            style="@style/common_blue_button"
-            android:layout_width="150dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="@dimen/dimen_70"
-            android:text="您还未开户，去开户"
-            android:visibility="gone"
-            />
-
-        <!--我的基金-->
-        <cn.droidlover.xrecyclerview.XRecyclerView
-            android:id="@+id/xrv_my_fund"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:visibility="gone"/>
-
-    </LinearLayout>
+    </ScrollView>
 
     <!--<inclactivity_bank_listyouactivity_bank_listyout/dialog_logout"/>-->
     <!--设置clickable="true" 可以避免点击上层触发底层-->
@@ -183,7 +190,7 @@
         <ImageView
             android:layout_width="300dp"
             android:layout_height="150dp"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@mipmap/logo"/>
 
         <Button
             android:id="@+id/login"

@@ -38,7 +38,7 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
         RegisterFirstParams params = new RegisterFirstParams();
         params.setMobile_tel(mobile_tel);
         params.setPassword(password);
-        params.setMessageCode(code);
+        params.setPhone_code(code);
         reqData.setData(params);
 
         Api.getApi()

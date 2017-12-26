@@ -13,8 +13,11 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.OpenAccountEvent;
 import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
 import com.zhsoft.fretting.utils.RuntimeHelper;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
@@ -141,11 +144,14 @@ public class SettingActivity extends XActivity {
                 App.getSharedPref().putString(Constant.USERID, "");
                 App.getSharedPref().putString(Constant.TOKEN, "");
                 App.getSharedPref().putString(Constant.USER_NAME, "");
+                App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, "");
+                EventBus.getDefault().post(new OpenAccountEvent());
 
                 RuntimeHelper.getInstance().setLogin(false);
 
                 //TODO 更新登录状态
                 showToast("安全退出");
+                finish();
             }
         });
         headBack.setOnClickListener(new View.OnClickListener() {

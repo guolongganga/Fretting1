@@ -13,15 +13,20 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.OpenAccountEvent;
 import com.zhsoft.fretting.model.user.BankResp;
+import com.zhsoft.fretting.model.user.OpenAccountResp;
 import com.zhsoft.fretting.present.user.RegisterSecondPresent;
 import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
 import com.zhsoft.fretting.widget.ChenJingET;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
+import cn.droidlover.xdroidmvp.event.BusProvider;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
@@ -298,9 +303,13 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
     /**
      * 开户成功
      */
-    public void requestOpenAccountSuccess(String data) {
+    public void requestOpenAccountSuccess(OpenAccountResp data) {
         httpLoadingDialog.dismiss();
-        showToast(data);
+//        showToast(data);
+        //更新开户状态 改成已开户
+        App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, Constant.ALREADY_OPEN_ACCOUNT);
+        EventBus.getDefault().post(new OpenAccountEvent());
+
         Bundle bundle = new Bundle();
         //姓名
         bundle.putString(Constant.NAME, getText(userName));

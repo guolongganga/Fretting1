@@ -8,6 +8,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.App;
+import com.zhsoft.fretting.event.OpenAccountEvent;
 import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.R;
@@ -15,6 +16,8 @@ import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.present.user.LoginPresent;
 import com.zhsoft.fretting.utils.RuntimeHelper;
 import com.zhsoft.fretting.widget.ChenJingET;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
@@ -125,6 +128,7 @@ public class LoginActivity extends XActivity<LoginPresent> {
         App.getSharedPref().putString(Constant.TOKEN, model.getToken());
         App.getSharedPref().putString(Constant.USER_NAME, getText(username));
         App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, model.getIsOpenAccount());
+        EventBus.getDefault().post(new OpenAccountEvent());
 
         //全局变量设置为登录状态
         RuntimeHelper.getInstance().setLogin(true);

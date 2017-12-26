@@ -5,8 +5,10 @@ import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.model.TaetResp;
 import com.zhsoft.fretting.model.user.BankResp;
 import com.zhsoft.fretting.model.user.ImageResp;
+import com.zhsoft.fretting.model.user.OpenAccountResp;
 import com.zhsoft.fretting.model.user.PhoneCodeResp;
 import com.zhsoft.fretting.params.CommonReqData;
+import com.zhsoft.fretting.params.OpenAccountParams;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
@@ -72,6 +74,6 @@ public interface HttpUtil {
 
     @Headers("apptype:Android")
     @POST(open_account)
-    Flowable<BaseResp<String>> openAccount(@Body CommonReqData reqData);
+    Flowable<OpenAccountResp> openAccount(@Body CommonReqData reqData);
 
 }

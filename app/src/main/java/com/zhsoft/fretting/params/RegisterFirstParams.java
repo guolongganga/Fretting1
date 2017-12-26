@@ -17,15 +17,16 @@ public class RegisterFirstParams extends CommonReqData<RegisterFirstParams> {
 
     private String mobile_tel;
     private String password;
-    private String messageCode;
+    private String phone_code;
 
-    public String getMessageCode() {
-        return messageCode;
+    public String getPhone_code() {
+        return phone_code;
     }
 
-    public void setMessageCode(String messageCode) {
-        this.messageCode = messageCode;
+    public void setPhone_code(String phone_code) {
+        this.phone_code = phone_code;
     }
+
     //    private String image_code;
 //    private String image_code_id;
 

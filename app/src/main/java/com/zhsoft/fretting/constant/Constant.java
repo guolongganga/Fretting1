@@ -8,17 +8,20 @@ package com.zhsoft.fretting.constant;
 public class Constant {
 
     public static final String BASE_CONSTANT = "fretting_";
-    //token 登录标识
+    //token 登录标识 存本地
     public static final String TOKEN = BASE_CONSTANT + "token";
 
-    //userId 用户编号
+    //userId 用户编号 存本地
     public static final String USERID = BASE_CONSTANT + "userId";
 
-    //用户名
+    //用户名 存本地
     public static final String USER_NAME = BASE_CONSTANT + "user_name";
 
-    //是否开户 1位未开户  0 位开户
+    //是否开户 1位未开户  0 位开户 存本地
     public static final String IS_OPEN_ACCOUNT = BASE_CONSTANT + "is_open_account";
+
+    //已开户
+    public static final String ALREADY_OPEN_ACCOUNT ="0" ;
 
     //密码
     public static final String PWD = BASE_CONSTANT + "pwd";
@@ -55,5 +58,6 @@ public class Constant {
 
     //注册成功传递身份证号
     public static final String CERT_NO = BASE_CONSTANT + "cert_no";
+
 
 }

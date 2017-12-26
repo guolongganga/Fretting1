@@ -4,6 +4,7 @@ import android.util.Log;
 
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.user.BankResp;
+import com.zhsoft.fretting.model.user.OpenAccountResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.BankListParams;
 import com.zhsoft.fretting.params.CommonReqData;
@@ -101,19 +102,22 @@ public class RegisterSecondPresent extends XPresent<RegisterSecondActivity> {
         reqData.setData(params);
 
         Api.getApi().openAccount(reqData)
-                .compose(XApi.<BaseResp<String>>getApiTransformer())
-                .compose(XApi.<BaseResp<String>>getScheduler())
-                .compose(getV().<BaseResp<String>>bindToLifecycle())
-                .subscribe(new ApiSubscriber<BaseResp<String>>() {
+                .compose(XApi.<OpenAccountResp>getApiTransformer())
+                .compose(XApi.<OpenAccountResp>getScheduler())
+                .compose(getV().<OpenAccountResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<OpenAccountResp>() {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestOpenAccountFail();
                     }
 
                     @Override
-                    public void onNext(BaseResp<String> resp) {
+                    public void onNext(OpenAccountResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestOpenAccountSuccess(resp.getData());
+                        } else {
+                            getV().showToast(resp.getMessage());
+                            getV().requestOpenAccountFail();
                         }
                     }
                 });

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.OpenAccountEvent;
 import com.zhsoft.fretting.model.Happ;
 import com.zhsoft.fretting.model.TaetResp;
 import com.zhsoft.fretting.model.user.MyFundResp;
@@ -22,13 +23,19 @@ import com.zhsoft.fretting.ui.activity.user.SettingActivity;
 import com.zhsoft.fretting.ui.adapter.user.MyFundRecyleAdapter;
 import com.zhsoft.fretting.utils.RuntimeHelper;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.util.List;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
+import cn.droidlover.xdroidmvp.event.BusProvider;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
 import cn.droidlover.xrecyclerview.RecyclerItemCallback;
 import cn.droidlover.xrecyclerview.XRecyclerView;
+import io.reactivex.functions.Consumer;
 
 /**
  * 作者：sunnyzeng on 2017/12/5
@@ -75,18 +82,27 @@ public class UserFragment extends XFragment<UserPresent> {
         headTitle.setText("我的");
         headRightImgbtn.setVisibility(View.VISIBLE);
         headRightImgbtn.setImageResource(R.mipmap.icon_user_set);
+        isOpenAccountView();
+        //注册事件
+        EventBus.getDefault().register(this);
 
+        xrvMyFund.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
+        getP().loadTestData();
+    }
+
+    /**
+     * 是否开户
+     */
+    public void isOpenAccountView() {
         isOpenAccount = App.getSharedPref().getString(Constant.IS_OPEN_ACCOUNT, "");
         //1位未开户  0 位开户
-        if ("0".equals(isOpenAccount)) {
+        if (Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
             toFinishRegister.setVisibility(View.GONE);
             xrvMyFund.setVisibility(View.VISIBLE);
         } else {
             toFinishRegister.setVisibility(View.VISIBLE);
             xrvMyFund.setVisibility(View.GONE);
         }
-        xrvMyFund.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
-        getP().loadTestData();
     }
 
 
@@ -96,7 +112,12 @@ public class UserFragment extends XFragment<UserPresent> {
         headRightImgbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(SettingActivity.class);
+                if (RuntimeHelper.getInstance().isLogin()) {
+                    startActivity(SettingActivity.class);
+                } else {
+                    showToast("您尚未登录，请先登录");
+                }
+
             }
         });
 
@@ -159,6 +180,7 @@ public class UserFragment extends XFragment<UserPresent> {
             }
         });
 
+
     }
 
     @Override
@@ -169,11 +191,6 @@ public class UserFragment extends XFragment<UserPresent> {
     @Override
     public UserPresent newP() {
         return new UserPresent();
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
     }
 
     public void showData(TaetResp data) {
@@ -223,5 +240,21 @@ public class UserFragment extends XFragment<UserPresent> {
         } else {
             llLogout.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroyView();
+    }
+
+    /**
+     * 是否开户事件
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.POSTING)
+    public void onOpenAccountEvent(OpenAccountEvent event) {
+        isOpenAccountView();
     }
 }
