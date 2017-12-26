@@ -32,14 +32,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_20"
-                    android:text="总资产（元）"
+                    android:text="@string/user_total_assets"
                     android:textColor="@color/color_696969"
                     android:textSize="@dimen/text_size_18"/>
 
                 <TextView
+                    android:id="@+id/tv_total_assets"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="1000.01"
+                    android:text=""
                     android:textColor="@color/color_text_333"
                     android:textSize="@dimen/text_size_18"/>
 
@@ -59,15 +60,16 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="昨日收益(元)"
+                            android:text="@string/user_yesterday_earn"
                             android:textColor="@color/color_696969"
                             android:textSize="@dimen/text_size_14"/>
 
                         <TextView
+                            android:id="@+id/tv_yesterday_income"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen_5"
-                            android:text="1.00"
+                            android:text=""
                             android:textColor="@color/color_696969"
                             android:textSize="@dimen/text_size_14"
                             />
@@ -79,19 +81,21 @@
                         android:gravity="center_horizontal"
                         android:orientation="vertical"
                         android:paddingLeft="@dimen/dimen_15">
-
+                        <!--累计收益-->
                         <TextView
+                            android:id="@+id/tv_time_accumlate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="(12/04)累计收益(元)"
+                            android:text=""
                             android:textColor="@color/color_696969"
                             android:textSize="@dimen/text_size_14"/>
 
                         <TextView
+                            android:id="@+id/tv_accumulate_earn"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/dimen_5"
-                            android:text="100.00"
+                            android:text=""
                             android:textColor="@color/color_696969"
                             android:textSize="@dimen/text_size_14"
                             />
@@ -112,31 +116,31 @@
                     android:id="@+id/self_choose"
                     style="@style/user_text_top_image"
                     android:drawableTop="@mipmap/icon_find_want_one"
-                    android:text="自选"/>
+                    android:text="@string/user_self_choose"/>
                 <!--定投-->
                 <TextView
                     android:id="@+id/timing"
                     style="@style/user_text_top_image"
                     android:drawableTop="@mipmap/icon_my_benefit"
-                    android:text="定投"/>
+                    android:text="@string/user_timing"/>
                 <!--交易查询-->
                 <TextView
                     android:id="@+id/transaction"
                     style="@style/user_text_top_image"
                     android:drawableTop="@mipmap/icon_my_coupon"
-                    android:text="交易查询"/>
+                    android:text="@string/user_transaction"/>
                 <!--分红-->
                 <TextView
                     android:id="@+id/profit"
                     style="@style/user_text_top_image"
                     android:drawableTop="@mipmap/icon_my_crash"
-                    android:text="分红"/>
+                    android:text="@string/user_profit"/>
                 <!--撤单-->
                 <TextView
                     android:id="@+id/remove"
                     style="@style/user_text_top_image"
                     android:drawableTop="@mipmap/icon_my_learn"
-                    android:text="撤单"/>
+                    android:text="@string/user_remove"/>
 
             </LinearLayout>
             <!--分割线-->
@@ -170,6 +174,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tv_empty"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="@dimen/dimen_70"
+                android:layout_marginBottom="@dimen/dimen_70"
+                android:text="您还没有持仓"
+                android:visibility="gone"
+                />
 
         </LinearLayout>
     </ScrollView>

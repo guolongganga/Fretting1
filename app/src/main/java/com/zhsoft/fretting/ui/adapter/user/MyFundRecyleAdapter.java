@@ -7,7 +7,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.model.user.FoundResp;
 import com.zhsoft.fretting.model.user.MyFundResp;
+
+import java.math.BigDecimal;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
@@ -18,7 +21,7 @@ import cn.droidlover.xdroidmvp.kit.KnifeKit;
  * 描述：
  */
 
-public class MyFundRecyleAdapter extends SimpleRecAdapter<MyFundResp, MyFundRecyleAdapter.ViewHolder> {
+public class MyFundRecyleAdapter extends SimpleRecAdapter<FoundResp, MyFundRecyleAdapter.ViewHolder> {
     public static final int ITEM_CLICK = 0;    //点击标识
 
     public MyFundRecyleAdapter(Context context) {
@@ -37,10 +40,10 @@ public class MyFundRecyleAdapter extends SimpleRecAdapter<MyFundResp, MyFundRecy
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.tvName.setText(data.get(position).getName());
-        holder.tvMoney.setText(data.get(position).getMoney().toString());
-        holder.tvYesterday.setText("+" + data.get(position).getYesterday());
-        holder.tvHold.setText("-" + data.get(position).getHold());
+        holder.tvName.setText(data.get(position).getFundName());
+        holder.tvMoney.setText(data.get(position).getTotalEarn().setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+        holder.tvYesterday.setText("+" + data.get(position).getEarningsLastDay().setScale(2, BigDecimal.ROUND_HALF_UP));
+        holder.tvHold.setText("-" + data.get(position).getHoldAmount().setScale(2, BigDecimal.ROUND_HALF_UP));
         if (data.size() - 1 == position) {
             holder.viewLine.setVisibility(View.GONE);
         } else {

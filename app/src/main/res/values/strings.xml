@@ -84,4 +84,13 @@
     <string name="user_bank_card_change">更换银行卡</string>
     <string name="user_bank_card_account">交易账号</string>
 
+    <!--我的-->
+    <string name="user_total_assets">总资产(元)</string>
+    <string name="user_yesterday_earn">昨日收益(元)</string>
+    <string name="user_self_choose">自选</string>
+    <string name="user_timing">定投</string>
+    <string name="user_transaction">交易查询</string>
+    <string name="user_profit">分红</string>
+    <string name="user_remove">撤单</string>
+
 </resources>

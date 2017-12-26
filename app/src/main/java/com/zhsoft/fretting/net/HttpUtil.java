@@ -7,6 +7,7 @@ import com.zhsoft.fretting.model.user.BankResp;
 import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.model.user.OpenAccountResp;
 import com.zhsoft.fretting.model.user.PhoneCodeResp;
+import com.zhsoft.fretting.model.user.UserAccountResp;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.params.OpenAccountParams;
 
@@ -16,6 +17,7 @@ import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 import static com.zhsoft.fretting.net.HttpContent.common_bank_list;
+import static com.zhsoft.fretting.net.HttpContent.fund_home;
 import static com.zhsoft.fretting.net.HttpContent.image_code;
 import static com.zhsoft.fretting.net.HttpContent.open_account;
 import static com.zhsoft.fretting.net.HttpContent.password_check;
@@ -75,5 +77,9 @@ public interface HttpUtil {
     @Headers("apptype:Android")
     @POST(open_account)
     Flowable<OpenAccountResp> openAccount(@Body CommonReqData reqData);
+
+    @Headers("apptype:Android")
+    @POST(fund_home)
+    Flowable<UserAccountResp> getFundHome(@Body CommonReqData reqData);
 
 }

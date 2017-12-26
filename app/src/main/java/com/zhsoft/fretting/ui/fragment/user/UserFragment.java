@@ -14,7 +14,10 @@ import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.OpenAccountEvent;
 import com.zhsoft.fretting.model.Happ;
 import com.zhsoft.fretting.model.TaetResp;
+import com.zhsoft.fretting.model.fund.FundResp;
+import com.zhsoft.fretting.model.user.FoundResp;
 import com.zhsoft.fretting.model.user.MyFundResp;
+import com.zhsoft.fretting.model.user.UserAccountResp;
 import com.zhsoft.fretting.present.user.UserPresent;
 import com.zhsoft.fretting.ui.activity.user.LoginActivity;
 import com.zhsoft.fretting.ui.activity.user.RegisterFirstActivity;
@@ -27,10 +30,12 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
+import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.event.BusProvider;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
 import cn.droidlover.xrecyclerview.RecyclerItemCallback;
@@ -50,6 +55,14 @@ public class UserFragment extends XFragment<UserPresent> {
     @BindView(R.id.head_title) TextView headTitle;
     /** 设置 */
     @BindView(R.id.head_right_imgbtn) ImageButton headRightImgbtn;
+    /** 总资产 */
+    @BindView(R.id.tv_total_assets) TextView tvTotalAssets;
+    /** 昨日收益 */
+    @BindView(R.id.tv_yesterday_income) TextView tvYesterdayIncome;
+    /** 累计收益时间 */
+    @BindView(R.id.tv_time_accumlate) TextView tvTimeAccumlate;
+    /** 累计收益 */
+    @BindView(R.id.tv_accumulate_earn) TextView tvAccumulateEarn;
     /** 登录 */
     @BindView(R.id.login) Button login;
     /** 注册 */
@@ -68,6 +81,8 @@ public class UserFragment extends XFragment<UserPresent> {
     @BindView(R.id.ll_logout) LinearLayout llLogout;
     /** 我的基金列表 */
     @BindView(R.id.xrv_my_fund) XRecyclerView xrvMyFund;
+    /** 您还没有持仓 */
+    @BindView(R.id.tv_empty) TextView tvEmpty;
     /** 去开户 */
     @BindView(R.id.to_finish_register) Button toFinishRegister;
 
@@ -75,25 +90,50 @@ public class UserFragment extends XFragment<UserPresent> {
 //    private boolean isLogin = false;
 
     private String isOpenAccount;
+    private String userId;
+    private String token;
+    private HttpLoadingDialog httpLoadingDialog;
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        //设置标题
         headBack.setVisibility(View.GONE);
         headTitle.setText("我的");
         headRightImgbtn.setVisibility(View.VISIBLE);
         headRightImgbtn.setImageResource(R.mipmap.icon_user_set);
+
+        //加载框
+        httpLoadingDialog = new HttpLoadingDialog(context);
+
         isOpenAccountView();
         //注册事件
         EventBus.getDefault().register(this);
 
         xrvMyFund.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
-        getP().loadTestData();
+
+        if (RuntimeHelper.getInstance().isLogin()) {
+            requestFund();
+        }
+
+    }
+
+    /**
+     * 我的资产请求
+     */
+    private void requestFund() {
+        //获得本地缓存的token和userID
+        userId = App.getSharedPref().getString(Constant.USERID, "");
+        token = App.getSharedPref().getString(Constant.TOKEN, "");
+        httpLoadingDialog.visible();
+        httpLoadingDialog.setCanceledOnKeyBack();
+        getP().getFundHome(token, userId);
     }
 
     /**
      * 是否开户
      */
     public void isOpenAccountView() {
+        //获得本地缓存的开户标识
         isOpenAccount = App.getSharedPref().getString(Constant.IS_OPEN_ACCOUNT, "");
         //1位未开户  0 位开户
         if (Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
@@ -206,14 +246,14 @@ public class UserFragment extends XFragment<UserPresent> {
     public SimpleRecAdapter getMyFundAdapter() {
         MyFundRecyleAdapter adapter = new MyFundRecyleAdapter(context);
         xrvMyFund.setAdapter(adapter);
-        adapter.setRecItemClick(new RecyclerItemCallback<MyFundResp, MyFundRecyleAdapter.ViewHolder>() {
+        adapter.setRecItemClick(new RecyclerItemCallback<FoundResp, MyFundRecyleAdapter.ViewHolder>() {
             @Override
-            public void onItemClick(int position, MyFundResp model, int tag, MyFundRecyleAdapter.ViewHolder holder) {
+            public void onItemClick(int position, FoundResp model, int tag, MyFundRecyleAdapter.ViewHolder holder) {
                 super.onItemClick(position, model, tag, holder);
                 switch (tag) {
                     //点击
                     case MyFundRecyleAdapter.ITEM_CLICK:
-                        showToast(model.getName());
+                        showToast(model.getFundName());
                         break;
                 }
             }
@@ -226,15 +266,33 @@ public class UserFragment extends XFragment<UserPresent> {
      *
      * @param resps
      */
-    public void showMyFund(List<MyFundResp> resps) {
-        if (resps != null && resps.size() > 0) {
-            getMyFundAdapter().addData(resps);
+    public void showMyFund(UserAccountResp resps) {
+        httpLoadingDialog.dismiss();
+        if (resps != null) {
+            //总资产
+            tvTotalAssets.setText(resps.getTotalAssets().setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+            //昨日收益
+            tvYesterdayIncome.setText(resps.getEarningsLastDay().setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+            //累计收益时间
+            tvTimeAccumlate.setText("(" + resps.getYesterday() + ")累计收益(元)");
+            //累计收益
+            tvAccumulateEarn.setText(resps.getCumulativeIncome().setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+
+            //持仓基金
+            if (resps.getFundList() != null && resps.getFundList().size() > 0) {
+                getMyFundAdapter().addData(resps.getFundList());
+            } else {
+                xrvMyFund.setVisibility(View.GONE);
+                tvEmpty.setVisibility(View.VISIBLE);
+            }
+
         }
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        //判断是否登录
         if (RuntimeHelper.getInstance().isLogin()) {
             llLogout.setVisibility(View.GONE);
         } else {
@@ -256,5 +314,13 @@ public class UserFragment extends XFragment<UserPresent> {
     @Subscribe(threadMode = ThreadMode.POSTING)
     public void onOpenAccountEvent(OpenAccountEvent event) {
         isOpenAccountView();
+        requestFund();
+    }
+
+    /**
+     * 请求账户数据失败
+     */
+    public void requestFundFail() {
+        httpLoadingDialog.dismiss();
     }
 }

@@ -28,5 +28,7 @@ public class HttpContent {
     public static final String phone_code = "noPermission/phoneCode";
     /** 开户绑卡 */
     public static final String open_account = "/permissionCheck/openAccount";
+    /** 我的资产 */
+    public static final String fund_home = "/permissionCheck/fundHome";
 
 }

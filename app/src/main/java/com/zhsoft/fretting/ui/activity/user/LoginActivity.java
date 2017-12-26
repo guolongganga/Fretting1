@@ -128,6 +128,7 @@ public class LoginActivity extends XActivity<LoginPresent> {
         App.getSharedPref().putString(Constant.TOKEN, model.getToken());
         App.getSharedPref().putString(Constant.USER_NAME, getText(username));
         App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, model.getIsOpenAccount());
+
         EventBus.getDefault().post(new OpenAccountEvent());
 
         //全局变量设置为登录状态
