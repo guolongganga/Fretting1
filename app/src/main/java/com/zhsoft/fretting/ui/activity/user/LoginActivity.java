@@ -148,7 +148,7 @@ public class LoginActivity extends XActivity<LoginPresent> {
      * 登录失败 关闭掉dialog
      */
     public void loginFail() {
-        showToast("登录失败");
         httpLoadingDialog.dismiss();
+        showToast("登录失败");
     }
 }

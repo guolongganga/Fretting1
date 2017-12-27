@@ -10,6 +10,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.present.user.FindPwdTradeSecondPresent;
 import com.zhsoft.fretting.widget.ChenJingET;
 
 import butterknife.BindView;
@@ -22,7 +23,7 @@ import cn.droidlover.xdroidmvp.router.Router;
  * 描述：找回交易密码 第二步
  */
 
-public class FindPwdTradeSecondActivity extends XActivity {
+public class FindPwdTradeSecondActivity extends XActivity<FindPwdTradeSecondPresent> {
     /** 传递phone */
     private static final String PHONE = "phone";
     /** 返回按钮 */
@@ -47,8 +48,8 @@ public class FindPwdTradeSecondActivity extends XActivity {
     }
 
     @Override
-    public Object newP() {
-        return null;
+    public FindPwdTradeSecondPresent newP() {
+        return new FindPwdTradeSecondPresent();
     }
 
     @Override
@@ -102,8 +103,8 @@ public class FindPwdTradeSecondActivity extends XActivity {
                     return;
                 }
                 //TODO 请求修改交易密码接口
-                showToast("修改交易密码");
-//                finish();
+                httpLoadingDialog.visible();
+                getP().findPassword(mPhone, pwd, againpwd);
             }
         });
     }
@@ -113,5 +114,25 @@ public class FindPwdTradeSecondActivity extends XActivity {
                 .to(FindPwdTradeSecondActivity.class)
                 .putString(PHONE, phone)
                 .launch();
+    }
+
+    /**
+     * 找回登录密码失败
+     */
+    public void requestFail() {
+        httpLoadingDialog.dismiss();
+        showToast("找回交易密码失败");
+    }
+
+    /**
+     * 找回登录密码成功
+     *
+     * @param data
+     */
+    public void requestSuccess(Object data) {
+        httpLoadingDialog.dismiss();
+        showToast("找回交易密码成功");
+        startActivity(LoginActivity.class);
+        finish();
     }
 }

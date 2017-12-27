@@ -7,6 +7,7 @@ import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.params.FindPwdSecondParams;
 import com.zhsoft.fretting.ui.activity.user.FindPwdLoginSecondActivity;
+import com.zhsoft.fretting.ui.activity.user.FindPwdTradeSecondActivity;
 
 import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XPresent;
@@ -16,13 +17,13 @@ import cn.droidlover.xdroidmvp.net.XApi;
 
 /**
  * 作者：sunnyzeng on 2017/12/15 13:43
- * 描述：
+ * 描述：找回交易密码
  */
 
-public class FindPwdLoginSecondPresent extends XPresent<FindPwdLoginSecondActivity> {
+public class FindPwdTradeSecondPresent extends XPresent<FindPwdTradeSecondActivity> {
 
     /**
-     * 找回登录密码 第二步
+     * 找回交易密码 第二步
      *
      * @param password 密码
      */
@@ -35,7 +36,7 @@ public class FindPwdLoginSecondPresent extends XPresent<FindPwdLoginSecondActivi
         params.setPassword(password);
         params.setRepetPassword(repetPassword);
         reqData.setData(params);
-
+        //TODO 换成找回交易密码接口
         Api.getApi()
                 .findPasswordReset(reqData)
                 .compose(XApi.<BaseResp>getApiTransformer())

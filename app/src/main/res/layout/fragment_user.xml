@@ -196,7 +196,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="@dimen/dimen_66"
-        android:background="@color/color_80696969"
+        android:background="@color/white"
         android:clickable="true"
         android:gravity="center"
         android:orientation="vertical"

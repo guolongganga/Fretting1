@@ -8,10 +8,14 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.present.user.ChangeTradePwdPresent;
 import com.zhsoft.fretting.widget.ChenJingET;
 
 import butterknife.BindView;
+import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
@@ -19,7 +23,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  * 描述：变更交易密码
  */
 
-public class ChangeTradePwdActivity extends XActivity {
+public class ChangeTradePwdActivity extends XActivity<ChangeTradePwdPresent> {
     /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
@@ -35,14 +39,21 @@ public class ChangeTradePwdActivity extends XActivity {
     /** 保存 */
     @BindView(R.id.btn_save) Button btnSave;
 
+    /** 加载框 */
+    private HttpLoadingDialog httpLoadingDialog;
+    /** 登录标识 */
+    private String token;
+    /** 用户编号 */
+    private String userId;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_user_changepwd_trade;
     }
 
     @Override
-    public Object newP() {
-        return null;
+    public ChangeTradePwdPresent newP() {
+        return new ChangeTradePwdPresent();
     }
 
     @Override
@@ -51,6 +62,12 @@ public class ChangeTradePwdActivity extends XActivity {
         ChenJingET.assistActivity(context);
         //设置标题
         headTitle.setText("变更交易密码");
+        httpLoadingDialog = new HttpLoadingDialog(context);
+
+        //获取本地缓存
+        token = App.getSharedPref().getString(Constant.TOKEN, "");
+        userId = App.getSharedPref().getString(Constant.USERID, "");
+
     }
 
 
@@ -99,13 +116,34 @@ public class ChangeTradePwdActivity extends XActivity {
                     return;
                 }
                 //TODO 请求修改交易密码接口
-                showToast("修改交易密码");
-//                finish();
+                httpLoadingDialog.visible();
+                getP().changePassword(token, userId, oldpwd, againpwd);
             }
         });
 
 
     }
 
+    /**
+     * 修改交易密码失败
+     */
+    public void requestFail() {
+        httpLoadingDialog.dismiss();
+        showToast("修改交易密码失败");
+    }
+
+    /**
+     * 修改交易密码成功
+     */
+    public void requestSuccess() {
+        httpLoadingDialog.dismiss();
+        showToast("修改交易密码成功");
+        //跳转回登录界面
+        startActivity(LoginActivity.class);
+        finish();
+    }
 
 }
+
+
+
