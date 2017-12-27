@@ -27,10 +27,7 @@ import cn.droidlover.xrecyclerview.XRecyclerView;
  */
 
 public class BankListActivity extends XActivity<BankListPresent> {
-    /** 传递银行列表数据 */
-//    private static final String BANK = "bank";
-//    private static final String CHOOSE_BANCK = "choosebank";
-//    private static final int RESULT_CODE = 200;
+
     /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
@@ -52,7 +49,7 @@ public class BankListActivity extends XActivity<BankListPresent> {
 
     @Override
     public void initData(Bundle bundle) {
-        headTitle.setText("基金开户");
+        headTitle.setText("选择银行");
         xrvBankList.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
         httpLoadingDialog = new HttpLoadingDialog(context);
         //请求银行卡列表

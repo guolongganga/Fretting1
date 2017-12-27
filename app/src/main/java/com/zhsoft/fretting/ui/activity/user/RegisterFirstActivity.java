@@ -328,7 +328,7 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
         //缓存用户userId,token,username,is_open_account
         App.getSharedPref().putString(Constant.USERID, model.getUserId());
         App.getSharedPref().putString(Constant.TOKEN, model.getToken());
-        App.getSharedPref().putString(Constant.USER_NAME, getText(phoneNumber));
+        App.getSharedPref().putString(Constant.USER_PHONE, getText(phoneNumber));
         App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, model.getIsOpenAccount());
 
         //全局变量设置为登录状态
@@ -460,6 +460,7 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
      */
     public void requestPhoneCodeFail() {
         //获取失败的原因
+        getVerifyCode.cancel();
         showToast("后台那家伙说你输错验证码了...老铁");
     }
 

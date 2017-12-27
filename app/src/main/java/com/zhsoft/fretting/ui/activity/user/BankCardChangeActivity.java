@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.ui.activity.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -9,11 +10,19 @@ import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.ChangeBankCardEvent;
+import com.zhsoft.fretting.model.user.BankResp;
+import com.zhsoft.fretting.present.user.BankCardChangePresent;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
 import com.zhsoft.fretting.widget.ChenJingET;
 
+import org.greenrobot.eventbus.EventBus;
+
 import butterknife.BindView;
+import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
@@ -21,7 +30,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  * 描述：变更银行卡 第二步
  */
 
-public class BankCardChangeActivity extends XActivity {
+public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
     /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
@@ -41,14 +50,21 @@ public class BankCardChangeActivity extends XActivity {
     /** 保存按钮 */
     @BindView(R.id.btn_save) Button btnSave;
 
+    /** 已选择的银行 */
+    private BankResp bankResp;
+    /** 注册手机号 */
+    private String strPhone;
+    /** 加载框 */
+    private HttpLoadingDialog httpLoadingDialog;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_user_bankcard_change;
     }
 
     @Override
-    public Object newP() {
-        return null;
+    public BankCardChangePresent newP() {
+        return new BankCardChangePresent();
     }
 
     @Override
@@ -57,6 +73,13 @@ public class BankCardChangeActivity extends XActivity {
         ChenJingET.assistActivity(context);
         //设置标题
         headTitle.setText("我的银行卡");
+
+        //获取本地缓存注册手机号
+        strPhone = App.getSharedPref().getString(Constant.USER_PHONE, "");
+        phone.setText(strPhone);
+        //弹出框
+        httpLoadingDialog = new HttpLoadingDialog(context);
+        httpLoadingDialog.setCanceledOnKeyBack();
     }
 
 
@@ -72,8 +95,8 @@ public class BankCardChangeActivity extends XActivity {
         llChooseBank.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("选择银行卡");
-                bankName.setText("招商银行");
+                //选择银行
+                startActivity(BankListActivity.class, Constant.TO_BANKLIST);
             }
         });
         getVerifyCode.setOnClickListener(new View.OnClickListener() {
@@ -86,6 +109,14 @@ public class BankCardChangeActivity extends XActivity {
                     showNetWorkError();
                     return;
                 }
+                if (!isNotEmpty(getText(bankName))) {
+                    showToast("请选择银行名称");
+                    return;
+                }
+                if (!isNotEmpty(getText(banknumber))) {
+                    showToast("银行卡号不能为空");
+                    return;
+                }
                 if (!isNotEmpty(phoneNumber)) {
                     showToast("预留手机号码不能为空");
                     return;
@@ -96,9 +127,12 @@ public class BankCardChangeActivity extends XActivity {
                 }
 
                 //TODO 发送请求验证码，getSmsCode(phoneStr, imageCodeStr）
+                httpLoadingDialog.visible();
+                getP().getMessageCode(phoneNumber);
 
                 //TODO 发送请求验证码成功
-                getVerifyCode.start();
+
+//                getVerifyCode.start();
                 //TODO 重试，发送请求验证码成功
                 //getVerifyCode.cancel();
             }
@@ -135,10 +169,54 @@ public class BankCardChangeActivity extends XActivity {
                     return;
                 }
                 //TODO 绑定银行卡接口
-                showToast("绑定银行卡");
+//                showToast("绑定银行卡");
+                httpLoadingDialog.visible();
+                getP().changeBankCard(bankResp, getText(banknumber), phoneNumber, getText(msgCode));
             }
         });
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == Constant.BANKLIST_RESULT_CODE && requestCode == Constant.TO_BANKLIST) {
+            bankResp = data.getParcelableExtra(Constant.CHOOSE_BANCK);
+            bankName.setText(bankResp.getBank_name());
+        }
+    }
+
+    /**
+     * 请求图片验证码失败
+     */
+    public void requestMessageCodeFail() {
+        httpLoadingDialog.dismiss();
+        getVerifyCode.cancel();
+    }
+
+    /**
+     * 请求图片验证码成功
+     */
+    public void requestMessageCodeSuccess() {
+        httpLoadingDialog.dismiss();
+        getVerifyCode.start();
+    }
+
+    /**
+     * 修改银行卡成功
+     */
+    public void requestChangeSuccess() {
+        httpLoadingDialog.dismiss();
+        showToast("更换成功");
+        //跳转回我的银行卡页面，并更新页面信息
+        EventBus.getDefault().post(new ChangeBankCardEvent());
+        finish();
+    }
+
+
+    /**
+     * 修改银行卡失败
+     */
+    public void requestChangeFail() {
+    }
 }

@@ -14,8 +14,11 @@ public class Constant {
     //userId 用户编号 存本地
     public static final String USERID = BASE_CONSTANT + "userId";
 
-    //用户名 存本地
-    public static final String USER_NAME = BASE_CONSTANT + "user_name";
+    //手机号 存本地
+    public static final String USER_PHONE = BASE_CONSTANT + "user_phone";
+
+    //身份证号
+    public static final String USER_CERTNO = BASE_CONSTANT + "user_certno";
 
     //是否开户 1位未开户  0 位开户 存本地
     public static final String IS_OPEN_ACCOUNT = BASE_CONSTANT + "is_open_account";

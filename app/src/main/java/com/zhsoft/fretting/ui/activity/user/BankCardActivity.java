@@ -11,8 +11,13 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.ChangeBankCardEvent;
 import com.zhsoft.fretting.model.user.BankCardResp;
 import com.zhsoft.fretting.present.user.BankCardPresent;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
@@ -64,9 +69,12 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
         userId = App.getSharedPref().getString(Constant.USERID, "");
         token = App.getSharedPref().getString(Constant.TOKEN, "");
 
+        //注册eventbus
+        EventBus.getDefault().register(this);
+
         //获取我的银行卡信息
         dialog.visible();
-        getP().getBankCardInfo(token,userId);
+        getP().getBankCardInfo(token, userId);
     }
 
     @Override
@@ -111,4 +119,24 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
     public void requestFail() {
         dialog.dismiss();
     }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    /**
+     * 修改银行卡事件
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.POSTING)
+    public void changeBankEvent(ChangeBankCardEvent event) {
+        //重新获取我的银行卡信息
+        dialog.visible();
+        getP().getBankCardInfo(token, userId);
+        showToast("修改啦");
+    }
+
 }

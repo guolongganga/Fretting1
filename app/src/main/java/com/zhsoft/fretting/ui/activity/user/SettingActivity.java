@@ -141,9 +141,11 @@ public class SettingActivity extends XActivity {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //清空缓存数据
                 App.getSharedPref().putString(Constant.USERID, "");
                 App.getSharedPref().putString(Constant.TOKEN, "");
-                App.getSharedPref().putString(Constant.USER_NAME, "");
+                App.getSharedPref().putString(Constant.USER_PHONE, "");
+                App.getSharedPref().putString(Constant.USER_CERTNO, "");
                 App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, "");
                 EventBus.getDefault().post(new OpenAccountEvent());
 

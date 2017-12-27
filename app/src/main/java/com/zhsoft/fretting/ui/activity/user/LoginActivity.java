@@ -126,7 +126,12 @@ public class LoginActivity extends XActivity<LoginPresent> {
         //缓存用户userId,token,username,is_open_account
         App.getSharedPref().putString(Constant.USERID, model.getUserId());
         App.getSharedPref().putString(Constant.TOKEN, model.getToken());
-        App.getSharedPref().putString(Constant.USER_NAME, getText(username));
+        //如果位数是11位，说明是手机号，否则是身份证号
+        if (getText(username).length() == 11) {
+            App.getSharedPref().putString(Constant.USER_PHONE, getText(username));
+        } else {
+            App.getSharedPref().putString(Constant.USER_CERTNO, getText(username));
+        }
         App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, model.getIsOpenAccount());
 
         EventBus.getDefault().post(new OpenAccountEvent());

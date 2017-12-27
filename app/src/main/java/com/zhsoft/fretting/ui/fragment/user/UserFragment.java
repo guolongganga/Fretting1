@@ -213,7 +213,7 @@ public class UserFragment extends XFragment<UserPresent> {
         toFinishRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String strPhone = App.getSharedPref().getString(Constant.USER_NAME, "");
+                String strPhone = App.getSharedPref().getString(Constant.USER_PHONE, "");
                 Bundle bundle = new Bundle();
                 bundle.putString(PHONE, strPhone);
                 startActivity(RegisterSecondActivity.class, bundle);
