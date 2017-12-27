@@ -1,13 +1,22 @@
 package com.zhsoft.fretting.ui.activity.user;
 
 import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
@@ -33,10 +42,6 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
     @BindView(R.id.head_title) TextView headTitle;
     /** 手机号码 */
     @BindView(R.id.phone) EditText phone;
-    /** 图片验证码 */
-    @BindView(R.id.image_code) EditText imageCode;
-    /** 图片 */
-    @BindView(R.id.image) ImageView image;
     /** 短信验证码 */
     @BindView(R.id.msg_code) EditText msgCode;
     /** 获取短信验证码 */
@@ -48,6 +53,16 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
     private HttpLoadingDialog httpLoadingDialog;
     /** 图片验证码id */
     private String image_code_id;
+    //验证码pop
+    PopupWindow mPopWindow;
+    //关闭pop
+    ImageView ivClose;
+    //图片验证码
+    ImageView ivCode;
+    //刷新
+    TextView tvRefresh;
+    //输入验证码
+    EditText etCode;
 
     @Override
     public int getLayoutId() {
@@ -64,11 +79,9 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
         //解决键盘弹出遮挡不滚动问题
         ChenJingET.assistActivity(context);
         httpLoadingDialog = new HttpLoadingDialog(context);
+        httpLoadingDialog.setCanceledOnKeyBack();
         //设置标题
         headTitle.setText("找回登录密码");
-        //访问图片验证码请求接口
-        httpLoadingDialog.visible();
-        getP().getImageCode();
     }
 
     @Override
@@ -79,19 +92,10 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
                 finish();
             }
         });
-        image.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //访问图片验证码请求接口
-                httpLoadingDialog.visible();
-                getP().getImageCode();
-            }
-        });
         getVerifyCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String phoneNumber = getText(phone);
-                String imgcode = getText(imageCode);
 
                 //表单验证
                 if (noNetWork()) {
@@ -106,16 +110,8 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
                     showToast("请输入正确的手机号码");
                     return;
                 }
-                if (!isNotEmpty(imgcode)) {
-                    showToast("图形验证码不能为空");
-                    return;
-                }
-                //TODO 发送请求验证码，getSmsCode(phoneStr, imageCodeStr）
-
-                //TODO 发送请求验证码成功
-                getVerifyCode.start();
-                //TODO 重试，发送请求验证码成功
-                //getVerifyCode.cancel();
+                //获取图片验证码
+                showImageCode(phoneNumber);
             }
         });
 
@@ -123,7 +119,7 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
             @Override
             public void onClick(View view) {
                 String phoneNumber = getText(phone);
-                String imgcode = getText(imageCode);
+//                String imgcode = getText(imageCode);
                 String messageCode = getText(msgCode);
 
                 //表单验证
@@ -139,10 +135,6 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
                     showToast("请输入正确的手机号码");
                     return;
                 }
-                if (!isNotEmpty(imgcode)) {
-                    showToast("图形验证码不能为空");
-                    return;
-                }
                 if (!isNotEmpty(messageCode)) {
                     showToast("短信验证码不能为空");
                     return;
@@ -155,6 +147,77 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
         });
 
 
+    }
+
+    /**
+     * 获取图片验证码
+     */
+    public void showImageCode(final String phone) {
+        //设置contentView
+        View contentView = LayoutInflater.from(context).inflate(R.layout.pop_show_image_code, null);
+        mPopWindow = new PopupWindow(contentView,
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
+        mPopWindow.setContentView(contentView);
+        mPopWindow.setFocusable(true);
+        //外部是否可以点击
+        mPopWindow.setBackgroundDrawable(new BitmapDrawable());
+        mPopWindow.setOutsideTouchable(true);
+
+        //解决popupwindow中弹出输入法被遮挡问题
+        mPopWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+        mPopWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
+
+        FrameLayout flContent = contentView.findViewById(R.id.fl_content);
+        flContent.getBackground().setAlpha(150);
+
+        ivClose = contentView.findViewById(R.id.iv_close);
+        ivCode = contentView.findViewById(R.id.iv_code);
+        tvRefresh = contentView.findViewById(R.id.tv_refresh);
+        etCode = contentView.findViewById(R.id.et_code);
+
+        //网络请求去获取图片
+        getP().getImageCode();
+
+        //关闭pop
+        ivClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPopWindow.dismiss();
+            }
+        });
+
+        //刷新 - 重新请求验证码
+        tvRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getP().getImageCode();
+            }
+        });
+
+        //监听EditText的输入长度
+        etCode.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String etImageCode = getText(etCode);
+                int len = etImageCode.length();
+                if (len == 4) {
+                    //获取验证码
+                    getP().getMessageCode(phone, etImageCode, image_code_id);
+                }
+            }
+        });
+        //显示PopupWindow
+        mPopWindow.showAtLocation(getVerifyCode, Gravity.CENTER, 0, 0);
     }
 
 
@@ -180,12 +243,13 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
         finish();
     }
 
+
     /**
-     * 获取图片验证码
+     * 获取图片验证码成功
      *
      * @param data
      */
-    public void getImageCode(ImageResp data) {
+    public void getImageCodeSuccess(ImageResp data) {
         httpLoadingDialog.dismiss();
         //获取 图片Base64 字符串
         String strimage = data.getBase64Image();
@@ -193,11 +257,34 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
         if (!TextUtils.isEmpty(strimage)) {
             //将Base64图片串转换成Bitmap
             Bitmap bitmap = Base64ImageUtil.base64ToBitmap(strimage);
-            image.setImageBitmap(bitmap);
+            ivCode.setImageBitmap(bitmap);
         }
     }
 
-    public void requestMessageFail() {
-        httpLoadingDialog.dismiss();
+    /**
+     * 获取图片验证码失败
+     */
+    public void getImageCodeFail() {
+        showToast("请求图片验证码失败...");
+    }
+
+    /**
+     * 请求短信验证码成功
+     */
+    public void requestPhoneCodeSuccess(String data) {
+//        messageCode = data.getMessageCode();
+        //关闭pop，
+        mPopWindow.dismiss();
+        //开始倒计时
+        getVerifyCode.start();
+    }
+
+    /**
+     * 请求短信验证码失败
+     */
+    public void requestPhoneCodeFail() {
+        //获取失败的原因
+        getVerifyCode.cancel();
+        showToast("后台那家伙说你输错验证码了...老铁");
     }
 }

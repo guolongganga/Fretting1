@@ -195,14 +195,6 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
             }
         });
 
-//        image.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //图片验证码接口
-//                httpLoadingDialog.visible();
-//                getP().getImageCode();
-//            }
-//        });
 
         getVerifyCode.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -247,7 +239,6 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
 //                }
 
                 //获取图片验证码
-                //getP().getMessageCode(phone, imgcode, image_code_id);
                 showImageCode(phone);
             }
         });
@@ -341,37 +332,6 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
         finish();
     }
 
-    /**
-     * 获取图片验证码成功
-     *
-     * @param data
-     */
-    public void getImageCodeSuccess(ImageResp data) {
-        httpLoadingDialog.dismiss();
-        //获取 图片Base64 字符串
-        String strimage = data.getBase64Image();
-        image_code_id = data.getImageCodeId();
-        if (!TextUtils.isEmpty(strimage)) {
-            //将Base64图片串转换成Bitmap
-            Bitmap bitmap = Base64ImageUtil.base64ToBitmap(strimage);
-            ivCode.setImageBitmap(bitmap);
-        }
-
-        //获取验证码成功就显示
-//        imageLoader.displayImage("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514031909051&di=8ed9e18b1cc42840143e19f0f2bc8976&imgtype=0&src=http%3A%2F%2Freso2.yiihuu.com%2F1331436-z.jpg", ivCode);
-
-//        ILFactory.getLoader().loadNet(ivCode, "", null);
-
-
-    }
-
-    /**
-     * 获取图片验证码成功失败
-     */
-    public void getImageCodeFail() {
-        showToast("请求图片验证码失败...");
-    }
-
 
     /**
      * 获取图片验证码
@@ -442,6 +402,37 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
         });
         //显示PopupWindow
         mPopWindow.showAtLocation(getVerifyCode, Gravity.CENTER, 0, 0);
+    }
+
+    /**
+     * 获取图片验证码成功
+     *
+     * @param data
+     */
+    public void getImageCodeSuccess(ImageResp data) {
+        httpLoadingDialog.dismiss();
+        //获取 图片Base64 字符串
+        String strimage = data.getBase64Image();
+        image_code_id = data.getImageCodeId();
+        if (!TextUtils.isEmpty(strimage)) {
+            //将Base64图片串转换成Bitmap
+            Bitmap bitmap = Base64ImageUtil.base64ToBitmap(strimage);
+            ivCode.setImageBitmap(bitmap);
+        }
+
+        //获取验证码成功就显示
+//        imageLoader.displayImage("https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1514031909051&di=8ed9e18b1cc42840143e19f0f2bc8976&imgtype=0&src=http%3A%2F%2Freso2.yiihuu.com%2F1331436-z.jpg", ivCode);
+
+//        ILFactory.getLoader().loadNet(ivCode, "", null);
+
+
+    }
+
+    /**
+     * 获取图片验证码成功失败
+     */
+    public void getImageCodeFail() {
+        showToast("请求图片验证码失败...");
     }
 
     /**

@@ -7,6 +7,7 @@ import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.params.FindPwdFirstParams;
+import com.zhsoft.fretting.params.PhoneCodeParams;
 import com.zhsoft.fretting.ui.activity.user.FindPwdLoginFirstActivity;
 import com.zhsoft.fretting.ui.activity.user.FindPwdTradeFirstActivity;
 
@@ -70,6 +71,9 @@ public class FindPwdTradeFirstPresent extends XPresent<FindPwdTradeFirstActivity
      * 获取图片验证码
      */
     public void getImageCode() {
+        //假装成功了
+//        ImageResp data = new ImageResp();
+//        getV().getImageCodeSuccess(data);
         CommonReqData reqData = new CommonReqData();
         reqData.setData("");
 
@@ -81,25 +85,61 @@ public class FindPwdTradeFirstPresent extends XPresent<FindPwdTradeFirstActivity
                 .subscribe(new ApiSubscriber<ImageResp>() {
                     @Override
                     protected void onFail(NetError error) {
-                        error.printStackTrace();
-                        getV().requestMessageFail();
-                        getV().showToast("请求图片验证码失败，点击图片重试");
+                        getV().getImageCodeFail();
                     }
 
                     @Override
                     public void onNext(ImageResp imageResp) {
                         if (imageResp != null && imageResp.getStatus() == 200) {
                             if (imageResp.getData() != null) {
-                                getV().getImageCode(imageResp.getData());
+                                getV().getImageCodeSuccess(imageResp.getData());
                             }
-
                         } else {
-                            getV().requestMessageFail();
+                            getV().getImageCodeFail();
                             getV().showToast(imageResp.getMessage());
                             XLog.e("返回数据为空");
                         }
                     }
                 });
+
+    }
+
+    /**
+     * 获取短信验证码
+     *
+     * @param phone
+     */
+    public void getMessageCode(String phone, String imgCode, String image_code_id) {
+        final CommonReqData reqData = new CommonReqData();
+        PhoneCodeParams params = new PhoneCodeParams();
+        params.setPhoneNo(phone);
+        params.setImage_code(imgCode);
+        params.setImage_code_id(image_code_id);
+        reqData.setData(params);
+
+        Api.getApi().getPhoneCode(reqData)
+                .compose(XApi.<BaseResp<String>>getApiTransformer())
+                .compose(XApi.<BaseResp<String>>getScheduler())
+                .compose(getV().<BaseResp<String>>bindToLifecycle())
+                .subscribe(new ApiSubscriber<BaseResp<String>>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        getV().requestPhoneCodeFail();
+                    }
+
+                    @Override
+                    public void onNext(BaseResp<String> resp) {
+                        if (resp != null && resp.getStatus() == 200) {
+                            getV().requestPhoneCodeSuccess(resp.getData());
+                        } else {
+                            getV().requestPhoneCodeFail();
+                            getV().showToast(resp.getMessage());
+                            XLog.e("返回数据为空");
+                        }
+                    }
+                });
+
+        //
 
 
     }
