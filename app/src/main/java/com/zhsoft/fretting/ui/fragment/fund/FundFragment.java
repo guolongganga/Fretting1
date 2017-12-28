@@ -90,6 +90,7 @@ public class FundFragment extends XLazyFragment {
             FundContentFragment fragment = new FundContentFragment();
             Bundle bundle = new Bundle();
             bundle.putString(Constant.FUND_TAB_NAME, tabName.get(i));
+            bundle.putInt(Constant.ACTIVITY_NAME, Constant.FUND_INDEX);
             fragment.setArguments(bundle);
             fragmentList.add(fragment);
         }

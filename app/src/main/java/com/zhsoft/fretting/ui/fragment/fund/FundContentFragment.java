@@ -60,6 +60,8 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
     public void initData(Bundle bundle) {
         //tab类型 请求接口的时候需要
         String fundTabName = bundle.getString(Constant.FUND_TAB_NAME, "");
+        //页面（基金页面或者人气产品）
+        int activityName = bundle.getInt(Constant.ACTIVITY_NAME, 0);
 
         contentLayout.getSwipeRefreshLayout().setColorSchemeResources(
                 R.color.color_main,
@@ -73,7 +75,15 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
                 .setAdapter(getAdapter());
         contentLayout.getRecyclerView().horizontalDivider(R.color.color_e7e7e7, R.dimen.dimen_1);  //设置divider
 
-        getP().loadData();
+        switch (activityName) {
+            case Constant.POPULARITY:
+                getP().loadPopularityData(1,10,fundTabName);
+                break;
+            case Constant.FUND_INDEX:
+                getP().loadFundData(1,10,fundTabName);
+                break;
+        }
+//        getP().loadData();
         tvRange.setText(list.get(isSelector));
 
         contentLayout.getRecyclerView()

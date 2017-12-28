@@ -109,6 +109,7 @@ public class PopularityActivity extends XActivity {
             FundContentFragment fragment = new FundContentFragment();
             Bundle bundle = new Bundle();
             bundle.putString(Constant.FUND_TAB_NAME, tabName.get(i));
+            bundle.putInt(Constant.ACTIVITY_NAME,Constant.POPULARITY);
             fragment.setArguments(bundle);
             fragmentList.add(fragment);
         }

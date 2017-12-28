@@ -24,7 +24,7 @@ public class Constant {
     public static final String IS_OPEN_ACCOUNT = BASE_CONSTANT + "is_open_account";
 
     //已开户
-    public static final String ALREADY_OPEN_ACCOUNT ="0" ;
+    public static final String ALREADY_OPEN_ACCOUNT = "0";
 
     //密码
     public static final String PWD = BASE_CONSTANT + "pwd";
@@ -43,6 +43,12 @@ public class Constant {
 
     //基金页面中的tab名称
     public static final String FUND_TAB_NAME = BASE_CONSTANT + "fund_tab_name";
+    //页面名称，人气产品或基金
+    public static final String ACTIVITY_NAME = BASE_CONSTANT + "activity_name";
+    //人气产品
+    public static final int POPULARITY = 1;
+    //基金主页
+    public static final int FUND_INDEX = 2;
 
     //跳转银行列表requestcode
     public static final int TO_BANKLIST = 100;
