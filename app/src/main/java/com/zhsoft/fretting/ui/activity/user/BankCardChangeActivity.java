@@ -2,7 +2,6 @@ package com.zhsoft.fretting.ui.activity.user;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -96,7 +95,7 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
             @Override
             public void onClick(View view) {
                 //选择银行
-                startActivity(BankListActivity.class, Constant.TO_BANKLIST);
+                startActivity(BankListActivity.class, Constant.BANKLIST_ACTIVITY);
             }
         });
         getVerifyCode.setOnClickListener(new View.OnClickListener() {
@@ -180,7 +179,7 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Constant.BANKLIST_RESULT_CODE && requestCode == Constant.TO_BANKLIST) {
+        if (resultCode == Constant.BANKLIST_RESULT_CODE && requestCode == Constant.BANKLIST_ACTIVITY) {
             bankResp = data.getParcelableExtra(Constant.CHOOSE_BANCK);
             bankName.setText(bankResp.getBank_name());
         }

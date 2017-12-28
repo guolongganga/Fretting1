@@ -22,11 +22,8 @@ import com.zhsoft.fretting.widget.ChenJingET;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
-import cn.droidlover.xdroidmvp.event.BusProvider;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
@@ -227,7 +224,7 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
             @Override
             public void onClick(View view) {
                 //选择银行
-                startActivity(BankListActivity.class, Constant.TO_BANKLIST);
+                startActivity(BankListActivity.class, Constant.BANKLIST_ACTIVITY);
 
             }
         });
@@ -247,7 +244,7 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Constant.BANKLIST_RESULT_CODE && requestCode == Constant.TO_BANKLIST) {
+        if (resultCode == Constant.BANKLIST_RESULT_CODE && requestCode == Constant.BANKLIST_ACTIVITY) {
             bankResp = data.getParcelableExtra(Constant.CHOOSE_BANCK);
             banckName.setText(bankResp.getBank_name());
         }

@@ -51,7 +51,7 @@ public class Constant {
     public static final int FUND_INDEX = 2;
 
     //跳转银行列表requestcode
-    public static final int TO_BANKLIST = 100;
+    public static final int BANKLIST_ACTIVITY = 100;
 
     //银行卡列表选择之后回到之前页面 resultcode
     public static final int BANKLIST_RESULT_CODE = 200;
@@ -68,5 +68,11 @@ public class Constant {
     //注册成功传递身份证号
     public static final String CERT_NO = BASE_CONSTANT + "cert_no";
 
+    //去修改手机页面 requestcode
+    public static final int CHANGE_PHONE_ACTIVITY = 101;
 
+    //修改手机号码成功后返回我的手机号码页面 resultcode
+    public static final int SUCCESS_BACK_PHONE = 201;
+
+    public static final String CHANGE_PHONE = "change_phone";
 }
