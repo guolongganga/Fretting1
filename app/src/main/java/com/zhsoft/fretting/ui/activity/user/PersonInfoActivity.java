@@ -2,6 +2,7 @@ package com.zhsoft.fretting.ui.activity.user;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.model.user.PersonInfoResp;
+import com.zhsoft.fretting.present.user.PersonInfoPresent;
 import com.zhsoft.fretting.ui.widget.PopShow;
 import com.zhsoft.fretting.ui.widget.PostionSelectPopupWindow;
 import com.zhsoft.fretting.utils.KeyBoardUtils;
@@ -25,6 +28,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
@@ -32,7 +36,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  * 描述：个人信息
  */
 
-public class PersonInfoActivity extends XActivity {
+public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
     //时间类
     private Calendar calendar = Calendar.getInstance();
     //时间选择器
@@ -74,12 +78,13 @@ public class PersonInfoActivity extends XActivity {
 //    @BindView(R.id.click_update) TextView clickUpdate;
 
     /** 用户编号 */
-    String userId;
+    private String userId;
     /** 登录标识 */
-    String token;
-
+    private String token;
+    /** 地址弹出框 */
     private PostionSelectPopupWindow popupWindow;
-
+    /** 加载框 */
+    private HttpLoadingDialog httpLoadingDialog;
 
     @Override
     public int getLayoutId() {
@@ -87,26 +92,28 @@ public class PersonInfoActivity extends XActivity {
     }
 
     @Override
-    public Object newP() {
-        return null;
+    public PersonInfoPresent newP() {
+        return new PersonInfoPresent();
     }
 
     @Override
     public void initData(Bundle bundle) {
         //解决键盘弹出遮挡不滚动问题
         ChenJingET.assistActivity(context);
-        //获取用户缓存的userid 和 token
-        userId = App.getSharedPref().getString(Constant.USERID, "");
-        token = App.getSharedPref().getString(Constant.TOKEN, "");
         //设置标题
         headTitle.setText("个人信息");
         ivSelector.setSelected(false);
-//        headRight.setVisibility(View.VISIBLE);
-//        headRight.setText("编辑");
-//        if (!isNotEmpty(getText(email))) {
-//            clickUpdate.setVisibility(View.VISIBLE);
-//            clickUpdate.setText("去填写");
-//        }
+        httpLoadingDialog = new HttpLoadingDialog(context);
+
+        //获取用户缓存的userid 和 token
+        userId = App.getSharedPref().getString(Constant.USERID, "");
+        token = App.getSharedPref().getString(Constant.TOKEN, "");
+
+        //请求个人信息接口
+        httpLoadingDialog.visible();
+        getP().getUserInfo(token, userId);
+
+
         popupWindow = new PostionSelectPopupWindow(this);
         popupWindow.setCallBack(new PostionSelectPopupWindow.CallBack() {
             @Override
@@ -115,6 +122,13 @@ public class PersonInfoActivity extends XActivity {
             }
         });
 
+
+//        headRight.setVisibility(View.VISIBLE);
+//        headRight.setText("编辑");
+//        if (!isNotEmpty(getText(email))) {
+//            clickUpdate.setVisibility(View.VISIBLE);
+//            clickUpdate.setText("去填写");
+//        }
     }
 
     @Override
@@ -201,7 +215,6 @@ public class PersonInfoActivity extends XActivity {
                 list.add("教师");
                 list.add("程序员");
                 list.add("其他");
-                //TODO 有BUG
                 PopShow popShow = new PopShow(context, linearlayout_duty);
                 popShow.showText(list);
                 popShow.setOnClickPop(new PopShow.OnClickPop() {
@@ -234,4 +247,48 @@ public class PersonInfoActivity extends XActivity {
 
     }
 
+    /**
+     * 请求用户信息成功
+     *
+     * @param personInfoResp
+     */
+    public void requestUserInfoSuccess(PersonInfoResp personInfoResp) {
+        if (personInfoResp != null) {
+            name.setText(personInfoResp.getName());
+            sex.setText(personInfoResp.getGender());
+            identity.setText(personInfoResp.getCertNo());
+            //如果是0说明永久有效
+            if ("0".equals(personInfoResp.getIsPermanent())) {
+                ivSelector.setSelected(true);
+                limitTime.setHint("");
+                limitTime.setText("");
+            } else {
+                ivSelector.setSelected(false);
+                if (isNotEmpty(personInfoResp.getLimitTime())) {
+                    limitTime.setText(personInfoResp.getLimitTime());
+                } else {
+                    limitTime.setText("请选择");
+                }
+            }
+            nationality.setText(personInfoResp.getNationality());
+            if (isNotEmpty(personInfoResp.getOccupation())) {
+                duty.setText(personInfoResp.getOccupation());
+            } else {
+                duty.setHint("请选择");
+            }
+            if (isNotEmpty(personInfoResp.getAddress())) {
+                address.setText(personInfoResp.getAddress());
+            } else {
+                address.setHint("请选择");
+            }
+            accountid.setText(personInfoResp.getFundAccount());
+            email.setText(personInfoResp.getEmail());
+        }
+    }
+
+    /**
+     * 请求用户信息失败
+     */
+    public void requestUserInfoFail() {
+    }
 }

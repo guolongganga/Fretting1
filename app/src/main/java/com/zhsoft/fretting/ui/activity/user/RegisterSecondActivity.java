@@ -15,7 +15,6 @@ import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.OpenAccountEvent;
 import com.zhsoft.fretting.model.user.BankResp;
-import com.zhsoft.fretting.model.user.OpenAccountResp;
 import com.zhsoft.fretting.present.user.RegisterSecondPresent;
 import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
 import com.zhsoft.fretting.widget.ChenJingET;
@@ -261,7 +260,7 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
     /**
      * 开户成功
      */
-    public void requestOpenAccountSuccess(OpenAccountResp data) {
+    public void requestOpenAccountSuccess() {
         httpLoadingDialog.dismiss();
 //        showToast(data);
         //更新开户状态 改成已开户

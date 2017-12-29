@@ -1,19 +1,13 @@
 package com.zhsoft.fretting.ui.fragment.fund;
 
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.model.fund.FundResp;
+import com.zhsoft.fretting.model.user.NewestFundResp;
 import com.zhsoft.fretting.present.fund.FundContentPresent;
-import com.zhsoft.fretting.ui.adapter.boot.PopDropSelectorRecycleAdapter;
 import com.zhsoft.fretting.ui.adapter.fund.FundContentRecycleAdapter;
 import com.zhsoft.fretting.ui.widget.PopShow;
 
@@ -22,8 +16,9 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
+import cn.droidlover.xdroidmvp.mvp.XLazyFragment;
+import cn.droidlover.xdroidmvp.net.NetError;
 import cn.droidlover.xrecyclerview.RecyclerAdapter;
-import cn.droidlover.xrecyclerview.RecyclerItemCallback;
 import cn.droidlover.xrecyclerview.XRecyclerContentLayout;
 import cn.droidlover.xrecyclerview.XRecyclerView;
 
@@ -45,6 +40,10 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
     private List<String> list;
 
     private int isSelector = 0;
+    private String fundTabName;
+    private int activityName;
+    private int pageno = 1;
+    private final int pageSize = 10;
 
     @Override
     public int getLayoutId() {
@@ -59,9 +58,9 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
     @Override
     public void initData(Bundle bundle) {
         //tab类型 请求接口的时候需要
-        String fundTabName = bundle.getString(Constant.FUND_TAB_NAME, "");
+        fundTabName = bundle.getString(Constant.FUND_TAB_NAME, "");
         //页面（基金页面或者人气产品）
-        int activityName = bundle.getInt(Constant.ACTIVITY_NAME, 0);
+        activityName = bundle.getInt(Constant.ACTIVITY_NAME, 0);
 
         contentLayout.getSwipeRefreshLayout().setColorSchemeResources(
                 R.color.color_main,
@@ -77,12 +76,15 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
 
         switch (activityName) {
             case Constant.POPULARITY:
-                getP().loadPopularityData(1,10,fundTabName);
+                getP().loadPopularityData(pageno, pageSize, fundTabName);
                 break;
             case Constant.FUND_INDEX:
-                getP().loadFundData(1,10,fundTabName);
+                getP().loadFundData(pageno, pageSize, fundTabName, "");
                 break;
         }
+        list = new ArrayList<>();
+        list.add("一周涨幅");
+        list.add("近期涨幅");
 //        getP().loadData();
         tvRange.setText(list.get(isSelector));
 
@@ -90,12 +92,12 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
                 .setOnRefreshAndLoadMoreListener(new XRecyclerView.OnRefreshAndLoadMoreListener() {
                     @Override
                     public void onRefresh() {
-
+                        getP().loadFundData(1, 10, fundTabName, "");
                     }
 
                     @Override
                     public void onLoadMore(int page) {
-
+                        getP().loadFundData(page, pageSize, fundTabName, "");
                     }
                 });
 
@@ -133,7 +135,7 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
      */
     public RecyclerAdapter getAdapter() {
         if (adapter == null) {
-            adapter = new FundContentRecycleAdapter(context);
+            adapter = new FundContentRecycleAdapter(context,fundTabName);
         }
         return adapter;
     }
@@ -141,24 +143,28 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
     /**
      * 数据展示
      *
-     * @param page
+     * @param pageno
      * @param item
      */
-    public void showData(int page, List<FundResp> item) {
-        list = new ArrayList<>();
-        list.add("一周涨幅");
-        list.add("近期涨幅");
+    public void showData(int pageno, List<NewestFundResp> item) {
+//        list = new ArrayList<>();
+//        list.add("一周涨幅");
+//        list.add("近期涨幅");
 
         if (item != null && item.size() > 1) {
-            if (page > 1) {
+            if (pageno > 1) {
                 getAdapter().addData(item);
             } else {
                 getAdapter().setData(item);
             }
-            contentLayout.getRecyclerView().setPage(page, page + 1);
+            contentLayout.getRecyclerView().setPage(pageno, pageno + 1);
         } else {
             //没有更多数据了
-            contentLayout.getRecyclerView().setPage(page, page - 1);
+            contentLayout.getRecyclerView().setPage(pageno, pageno - 1);
         }
+    }
+
+    public void showError(NetError error) {
+
     }
 }

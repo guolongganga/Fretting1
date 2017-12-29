@@ -1,17 +1,12 @@
 package com.zhsoft.fretting.present.user;
 
-import android.util.Log;
-
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.user.BankResp;
-import com.zhsoft.fretting.model.user.OpenAccountResp;
 import com.zhsoft.fretting.net.Api;
-import com.zhsoft.fretting.params.BankListParams;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.params.OpenAccountParams;
 import com.zhsoft.fretting.ui.activity.user.RegisterSecondActivity;
 
-import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XPresent;
 import cn.droidlover.xdroidmvp.net.ApiSubscriber;
 import cn.droidlover.xdroidmvp.net.NetError;
@@ -102,19 +97,19 @@ public class RegisterSecondPresent extends XPresent<RegisterSecondActivity> {
         reqData.setData(params);
 
         Api.getApi().openAccount(reqData)
-                .compose(XApi.<OpenAccountResp>getApiTransformer())
-                .compose(XApi.<OpenAccountResp>getScheduler())
-                .compose(getV().<OpenAccountResp>bindToLifecycle())
-                .subscribe(new ApiSubscriber<OpenAccountResp>() {
+                .compose(XApi.<BaseResp<String>>getApiTransformer())
+                .compose(XApi.<BaseResp<String>>getScheduler())
+                .compose(getV().<BaseResp<String>>bindToLifecycle())
+                .subscribe(new ApiSubscriber<BaseResp<String>>() {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestOpenAccountFail();
                     }
 
                     @Override
-                    public void onNext(OpenAccountResp resp) {
+                    public void onNext(BaseResp<String> resp) {
                         if (resp != null && resp.getStatus() == 200) {
-                            getV().requestOpenAccountSuccess(resp.getData());
+                            getV().requestOpenAccountSuccess();
                         } else {
                             getV().showToast(resp.getMessage());
                             getV().requestOpenAccountFail();

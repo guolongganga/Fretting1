@@ -8,9 +8,9 @@ import cn.droidlover.xdroidmvp.net.XApi;
 
 public class Api {
 
-    public static final String API_BASE_URL = "https://192.168.0.116:8443/";//苑
+//    public static final String API_BASE_URL = "https://192.168.0.116:8443/";//苑
 //    public static final String API_BASE_URL = "https://10.0.8.74:8443/";//聂
-//    public static final String API_BASE_URL = "https://10.0.8.10:8443/";//陈
+    public static final String API_BASE_URL = "https://192.168.0.107:8443/";//陈
 
     private static HttpUtil httpUtil;
 

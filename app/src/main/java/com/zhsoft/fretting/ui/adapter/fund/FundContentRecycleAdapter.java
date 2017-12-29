@@ -7,6 +7,10 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.fund.FundResp;
+import com.zhsoft.fretting.model.user.NewestFundResp;
+import com.zhsoft.fretting.utils.BigDecimalUtil;
+
+import java.math.BigDecimal;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
@@ -17,11 +21,13 @@ import cn.droidlover.xdroidmvp.kit.KnifeKit;
  * data: 2017/12/19
  */
 
-public class FundContentRecycleAdapter extends SimpleRecAdapter<FundResp, FundContentRecycleAdapter.ViewHolder> {
+public class FundContentRecycleAdapter extends SimpleRecAdapter<NewestFundResp, FundContentRecycleAdapter.ViewHolder> {
 
+    private String tabname;
 
-    public FundContentRecycleAdapter(Context context) {
+    public FundContentRecycleAdapter(Context context, String tabname) {
         super(context);
+        this.tabname = tabname;
     }
 
     @Override
@@ -36,10 +42,10 @@ public class FundContentRecycleAdapter extends SimpleRecAdapter<FundResp, FundCo
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        holder.tvName.setText(data.get(position).getName());
-        holder.tvCode.setText(data.get(position).getCode());
-        holder.tvValue.setText(data.get(position).getValue());
-        holder.tvRange.setText(data.get(position).getRange());
+        holder.tvName.setText(tabname + data.get(position).getFund_name());
+        holder.tvCode.setText(data.get(position).getFund_code());
+        holder.tvValue.setText(BigDecimalUtil.bigdecimalToString(data.get(position).getNet_value()));
+        holder.tvRange.setText("+" + BigDecimalUtil.bigdecimalToString(data.get(position).getFund_curr_ratio()));
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

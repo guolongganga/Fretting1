@@ -5,11 +5,9 @@ import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.model.TaetResp;
 import com.zhsoft.fretting.model.user.BankResp;
 import com.zhsoft.fretting.model.user.ImageResp;
-import com.zhsoft.fretting.model.user.OpenAccountResp;
-import com.zhsoft.fretting.model.user.PhoneCodeResp;
+import com.zhsoft.fretting.model.user.NewestFundListResp;
 import com.zhsoft.fretting.model.user.UserAccountResp;
 import com.zhsoft.fretting.params.CommonReqData;
-import com.zhsoft.fretting.params.OpenAccountParams;
 
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
@@ -19,6 +17,7 @@ import retrofit2.http.POST;
 import static com.zhsoft.fretting.net.HttpContent.common_bank_list;
 import static com.zhsoft.fretting.net.HttpContent.fund_home;
 import static com.zhsoft.fretting.net.HttpContent.image_code;
+import static com.zhsoft.fretting.net.HttpContent.newest_fund;
 import static com.zhsoft.fretting.net.HttpContent.open_account;
 import static com.zhsoft.fretting.net.HttpContent.password_check;
 import static com.zhsoft.fretting.net.HttpContent.password_reset;
@@ -76,10 +75,13 @@ public interface HttpUtil {
 
     @Headers("apptype:Android")
     @POST(open_account)
-    Flowable<OpenAccountResp> openAccount(@Body CommonReqData reqData);
+    Flowable<BaseResp<String>> openAccount(@Body CommonReqData reqData);
 
     @Headers("apptype:Android")
     @POST(fund_home)
     Flowable<UserAccountResp> getFundHome(@Body CommonReqData reqData);
 
+    @Headers("apptype:Android")
+    @POST(newest_fund)
+    Flowable<NewestFundListResp> getNewestFund(@Body CommonReqData reqData);
 }

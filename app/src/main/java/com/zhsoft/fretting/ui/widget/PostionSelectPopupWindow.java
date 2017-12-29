@@ -29,10 +29,8 @@ import javax.xml.parsers.SAXParserFactory;
 
 /**
  * <p>Description: 地区选择菜单</p>
- * <p>Company: 投资啦</p>
- * <p>Create Time:2016/8/18 8:07</p>
  *
- * @author MiaoWenHai
+ * @author sunnyzeng
  */
 public class PostionSelectPopupWindow extends PopupWindow implements OnWheelChangedListener {
     private View mMenuView;
