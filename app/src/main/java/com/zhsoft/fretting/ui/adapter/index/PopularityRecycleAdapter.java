@@ -10,6 +10,8 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.index.PopularityResp;
+import com.zhsoft.fretting.model.index.ProductModel;
+import com.zhsoft.fretting.utils.BigDecimalUtil;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
@@ -21,7 +23,7 @@ import cn.droidlover.xdroidmvp.kit.KnifeKit;
  * data: 2017/12/14
  */
 
-public class PopularityRecycleAdapter extends SimpleRecAdapter<PopularityResp, PopularityRecycleAdapter.ViewHolder> {
+public class PopularityRecycleAdapter extends SimpleRecAdapter<ProductModel, PopularityRecycleAdapter.ViewHolder> {
 
     public static final int ITEM_CLICK = 0;    //点击标识
 
@@ -42,11 +44,11 @@ public class PopularityRecycleAdapter extends SimpleRecAdapter<PopularityResp, P
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        holder.tvValue.setText(data.get(position).getValue());
-        holder.tvDescribe.setText(data.get(position).getDescribe());
-        holder.tvTitle.setText(data.get(position).getTitle());
-        holder.tvLocationOne.setText(data.get(position).getLocationOne());
-        holder.tvLocationTwo.setText(data.get(position).getLocationTwo());
+        holder.tvValue.setText(BigDecimalUtil.bigdecimalToString(data.get(position).getAveg())+"%");
+//        holder.tvDescribe.setText("近一年的收益率");
+        holder.tvTitle.setText(data.get(position).getName());
+        holder.tvLocationOne.setText(data.get(position).getFeatureOne());
+        holder.tvLocationTwo.setText(data.get(position).getFeatureTwo());
 
         if (data.size() - 1 == position) {
             holder.viewLine.setVisibility(View.GONE);

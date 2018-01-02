@@ -3,6 +3,7 @@ package com.zhsoft.fretting.net;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.model.TaetResp;
+import com.zhsoft.fretting.model.index.IndexResp;
 import com.zhsoft.fretting.model.user.BankResp;
 import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.model.user.NewestFundListResp;
@@ -16,6 +17,7 @@ import retrofit2.http.POST;
 
 import static com.zhsoft.fretting.net.HttpContent.common_bank_list;
 import static com.zhsoft.fretting.net.HttpContent.fund_home;
+import static com.zhsoft.fretting.net.HttpContent.get_home;
 import static com.zhsoft.fretting.net.HttpContent.image_code;
 import static com.zhsoft.fretting.net.HttpContent.newest_fund;
 import static com.zhsoft.fretting.net.HttpContent.open_account;
@@ -84,4 +86,8 @@ public interface HttpUtil {
     @Headers("apptype:Android")
     @POST(newest_fund)
     Flowable<NewestFundListResp> getNewestFund(@Body CommonReqData reqData);
+
+    @Headers("apptype:Android")
+    @POST(get_home)
+    Flowable<IndexResp> getHome(@Body CommonReqData reqData);
 }

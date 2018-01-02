@@ -7,8 +7,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.net.Api;
+import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
@@ -78,7 +81,10 @@ public class RegisterSuccessActivity extends XActivity {
             @Override
             public void onClick(View view) {
                 //TODO 跳转风险测评
-                showToast("跳转风险测评");
+                Bundle bundle = new Bundle();
+                bundle.putInt(Constant.WEB_TITLE, R.string.user_risk_test);
+                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.risk_question);
+                startActivity(RiskTestWebViewAcvitity.class, bundle);
             }
         });
     }

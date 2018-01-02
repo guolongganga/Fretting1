@@ -6,18 +6,24 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.model.index.BannerModel;
+import com.zhsoft.fretting.model.index.IndexResp;
 import com.zhsoft.fretting.model.index.PopularityResp;
+import com.zhsoft.fretting.model.index.ProductModel;
 import com.zhsoft.fretting.present.index.IndexPresent;
 import com.zhsoft.fretting.ui.activity.index.PopularityActivity;
 import com.zhsoft.fretting.ui.activity.index.TimingActivity;
 import com.zhsoft.fretting.ui.adapter.index.PopularityRecycleAdapter;
 import com.zhsoft.fretting.ui.adapter.user.SwitchAccountRecycleAdapter;
+import com.zhsoft.fretting.utils.BigDecimalUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.banner.FlyBanner;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
+import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
 import cn.droidlover.xrecyclerview.RecyclerItemCallback;
 import cn.droidlover.xrecyclerview.XRecyclerView;
@@ -38,9 +44,33 @@ public class IndexFragment extends XFragment<IndexPresent> {
     /** 人气产品 更多 */
     @BindView(R.id.popularity_more)
     TextView popularityMore;
+    /** 明星基金 收益率 */
+    @BindView(R.id.tv_seven_earnings)
+    TextView tvSevenEarnings;
+    /** 明星基金 名称 */
+    @BindView(R.id.tv_wan_earnings)
+    TextView tvWanarnings;
+    /** 指数基金产品1 名称 */
+    @BindView(R.id.tv_nvshen)
+    TextView tvNvshen;
+    /** 指数基金产品1 收益 */
+    @BindView(R.id.tv_nvshen_shouyi)
+    TextView tvNvshenShouyi;
+    /** 指数基金产品2 名称 */
+    @BindView(R.id.tv_chihuo)
+    TextView tvChihuo;
+    /** 指数基金产品2 收益 */
+    @BindView(R.id.tv_chihuo_shouyi)
+    TextView tvChihuoShouyi;
     /** 优选定投 更多 */
     @BindView(R.id.timing_more)
     TextView timingMore;
+    /** 优选定投 名称 */
+    @BindView(R.id.preferred_name)
+    TextView preferredName;
+    /** 优选定投 利率 */
+    @BindView(R.id.preferred_rate)
+    TextView preferredRate;
 
     @Override
     public int getLayoutId() {
@@ -85,8 +115,13 @@ public class IndexFragment extends XFragment<IndexPresent> {
      *
      * @param bannerList
      */
-    public void showBanner(List<String> bannerList) {
-        banner.setImagesUrl(bannerList);
+    public void showBanner(List<BannerModel> bannerList) {
+        List<String> bannerUrlList = new ArrayList<>();
+        for (BannerModel bannerModel : bannerList) {
+            bannerUrlList.add(bannerModel.getBannerImageUrl());
+        }
+        XLog.e("qqq", bannerUrlList.size() + "");
+        banner.setImagesUrl(bannerUrlList);
 
         banner.setOnItemClickListener(new FlyBanner.OnItemClickListener() {
             @Override
@@ -94,6 +129,8 @@ public class IndexFragment extends XFragment<IndexPresent> {
                 showToast("点击了第" + position + "张图片");
             }
         });
+
+
     }
 
     /**
@@ -104,14 +141,14 @@ public class IndexFragment extends XFragment<IndexPresent> {
     public SimpleRecAdapter getPopularityAdapter() {
         PopularityRecycleAdapter adapter = new PopularityRecycleAdapter(context);
         xrvPopularity.setAdapter(adapter);
-        adapter.setRecItemClick(new RecyclerItemCallback<PopularityResp, PopularityRecycleAdapter.ViewHolder>() {
+        adapter.setRecItemClick(new RecyclerItemCallback<ProductModel, PopularityRecycleAdapter.ViewHolder>() {
             @Override
-            public void onItemClick(int position, PopularityResp model, int tag, PopularityRecycleAdapter.ViewHolder holder) {
+            public void onItemClick(int position, ProductModel model, int tag, PopularityRecycleAdapter.ViewHolder holder) {
                 super.onItemClick(position, model, tag, holder);
                 switch (tag) {
                     //点击
                     case SwitchAccountRecycleAdapter.ITEM_CLICK:
-                        showToast(model.getTitle());
+                        showToast(model.getName());
                         break;
                 }
             }
@@ -131,4 +168,50 @@ public class IndexFragment extends XFragment<IndexPresent> {
     }
 
 
+    public void showIndexData(IndexResp data) {
+        if (data != null) {
+            //banner展示
+            if (data.getBannerList() != null && data.getBannerList().size() > 0) {
+                List<String> bannerUrlList = new ArrayList<>();
+                for (BannerModel bannerModel : data.getBannerList()) {
+                    XLog.e("qqq", bannerModel.getBannerImageUrl());
+                    bannerUrlList.add(bannerModel.getBannerImageUrl());
+                }
+                XLog.e("qqq", bannerUrlList.size() + "");
+                banner.setImagesUrl(bannerUrlList);
+
+                banner.setOnItemClickListener(new FlyBanner.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+                        showToast("点击了第" + position + "张图片");
+                    }
+                });
+            }
+            //明星基金
+            if (data.getStarFound() != null) {
+                tvSevenEarnings.setText(BigDecimalUtil.bigdecimalToString(data.getStarFound().getAveg()) + "%");
+                tvWanarnings.setText(data.getStarFound().getName());
+            }
+            //微银专题
+            //人气产品
+            if (data.getHotList() != null && data.getHotList().size() > 0) {
+                getPopularityAdapter().addData(data.getHotList());
+            }
+            //指数基金
+            if (data.getIndexList() != null && data.getIndexList().size() > 0) {
+                tvNvshen.setText(data.getIndexList().get(0).getName());
+                tvNvshenShouyi.setText("+" + BigDecimalUtil.bigdecimalToString(data.getIndexList().get(0).getAveg()) + "%");
+
+                tvChihuo.setText(data.getIndexList().get(1).getName());
+                tvChihuoShouyi.setText("+" + BigDecimalUtil.bigdecimalToString(data.getIndexList().get(1).getAveg()) + "%");
+            }
+            //优选定投
+            if (data.getPreferredVote() != null) {
+
+                preferredName.setText(data.getPreferredVote().getName());
+                preferredRate.setText(BigDecimalUtil.bigdecimalToString(data.getPreferredVote().getAveg()) + "%");
+            }
+
+        }
+    }
 }

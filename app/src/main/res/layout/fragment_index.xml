@@ -97,7 +97,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerHorizontal="true"
-                        android:text="4.301%"
                         android:textColor="@color/color_f7182d"
                         android:textSize="@dimen/text_size_22" />
 
@@ -124,7 +123,6 @@
                         android:id="@+id/tv_wan_earnings"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="国泰互联网金鑫股票"
                         android:textColor="@color/color_333333"
                         android:textSize="@dimen/text_size_22" />
 
@@ -316,7 +314,7 @@
                         android:layout_centerHorizontal="true"
                         android:layout_marginTop="@dimen/dimen_10"
                         android:text="收益"
-                        android:textColor="@color/color_333333"
+                        android:textColor="@color/color_f7182d"
                         android:textSize="@dimen/text_size_16" />
 
                     <TextView
@@ -423,6 +421,7 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/preferred_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="国泰互联网金鑫股票"
@@ -433,6 +432,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen_10"
+                    android:id="@+id/preferred_rate"
                     android:text="48.90%"
                     android:textColor="@color/color_f7182d"
                     android:textSize="@dimen/text_size_22" />

@@ -14,6 +14,8 @@ import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.OpenAccountEvent;
+import com.zhsoft.fretting.net.Api;
+import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
 import com.zhsoft.fretting.utils.RuntimeHelper;
 
@@ -104,7 +106,11 @@ public class SettingActivity extends XActivity {
         riskTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("风险等级测评");
+//                showToast("风险等级测评");
+                Bundle bundle = new Bundle();
+                bundle.putInt(Constant.WEB_TITLE, R.string.user_risk_test);
+                bundle.putString(Constant.WEB_LINK, "http://api.fushoushu.cn/inviteInfo/");
+                startActivity(RiskTestWebViewAcvitity.class, bundle);
             }
         });
         callAgent.setOnClickListener(new View.OnClickListener() {

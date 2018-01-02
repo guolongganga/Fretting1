@@ -32,5 +32,9 @@ public class HttpContent {
     public static final String fund_home = "/permissionCheck/fundHome";
     /** 基金页 */
     public static final String newest_fund = "noPermission/s428NewestFund";
+    /** 主页 */
+    public static final String get_home = "noPermission/getHome";
+    /** 风险测评 */
+    public static final String risk_question = "/htmlNoPermission/risk/getQuestions";
 
 }
