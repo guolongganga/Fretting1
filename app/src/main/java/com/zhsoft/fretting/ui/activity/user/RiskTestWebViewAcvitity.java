@@ -92,7 +92,17 @@ public class RiskTestWebViewAcvitity extends XActivity {
         mWeb.getSettings().setBuiltInZoomControls(true);
 
         // 设置WebViewClient，保证新的链接地址不打开系统的浏览器窗口
-        mWeb.setWebViewClient(new WebViewClient());
+//        mWeb.setWebViewClient(new WebViewClient());
+        mWeb.setWebViewClient(new WebViewClient() {
+            @Override
+            public void onReceivedSslError(WebView view,
+                                           SslErrorHandler handler, SslError error) {
+                // TODO Auto-generated method stub
+                // handler.cancel();// Android默认的处理方式
+                handler.proceed();// 接受所有网站的证书
+                // handleMessage(Message msg);// 进行其他处理
+            }
+        });
         // 设置WebView支持运行普通的Javascript
         mWeb.getSettings().setJavaScriptEnabled(true);
         //加载视频需要
@@ -128,28 +138,28 @@ public class RiskTestWebViewAcvitity extends XActivity {
 
         });
 
-//        mWeb.loadUrl(link);
-//        CommonReqData reqData = new CommonReqData();
-//        reqData.setToken(token);
-//        reqData.setUserId(userId);
-//        Gson gson = new Gson();
-//        String strData = gson.toJson(reqData);
-//        //加密请求数据
-//        String encrypt = EncryptDecrypt.encryptByAES(strData);
-//        Map<String, String> map = new HashMap<>();
-//        map.put("reqData", encrypt);
-//
-//        XLog.e("qqq", "params = " + gson.toJson(map));
-//        XLog.e("qqq", "url = " + link);
+        mWeb.loadUrl(link);
         CommonReqData reqData = new CommonReqData();
-        reqData.setToken("343e2aa09def8de29bd9d2fc38a57ede");
-        reqData.setUserId("7");
+        reqData.setToken(token);
+        reqData.setUserId(userId);
         Gson gson = new Gson();
         String strData = gson.toJson(reqData);
-        XLog.e("qqq", "params = " + strData);
-        XLog.e("qqq", "url = " + link);
+        //加密请求数据
+        String encrypt = EncryptDecrypt.encryptByAES(strData);
+        Map<String, String> map = new HashMap<>();
+        map.put("reqData", encrypt);
 
-        mWeb.postUrl(link, strData.getBytes());
+        XLog.e("qqq", "params = " + gson.toJson(map));
+        XLog.e("qqq", "url = " + link);
+//        CommonReqData reqData = new CommonReqData();
+//        reqData.setToken("343e2aa09def8de29bd9d2fc38a57ede");
+//        reqData.setUserId("7");
+//        Gson gson = new Gson();
+//        String strData = gson.toJson(reqData);
+//        XLog.e("qqq", "params = " + gson.toJson(map));
+//        XLog.e("qqq", "url = " + link);
+
+        mWeb.postUrl(link, gson.toJson(map).getBytes());
 
     }
 

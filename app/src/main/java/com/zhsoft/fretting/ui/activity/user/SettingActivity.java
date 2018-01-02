@@ -109,7 +109,7 @@ public class SettingActivity extends XActivity {
 //                showToast("风险等级测评");
                 Bundle bundle = new Bundle();
                 bundle.putInt(Constant.WEB_TITLE, R.string.user_risk_test);
-                bundle.putString(Constant.WEB_LINK, "http://api.fushoushu.cn/inviteInfo/");
+                bundle.putString(Constant.WEB_LINK, "https://192.168.0.118:8443/noPermission/risk/getQuestions");
                 startActivity(RiskTestWebViewAcvitity.class, bundle);
             }
         });
