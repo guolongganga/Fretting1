@@ -36,5 +36,14 @@ public class HttpContent {
     public static final String get_home = "noPermission/getHome";
     /** 风险测评 */
     public static final String risk_question = "/htmlNoPermission/risk/getQuestions";
+    /** 我的银行卡 */
+    public static final String my_bankcard = "/permissionCheck/fundHome/turnToMyBankCard";
+    /** 检查是否可以更换银行卡 */
+    public static final String change_bankcard_check = "/permissionCheck/fundHome/changeBankCardCheck";
+    /** 更换银行卡操作 */
+    public static final String change_bankcard = "/permissionCheck/fundHome/changeBankCard";
+    /** 发送短信验证码 不需要图片验证码 */
+    public static final String send_phone_code = "/permissionCheck/fundHome/sendPhoneCode";
+
 
 }

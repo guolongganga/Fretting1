@@ -141,12 +141,5 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
                     }
                 });
 
-        //
-//        int code = Integer.parseInt(imgCode);
-//        if (false) {
-//            getV().requestImageCodeSuccess();
-//        } else {
-//            getV().requestImageCodeFail();
-//        }
     }
 }

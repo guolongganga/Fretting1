@@ -4,6 +4,7 @@ import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.model.TaetResp;
 import com.zhsoft.fretting.model.index.IndexResp;
+import com.zhsoft.fretting.model.user.BankCardResp;
 import com.zhsoft.fretting.model.user.BankResp;
 import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.model.user.NewestFundListResp;
@@ -15,15 +16,19 @@ import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
+import static com.zhsoft.fretting.net.HttpContent.change_bankcard;
+import static com.zhsoft.fretting.net.HttpContent.change_bankcard_check;
 import static com.zhsoft.fretting.net.HttpContent.common_bank_list;
 import static com.zhsoft.fretting.net.HttpContent.fund_home;
 import static com.zhsoft.fretting.net.HttpContent.get_home;
 import static com.zhsoft.fretting.net.HttpContent.image_code;
+import static com.zhsoft.fretting.net.HttpContent.my_bankcard;
 import static com.zhsoft.fretting.net.HttpContent.newest_fund;
 import static com.zhsoft.fretting.net.HttpContent.open_account;
 import static com.zhsoft.fretting.net.HttpContent.password_check;
 import static com.zhsoft.fretting.net.HttpContent.password_reset;
 import static com.zhsoft.fretting.net.HttpContent.phone_code;
+import static com.zhsoft.fretting.net.HttpContent.send_phone_code;
 import static com.zhsoft.fretting.net.HttpContent.test_test;
 import static com.zhsoft.fretting.net.HttpContent.user_login;
 import static com.zhsoft.fretting.net.HttpContent.user_register;
@@ -75,19 +80,43 @@ public interface HttpUtil {
     @POST(phone_code)
     Flowable<BaseResp<String>> getPhoneCode(@Body CommonReqData reqData);
 
+    //开户绑卡
     @Headers("apptype:Android")
     @POST(open_account)
     Flowable<BaseResp<String>> openAccount(@Body CommonReqData reqData);
 
+    //我的资产
     @Headers("apptype:Android")
     @POST(fund_home)
     Flowable<UserAccountResp> getFundHome(@Body CommonReqData reqData);
 
+    //基金页
     @Headers("apptype:Android")
     @POST(newest_fund)
     Flowable<NewestFundListResp> getNewestFund(@Body CommonReqData reqData);
 
+    //主页
     @Headers("apptype:Android")
     @POST(get_home)
     Flowable<IndexResp> getHome(@Body CommonReqData reqData);
+
+    //我的银行卡
+    @Headers("apptype:Android")
+    @POST(my_bankcard)
+    Flowable<BankCardResp> getMyBankCard(@Body CommonReqData reqData);
+
+    //检查是否可以更换银行卡
+    @Headers("apptype:Android")
+    @POST(change_bankcard_check)
+    Flowable<BankCardResp> changeBankCardCheck(@Body CommonReqData reqData);
+
+    //更换银行卡操作
+    @Headers("apptype:Android")
+    @POST(change_bankcard)
+    Flowable<BaseResp<String>> changeBankCard(@Body CommonReqData reqData);
+
+    //发送短信验证码 不需要图片验证码
+    @Headers("apptype:Android")
+    @POST(send_phone_code)
+    Flowable<BaseResp<String>> sendPhoneCode(@Body CommonReqData reqData);
 }

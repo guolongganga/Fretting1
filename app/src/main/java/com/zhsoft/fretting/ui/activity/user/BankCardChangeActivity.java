@@ -53,6 +53,10 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
     private BankResp bankResp;
     /** 注册手机号 */
     private String strPhone;
+    /** 登录标识 */
+    private String token;
+    /** 用户编号 */
+    private String userId;
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
 
@@ -73,7 +77,9 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
         //设置标题
         headTitle.setText("我的银行卡");
 
-        //获取本地缓存注册手机号
+        //获取本地缓存token,userId,注册手机号
+        token = App.getSharedPref().getString(Constant.TOKEN, "");
+        userId = App.getSharedPref().getString(Constant.USERID, "");
         strPhone = App.getSharedPref().getString(Constant.USER_PHONE, "");
         phone.setText(strPhone);
         //弹出框
@@ -125,15 +131,10 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
                     return;
                 }
 
-                //TODO 发送请求验证码，getSmsCode(phoneStr, imageCodeStr）
+                //发送请求验证码
                 httpLoadingDialog.visible();
                 getP().getMessageCode(phoneNumber);
 
-                //TODO 发送请求验证码成功
-
-//                getVerifyCode.start();
-                //TODO 重试，发送请求验证码成功
-                //getVerifyCode.cancel();
             }
         });
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -167,10 +168,9 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
                     showToast("验证码不能为空");
                     return;
                 }
-                //TODO 绑定银行卡接口
-//                showToast("绑定银行卡");
+                //绑定银行卡接口
                 httpLoadingDialog.visible();
-                getP().changeBankCard(bankResp, getText(banknumber), phoneNumber, getText(msgCode));
+                getP().changeBankCard(token, userId, bankResp, getText(banknumber), phoneNumber, getText(msgCode));
             }
         });
 
@@ -186,7 +186,7 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
     }
 
     /**
-     * 请求图片验证码失败
+     * 重试，发送请求验证码成功
      */
     public void requestMessageCodeFail() {
         httpLoadingDialog.dismiss();
@@ -194,7 +194,7 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
     }
 
     /**
-     * 请求图片验证码成功
+     * 发送请求验证码成功
      */
     public void requestMessageCodeSuccess() {
         httpLoadingDialog.dismiss();
@@ -217,5 +217,6 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
      * 修改银行卡失败
      */
     public void requestChangeFail() {
+        httpLoadingDialog.dismiss();
     }
 }

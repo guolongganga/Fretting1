@@ -88,13 +88,9 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
         btnChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //先验证是否符合更换条件
-                if ("1".equals(bankCardResp.getIsCanChange())) {
-                    startActivity(BankCardChangeActivity.class);
-                } else {
-                    showToast("您的账户在持仓或者在途交易期间，不能更换银行卡");
-                }
-
+                //验证是否符合更换条件
+                dialog.visible();
+                getP().changeBankCardCheck(token, userId);
             }
         });
 
@@ -105,13 +101,14 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
      *
      * @param resp
      */
-    public void showData(BankCardResp resp) {
+    public void showBankCardData(BankCardResp resp) {
         dialog.dismiss();
         bankCardResp = resp;
         imageLoader.displayImage(resp.getLogoUrl(), imageBanck);
-        banckName.setText(resp.getBankName() + "（尾号" + resp.getLastNumber() + "）");
-        tradeNumber.setText(resp.getDealAcccount());
+        banckName.setText(resp.getBankName() + "（尾号" + resp.getBankNoTail() + "）");
+        tradeNumber.setText(resp.getTa_acco());
     }
+
 
     /**
      * 获取用户银行卡信息失败
@@ -139,4 +136,17 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
         showToast("修改啦");
     }
 
+    /**
+     * 是否能修改银行卡
+     *
+     * @param data
+     */
+    public void isCanChange(BankCardResp data) {
+        dialog.dismiss();
+        if ("0".equals(data.getIsCanChangeBankNo())) {
+            startActivity(BankCardChangeActivity.class);
+        } else {
+            showToast("您的账户在持仓或者在途交易期间，不能更换银行卡");
+        }
+    }
 }

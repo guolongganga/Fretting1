@@ -15,25 +15,34 @@ public class IndexResp extends BaseResp<IndexResp> {
      */
     private ArrayList<BannerModel> bannerList;
     /**
-     * 人气产品
-     */
-    private ArrayList<ProductModel> hotList;
-    /**
-     * 指数基金
-     */
-    private ArrayList<ProductModel> indexList;
-    /**
      * 微银专题
      */
     private ArrayList<String> objList;
     /**
-     * 优选定投
-     */
-    private ProductModel preferredVote;
-    /**
      * 明星基金
      */
     private ProductModel starFound;
+    /**
+     * 人气产品1
+     */
+    private ProductModel firstHotFound;
+    /**
+     * 人气产品2
+     */
+    private ProductModel secondHotFound;
+    /**
+     * 指数基金1
+     */
+    private ProductModel firstIndexFound;
+    /**
+     * 指数基金2
+     */
+    private ProductModel secondIndexFound;
+
+    /**
+     * 优选定投
+     */
+    private ProductModel preferredVote;
 
     public ArrayList<BannerModel> getBannerList() {
         return bannerList;
@@ -41,22 +50,6 @@ public class IndexResp extends BaseResp<IndexResp> {
 
     public void setBannerList(ArrayList<BannerModel> bannerList) {
         this.bannerList = bannerList;
-    }
-
-    public ArrayList<ProductModel> getHotList() {
-        return hotList;
-    }
-
-    public void setHotList(ArrayList<ProductModel> hotList) {
-        this.hotList = hotList;
-    }
-
-    public ArrayList<ProductModel> getIndexList() {
-        return indexList;
-    }
-
-    public void setIndexList(ArrayList<ProductModel> indexList) {
-        this.indexList = indexList;
     }
 
     public ArrayList<String> getObjList() {
@@ -67,19 +60,51 @@ public class IndexResp extends BaseResp<IndexResp> {
         this.objList = objList;
     }
 
-    public ProductModel getPreferredVote() {
-        return preferredVote;
-    }
-
-    public void setPreferredVote(ProductModel preferredVote) {
-        this.preferredVote = preferredVote;
-    }
-
     public ProductModel getStarFound() {
         return starFound;
     }
 
     public void setStarFound(ProductModel starFound) {
         this.starFound = starFound;
+    }
+
+    public ProductModel getFirstHotFound() {
+        return firstHotFound;
+    }
+
+    public void setFirstHotFound(ProductModel firstHotFound) {
+        this.firstHotFound = firstHotFound;
+    }
+
+    public ProductModel getSecondHotFound() {
+        return secondHotFound;
+    }
+
+    public void setSecondHotFound(ProductModel secondHotFound) {
+        this.secondHotFound = secondHotFound;
+    }
+
+    public ProductModel getFirstIndexFound() {
+        return firstIndexFound;
+    }
+
+    public void setFirstIndexFound(ProductModel firstIndexFound) {
+        this.firstIndexFound = firstIndexFound;
+    }
+
+    public ProductModel getSecondIndexFound() {
+        return secondIndexFound;
+    }
+
+    public void setSecondIndexFound(ProductModel secondIndexFound) {
+        this.secondIndexFound = secondIndexFound;
+    }
+
+    public ProductModel getPreferredVote() {
+        return preferredVote;
+    }
+
+    public void setPreferredVote(ProductModel preferredVote) {
+        this.preferredVote = preferredVote;
     }
 }

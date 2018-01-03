@@ -3,10 +3,10 @@
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
-    <!--配置glide加载https所需要的GlideModule-->
-    <meta-data
-        android:name="cn.droidlover.xdroidmvp.imageloader.OkHttpGlideModule"
-        android:value="GlideModule"/>
+    <!--&lt;!&ndash;配置glide加载https所需要的GlideModule&ndash;&gt;-->
+    <!--<meta-data-->
+        <!--android:name="cn.droidlover.xdroidmvp.imageloader.OkHttpGlideModule"-->
+        <!--android:value="GlideModule"/>-->
 
     <application
         android:allowBackup="true"

@@ -194,16 +194,26 @@ public class IndexFragment extends XFragment<IndexPresent> {
             }
             //微银专题
             //人气产品
-            if (data.getHotList() != null && data.getHotList().size() > 0) {
-                getPopularityAdapter().addData(data.getHotList());
+            ArrayList<ProductModel> hotList = new ArrayList<>();
+            if (data.getFirstHotFound() != null) {
+                hotList.add(data.getFirstHotFound());
             }
-            //指数基金
-            if (data.getIndexList() != null && data.getIndexList().size() > 0) {
-                tvNvshen.setText(data.getIndexList().get(0).getName());
-                tvNvshenShouyi.setText("+" + BigDecimalUtil.bigdecimalToString(data.getIndexList().get(0).getAveg()) + "%");
+            if (data.getSecondHotFound() != null) {
+                hotList.add(data.getSecondHotFound());
+            }
+            if (hotList != null && hotList.size() > 0) {
+                getPopularityAdapter().addData(hotList);
+            }
+            //指数基金1
+            if (data.getFirstIndexFound() != null) {
+                tvNvshen.setText(data.getFirstIndexFound().getName());
+                tvNvshenShouyi.setText("+" + BigDecimalUtil.bigdecimalToString(data.getFirstIndexFound().getAveg()) + "%");
 
-                tvChihuo.setText(data.getIndexList().get(1).getName());
-                tvChihuoShouyi.setText("+" + BigDecimalUtil.bigdecimalToString(data.getIndexList().get(1).getAveg()) + "%");
+            }
+            //指数基金2
+            if (data.getSecondIndexFound() != null) {
+                tvChihuo.setText(data.getSecondIndexFound().getName());
+                tvChihuoShouyi.setText("+" + BigDecimalUtil.bigdecimalToString(data.getSecondIndexFound().getAveg()) + "%");
             }
             //优选定投
             if (data.getPreferredVote() != null) {
