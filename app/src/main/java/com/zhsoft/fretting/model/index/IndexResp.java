@@ -23,13 +23,9 @@ public class IndexResp extends BaseResp<IndexResp> {
      */
     private ProductModel starFound;
     /**
-     * 人气产品1
+     * 人气产品
      */
-    private ProductModel firstHotFound;
-    /**
-     * 人气产品2
-     */
-    private ProductModel secondHotFound;
+    private ArrayList<ProductModel> hotFoundList;
     /**
      * 指数基金1
      */
@@ -68,22 +64,6 @@ public class IndexResp extends BaseResp<IndexResp> {
         this.starFound = starFound;
     }
 
-    public ProductModel getFirstHotFound() {
-        return firstHotFound;
-    }
-
-    public void setFirstHotFound(ProductModel firstHotFound) {
-        this.firstHotFound = firstHotFound;
-    }
-
-    public ProductModel getSecondHotFound() {
-        return secondHotFound;
-    }
-
-    public void setSecondHotFound(ProductModel secondHotFound) {
-        this.secondHotFound = secondHotFound;
-    }
-
     public ProductModel getFirstIndexFound() {
         return firstIndexFound;
     }
@@ -106,5 +86,13 @@ public class IndexResp extends BaseResp<IndexResp> {
 
     public void setPreferredVote(ProductModel preferredVote) {
         this.preferredVote = preferredVote;
+    }
+
+    public ArrayList<ProductModel> getHotFoundList() {
+        return hotFoundList;
+    }
+
+    public void setHotFoundList(ArrayList<ProductModel> hotFoundList) {
+        this.hotFoundList = hotFoundList;
     }
 }

@@ -16,13 +16,17 @@ import android.webkit.WebViewClient;
 import android.widget.ProgressBar;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.ui.widget.TitleView;
 
+import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EncodingUtils;
+import org.apache.http.util.EntityUtils;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -139,32 +143,51 @@ public class RiskTestWebViewAcvitity extends XActivity {
             }
 
         });
+
         //添加header
         String ua = mWeb.getSettings().getUserAgentString();
         mWeb.getSettings().setUserAgentString(ua.replace("appType", "Android"));
 
+        //添加token userid
 //        CommonReqData reqData = new CommonReqData();
 //        reqData.setToken(token);
 //        reqData.setUserId(userId);
 //
 //        Gson gson = new Gson();
 //        String strData = gson.toJson(reqData);
-        //加密请求数据
+//        //加密请求数据
 //        String encrypt = EncryptDecrypt.encryptByAES(strData);
 //        Map<String, String> map = new HashMap<>();
 //        map.put("reqData", encrypt);
+//        String params = gson.toJson(map);
 //        XLog.e("qqq", "data = " + strData);
-//        XLog.e("qqq", "params = " + gson.toJson(map));
+//        XLog.e("qqq", "params = " + params);
 //        XLog.e("qqq", "url = " + link);
-//        mWeb.postUrl(link, EncodingUtils.getBytes(gson.toJson(map), "UTF-8"));
+//        mWeb.postUrl(link, params.getBytes());
 
-        CommonReqData reqData = new CommonReqData();
-        reqData.setToken("343e2aa09def8de29bd9d2fc38a57ede");
-        reqData.setUserId("7");
-        Gson gson = new Gson();
-        String strData = gson.toJson(reqData);
-        XLog.e("qqq", "params = " + strData);
-        mWeb.postUrl("http://api.fushoushu.cn/inviteInfo/", strData.getBytes());
+//        mWeb.loadUrl(link + reqData.toString());
+
+//        StringEntity se = null;
+//        try
+//        {
+//            se = new StringEntity(reqData.toString(),"UTF-8");
+//            se.setContentType("application/json");
+//            byte[] array = EntityUtils.toByteArray(se);
+//            mWeb.postUrl(link, array);
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+
+//        HashMap<String,String> map = new HashMap();
+//        map.put("token","343e2aa09def8de29bd9d2fc38a57ede");
+//        map.put("uid","7");
+//        Gson gson = new Gson();
+//        String strData = gson.toJson(map);
+//        XLog.e("qqq", "params = " + strData);
+//        mWeb.postUrl("http://api.fushoushu.cn/inviteInfo/", strData.getBytes());
+
 
 
     }

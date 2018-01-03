@@ -253,6 +253,7 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
      * @param personInfoResp
      */
     public void requestUserInfoSuccess(PersonInfoResp personInfoResp) {
+        httpLoadingDialog.dismiss();
         if (personInfoResp != null) {
             name.setText(personInfoResp.getName());
             sex.setText(personInfoResp.getGender());
@@ -290,5 +291,6 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
      * 请求用户信息失败
      */
     public void requestUserInfoFail() {
+        httpLoadingDialog.dismiss();
     }
 }

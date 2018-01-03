@@ -20,6 +20,8 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import cn.droidlover.xdroidmvp.R;
@@ -322,10 +324,13 @@ public class FlyBanner extends RelativeLayout {
             });
             imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             if (mIsImageUrl) {
-                ILFactory.getLoader().loadNet(imageView, mImageUrls.get(toRealPosition(position)), null);
+//                ILFactory.getLoader().loadNet(imageView, mImageUrls.get(toRealPosition(position)), null);
 //                Picasso.with(getContext())
 //                        .load(mImageUrls.get(toRealPosition(position)))
 //                        .into(imageView);
+                Glide.with(getContext())
+                        .load(mImageUrls.get(toRealPosition(position)))
+                        .into(imageView);
             } else {
                 imageView.setImageResource(mImages.get(toRealPosition(position)));
             }

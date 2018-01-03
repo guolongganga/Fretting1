@@ -28,6 +28,7 @@ import static com.zhsoft.fretting.net.HttpContent.open_account;
 import static com.zhsoft.fretting.net.HttpContent.password_check;
 import static com.zhsoft.fretting.net.HttpContent.password_reset;
 import static com.zhsoft.fretting.net.HttpContent.phone_code;
+import static com.zhsoft.fretting.net.HttpContent.risk_question;
 import static com.zhsoft.fretting.net.HttpContent.send_phone_code;
 import static com.zhsoft.fretting.net.HttpContent.test_test;
 import static com.zhsoft.fretting.net.HttpContent.user_login;
@@ -99,6 +100,11 @@ public interface HttpUtil {
     @Headers("apptype:Android")
     @POST(get_home)
     Flowable<IndexResp> getHome(@Body CommonReqData reqData);
+
+    //风险测评
+    @Headers("apptype:Android")
+    @POST(risk_question)
+    Flowable<BaseResp<String>> goRiskTest(@Body String reqData);
 
     //我的银行卡
     @Headers("apptype:Android")

@@ -194,15 +194,8 @@ public class IndexFragment extends XFragment<IndexPresent> {
             }
             //微银专题
             //人气产品
-            ArrayList<ProductModel> hotList = new ArrayList<>();
-            if (data.getFirstHotFound() != null) {
-                hotList.add(data.getFirstHotFound());
-            }
-            if (data.getSecondHotFound() != null) {
-                hotList.add(data.getSecondHotFound());
-            }
-            if (hotList != null && hotList.size() > 0) {
-                getPopularityAdapter().addData(hotList);
+            if (data.getHotFoundList() != null && data.getHotFoundList().size() > 0) {
+                getPopularityAdapter().addData(data.getHotFoundList());
             }
             //指数基金1
             if (data.getFirstIndexFound() != null) {
@@ -217,7 +210,6 @@ public class IndexFragment extends XFragment<IndexPresent> {
             }
             //优选定投
             if (data.getPreferredVote() != null) {
-
                 preferredName.setText(data.getPreferredVote().getName());
                 preferredRate.setText(BigDecimalUtil.bigdecimalToString(data.getPreferredVote().getAveg()) + "%");
             }

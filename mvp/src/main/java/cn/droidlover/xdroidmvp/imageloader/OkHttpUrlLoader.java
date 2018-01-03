@@ -13,18 +13,14 @@ import java.io.InputStream;
 import okhttp3.OkHttpClient;
 
 /**
- * author           Alpha58
- * time             2017/1/5 22:57
- * desc             ${TODO}
- * <p>
- * upDateAuthor     $Author$
- * upDate           $Date$
- * upDateDesc       ${TODO}
+ * <p>Description: </p>
+ * <p>Company: 中企明道</p>
+ * <p>Create Time:2017/12/26 13:29</p>
+ *
+ * @author MiaoWenHai
  */
 public class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
-    /**
-     * The default factory for {@link OkHttpUrlLoader}s.
-     */
+
     public static class Factory implements ModelLoaderFactory<GlideUrl, InputStream> {
         private static volatile OkHttpClient internalClient;
         private OkHttpClient client;
@@ -40,16 +36,10 @@ public class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
             return internalClient;
         }
 
-        /**
-         * Constructor for a new Factory that runs requests using a static singleton client.
-         */
         public Factory() {
             this(getInternalClient());
         }
 
-        /**
-         * Constructor for a new Factory that runs requests using given client.
-         */
         public Factory(OkHttpClient client) {
             this.client = client;
         }
@@ -61,7 +51,6 @@ public class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
 
         @Override
         public void teardown() {
-            // Do nothing, this instance doesn't own the client.
         }
     }
 

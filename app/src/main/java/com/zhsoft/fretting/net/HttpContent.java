@@ -17,7 +17,7 @@ public class HttpContent {
     /** 找回登录密码 第一步 */
     public static final String password_check = "noPermission/password/check";
     /** 找回登录密码 第二步 */
-    public static final String password_reset = "/noPermission/password/reset";
+    public static final String password_reset = "noPermission/password/reset";
     /** 注册 */
     public static final String user_register = "noPermission/regist";
     /** 银行列表 */
@@ -27,23 +27,23 @@ public class HttpContent {
     /** 短信验证码 */
     public static final String phone_code = "noPermission/phoneCode";
     /** 开户绑卡 */
-    public static final String open_account = "/permissionCheck/openAccount";
+    public static final String open_account = "permissionCheck/openAccount";
     /** 我的资产 */
-    public static final String fund_home = "/permissionCheck/fundHome";
+    public static final String fund_home = "permissionCheck/fundHome";
     /** 基金页 */
     public static final String newest_fund = "noPermission/s428NewestFund";
     /** 主页 */
     public static final String get_home = "noPermission/getHome";
     /** 风险测评 */
-    public static final String risk_question = "/htmlNoPermission/risk/getQuestions";
+    public static final String risk_question = "htmlNoPermission/risk/getQuestions";
     /** 我的银行卡 */
-    public static final String my_bankcard = "/permissionCheck/fundHome/turnToMyBankCard";
+    public static final String my_bankcard = "permissionCheck/fundHome/turnToMyBankCard";
     /** 检查是否可以更换银行卡 */
-    public static final String change_bankcard_check = "/permissionCheck/fundHome/changeBankCardCheck";
+    public static final String change_bankcard_check = "permissionCheck/fundHome/changeBankCardCheck";
     /** 更换银行卡操作 */
-    public static final String change_bankcard = "/permissionCheck/fundHome/changeBankCard";
+    public static final String change_bankcard = "permissionCheck/fundHome/changeBankCard";
     /** 发送短信验证码 不需要图片验证码 */
-    public static final String send_phone_code = "/permissionCheck/fundHome/sendPhoneCode";
+    public static final String send_phone_code = "permissionCheck/fundHome/sendPhoneCode";
 
 
 }

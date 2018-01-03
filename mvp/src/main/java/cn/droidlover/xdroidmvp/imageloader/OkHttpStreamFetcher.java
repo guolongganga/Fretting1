@@ -14,11 +14,14 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.ResponseBody;
 
-
 /**
- * Fetches an {@link InputStream} using the okhttp library.
+ * <p>Description: </p>
+ * <p>Company: 中企明道</p>
+ * <p>Create Time:2017/12/26 13:29</p>
+ *
+ * @author MiaoWenHai
  */
-public class OkHttpStreamFetcher implements DataFetcher<InputStream> {
+public class OkHttpStreamFetcher  implements DataFetcher<InputStream> {
     private final OkHttpClient client;
     private final GlideUrl url;
     private InputStream stream;
@@ -58,7 +61,6 @@ public class OkHttpStreamFetcher implements DataFetcher<InputStream> {
             try {
                 stream.close();
             } catch (IOException e) {
-                // Ignored
             }
         }
         if (responseBody != null) {
@@ -73,6 +75,5 @@ public class OkHttpStreamFetcher implements DataFetcher<InputStream> {
 
     @Override
     public void cancel() {
-        // TODO: call cancel on the client when this method is called on a background thread. See #257
     }
 }

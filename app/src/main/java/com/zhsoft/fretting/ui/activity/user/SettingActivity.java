@@ -16,6 +16,8 @@ import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.OpenAccountEvent;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
+import com.zhsoft.fretting.net.HttpUtil;
+import com.zhsoft.fretting.present.user.SettingPresent;
 import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
 import com.zhsoft.fretting.utils.RuntimeHelper;
 
@@ -29,7 +31,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  * 描述：设置页面
  */
 
-public class SettingActivity extends XActivity {
+public class SettingActivity extends XActivity<SettingPresent> {
     /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
@@ -55,6 +57,10 @@ public class SettingActivity extends XActivity {
 
     /** 客服电话 */
     private static final String PHONE_NUMBER = "13717832879";
+    /** 登录标识 */
+    private String token;
+    /** 用户编号 */
+    private String userId;
 
     @Override
 
@@ -63,18 +69,17 @@ public class SettingActivity extends XActivity {
     }
 
     @Override
-    public Object newP() {
-        return null;
+    public SettingPresent newP() {
+        return new SettingPresent();
     }
 
     @Override
     public void initData(Bundle bundle) {
-        initview();
+        headTitle.setText("设置");
+        token = App.getSharedPref().getString(Constant.TOKEN, "");
+        userId = App.getSharedPref().getString(Constant.USERID, "");
     }
 
-    private void initview() {
-        headTitle.setText("设置");
-    }
 
     @Override
     public void initEvents() {
@@ -107,10 +112,12 @@ public class SettingActivity extends XActivity {
             @Override
             public void onClick(View view) {
 //                showToast("风险等级测评");
-                Bundle bundle = new Bundle();
-                bundle.putInt(Constant.WEB_TITLE, R.string.user_risk_test);
-                bundle.putString(Constant.WEB_LINK, "https://192.168.0.118:8443/noPermission/risk/getQuestions");
-                startActivity(RiskTestWebViewAcvitity.class, bundle);
+                getP().goRiskTest(token, userId);
+//                Bundle bundle = new Bundle();
+//                bundle.putInt(Constant.WEB_TITLE, R.string.user_risk_test);
+//                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.risk_question);
+//                startActivity(RiskTestWebViewAcvitity.class, bundle);
+
             }
         });
         callAgent.setOnClickListener(new View.OnClickListener() {
@@ -169,5 +176,12 @@ public class SettingActivity extends XActivity {
             }
         });
 
+    }
+
+    public void requestRiskTestSuccess(String data) {
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constant.WEB_TITLE, R.string.user_risk_test);
+        bundle.putString(Constant.WEB_LINK, data);
+        startActivity(RiskTestWebViewAcvitity.class, bundle);
     }
 }

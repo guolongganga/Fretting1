@@ -9,25 +9,26 @@ import com.bumptech.glide.module.GlideModule;
 
 import java.io.InputStream;
 
+import okhttp3.OkHttpClient;
+
 /**
- * A {@link GlideModule} implementation to replace Glide's default
- * {@link java.net.HttpURLConnection} based {@link com.bumptech.glide.load.model.ModelLoader} with an OkHttp based
- * {@link com.bumptech.glide.load.model.ModelLoader}.
- * <p>
- * <p>
- * If you're using gradle, you can include this module simply by depending on the aar, the module will be merged
- * in by manifest merger. For other build systems or for more more information, see
- * {@link GlideModule}.
- * </p>
+ * <p>Description: </p>
+ * <p>Company: 中企明道</p>
+ * <p>Create Time:2017/12/26 13:28</p>
+ *
+ * @author MiaoWenHai
  */
 public class OkHttpGlideModule implements GlideModule {
     @Override
     public void applyOptions(Context context, GlideBuilder builder) {
-        // Do nothing.
     }
 
     @Override
     public void registerComponents(Context context, Glide glide) {
-        glide.register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(new HTTPSUtils(context).getInstance()));
+        OkHttpClient mHttpClient = new OkHttpClient().newBuilder()
+                .sslSocketFactory(SSLSocketClient.getSSLSocketFactory())
+                .hostnameVerifier(SSLSocketClient.getHostnameVerifier())
+                .build();
+        glide.register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(mHttpClient));
     }
 }
