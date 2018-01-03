@@ -22,7 +22,6 @@ import okhttp3.OkHttpClient;
  * upDateDesc       ${TODO}
  */
 public class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
-
     /**
      * The default factory for {@link OkHttpUrlLoader}s.
      */

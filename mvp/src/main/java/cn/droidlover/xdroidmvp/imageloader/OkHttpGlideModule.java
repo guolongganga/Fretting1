@@ -28,7 +28,6 @@ public class OkHttpGlideModule implements GlideModule {
 
     @Override
     public void registerComponents(Context context, Glide glide) {
-        //注意：new HTTPSUtils(context).getInstance()为已经通过认证的okhttpclient
         glide.register(GlideUrl.class, InputStream.class, new OkHttpUrlLoader.Factory(new HTTPSUtils(context).getInstance()));
     }
 }

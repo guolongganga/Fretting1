@@ -22,6 +22,8 @@ import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.ui.widget.TitleView;
 
+import org.apache.http.util.EncodingUtils;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -137,29 +139,33 @@ public class RiskTestWebViewAcvitity extends XActivity {
             }
 
         });
+        //添加header
+        String ua = mWeb.getSettings().getUserAgentString();
+        mWeb.getSettings().setUserAgentString(ua.replace("appType", "Android"));
 
-        mWeb.loadUrl(link);
-        CommonReqData reqData = new CommonReqData();
-        reqData.setToken(token);
-        reqData.setUserId(userId);
-        Gson gson = new Gson();
-        String strData = gson.toJson(reqData);
-        //加密请求数据
-        String encrypt = EncryptDecrypt.encryptByAES(strData);
-        Map<String, String> map = new HashMap<>();
-        map.put("reqData", encrypt);
-
-        XLog.e("qqq", "params = " + gson.toJson(map));
-        XLog.e("qqq", "url = " + link);
 //        CommonReqData reqData = new CommonReqData();
-//        reqData.setToken("343e2aa09def8de29bd9d2fc38a57ede");
-//        reqData.setUserId("7");
+//        reqData.setToken(token);
+//        reqData.setUserId(userId);
+//
 //        Gson gson = new Gson();
 //        String strData = gson.toJson(reqData);
+        //加密请求数据
+//        String encrypt = EncryptDecrypt.encryptByAES(strData);
+//        Map<String, String> map = new HashMap<>();
+//        map.put("reqData", encrypt);
+//        XLog.e("qqq", "data = " + strData);
 //        XLog.e("qqq", "params = " + gson.toJson(map));
 //        XLog.e("qqq", "url = " + link);
+//        mWeb.postUrl(link, EncodingUtils.getBytes(gson.toJson(map), "UTF-8"));
 
-        mWeb.postUrl(link, gson.toJson(map).getBytes());
+        CommonReqData reqData = new CommonReqData();
+        reqData.setToken("343e2aa09def8de29bd9d2fc38a57ede");
+        reqData.setUserId("7");
+        Gson gson = new Gson();
+        String strData = gson.toJson(reqData);
+        XLog.e("qqq", "params = " + strData);
+        mWeb.postUrl("http://api.fushoushu.cn/inviteInfo/", strData.getBytes());
+
 
     }
 
