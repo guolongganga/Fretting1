@@ -8,6 +8,7 @@ import com.zhsoft.fretting.model.user.BankCardResp;
 import com.zhsoft.fretting.model.user.BankResp;
 import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.model.user.NewestFundListResp;
+import com.zhsoft.fretting.model.user.PhoneResp;
 import com.zhsoft.fretting.model.user.UserAccountResp;
 import com.zhsoft.fretting.params.CommonReqData;
 
@@ -18,6 +19,9 @@ import retrofit2.http.POST;
 
 import static com.zhsoft.fretting.net.HttpContent.change_bankcard;
 import static com.zhsoft.fretting.net.HttpContent.change_bankcard_check;
+import static com.zhsoft.fretting.net.HttpContent.change_phone_index;
+import static com.zhsoft.fretting.net.HttpContent.change_phone_save;
+import static com.zhsoft.fretting.net.HttpContent.change_phone_sendcode;
 import static com.zhsoft.fretting.net.HttpContent.common_bank_list;
 import static com.zhsoft.fretting.net.HttpContent.fund_home;
 import static com.zhsoft.fretting.net.HttpContent.get_home;
@@ -125,4 +129,19 @@ public interface HttpUtil {
     @Headers("apptype:Android")
     @POST(send_phone_code)
     Flowable<BaseResp<String>> sendPhoneCode(@Body CommonReqData reqData);
+
+    //我的手机号码
+    @Headers("apptype:Android")
+    @POST(change_phone_index)
+    Flowable<PhoneResp> changePhoneIndex(@Body CommonReqData reqData);
+
+    //发送短信验证码 不需要图片验证码 更换手机号码
+    @Headers("apptype:Android")
+    @POST(change_phone_sendcode)
+    Flowable<BaseResp<String>> changePhoneSendcode(@Body CommonReqData reqData);
+
+    //更换手机号
+    @Headers("apptype:Android")
+    @POST(change_phone_save)
+    Flowable<BaseResp<String>> changePhoneSave(@Body CommonReqData reqData);
 }

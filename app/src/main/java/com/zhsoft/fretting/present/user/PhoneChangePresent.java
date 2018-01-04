@@ -7,7 +7,9 @@ import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.params.FindPwdFirstParams;
+import com.zhsoft.fretting.params.PhoneAndCodeParams;
 import com.zhsoft.fretting.params.PhoneCodeParams;
+import com.zhsoft.fretting.params.SendPhoneCodeParams;
 import com.zhsoft.fretting.ui.activity.user.FindPwdLoginFirstActivity;
 import com.zhsoft.fretting.ui.activity.user.PhoneChangeActivity;
 
@@ -29,7 +31,7 @@ public class PhoneChangePresent extends XPresent<PhoneChangeActivity> {
      *
      * @param phone        用户名
      * @param validateCode 密码
-     *                     "phone":"15032269871","validateCode":"1234"
+     *                     "phone":"15032269871","phoneCode":"1234"
      */
     public void changePhone(String phone, String validateCode, String token, String userId) {
 
@@ -38,15 +40,34 @@ public class PhoneChangePresent extends XPresent<PhoneChangeActivity> {
         reqData.setToken(token);
 
         //手机号验证码
-        FindPwdFirstParams params = new FindPwdFirstParams();
-        params.setPhone(phone);
-        params.setValidateCode(validateCode);
+        PhoneAndCodeParams params = new PhoneAndCodeParams();
+        params.setPhoneNo(phone);
+        params.setPhoneCode(validateCode);
         reqData.setData(params);
-        if(true){
-            getV().disposeChangeResult();
-        }else{
-            getV().requestFail();
-        }
+
+        Api.getApi()
+                .changePhoneSave(reqData)
+                .compose(XApi.<BaseResp<String>>getApiTransformer())
+                .compose(XApi.<BaseResp<String>>getScheduler())
+                .compose(getV().<BaseResp<String>>bindToLifecycle())
+                .subscribe(new ApiSubscriber<BaseResp<String>>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        getV().requestFail();
+                        getV().showToast("更换银行卡请求失败");
+                    }
+
+                    @Override
+                    public void onNext(BaseResp<String> resp) {
+                        if (resp != null && resp.getStatus() == 200) {
+                            getV().disposeChangeResult();
+                        } else {
+                            getV().requestFail();
+                            getV().showToast(resp.getMessage());
+                            XLog.e("返回数据为空");
+                        }
+                    }
+                });
 
     }
 
@@ -124,6 +145,46 @@ public class PhoneChangePresent extends XPresent<PhoneChangeActivity> {
 
         //
 
+
+    }
+
+    /**
+     * 获取短信验证码 不需要图片验证码
+     *
+     * @param phone
+     */
+    public void getMessageCodeNoImage(String phone, String token, String userId) {
+        final CommonReqData reqData = new CommonReqData();
+        reqData.setToken(token);
+        reqData.setUserId(userId);
+
+        SendPhoneCodeParams params = new SendPhoneCodeParams();
+        params.setPhoneNo(phone);
+        reqData.setData(params);
+
+        Api.getApi()
+                .changePhoneSendcode(reqData)
+                .compose(XApi.<BaseResp<String>>getApiTransformer())
+                .compose(XApi.<BaseResp<String>>getScheduler())
+                .compose(getV().<BaseResp<String>>bindToLifecycle())
+                .subscribe(new ApiSubscriber<BaseResp<String>>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        getV().requestPhoneCodeNoImageFail();
+                        getV().showToast("获取短信验证码请求失败");
+                    }
+
+                    @Override
+                    public void onNext(BaseResp<String> resp) {
+                        if (resp != null && resp.getStatus() == 200) {
+                            getV().requestPhoneCodeNoImageSuccess(resp.getData());
+                        } else {
+                            getV().requestPhoneCodeNoImageFail();
+                            getV().showToast(resp.getMessage());
+                            XLog.e("返回数据为空");
+                        }
+                    }
+                });
 
     }
 }

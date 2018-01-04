@@ -12,7 +12,7 @@ import com.zhsoft.fretting.model.BaseResp;
 
 public class BankCardResp extends BaseResp<BankCardResp> implements Parcelable {
     /** 银行卡logo */
-    private String logoUrl;
+    private String bankLogo;
     /** 银行名称 */
     private String bankName;
     /** 银行卡尾号 */
@@ -22,12 +22,12 @@ public class BankCardResp extends BaseResp<BankCardResp> implements Parcelable {
     /** 是否能够更改银行卡  0代表不能 1代表能 */
     private String isCanChangeBankNo;
 
-    public String getLogoUrl() {
-        return logoUrl;
+    public String getBankLogo() {
+        return bankLogo;
     }
 
-    public void setLogoUrl(String logoUrl) {
-        this.logoUrl = logoUrl;
+    public void setBankLogo(String bankLogo) {
+        this.bankLogo = bankLogo;
     }
 
     public String getBankName() {
@@ -69,7 +69,7 @@ public class BankCardResp extends BaseResp<BankCardResp> implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.logoUrl);
+        dest.writeString(this.bankLogo);
         dest.writeString(this.bankName);
         dest.writeString(this.bankNoTail);
         dest.writeString(this.ta_acco);
@@ -80,7 +80,7 @@ public class BankCardResp extends BaseResp<BankCardResp> implements Parcelable {
     }
 
     protected BankCardResp(Parcel in) {
-        this.logoUrl = in.readString();
+        this.bankLogo = in.readString();
         this.bankName = in.readString();
         this.bankNoTail = in.readString();
         this.ta_acco = in.readString();

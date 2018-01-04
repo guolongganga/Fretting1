@@ -1,6 +1,8 @@
 package com.zhsoft.fretting.ui.activity.user;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -14,6 +16,7 @@ import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.ChangeBankCardEvent;
 import com.zhsoft.fretting.model.user.BankCardResp;
 import com.zhsoft.fretting.present.user.BankCardPresent;
+import com.zhsoft.fretting.utils.Base64ImageUtil;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -104,7 +107,13 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
     public void showBankCardData(BankCardResp resp) {
         dialog.dismiss();
         bankCardResp = resp;
-        imageLoader.displayImage(resp.getLogoUrl(), imageBanck);
+        //获取 图片Base64 字符串
+        String strimage = resp.getBankLogo();
+        if (!TextUtils.isEmpty(strimage)) {
+            //将Base64图片串转换成Bitmap
+            Bitmap bitmap = Base64ImageUtil.base64ToBitmap(strimage);
+            imageBanck.setImageBitmap(bitmap);
+        }
         banckName.setText(resp.getBankName() + "（尾号" + resp.getBankNoTail() + "）");
         tradeNumber.setText(resp.getTa_acco());
     }

@@ -42,8 +42,14 @@ public class HttpContent {
     public static final String change_bankcard_check = "permissionCheck/fundHome/changeBankCardCheck";
     /** 更换银行卡操作 */
     public static final String change_bankcard = "permissionCheck/fundHome/changeBankCard";
-    /** 发送短信验证码 不需要图片验证码 */
+    /** 发送短信验证码 不需要图片验证码 更换银行卡 */
     public static final String send_phone_code = "permissionCheck/fundHome/sendPhoneCode";
+    /** 我的手机号码 */
+    public static final String change_phone_index = "permissionCheck/change/phone/index";
+    /** 发送短信验证码 不需要图片验证码 更换手机号码 */
+    public static final String change_phone_sendcode = "permissionCheck/change/phone/sendCode";
+    /** 更换手机号 */
+    public static final String change_phone_save = "permissionCheck/change/phone/save";
 
 
 }

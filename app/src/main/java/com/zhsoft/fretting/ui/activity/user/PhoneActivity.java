@@ -84,14 +84,7 @@ public class PhoneActivity extends XActivity<PhonePresent> {
      */
     public void requestSuccess(PhoneResp resp) {
         httpLoadingDialog.dismiss();
-        if ("yidong".equals(resp.getCarrieroperator())) {
-            imgSign.setImageResource(R.mipmap.yidong_logo);
-        } else if ("liantong".equals(resp.getCarrieroperator())) {
-            imgSign.setImageResource(R.mipmap.lianton_logo);
-        } else if ("dianxin".equals(resp.getCarrieroperator())) {
-            imgSign.setImageResource(R.mipmap.dianxin_logo);
-        }
-        phoneNumber.setText("现注册手机号为" + resp.getPhone());
+        phoneNumber.setText("现注册手机号为" + resp.getMobile_tel());
     }
 
     /***
@@ -108,8 +101,8 @@ public class PhoneActivity extends XActivity<PhonePresent> {
         if (requestCode == Constant.CHANGE_PHONE_ACTIVITY && resultCode == Constant.SUCCESS_BACK_PHONE) {
             String phone = data.getStringExtra(Constant.CHANGE_PHONE);
             phoneNumber.setText("现注册手机号为" + phone);
-            httpLoadingDialog.visible();
-            getP().getPhoneInfo(token, userId);
+//            httpLoadingDialog.visible();
+//            getP().getPhoneInfo(token, userId);
         }
     }
 }

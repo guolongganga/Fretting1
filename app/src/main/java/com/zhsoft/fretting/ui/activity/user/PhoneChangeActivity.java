@@ -127,8 +127,11 @@ public class PhoneChangeActivity extends XActivity<PhoneChangePresent> {
                     showToast("请输入正确的手机号码");
                     return;
                 }
-                //获取图片验证码
-                showImageCode(getText(phoneNumber));
+//                //获取图片验证码
+//                showImageCode(getText(phoneNumber));
+                //获取短信验证码 不需要图片
+                getP().getMessageCodeNoImage(getText(phoneNumber),token,userId);
+
             }
         });
 
@@ -153,8 +156,7 @@ public class PhoneChangeActivity extends XActivity<PhoneChangePresent> {
                     return;
                 }
                 getP().changePhone(getText(phoneNumber), getText(verifyCode), token, userId);
-                //TODO 将验证码和手机号码提交到后台
-                showToast("保存更换的手机号");
+
             }
         });
 
@@ -295,5 +297,21 @@ public class PhoneChangeActivity extends XActivity<PhoneChangePresent> {
      */
     public void requestFail() {
         httpLoadingDialog.dismiss();
+    }
+
+    /**
+     * 请求短信验证码成功 无图片
+     */
+    public void requestPhoneCodeNoImageSuccess(String data) {
+        //开始倒计时
+        getVerifyCode.start();
+    }
+
+    /**
+     * 请求短信验证码失败 无图片
+     */
+    public void requestPhoneCodeNoImageFail() {
+        //获取失败的原因
+        getVerifyCode.cancel();
     }
 }

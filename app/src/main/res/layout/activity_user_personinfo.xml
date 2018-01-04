@@ -237,6 +237,7 @@
                     />
 
             </LinearLayout>
+
             <include layout="@layout/layout_divider_horizontal"/>
             <!--详细地址-->
             <LinearLayout
@@ -266,6 +267,7 @@
                     android:text=""
                     android:textColor="@color/color_text_333"
                     android:textColorHint="@color/color_696969"
+                    android:textCursorDrawable="@null"
                     android:textSize="14sp"/>
 
             </LinearLayout>
@@ -328,6 +330,7 @@
                     android:text=""
                     android:textColor="@color/color_text_333"
                     android:textColorHint="@color/color_696969"
+                    android:textCursorDrawable="@null"
                     android:textSize="14sp"/>
 
             </LinearLayout>

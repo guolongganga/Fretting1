@@ -8,24 +8,14 @@ import com.zhsoft.fretting.model.BaseResp;
  */
 
 public class PhoneResp extends BaseResp<PhoneResp> {
-    //运营商
-    private String carrieroperator;
     //手机号码
-    private String phone;
+    private String mobile_tel;
 
-    public String getCarrieroperator() {
-        return carrieroperator;
+    public String getMobile_tel() {
+        return mobile_tel;
     }
 
-    public void setCarrieroperator(String carrieroperator) {
-        this.carrieroperator = carrieroperator;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setMobile_tel(String mobile_tel) {
+        this.mobile_tel = mobile_tel;
     }
 }
