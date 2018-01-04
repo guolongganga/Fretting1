@@ -5,8 +5,17 @@ package com.zhsoft.fretting.params;
  * 描述：修改登录密码参数
  */
 
-public class ChangeLoginPwdParams extends CommonReqData<ChangeLoginPwdParams>{
+public class ChangeLoginPwdParams extends CommonReqData<ChangeLoginPwdParams> {
     private String password;
+    private String repetPassword;
+
+    public String getRepetPassword() {
+        return repetPassword;
+    }
+
+    public void setRepetPassword(String repetPassword) {
+        this.repetPassword = repetPassword;
+    }
 
     public String getPassword() {
         return password;

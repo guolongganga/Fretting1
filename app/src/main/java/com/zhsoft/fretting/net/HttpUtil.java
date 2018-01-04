@@ -29,6 +29,8 @@ import static com.zhsoft.fretting.net.HttpContent.image_code;
 import static com.zhsoft.fretting.net.HttpContent.my_bankcard;
 import static com.zhsoft.fretting.net.HttpContent.newest_fund;
 import static com.zhsoft.fretting.net.HttpContent.open_account;
+import static com.zhsoft.fretting.net.HttpContent.password_change_login;
+import static com.zhsoft.fretting.net.HttpContent.password_change_trade;
 import static com.zhsoft.fretting.net.HttpContent.password_check;
 import static com.zhsoft.fretting.net.HttpContent.password_reset;
 import static com.zhsoft.fretting.net.HttpContent.phone_code;
@@ -144,4 +146,14 @@ public interface HttpUtil {
     @Headers("apptype:Android")
     @POST(change_phone_save)
     Flowable<BaseResp<String>> changePhoneSave(@Body CommonReqData reqData);
+
+    //变更登录密码
+    @Headers("apptype:Android")
+    @POST(password_change_login)
+    Flowable<BaseResp<String>> passwordChangeLogin(@Body CommonReqData reqData);
+
+    //变更交易密码
+    @Headers("apptype:Android")
+    @POST(password_change_trade)
+    Flowable<BaseResp<String>> passwordChangeTrade(@Body CommonReqData reqData);
 }

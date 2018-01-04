@@ -6,22 +6,31 @@ package com.zhsoft.fretting.params;
  */
 
 public class ChangeTradePwdParams extends CommonReqData<ChangeTradePwdParams> {
-    private String oldPassword;
-    private String password;
+    private String tradePassword;
+    private String repetTradePassword;
+    private String oldTradePassword;
 
-    public String getPassword() {
-        return password;
+    public String getTradePassword() {
+        return tradePassword;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setTradePassword(String tradePassword) {
+        this.tradePassword = tradePassword;
     }
 
-    public String getOldPassword() {
-        return oldPassword;
+    public String getRepetTradePassword() {
+        return repetTradePassword;
     }
 
-    public void setOldPassword(String oldPassword) {
-        this.oldPassword = oldPassword;
+    public void setRepetTradePassword(String repetTradePassword) {
+        this.repetTradePassword = repetTradePassword;
+    }
+
+    public String getOldTradePassword() {
+        return oldTradePassword;
+    }
+
+    public void setOldTradePassword(String oldTradePassword) {
+        this.oldTradePassword = oldTradePassword;
     }
 }

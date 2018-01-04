@@ -103,7 +103,7 @@ public class ChangeLoginPwdActivity extends XActivity<ChangeLoginPwdPresent> {
                 }
                 //TODO 请求修改登录密码接口
                 httpLoadingDialog.visible();
-                getP().changePassword(token, userId, pwdnumbe);
+                getP().changePassword(token, userId, pwdnumbe, pwdAgainnumbe);
             }
         });
     }
@@ -126,4 +126,6 @@ public class ChangeLoginPwdActivity extends XActivity<ChangeLoginPwdPresent> {
         startActivity(LoginActivity.class);
         finish();
     }
+
+
 }

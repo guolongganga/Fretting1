@@ -50,6 +50,12 @@ public class HttpContent {
     public static final String change_phone_sendcode = "permissionCheck/change/phone/sendCode";
     /** 更换手机号 */
     public static final String change_phone_save = "permissionCheck/change/phone/save";
+    /** 变更登录密码 */
+    public static final String password_change_login = "permissionCheck/password/change/login";
+    /** 变更交易密码 */
+    public static final String password_change_trade = "permissionCheck/password/change/trade";
+    /** 获取职业信息 */
+    public static final String get_occupation = "permissionCheck/fundHome/getOccupation";
 
 
 }

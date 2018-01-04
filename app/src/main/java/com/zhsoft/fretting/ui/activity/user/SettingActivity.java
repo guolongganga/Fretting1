@@ -160,7 +160,7 @@ public class SettingActivity extends XActivity<SettingPresent> {
                 App.getSharedPref().putString(Constant.USER_PHONE, "");
                 App.getSharedPref().putString(Constant.USER_CERTNO, "");
                 App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, "");
-                EventBus.getDefault().post(new OpenAccountEvent());
+//                EventBus.getDefault().post(new OpenAccountEvent());
 
                 RuntimeHelper.getInstance().setLogin(false);
 

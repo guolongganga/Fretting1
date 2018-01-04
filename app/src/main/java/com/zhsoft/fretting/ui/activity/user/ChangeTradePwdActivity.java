@@ -117,7 +117,7 @@ public class ChangeTradePwdActivity extends XActivity<ChangeTradePwdPresent> {
                 }
                 //TODO 请求修改交易密码接口
                 httpLoadingDialog.visible();
-                getP().changePassword(token, userId, oldpwd, againpwd);
+                getP().changePassword(token, userId, oldpwd, pwd, againpwd);
             }
         });
 

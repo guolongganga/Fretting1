@@ -1,10 +1,16 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.model.BaseResp;
+import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.ChangeLoginPwdParams;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.ui.activity.user.ChangeLoginPwdActivity;
 
+import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XPresent;
+import cn.droidlover.xdroidmvp.net.ApiSubscriber;
+import cn.droidlover.xdroidmvp.net.NetError;
+import cn.droidlover.xdroidmvp.net.XApi;
 
 /**
  * 作者：sunnyzeng on 2017/12/27 16:36
@@ -18,23 +24,44 @@ public class ChangeLoginPwdPresent extends XPresent<ChangeLoginPwdActivity> {
      *
      * @param token
      * @param userId
-     * @param pwdnumbe
+     * @param password
+     * @param repetPassword
      */
-    public void changePassword(String token, String userId, String pwdnumbe) {
+    public void changePassword(String token, String userId, String password, String repetPassword) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
 
         ChangeLoginPwdParams params = new ChangeLoginPwdParams();
-        params.setPassword(pwdnumbe);
+        params.setPassword(password);
+        params.setRepetPassword(repetPassword);
         reqData.setData(params);
 
-        //模拟请求
-        if (true) {
-            getV().requestSuccess();
-        } else {
-            getV().requestFail();
-        }
+
+        Api.getApi()
+                .passwordChangeLogin(reqData)
+                .compose(XApi.<BaseResp<String>>getApiTransformer())
+                .compose(XApi.<BaseResp<String>>getScheduler())
+                .compose(getV().<BaseResp<String>>bindToLifecycle())
+                .subscribe(new ApiSubscriber<BaseResp<String>>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        getV().requestFail();
+//                        getV().showToast("变更登录密码请求失败");
+                    }
+
+                    @Override
+                    public void onNext(BaseResp<String> resp) {
+                        if (resp != null && resp.getStatus() == 200) {
+                            getV().requestSuccess();
+                        } else {
+                            getV().requestFail();
+                            getV().showToast(resp.getMessage());
+                            XLog.e("返回数据为空");
+                        }
+                    }
+                });
+
 
     }
 }
