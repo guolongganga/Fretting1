@@ -8,6 +8,8 @@ import com.zhsoft.fretting.model.user.BankCardResp;
 import com.zhsoft.fretting.model.user.BankResp;
 import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.model.user.NewestFundListResp;
+import com.zhsoft.fretting.model.user.OccupationResp;
+import com.zhsoft.fretting.model.user.PersonInfoResp;
 import com.zhsoft.fretting.model.user.PhoneResp;
 import com.zhsoft.fretting.model.user.UserAccountResp;
 import com.zhsoft.fretting.params.CommonReqData;
@@ -19,14 +21,17 @@ import retrofit2.http.POST;
 
 import static com.zhsoft.fretting.net.HttpContent.change_bankcard;
 import static com.zhsoft.fretting.net.HttpContent.change_bankcard_check;
+import static com.zhsoft.fretting.net.HttpContent.change_my_information;
 import static com.zhsoft.fretting.net.HttpContent.change_phone_index;
 import static com.zhsoft.fretting.net.HttpContent.change_phone_save;
 import static com.zhsoft.fretting.net.HttpContent.change_phone_sendcode;
 import static com.zhsoft.fretting.net.HttpContent.common_bank_list;
 import static com.zhsoft.fretting.net.HttpContent.fund_home;
 import static com.zhsoft.fretting.net.HttpContent.get_home;
+import static com.zhsoft.fretting.net.HttpContent.get_occupation;
 import static com.zhsoft.fretting.net.HttpContent.image_code;
 import static com.zhsoft.fretting.net.HttpContent.my_bankcard;
+import static com.zhsoft.fretting.net.HttpContent.my_informationpage;
 import static com.zhsoft.fretting.net.HttpContent.newest_fund;
 import static com.zhsoft.fretting.net.HttpContent.open_account;
 import static com.zhsoft.fretting.net.HttpContent.password_change_login;
@@ -156,4 +161,20 @@ public interface HttpUtil {
     @Headers("apptype:Android")
     @POST(password_change_trade)
     Flowable<BaseResp<String>> passwordChangeTrade(@Body CommonReqData reqData);
+
+    //请求职业列表
+    @Headers("apptype:Android")
+    @POST(get_occupation)
+    Flowable<OccupationResp> getOccupation(@Body CommonReqData reqData);
+
+    //个人信息
+    @Headers("apptype:Android")
+    @POST(my_informationpage)
+    Flowable<PersonInfoResp> myInformationPage(@Body CommonReqData reqData);
+
+    //变更登录密码
+    @Headers("apptype:Android")
+    @POST(change_my_information)
+    Flowable<BaseResp<String>> changeMyInformation(@Body CommonReqData reqData);
+
 }

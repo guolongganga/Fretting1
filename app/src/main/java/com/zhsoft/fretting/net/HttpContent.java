@@ -56,6 +56,10 @@ public class HttpContent {
     public static final String password_change_trade = "permissionCheck/password/change/trade";
     /** 获取职业信息 */
     public static final String get_occupation = "permissionCheck/fundHome/getOccupation";
+    /** 我的个人信息 */
+    public static final String my_informationpage = "permissionCheck/fundHome/MyInformationPage";
+    /** 修改个人信息 */
+    public static final String change_my_information = "permissionCheck/fundHome/changeMyInformation";
 
 
 }

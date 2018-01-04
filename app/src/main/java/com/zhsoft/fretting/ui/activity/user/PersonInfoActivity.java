@@ -16,6 +16,7 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.model.user.OccupationResp;
 import com.zhsoft.fretting.model.user.PersonInfoResp;
 import com.zhsoft.fretting.present.user.PersonInfoPresent;
 import com.zhsoft.fretting.ui.widget.PopShow;
@@ -69,6 +70,8 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
     @BindView(R.id.linearlayout_area) LinearLayout linearlayoutArea;
     /** 地址 */
     @BindView(R.id.address) TextView address;
+    /** 详细地址 */
+    @BindView(R.id.address_detail) TextView addressDetail;
     /** 保存按钮 */
     @BindView(R.id.btn_save) Button btnSave;
 
@@ -85,6 +88,10 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
     private PostionSelectPopupWindow popupWindow;
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
+    /** 职业集合 */
+    private ArrayList<OccupationResp> listOccupation;
+    /** 选择的职业 */
+    private OccupationResp selectOccupationResp;
 
     @Override
     public int getLayoutId() {
@@ -109,10 +116,12 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
         userId = App.getSharedPref().getString(Constant.USERID, "");
         token = App.getSharedPref().getString(Constant.TOKEN, "");
 
-        //请求个人信息接口
+        //请求职业集合接口
         httpLoadingDialog.visible();
-        getP().getUserInfo(token, userId);
+        getP().getOccupation(token, userId);
 
+        //请求个人信息接口
+        getP().getUserInfo(token, userId);
 
         popupWindow = new PostionSelectPopupWindow(this);
         popupWindow.setCallBack(new PostionSelectPopupWindow.CallBack() {
@@ -179,7 +188,20 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
                     timeDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                            limitTime.setText(year + "/" + (monthOfYear + 1) + "/" + dayOfMonth);
+                            String strMonth;
+                            int month = monthOfYear + 1;
+                            if (month < 10) {
+                                strMonth = "0" + month;
+                            } else {
+                                strMonth = "" + month;
+                            }
+                            String strDay;
+                            if (dayOfMonth < 10) {
+                                strDay = "0" + dayOfMonth;
+                            } else {
+                                strDay = "" + dayOfMonth;
+                            }
+                            limitTime.setText(year + strMonth + strDay);
                         }
                     }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                     timeDialog.show();
@@ -211,22 +233,22 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
                 //关闭当前输入框
                 KeyBoardUtils.closeKeybord(PersonInfoActivity.this);
                 final List<String> list = new ArrayList<>();
-                list.add("金融从业者");
-                list.add("教师");
-                list.add("程序员");
-                list.add("其他");
+                for (OccupationResp occupation : listOccupation) {
+                    list.add(occupation.getCaption());
+                }
                 PopShow popShow = new PopShow(context, linearlayout_duty);
                 popShow.showText(list);
                 popShow.setOnClickPop(new PopShow.OnClickPop() {
                     @Override
                     public void setRange(int position) {
                         duty.setText(list.get(position));
+                        selectOccupationResp = listOccupation.get(position);
                     }
                 });
             }
         });
 
-        address.setOnClickListener(new View.OnClickListener() {
+        linearlayoutArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //关闭当前输入框
@@ -239,7 +261,43 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("保存");
+
+                //表单验证通过才弹出pop
+                if (noNetWork()) {
+                    showNetWorkError();
+                    return;
+                }
+                if (!ivSelector.isSelected() && !isNotEmpty(getText(limitTime))) {
+                    showToast("身份证有效期不能为空");
+                    return;
+                }
+                if (!isNotEmpty(getText(duty))) {
+                    showToast("职业不能为空");
+                    return;
+                }
+                if (!isNotEmpty(getText(address))) {
+                    showToast("联系地址不能为空");
+                    return;
+                }
+                if (!isNotEmpty(getText(addressDetail))) {
+                    showToast("详细地址不能为空");
+                    return;
+                }
+                if (!isNotEmpty(getText(email))) {
+                    showToast("邮箱不能为空");
+                    return;
+                }
+                //身份证有限期
+                String id_enddate;
+                if (ivSelector.isSelected()) {
+                    id_enddate = "1";
+                } else {
+                    id_enddate = getText(limitTime);
+                }
+                httpLoadingDialog.visible("保存中...");
+                getP().changeMyInformation(token, userId, id_enddate, getText(address), getText(addressDetail), getText(email), selectOccupationResp);
+
+//                showToast("保存");
 
             }
         });
@@ -255,35 +313,47 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
     public void requestUserInfoSuccess(PersonInfoResp personInfoResp) {
         httpLoadingDialog.dismiss();
         if (personInfoResp != null) {
-            name.setText(personInfoResp.getName());
-            sex.setText(personInfoResp.getGender());
+            //姓名
+            name.setText(personInfoResp.getUserName());
+            //性别
+            sex.setText(personInfoResp.getSex());
+            //身份证号
             identity.setText(personInfoResp.getCertNo());
-            //如果是0说明永久有效
-            if ("0".equals(personInfoResp.getIsPermanent())) {
+            //身份证有效期 如果是0说明永久有效
+            if ("1".equals(personInfoResp.getId_enddate())) {
                 ivSelector.setSelected(true);
                 limitTime.setHint("");
                 limitTime.setText("");
             } else {
                 ivSelector.setSelected(false);
-                if (isNotEmpty(personInfoResp.getLimitTime())) {
-                    limitTime.setText(personInfoResp.getLimitTime());
+                if (isNotEmpty(personInfoResp.getId_enddate())) {
+                    limitTime.setText(personInfoResp.getId_enddate());
                 } else {
                     limitTime.setText("请选择");
                 }
             }
-            nationality.setText(personInfoResp.getNationality());
-            if (isNotEmpty(personInfoResp.getOccupation())) {
-                duty.setText(personInfoResp.getOccupation());
+            //国籍
+            nationality.setText(personInfoResp.getFund_nationality());
+            //职业
+            if (personInfoResp.getOccupation() != null) {
+                selectOccupationResp = personInfoResp.getOccupation();
+                duty.setText(personInfoResp.getOccupation().getCaption());
             } else {
                 duty.setHint("请选择");
             }
+            //地址
             if (isNotEmpty(personInfoResp.getAddress())) {
                 address.setText(personInfoResp.getAddress());
             } else {
                 address.setHint("请选择");
             }
-            accountid.setText(personInfoResp.getFundAccount());
+            //详细地址
+            addressDetail.setText(personInfoResp.getDetaile_address());
+            //基金账号
+            accountid.setText(personInfoResp.getTa_acco());
+            //邮箱
             email.setText(personInfoResp.getEmail());
+
         }
     }
 
@@ -291,6 +361,38 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
      * 请求用户信息失败
      */
     public void requestUserInfoFail() {
+        httpLoadingDialog.dismiss();
+    }
+
+    /**
+     * 获取职业集合成功
+     *
+     * @param data
+     */
+    public void getOccupationSuccess(ArrayList<OccupationResp> data) {
+        httpLoadingDialog.dismiss();
+        listOccupation = data;
+    }
+
+    /**
+     * 获取职业集合失败
+     */
+    public void getOccupationFail() {
+        httpLoadingDialog.dismiss();
+    }
+
+    /**
+     * 保存我的信息成功
+     */
+    public void changeMyInformationSuccess() {
+        httpLoadingDialog.dismiss();
+        showToast("保存成功");
+    }
+
+    /**
+     * 保存我的信息失败
+     */
+    public void changeMyInformationFail() {
         httpLoadingDialog.dismiss();
     }
 }
