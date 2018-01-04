@@ -147,6 +147,10 @@ public class RiskTestWebViewAcvitity extends XActivity {
         //添加header
         String ua = mWeb.getSettings().getUserAgentString();
         mWeb.getSettings().setUserAgentString(ua.replace("appType", "Android"));
+        link = link + "?token=" + token + "&userId=" + userId;
+        XLog.e("qqq",link);
+//        mWeb.loadDataWithBaseURL(link, null, "text/html", "UTF-8", null);
+        mWeb.loadUrl(link);
 
         //添加token userid
 //        CommonReqData reqData = new CommonReqData();
@@ -179,15 +183,42 @@ public class RiskTestWebViewAcvitity extends XActivity {
 //        {
 //            e.printStackTrace();
 //        }
-
+//
 //        HashMap<String,String> map = new HashMap();
-//        map.put("token","343e2aa09def8de29bd9d2fc38a57ede");
-//        map.put("uid","7");
+//        map.put("token","7a9a9ef0bfda9a7a0907e21dd913baf0");
+//        map.put("uid","28");
 //        Gson gson = new Gson();
 //        String strData = gson.toJson(map);
 //        XLog.e("qqq", "params = " + strData);
 //        mWeb.postUrl("http://api.fushoushu.cn/inviteInfo/", strData.getBytes());
 
+//        CommonReqData reqData = new CommonReqData();
+//        reqData.setToken(token);
+//        reqData.setUserId(userId);
+////
+//        Gson gson = new Gson();
+//        String strData = gson.toJson(reqData);
+//        Map<String, String> map = new HashMap<>();
+//        map.put("reqData", strData);
+//        String params = gson.toJson(map);
+
+//        StringEntity se = null;
+//        try
+//        {
+//        XLog.e("qqq", "strData = " + strData);
+//            se = new StringEntity(strData,"UTF-8");
+//            se.setContentType("application/json");
+//            byte[] array = EntityUtils.toByteArray(se);
+//            mWeb.postUrl(link, array);
+//        }
+//        catch (Exception e)
+//        {
+//            e.printStackTrace();
+//        }
+//        XLog.e("qqq", "strData = " + strData);
+//        XLog.e("qqq", "url = " + link);
+//
+//        mWeb.postUrl(link, strData.getBytes());
 
 
     }

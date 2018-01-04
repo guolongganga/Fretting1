@@ -237,6 +237,38 @@
                     />
 
             </LinearLayout>
+            <include layout="@layout/layout_divider_horizontal"/>
+            <!--详细地址-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingLeft="30dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="详细地址"
+                    android:textColor="@color/color_text_333"
+                    android:textSize="14sp"/>
+
+                <EditText
+                    android:id="@+id/address_detail"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:background="@android:color/transparent"
+                    android:gravity="right"
+                    android:hint="请输入详细地址"
+                    android:paddingLeft="15dp"
+                    android:paddingRight="15dp"
+                    android:text=""
+                    android:textColor="@color/color_text_333"
+                    android:textColorHint="@color/color_696969"
+                    android:textSize="14sp"/>
+
+            </LinearLayout>
 
             <include layout="@layout/layout_divider_horizontal"/>
             <!--基金账号-->
@@ -290,10 +322,12 @@
                     android:layout_weight="1"
                     android:background="@android:color/transparent"
                     android:gravity="right"
+                    android:hint="请输入邮箱"
                     android:paddingLeft="15dp"
                     android:paddingRight="15dp"
                     android:text=""
                     android:textColor="@color/color_text_333"
+                    android:textColorHint="@color/color_696969"
                     android:textSize="14sp"/>
 
             </LinearLayout>

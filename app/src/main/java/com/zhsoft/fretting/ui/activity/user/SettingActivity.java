@@ -112,11 +112,11 @@ public class SettingActivity extends XActivity<SettingPresent> {
             @Override
             public void onClick(View view) {
 //                showToast("风险等级测评");
-                getP().goRiskTest(token, userId);
-//                Bundle bundle = new Bundle();
-//                bundle.putInt(Constant.WEB_TITLE, R.string.user_risk_test);
-//                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.risk_question);
-//                startActivity(RiskTestWebViewAcvitity.class, bundle);
+//                getP().goRiskTest(token, userId);
+                Bundle bundle = new Bundle();
+                bundle.putInt(Constant.WEB_TITLE, R.string.user_risk_test);
+                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.risk_question);
+                startActivity(RiskTestWebViewAcvitity.class, bundle);
 
             }
         });

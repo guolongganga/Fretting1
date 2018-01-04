@@ -1,7 +1,9 @@
 package com.zhsoft.fretting.ui.adapter.user;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -10,6 +12,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.user.BankResp;
+import com.zhsoft.fretting.utils.Base64ImageUtil;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
@@ -41,7 +44,13 @@ public class BankListAdapter extends SimpleRecAdapter<BankResp, BankListAdapter.
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final BankResp resp = data.get(position);
-//        imageLoader.displayImage(data.get(position).getImageUrl(), holder.bankImage);
+        //获取 图片Base64 字符串
+        String strimage = resp.getBankLogo();
+        if (!TextUtils.isEmpty(strimage)) {
+            //将Base64图片串转换成Bitmap
+            Bitmap bitmap = Base64ImageUtil.base64ToBitmap(strimage);
+            holder.bankImage.setImageBitmap(bitmap);
+        }
         holder.bankName.setText(resp.getBank_name());
         holder.bankLimit.setText("单笔限额" + resp.getLimit_per_payment() + "万，单日限额" + resp.getLimit_per_day() + "万，单月限额" + resp.getLimit_per_month() + "万");
         if (data.size() - 1 == position) {

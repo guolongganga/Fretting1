@@ -22,7 +22,7 @@ import java.util.ArrayList;
  */
 
 public class BankResp extends BaseResp<ArrayList<BankResp>> implements Parcelable {
-
+    private String bankLogo;
     private String bank_name;
     private String bank_no;
     private String capital_mode;
@@ -31,6 +31,14 @@ public class BankResp extends BaseResp<ArrayList<BankResp>> implements Parcelabl
     private String limit_per_day;
     private String limit_per_month;
     private String limit_per_payment;
+
+    public String getBankLogo() {
+        return bankLogo;
+    }
+
+    public void setBankLogo(String bankLogo) {
+        this.bankLogo = bankLogo;
+    }
 
     public String getBank_name() {
         return bank_name;
@@ -103,6 +111,7 @@ public class BankResp extends BaseResp<ArrayList<BankResp>> implements Parcelabl
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.bankLogo);
         dest.writeString(this.bank_name);
         dest.writeString(this.bank_no);
         dest.writeString(this.capital_mode);
@@ -117,6 +126,7 @@ public class BankResp extends BaseResp<ArrayList<BankResp>> implements Parcelabl
     }
 
     protected BankResp(Parcel in) {
+        this.bankLogo = in.readString();
         this.bank_name = in.readString();
         this.bank_no = in.readString();
         this.capital_mode = in.readString();
