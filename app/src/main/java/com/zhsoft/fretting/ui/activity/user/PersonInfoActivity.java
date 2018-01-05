@@ -188,6 +188,7 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
                     timeDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                            //月份未满10 前面添加0
                             String strMonth;
                             int month = monthOfYear + 1;
                             if (month < 10) {
@@ -195,6 +196,7 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
                             } else {
                                 strMonth = "" + month;
                             }
+                            //天数未满10 前面添加0
                             String strDay;
                             if (dayOfMonth < 10) {
                                 strDay = "0" + dayOfMonth;
@@ -329,7 +331,7 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
                 if (isNotEmpty(personInfoResp.getId_enddate())) {
                     limitTime.setText(personInfoResp.getId_enddate());
                 } else {
-                    limitTime.setText("请选择");
+                    limitTime.setHint("请选择");
                 }
             }
             //国籍
