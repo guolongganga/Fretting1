@@ -238,7 +238,7 @@ public class FindPwdTradeFirstActivity extends XActivity<FindPwdTradeFirstPresen
     public void disposeUpdateResult(Object data) {
         httpLoadingDialog.dismiss();
 
-        ////跳转找回密码第二步 传递电话号码
+        //跳转找回密码第二步 传递电话号码
         FindPwdTradeSecondActivity.launch(this, getText(phone));
         finish();
 

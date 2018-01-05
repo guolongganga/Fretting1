@@ -43,18 +43,9 @@ public class Constant {
 
     //基金页面中的tab名称
     public static final String FUND_TAB_NAME = BASE_CONSTANT + "fund_tab_name";
+
     //页面名称，人气产品或基金
     public static final String ACTIVITY_NAME = BASE_CONSTANT + "activity_name";
-    //人气产品
-    public static final int POPULARITY = 1;
-    //基金主页
-    public static final int FUND_INDEX = 2;
-
-    //跳转银行列表requestcode
-    public static final int BANKLIST_ACTIVITY = 100;
-
-    //银行卡列表选择之后回到之前页面 resultcode
-    public static final int BANKLIST_RESULT_CODE = 200;
 
     //选择的银行
     public static final String CHOOSE_BANCK = BASE_CONSTANT + "";
@@ -68,11 +59,36 @@ public class Constant {
     //注册成功传递身份证号
     public static final String CERT_NO = BASE_CONSTANT + "cert_no";
 
+    //修改手机号传递数据
+    public static final String CHANGE_PHONE = "change_phone";
+
+    //跳转登录页面标识
+    public static final String SKIP_SIGN = "skip_sign";
+
+    //变更登录密码 跳转登录页面 skip_sign
+    public static final String CHANGE_LOGIN_ACTIVITY = "300";
+
+    //变更交易密码 跳转登录页面 skip_sign
+    public static final String CHANGE_TRADE_ACTIVITY = "301";
+
+    //找回交易密码 跳转登录页面 skip_sign
+    public static final String FIND_TRADE_ACTIVITY = "302";
+
+    //人气产品
+    public static final int POPULARITY = 1;
+    //基金主页
+    public static final int FUND_INDEX = 2;
+
+    //跳转银行列表requestcode
+    public static final int BANKLIST_ACTIVITY = 100;
+
+    //银行卡列表选择之后回到之前页面 resultcode
+    public static final int BANKLIST_RESULT_CODE = 200;
+
     //去修改手机页面 requestcode
     public static final int CHANGE_PHONE_ACTIVITY = 101;
 
     //修改手机号码成功后返回我的手机号码页面 resultcode
     public static final int SUCCESS_BACK_PHONE = 201;
 
-    public static final String CHANGE_PHONE = "change_phone";
 }

@@ -40,7 +40,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="张三"
+                    android:text=""
                     android:textColor="@color/color_696969"
                     android:textSize="14sp"/>
 
@@ -68,7 +68,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="女"
+                    android:text=""
                     android:textColor="@color/color_696969"
                     android:textSize="14sp"/>
 
@@ -97,7 +97,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="21078222919293***23"
+                    android:text=""
                     android:textColor="@color/color_696969"
                     android:textSize="14sp"/>
 
@@ -168,7 +168,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="中国"
+                    android:text=""
                     android:textColor="@color/color_696969"
                     android:textSize="14sp"/>
 
@@ -294,7 +294,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
-                    android:text="021139388305"
+                    android:text=""
                     android:textColor="@color/color_696969"
                     android:textSize="14sp"/>
 

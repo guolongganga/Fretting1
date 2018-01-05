@@ -12,6 +12,7 @@ import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.present.user.ChangeLoginPwdPresent;
+import com.zhsoft.fretting.utils.RuntimeHelper;
 import com.zhsoft.fretting.widget.ChenJingET;
 
 import butterknife.BindView;
@@ -122,8 +123,20 @@ public class ChangeLoginPwdActivity extends XActivity<ChangeLoginPwdPresent> {
     public void requestSuccess() {
         httpLoadingDialog.dismiss();
         showToast("修改登录密码成功");
+
+        //清空缓存数据
+        App.getSharedPref().putString(Constant.USERID, "");
+        App.getSharedPref().putString(Constant.TOKEN, "");
+        App.getSharedPref().putString(Constant.USER_PHONE, "");
+        App.getSharedPref().putString(Constant.USER_CERTNO, "");
+        App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, "");
+//                EventBus.getDefault().post(new OpenAccountEvent());
+
+        RuntimeHelper.getInstance().setLogin(false);
         //跳转回登录界面
-        startActivity(LoginActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.SKIP_SIGN, Constant.CHANGE_LOGIN_ACTIVITY);
+        startActivity(LoginActivity.class,bundle);
         finish();
     }
 

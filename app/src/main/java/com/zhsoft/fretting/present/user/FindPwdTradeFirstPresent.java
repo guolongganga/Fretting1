@@ -19,13 +19,13 @@ import cn.droidlover.xdroidmvp.net.XApi;
 
 /**
  * 作者：sunnyzeng on 2017/12/15 13:43
- * 描述：找回登录密码第一步请求
+ * 描述：找回交易密码第一步请求
  */
 
 public class FindPwdTradeFirstPresent extends XPresent<FindPwdTradeFirstActivity> {
 
     /**
-     * 找回密码
+     * 找回交易密码
      *
      * @param phone        用户名
      * @param validateCode 密码
@@ -41,7 +41,7 @@ public class FindPwdTradeFirstPresent extends XPresent<FindPwdTradeFirstActivity
         reqData.setData(params);
 
         Api.getApi()
-                .findPasswordCheck(reqData)
+                .findTradePasswordCheck(reqData)
                 .compose(XApi.<BaseResp>getApiTransformer())
                 .compose(XApi.<BaseResp>getScheduler())
                 .compose(getV().<BaseResp>bindToLifecycle())
@@ -105,7 +105,7 @@ public class FindPwdTradeFirstPresent extends XPresent<FindPwdTradeFirstActivity
     }
 
     /**
-     * 获取短信验证码
+     * 找回交易密码 获取短信验证码
      *
      * @param phone
      */
@@ -117,7 +117,8 @@ public class FindPwdTradeFirstPresent extends XPresent<FindPwdTradeFirstActivity
         params.setImage_code_id(image_code_id);
         reqData.setData(params);
 
-        Api.getApi().getPhoneCode(reqData)
+        Api.getApi()
+                .tradePasswordPhoneCode(reqData)
                 .compose(XApi.<BaseResp<String>>getApiTransformer())
                 .compose(XApi.<BaseResp<String>>getScheduler())
                 .compose(getV().<BaseResp<String>>bindToLifecycle())
@@ -138,9 +139,6 @@ public class FindPwdTradeFirstPresent extends XPresent<FindPwdTradeFirstActivity
                         }
                     }
                 });
-
-        //
-
 
     }
 

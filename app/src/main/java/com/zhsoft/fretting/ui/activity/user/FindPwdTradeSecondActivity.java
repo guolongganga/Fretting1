@@ -9,8 +9,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.present.user.FindPwdTradeSecondPresent;
+import com.zhsoft.fretting.utils.RuntimeHelper;
 import com.zhsoft.fretting.widget.ChenJingET;
 
 import butterknife.BindView;
@@ -102,7 +105,7 @@ public class FindPwdTradeSecondActivity extends XActivity<FindPwdTradeSecondPres
                     showToast("两次密码不一致");
                     return;
                 }
-                //TODO 请求修改交易密码接口
+                //请求修改交易密码接口
                 httpLoadingDialog.visible();
                 getP().findPassword(mPhone, pwd, againpwd);
             }
@@ -132,7 +135,19 @@ public class FindPwdTradeSecondActivity extends XActivity<FindPwdTradeSecondPres
     public void requestSuccess(Object data) {
         httpLoadingDialog.dismiss();
         showToast("找回交易密码成功");
-        startActivity(LoginActivity.class);
+        //清空缓存数据
+        App.getSharedPref().putString(Constant.USERID, "");
+        App.getSharedPref().putString(Constant.TOKEN, "");
+        App.getSharedPref().putString(Constant.USER_PHONE, "");
+        App.getSharedPref().putString(Constant.USER_CERTNO, "");
+        App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, "");
+//                EventBus.getDefault().post(new OpenAccountEvent());
+        //改变登录状态
+        RuntimeHelper.getInstance().setLogin(false);
+        //跳转登录页面
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.SKIP_SIGN, Constant.FIND_TRADE_ACTIVITY);
+        startActivity(LoginActivity.class,bundle);
         finish();
     }
 }

@@ -5,7 +5,7 @@ import android.util.Log;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
-import com.zhsoft.fretting.params.FindPwdSecondParams;
+import com.zhsoft.fretting.params.FindLoginPwdSecondParams;
 import com.zhsoft.fretting.ui.activity.user.FindPwdLoginSecondActivity;
 
 import cn.droidlover.xdroidmvp.log.XLog;
@@ -30,7 +30,7 @@ public class FindPwdLoginSecondPresent extends XPresent<FindPwdLoginSecondActivi
 
         CommonReqData reqData = new CommonReqData();
 
-        FindPwdSecondParams params = new FindPwdSecondParams();
+        FindLoginPwdSecondParams params = new FindLoginPwdSecondParams();
         params.setPhone(phone);
         params.setPassword(password);
         params.setRepetPassword(repetPassword);

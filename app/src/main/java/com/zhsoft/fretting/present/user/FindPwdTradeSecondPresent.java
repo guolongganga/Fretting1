@@ -5,8 +5,8 @@ import android.util.Log;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
-import com.zhsoft.fretting.params.FindPwdSecondParams;
-import com.zhsoft.fretting.ui.activity.user.FindPwdLoginSecondActivity;
+import com.zhsoft.fretting.params.FindLoginPwdSecondParams;
+import com.zhsoft.fretting.params.FindTradePwdSecondParams;
 import com.zhsoft.fretting.ui.activity.user.FindPwdTradeSecondActivity;
 
 import cn.droidlover.xdroidmvp.log.XLog;
@@ -31,14 +31,14 @@ public class FindPwdTradeSecondPresent extends XPresent<FindPwdTradeSecondActivi
 
         CommonReqData reqData = new CommonReqData();
 
-        FindPwdSecondParams params = new FindPwdSecondParams();
+        FindTradePwdSecondParams params = new FindTradePwdSecondParams();
         params.setPhone(phone);
-        params.setPassword(password);
-        params.setRepetPassword(repetPassword);
+        params.setTradePassword(password);
+        params.setRepetTradePassword(repetPassword);
         reqData.setData(params);
-        //TODO 换成找回交易密码接口
+        //找回交易密码接口
         Api.getApi()
-                .findPasswordReset(reqData)
+                .findTradePasswordReset(reqData)
                 .compose(XApi.<BaseResp>getApiTransformer())
                 .compose(XApi.<BaseResp>getScheduler())
                 .compose(getV().<BaseResp>bindToLifecycle())

@@ -5,7 +5,7 @@ package com.zhsoft.fretting.params;
  * 描述：找回登录密码 第二步
  */
 
-public class FindPwdSecondParams extends CommonReqData<FindPwdSecondParams> {
+public class FindLoginPwdSecondParams extends CommonReqData<FindLoginPwdSecondParams> {
 
     private String phone;
     private String password;

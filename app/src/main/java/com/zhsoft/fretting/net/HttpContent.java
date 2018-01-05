@@ -14,10 +14,6 @@ public class HttpContent {
     public static final String test_test = "noPermission/testCache";
     /** 登录 */
     public static final String user_login = "noPermission/login";
-    /** 找回登录密码 第一步 */
-    public static final String password_check = "noPermission/password/check";
-    /** 找回登录密码 第二步 */
-    public static final String password_reset = "noPermission/password/reset";
     /** 注册 */
     public static final String user_register = "noPermission/regist";
     /** 银行列表 */
@@ -60,6 +56,18 @@ public class HttpContent {
     public static final String my_informationpage = "permissionCheck/fundHome/MyInformationPage";
     /** 修改个人信息 */
     public static final String change_my_information = "permissionCheck/fundHome/changeMyInformation";
+    /** 找回登录密码 的 短信验证码 */
+    public static final String password_phonecode = "noPermission/password/phoneCode";
+    /** 找回登录密码 第一步 */
+    public static final String password_check = "noPermission/password/check";
+    /** 找回登录密码 第二步 */
+    public static final String password_reset = "noPermission/password/reset";
+    /** 找回交易密码 的 短信验证码 */
+    public static final String trade_password_phonecode = "noPermission/tradePassword/phoneCode";
+    /** 找回交易密码 第一步 */
+    public static final String trade_password_check = "noPermission/tradePassword/check";
+    /** 找回交易密码 第二步 */
+    public static final String trade_password_reset = "noPermission/tradepassword/reset";
 
 
 }

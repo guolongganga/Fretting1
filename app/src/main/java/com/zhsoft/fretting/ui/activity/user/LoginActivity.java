@@ -8,12 +8,12 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.App;
-import com.zhsoft.fretting.event.OpenAccountEvent;
-import com.zhsoft.fretting.model.LoginResp;
-import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.OpenAccountEvent;
+import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.present.user.LoginPresent;
+import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.utils.RuntimeHelper;
 import com.zhsoft.fretting.widget.ChenJingET;
 
@@ -46,6 +46,8 @@ public class LoginActivity extends XActivity<LoginPresent> {
 
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
+    /** 从哪个页面跳转过来的请求码 */
+    private String mRequestCode;
 
     @Override
     public int getLayoutId() {
@@ -64,6 +66,12 @@ public class LoginActivity extends XActivity<LoginPresent> {
         httpLoadingDialog = new HttpLoadingDialog(context);
         //设置标题
         headTitle.setText("登录");
+        if (bundle != null) {
+            mRequestCode = bundle.getString(Constant.SKIP_SIGN);
+        } else {
+            mRequestCode = "";
+        }
+
 
     }
 
@@ -72,7 +80,7 @@ public class LoginActivity extends XActivity<LoginPresent> {
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                skipTarget();
             }
         });
         register.setOnClickListener(new View.OnClickListener() {
@@ -150,5 +158,28 @@ public class LoginActivity extends XActivity<LoginPresent> {
     public void loginFail() {
         httpLoadingDialog.dismiss();
         showToast("登录失败");
+    }
+
+    /**
+     * 跳转的目标
+     */
+    private void skipTarget() {
+        //如果是修改登录密码，修改交易密码，重置交易密码页面过来返回按钮都返回到主页面
+        if (isNotEmpty(mRequestCode)) {
+            if (Constant.CHANGE_LOGIN_ACTIVITY.equals(mRequestCode) || Constant.CHANGE_TRADE_ACTIVITY.equals(mRequestCode)
+                    || Constant.FIND_TRADE_ACTIVITY.equals(mRequestCode)) {
+                startActivity(MainActivity.class);
+            }
+        }
+        finish();
+    }
+
+    /**
+     * 返回按键
+     */
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        skipTarget();
     }
 }

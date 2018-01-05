@@ -37,11 +37,15 @@ import static com.zhsoft.fretting.net.HttpContent.open_account;
 import static com.zhsoft.fretting.net.HttpContent.password_change_login;
 import static com.zhsoft.fretting.net.HttpContent.password_change_trade;
 import static com.zhsoft.fretting.net.HttpContent.password_check;
+import static com.zhsoft.fretting.net.HttpContent.password_phonecode;
 import static com.zhsoft.fretting.net.HttpContent.password_reset;
 import static com.zhsoft.fretting.net.HttpContent.phone_code;
 import static com.zhsoft.fretting.net.HttpContent.risk_question;
 import static com.zhsoft.fretting.net.HttpContent.send_phone_code;
 import static com.zhsoft.fretting.net.HttpContent.test_test;
+import static com.zhsoft.fretting.net.HttpContent.trade_password_check;
+import static com.zhsoft.fretting.net.HttpContent.trade_password_phonecode;
+import static com.zhsoft.fretting.net.HttpContent.trade_password_reset;
 import static com.zhsoft.fretting.net.HttpContent.user_login;
 import static com.zhsoft.fretting.net.HttpContent.user_register;
 
@@ -61,16 +65,6 @@ public interface HttpUtil {
     @Headers("apptype:Android")
     @POST(user_login)
     Flowable<LoginResp> login(@Body CommonReqData reqData);
-
-    //找回密码 第一步 验证手机号
-    @Headers("apptype:Android")
-    @POST(password_check)
-    Flowable<BaseResp> findPasswordCheck(@Body CommonReqData reqData);
-
-    //找回密码 第二步
-    @Headers("apptype:Android")
-    @POST(password_reset)
-    Flowable<BaseResp> findPasswordReset(@Body CommonReqData reqData);
 
     //注册 第一步 验证手机号
     @Headers("apptype:Android")
@@ -176,5 +170,36 @@ public interface HttpUtil {
     @Headers("apptype:Android")
     @POST(change_my_information)
     Flowable<BaseResp<String>> changeMyInformation(@Body CommonReqData reqData);
+
+    //找回登录密码 短信验证码
+    @Headers("apptype:Android")
+    @POST(password_phonecode)
+    Flowable<BaseResp<String>> passwordPhoneCode(@Body CommonReqData reqData);
+
+    //找回登录密码 第一步 验证手机号
+    @Headers("apptype:Android")
+    @POST(password_check)
+    Flowable<BaseResp> findPasswordCheck(@Body CommonReqData reqData);
+
+    //找回登录密码 第二步
+    @Headers("apptype:Android")
+    @POST(password_reset)
+    Flowable<BaseResp> findPasswordReset(@Body CommonReqData reqData);
+
+    //找回交易密码 短信验证码
+    @Headers("apptype:Android")
+    @POST(trade_password_phonecode)
+    Flowable<BaseResp<String>> tradePasswordPhoneCode(@Body CommonReqData reqData);
+
+    //找回交易密码 第一步 验证手机号
+    @Headers("apptype:Android")
+    @POST(trade_password_check)
+    Flowable<BaseResp> findTradePasswordCheck(@Body CommonReqData reqData);
+
+    //找回交易密码 第二步
+    @Headers("apptype:Android")
+    @POST(trade_password_reset)
+    Flowable<BaseResp> findTradePasswordReset(@Body CommonReqData reqData);
+
 
 }

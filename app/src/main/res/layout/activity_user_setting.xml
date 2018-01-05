@@ -78,7 +78,7 @@
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
                     android:gravity="right"
-                    android:text="未测"
+                    android:text=""
                     android:textColor="@color/color_text_333"
                     android:textSize="14sp"/>
 

@@ -9,8 +9,11 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.present.user.FindPwdLoginSecondPresent;
+import com.zhsoft.fretting.utils.RuntimeHelper;
 import com.zhsoft.fretting.widget.ChenJingET;
 
 import butterknife.BindView;
@@ -129,7 +132,6 @@ public class FindPwdLoginSecondActivity extends XActivity<FindPwdLoginSecondPres
     public void requestSuccess(Object data) {
         httpLoadingDialog.dismiss();
         showToast("找回登录密码成功");
-        startActivity(LoginActivity.class);
         finish();
     }
 }
