@@ -303,34 +303,6 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
         });
     }
 
-    public void requestFail() {
-        httpLoadingDialog.dismiss();
-    }
-
-    /**
-     * 注册成功
-     *
-     * @param model
-     */
-    public void commitSuccess(LoginResp model) {
-        httpLoadingDialog.dismiss();
-        showToast(model.getToken());
-
-        //缓存用户userId,token,username,is_open_account
-        App.getSharedPref().putString(Constant.USERID, model.getUserId());
-        App.getSharedPref().putString(Constant.TOKEN, model.getToken());
-        App.getSharedPref().putString(Constant.USER_PHONE, getText(phoneNumber));
-        App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, model.getIsOpenAccount());
-
-        //全局变量设置为登录状态
-        RuntimeHelper.getInstance().setLogin(true);
-
-        Bundle bundle = new Bundle();
-        bundle.putString(Constant.PHONE, getText(phoneNumber));
-        startActivity(RegisterSecondActivity.class, bundle);
-
-        finish();
-    }
 
 
     /**
@@ -425,7 +397,6 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
 
 //        ILFactory.getLoader().loadNet(ivCode, "", null);
 
-
     }
 
     /**
@@ -453,6 +424,39 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
         //获取失败的原因
         getVerifyCode.cancel();
         showToast("后台那家伙说你输错验证码了...老铁");
+    }
+
+
+    /**
+     * 注册失败
+     */
+    public void requestFail() {
+        httpLoadingDialog.dismiss();
+    }
+
+    /**
+     * 注册成功
+     *
+     * @param model
+     */
+    public void commitSuccess(LoginResp model) {
+        httpLoadingDialog.dismiss();
+        showToast(model.getToken());
+
+        //缓存用户userId,token,username,is_open_account
+        App.getSharedPref().putString(Constant.USERID, model.getUserId());
+        App.getSharedPref().putString(Constant.TOKEN, model.getToken());
+        App.getSharedPref().putString(Constant.USER_PHONE, getText(phoneNumber));
+        App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, model.getIsOpenAccount());
+
+        //全局变量设置为登录状态
+        RuntimeHelper.getInstance().setLogin(true);
+
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.PHONE, getText(phoneNumber));
+        startActivity(RegisterSecondActivity.class, bundle);
+
+        finish();
     }
 
 }
