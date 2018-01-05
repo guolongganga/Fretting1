@@ -1,4 +1,4 @@
-package cn.droidlover.xdroidmvp.imageloader;
+package cn.droidlover.xdroidmvp.imageloader.glide;
 
 import android.content.Context;
 
@@ -14,10 +14,9 @@ import okhttp3.OkHttpClient;
 
 /**
  * <p>Description: </p>
- * <p>Company: 中企明道</p>
- * <p>Create Time:2017/12/26 13:29</p>
+ * <p>Company: 中融百汇</p>
  *
- * @author MiaoWenHai
+ * @author zengsuwa
  */
 public class OkHttpUrlLoader implements ModelLoader<GlideUrl, InputStream> {
 

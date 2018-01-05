@@ -3,11 +3,6 @@
           xmlns:tools="http://schemas.android.com/tools"
           package="com.zhsoft.fretting">
 
-    <!--配置glide加载https所需要的GlideModule-->
-    <meta-data
-        android:name="cn.droidlover.xdroidmvp.imageloader.OkHttpGlideModule"
-        android:value="GlideModule"/>
-
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -17,6 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup,icon">
+
         <!--主界面-->
         <activity
             android:name=".ui.activity.MainActivity"

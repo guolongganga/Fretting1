@@ -112,7 +112,7 @@ public class XApi {
 
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
 
-        //配置https
+        //配置https 开始
         Https.SSLParams sslParams = Https.getSslSocketFactory(null, null, null);
         builder.sslSocketFactory(sslParams.sSLSocketFactory, sslParams.trustManager);
 
@@ -124,6 +124,7 @@ public class XApi {
                 return true;
             }
         });
+        //配置https 完成
 
         builder.connectTimeout(provider.configConnectTimeoutMills() != 0
                 ? provider.configConnectTimeoutMills()

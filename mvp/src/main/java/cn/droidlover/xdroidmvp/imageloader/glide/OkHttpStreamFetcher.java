@@ -1,4 +1,4 @@
-package cn.droidlover.xdroidmvp.imageloader;
+package cn.droidlover.xdroidmvp.imageloader.glide;
 
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.load.data.DataFetcher;
@@ -16,10 +16,9 @@ import okhttp3.ResponseBody;
 
 /**
  * <p>Description: </p>
- * <p>Company: 中企明道</p>
- * <p>Create Time:2017/12/26 13:29</p>
+ * <p>Company: 中融百汇</p>
  *
- * @author MiaoWenHai
+ * @author zengsuwa
  */
 public class OkHttpStreamFetcher  implements DataFetcher<InputStream> {
     private final OkHttpClient client;

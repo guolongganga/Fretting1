@@ -1,4 +1,4 @@
-package cn.droidlover.xdroidmvp.imageloader;
+package cn.droidlover.xdroidmvp.imageloader.glide;
 
 import java.security.SecureRandom;
 import java.security.cert.X509Certificate;
@@ -11,10 +11,11 @@ import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
 /**
- * <p>Description: </p>
- * <p>Create Time:2017/12/26 13:36</p>
+ * <p>Description: 忽略https</p>
+ * <p>Company: 中融百汇</p>
  *
- * @author sunny.zeng
+ *
+ * @author zengsuwa
  */
 public class SSLSocketClient {
     //获取这个SSLSocketFactory
@@ -27,6 +28,7 @@ public class SSLSocketClient {
             throw new RuntimeException(e);
         }
     }
+
     //获取TrustManager
     private static TrustManager[] getTrustManager() {
         TrustManager[] trustAllCerts = new TrustManager[]{

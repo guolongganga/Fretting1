@@ -5,8 +5,10 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
@@ -21,6 +23,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
+import cn.droidlover.xdroidmvp.imageloader.ILFactory;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
@@ -43,6 +46,7 @@ public class LoginActivity extends XActivity<LoginPresent> {
     @BindView(R.id.find_password) TextView findPassword;
     /** 登录按钮 */
     @BindView(R.id.btn_next) Button btnNext;
+    @BindView(R.id.text_image) ImageView testImage;
 
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
@@ -71,7 +75,9 @@ public class LoginActivity extends XActivity<LoginPresent> {
         } else {
             mRequestCode = "";
         }
-
+//        String url = "http://img4.imgtn.bdimg.com/it/u=2430963138,1300578556&fm=23&gp=0.jpg";
+//        String urls = "https://travel.12306.cn/imgs/resources/uploadfiles/images/a9b9c76d-36ba-4e4a-8e02-9e6a1a991da0_news_W540_H300.jpg";
+//        ILFactory.getLoader().loadNet(testImage, urls, null);
 
     }
 
@@ -182,4 +188,5 @@ public class LoginActivity extends XActivity<LoginPresent> {
         super.onBackPressed();
         skipTarget();
     }
+
 }
