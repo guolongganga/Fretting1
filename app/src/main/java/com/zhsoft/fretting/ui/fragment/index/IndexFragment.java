@@ -3,6 +3,7 @@ package com.zhsoft.fretting.ui.fragment.index;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
@@ -11,6 +12,7 @@ import com.zhsoft.fretting.model.index.IndexResp;
 import com.zhsoft.fretting.model.index.PopularityResp;
 import com.zhsoft.fretting.model.index.ProductModel;
 import com.zhsoft.fretting.present.index.IndexPresent;
+import com.zhsoft.fretting.ui.activity.fund.FundBuyActivity;
 import com.zhsoft.fretting.ui.activity.index.PopularityActivity;
 import com.zhsoft.fretting.ui.activity.index.TimingActivity;
 import com.zhsoft.fretting.ui.adapter.index.PopularityRecycleAdapter;
@@ -71,6 +73,9 @@ public class IndexFragment extends XFragment<IndexPresent> {
     /** 优选定投 利率 */
     @BindView(R.id.preferred_rate)
     TextView preferredRate;
+    /** 搜索 */
+    @BindView(R.id.rl_name_search)
+    RelativeLayout rlNameSearch;
 
     @Override
     public int getLayoutId() {
@@ -105,6 +110,13 @@ public class IndexFragment extends XFragment<IndexPresent> {
             @Override
             public void onClick(View view) {
                 startActivity(TimingActivity.class);
+            }
+        });
+
+        rlNameSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(FundBuyActivity.class);
             }
         });
 

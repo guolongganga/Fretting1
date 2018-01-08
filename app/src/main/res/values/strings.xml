@@ -94,4 +94,11 @@
     <string name="user_profit">分红</string>
     <string name="user_remove">撤单</string>
 
+    <!--基金购买页-->
+    <string name="fund_buy">购买</string>
+    <string name="fund_change"><u>更换></u></string>
+    <string name="fund_amount">金额</string>
+    <string name="fund_sure">确定购买</string>
+    <string name="fund_support">基金销售服务由北京微动利投资管理有限公司提供\n基金销售资格：0000000000000</string>
+
 </resources>
