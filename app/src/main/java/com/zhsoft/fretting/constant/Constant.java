@@ -91,4 +91,6 @@ public class Constant {
     //修改手机号码成功后返回我的手机号码页面 resultcode
     public static final int SUCCESS_BACK_PHONE = 201;
 
+    public static final String MAIN_SKIP = "main_skip";
+    public static final String MAIN_MY = "main_my";
 }

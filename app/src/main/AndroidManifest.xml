@@ -76,7 +76,9 @@
         <!--优选定投 定投排行-->
         <activity android:name=".ui.activity.index.TimingActivity"></activity>
         <!--基金购买页-->
-        <activity android:name=".ui.activity.fund.FundBuyActivity"></activity>
+        <activity android:name=".ui.activity.fund.BuyActivity"></activity>
+        <!--基金购买成功页-->
+        <activity android:name=".ui.activity.fund.BuySuccessActivity"></activity>
 
         <!--通用WebView-->
         <activity android:name=".ui.activity.boot.WebPublicActivity"></activity>

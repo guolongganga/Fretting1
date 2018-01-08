@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.ui.fragment.fund.FundFragment;
 import com.zhsoft.fretting.ui.fragment.user.UserFragment;
 import com.zhsoft.fretting.ui.fragment.index.IndexFragment;
@@ -50,9 +51,14 @@ public class MainActivity extends XActivity {
     private List<TextView> textViews;
 
     private long firstTime; //用于点击两次返回退出程序
+    private String skip;
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        if (savedInstanceState != null) {
+            skip = savedInstanceState.getString(Constant.MAIN_SKIP);
+        }
+
         fragments = new ArrayList<>();
         fragments.add(new IndexFragment());
         fragments.add(new FundFragment());
@@ -64,7 +70,12 @@ public class MainActivity extends XActivity {
         textViews.add(tvUser);
 
         //默认显示主页
-        show(tvIndex, 0);
+        if (Constant.MAIN_MY.equals(skip)) {
+            show(tvUser, 2);
+        } else {
+            show(tvIndex, 0);
+        }
+
     }
 
     @Override
@@ -158,6 +169,7 @@ public class MainActivity extends XActivity {
 
     /**
      * 跳转
+     *
      * @param activity
      */
     public static void launch(Activity activity) {

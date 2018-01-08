@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.ui.activity.user.FindPwdTradeFirstActivity;
-import com.zhsoft.fretting.ui.activity.user.RegisterSetTradePwdActivity;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.ui.widget.FundBuyDialog;
 
@@ -23,7 +22,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  * 描述：基金详情页-购买页面
  */
 
-public class FundBuyActivity extends XActivity {
+public class BuyActivity extends XActivity {
     @BindView(R.id.head_back) ImageButton headBack;
     @BindView(R.id.head_title) TextView headTitle;
     @BindView(R.id.bank_image) ImageView bankImage;
@@ -73,7 +72,8 @@ public class FundBuyActivity extends XActivity {
                                 fundBuyDialog.dismiss();
 
                                 if ("123456".equals(str)) {
-                                    showToast("密码正确");
+//                                    showToast("密码正确");
+                                    startActivity(BuySuccessActivity.class);
                                 } else {
                                     customDialog = new CustomDialog.Builder(context)
                                             .setMessage("交易密码错误，请重试")

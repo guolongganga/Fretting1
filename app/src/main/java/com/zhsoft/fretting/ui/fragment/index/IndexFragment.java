@@ -12,7 +12,7 @@ import com.zhsoft.fretting.model.index.IndexResp;
 import com.zhsoft.fretting.model.index.PopularityResp;
 import com.zhsoft.fretting.model.index.ProductModel;
 import com.zhsoft.fretting.present.index.IndexPresent;
-import com.zhsoft.fretting.ui.activity.fund.FundBuyActivity;
+import com.zhsoft.fretting.ui.activity.fund.BuyActivity;
 import com.zhsoft.fretting.ui.activity.index.PopularityActivity;
 import com.zhsoft.fretting.ui.activity.index.TimingActivity;
 import com.zhsoft.fretting.ui.adapter.index.PopularityRecycleAdapter;
@@ -116,7 +116,7 @@ public class IndexFragment extends XFragment<IndexPresent> {
         rlNameSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(FundBuyActivity.class);
+                startActivity(BuyActivity.class);
             }
         });
 
