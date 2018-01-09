@@ -62,6 +62,12 @@ public class Constant {
     //修改手机号传递数据
     public static final String CHANGE_PHONE = "change_phone";
 
+    //修改银行卡传递数据
+    public static final String CHANGE_BANK = "change_bank";
+
+    //修改银行卡成功
+    public static final String CHANGE_BANK_SUCCESS = "0";
+
     //跳转登录页面标识
     public static final String SKIP_SIGN = "skip_sign";
 
@@ -79,7 +85,7 @@ public class Constant {
     //基金主页
     public static final int FUND_INDEX = 2;
 
-    //跳转银行列表requestcode
+    //跳转银行列表 requestcode
     public static final int BANKLIST_ACTIVITY = 100;
 
     //银行卡列表选择之后回到之前页面 resultcode
@@ -90,6 +96,12 @@ public class Constant {
 
     //修改手机号码成功后返回我的手机号码页面 resultcode
     public static final int SUCCESS_BACK_PHONE = 201;
+
+    //定投购买 到 修改银行卡 requestcode
+    public static final int INVEST_BANK_ACTIVITY = 102;
+
+    //我的银行卡后 返回我的手机号码页面 resultcode
+    public static final int SUCCESS_BACK_BANK = 201;
 
     //投资页的类型，是定投，还是定投修改
     public static final String INVEST_ACTIVITY_TYPE = "invest_activity_type";
@@ -102,4 +114,5 @@ public class Constant {
 
     //跳转到主页面，我的tab
     public static final String MAIN_MY = "main_my";
+
 }

@@ -314,4 +314,5 @@ public class PhoneChangeActivity extends XActivity<PhoneChangePresent> {
         //获取失败的原因
         getVerifyCode.cancel();
     }
+
 }

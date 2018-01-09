@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.ui.activity.user;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -54,6 +55,8 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
     /** 登录标识 */
     private String token;
 
+    private String isChange = "1";
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_user_bankcard;
@@ -85,7 +88,7 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                backDeal();
             }
         });
         btnChange.setOnClickListener(new View.OnClickListener() {
@@ -141,6 +144,8 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
     public void changeBankEvent(ChangeBankCardEvent event) {
         //重新获取我的银行卡信息
         dialog.visible();
+        //修改了银行卡
+        isChange = "0";
         getP().getBankCardInfo(token, userId);
         showToast("修改啦");
     }
@@ -158,4 +163,21 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
             showToast("您的账户在持仓或者在途交易期间，不能更换银行卡");
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        backDeal();
+    }
+
+    /**
+     * 返回键处理
+     */
+    private void backDeal() {
+        Intent intent = new Intent();
+        intent.putExtra(Constant.CHANGE_BANK, isChange);
+        setResult(Constant.SUCCESS_BACK_BANK, intent);
+        finish();
+    }
+
 }

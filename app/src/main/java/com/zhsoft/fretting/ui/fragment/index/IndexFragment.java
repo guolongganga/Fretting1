@@ -15,7 +15,7 @@ import com.zhsoft.fretting.model.index.PopularityResp;
 import com.zhsoft.fretting.model.index.ProductModel;
 import com.zhsoft.fretting.present.index.IndexPresent;
 import com.zhsoft.fretting.ui.activity.fund.BuyActivity;
-import com.zhsoft.fretting.ui.activity.fund.InvestUpdateActivity;
+import com.zhsoft.fretting.ui.activity.fund.InvestActivity;
 import com.zhsoft.fretting.ui.activity.index.PopularityActivity;
 import com.zhsoft.fretting.ui.activity.index.TimingActivity;
 import com.zhsoft.fretting.ui.adapter.index.PopularityRecycleAdapter;
@@ -135,7 +135,7 @@ public class IndexFragment extends XFragment<IndexPresent> {
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putString(Constant.INVEST_ACTIVITY_TYPE,Constant.INVEST_ACTIVITY);
-                startActivity(InvestUpdateActivity.class,bundle);
+                startActivity(InvestActivity.class,bundle);
 //                if (RuntimeHelper.getInstance().isLogin()) {
 //                    startActivity(InvestActivity.class);
 //                } else {
