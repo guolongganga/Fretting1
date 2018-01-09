@@ -79,6 +79,12 @@
         <activity android:name=".ui.activity.fund.BuyActivity"></activity>
         <!--基金购买成功页-->
         <activity android:name=".ui.activity.fund.BuySuccessActivity"></activity>
+        <!--基金定投页-->
+        <activity android:name=".ui.activity.fund.InvestActivity"></activity>
+        <!--基金定投修改页-->
+        <activity android:name=".ui.activity.fund.InvestUpdateActivity"></activity>
+        <!--基金定投成功页-->
+        <activity android:name=".ui.activity.fund.InvestSuccessActivity"></activity>
 
         <!--通用WebView-->
         <activity android:name=".ui.activity.boot.WebPublicActivity"></activity>

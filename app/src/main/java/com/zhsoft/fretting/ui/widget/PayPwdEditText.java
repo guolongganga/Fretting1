@@ -19,7 +19,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
- * Created by ywl on 2016/7/10.
+ * 仿支付宝、微信 密码输入框
  */
 public class PayPwdEditText extends RelativeLayout{
 
@@ -244,6 +244,9 @@ public class PayPwdEditText extends RelativeLayout{
         void onFinish(String str);
     }
 
+    /**
+     * 获得焦点
+     */
     public void setFocus()
     {
         editText.requestFocus();

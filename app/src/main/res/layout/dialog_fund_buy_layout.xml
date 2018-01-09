@@ -65,10 +65,9 @@
 
             <com.zhsoft.fretting.ui.widget.PayPwdEditText
                 android:id="@+id/ppe_pwd"
-                android:layout_width="300dp"
+                android:layout_width="match_parent"
                 android:layout_height="45dp"
-                android:layout_marginBottom="5dp"
-                android:layout_marginTop="5dp"/>
+                android:layout_margin="@dimen/dimen_5"/>
         </LinearLayout>
 
 

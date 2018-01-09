@@ -3,6 +3,7 @@ package com.zhsoft.fretting.ui.fragment.index;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -13,11 +14,14 @@ import com.zhsoft.fretting.model.index.PopularityResp;
 import com.zhsoft.fretting.model.index.ProductModel;
 import com.zhsoft.fretting.present.index.IndexPresent;
 import com.zhsoft.fretting.ui.activity.fund.BuyActivity;
+import com.zhsoft.fretting.ui.activity.fund.InvestActivity;
 import com.zhsoft.fretting.ui.activity.index.PopularityActivity;
 import com.zhsoft.fretting.ui.activity.index.TimingActivity;
+import com.zhsoft.fretting.ui.activity.user.LoginActivity;
 import com.zhsoft.fretting.ui.adapter.index.PopularityRecycleAdapter;
 import com.zhsoft.fretting.ui.adapter.user.SwitchAccountRecycleAdapter;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
+import com.zhsoft.fretting.utils.RuntimeHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +56,9 @@ public class IndexFragment extends XFragment<IndexPresent> {
     /** 明星基金 名称 */
     @BindView(R.id.tv_wan_earnings)
     TextView tvWanarnings;
+    /** 明星基金 购买 */
+    @BindView(R.id.btn_buy)
+    Button btnBuy;
     /** 指数基金产品1 名称 */
     @BindView(R.id.tv_nvshen)
     TextView tvNvshen;
@@ -117,6 +124,23 @@ public class IndexFragment extends XFragment<IndexPresent> {
             @Override
             public void onClick(View view) {
                 startActivity(BuyActivity.class);
+//                if (RuntimeHelper.getInstance().isLogin()) {
+//                    startActivity(BuyActivity.class);
+//                } else {
+//                    startActivity(LoginActivity.class);
+//                }
+            }
+        });
+        btnBuy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(InvestActivity.class);
+//                if (RuntimeHelper.getInstance().isLogin()) {
+//                    startActivity(InvestActivity.class);
+//                } else {
+//                    startActivity(LoginActivity.class);
+//                }
+
             }
         });
 

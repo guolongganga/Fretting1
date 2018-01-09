@@ -128,6 +128,7 @@
 
 
                     <Button
+                        android:id="@+id/btn_buy"
                         android:layout_width="@dimen/dimen_120"
                         android:layout_height="@dimen/dimen_30"
                         android:layout_below="@id/tv_wan_earnings"

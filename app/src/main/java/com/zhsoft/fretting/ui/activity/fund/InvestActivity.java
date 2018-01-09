@@ -1,9 +1,7 @@
 package com.zhsoft.fretting.ui.activity.fund;
 
 import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,26 +10,29 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
-import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.event.ChangeTabEvent;
 import com.zhsoft.fretting.ui.activity.user.BankCardActivity;
 import com.zhsoft.fretting.ui.activity.user.BankCardChangeActivity;
 import com.zhsoft.fretting.ui.activity.user.FindPwdTradeFirstActivity;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.ui.widget.FundBuyDialog;
-import com.zhsoft.fretting.utils.Base64ImageUtil;
+import com.zhsoft.fretting.ui.widget.PopShow;
+import com.zhsoft.fretting.utils.KeyBoardUtils;
 
-import org.greenrobot.eventbus.EventBus;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
- * 作者：sunnyzeng on 2018/1/8 11:55
- * 描述：基金详情页-购买页面
+ * 作者：sunnyzeng on 2018/1/9 10:57
+ * 描述：定投页面
  */
 
-public class BuyActivity extends XActivity {
+public class InvestActivity extends XActivity {
     @BindView(R.id.head_back) ImageButton headBack;
     @BindView(R.id.head_title) TextView headTitle;
     @BindView(R.id.bank_image) ImageView bankImage;
@@ -39,13 +40,21 @@ public class BuyActivity extends XActivity {
     @BindView(R.id.bank_limit) TextView bankLimit;
     @BindView(R.id.tv_change) TextView tvChange;
     @BindView(R.id.et_amount) EditText etAmount;
+    @BindView(R.id.et_invest_week) TextView etInvestWeek;
+    @BindView(R.id.et_invest_day) TextView etInvestDay;
     @BindView(R.id.sure) Button sure;
+
+    /** 周期选择 */
+    private int isSelector = 1;
+    /** 周期集合 */
+    private List<String> cycleList;
+    private Map<String, ArrayList<String>> dayMap;
     private FundBuyDialog fundBuyDialog;
     private CustomDialog customDialog;
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_fund_buy;
+        return R.layout.activity_fund_invest;
     }
 
     @Override
@@ -55,18 +64,32 @@ public class BuyActivity extends XActivity {
 
     @Override
     public void initData(Bundle bundle) {
-        headTitle.setText(R.string.fund_buy);
-        //获取到基金数据
-//        bankCardResp = resp;
-        //获取 图片Base64 字符串
-//        String strimage = resp.getBankLogo();
-//        if (!TextUtils.isEmpty(strimage)) {
-//            //将Base64图片串转换成Bitmap
-//            Bitmap bitmap = Base64ImageUtil.base64ToBitmap(strimage);
-//            bankImage.setImageBitmap(bitmap);
-//        }
-//        bankName.setText(resp.getBankName() + "（" + resp.getBankNoTail() + "）");
-//        bankLimit.setText("单笔限额" + resp.getLimit_per_payment() + "万，单日限额" + resp.getLimit_per_day() + "万，单月限额" + resp.getLimit_per_month() + "万");
+        headTitle.setText("定投");
+        cycleList = new ArrayList<>();
+        cycleList.add("每周");
+        cycleList.add("每月");
+        //周集合
+        ArrayList<String> weekList = new ArrayList<>();
+        weekList.add("星期一");
+        weekList.add("星期二");
+        weekList.add("星期三");
+        weekList.add("星期四");
+        weekList.add("星期五");
+        //日集合
+        ArrayList<String> dayList = new ArrayList<>();
+        for (int i = 1; i < 29; i++) {
+            dayList.add(i + "日");
+        }
+
+        dayMap = new HashMap<>();
+        dayMap.put(cycleList.get(0), weekList);
+        dayMap.put(cycleList.get(1), dayList);
+        //一进入定投页面，默认周期为月
+        etInvestWeek.setText(cycleList.get(isSelector));
+        //定投日为明天 获取今天的日期
+        Calendar calendar = Calendar.getInstance();
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        etInvestDay.setText(dayList.get(day));
 
     }
 
@@ -76,6 +99,46 @@ public class BuyActivity extends XActivity {
             @Override
             public void onClick(View view) {
                 finish();
+            }
+        });
+        etInvestWeek.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //关闭当前输入框
+                KeyBoardUtils.closeKeybord(InvestActivity.this);
+
+                final String lastChoose = getText(etInvestWeek);
+                PopShow popShow = new PopShow(context, etInvestWeek);
+                popShow.showText(cycleList);
+                popShow.setOnClickPop(new PopShow.OnClickPop() {
+                    @Override
+                    public void setRange(int position) {
+                        etInvestWeek.setText(cycleList.get(position));
+                        isSelector = position;
+                        if (!getText(etInvestWeek).equals(lastChoose)) {
+                            etInvestDay.setText("");
+                        }
+                    }
+                });
+
+            }
+        });
+
+        etInvestDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //关闭当前输入框
+                KeyBoardUtils.closeKeybord(InvestActivity.this);
+                final ArrayList<String> selectList = dayMap.get(cycleList.get(isSelector));
+
+                PopShow popShow = new PopShow(context, etInvestDay);
+                popShow.showText(selectList);
+                popShow.setOnClickPop(new PopShow.OnClickPop() {
+                    @Override
+                    public void setRange(int position) {
+                        etInvestDay.setText(selectList.get(position));
+                    }
+                });
             }
         });
         sure.setOnClickListener(new View.OnClickListener() {
@@ -90,12 +153,18 @@ public class BuyActivity extends XActivity {
                     showToast("请输入购买金额");
                     return;
                 }
-
-                //TODO 弹出框
+                if (!isNotEmpty(getText(etInvestWeek))) {
+                    showToast("请选择定投周期");
+                    return;
+                }
+                if (!isNotEmpty(getText(etInvestDay))) {
+                    showToast("请选择定投日");
+                    return;
+                }
                 fundBuyDialog = new FundBuyDialog
                         .Builder(context)
                         .setFundName("国泰哈哈哈基金")
-                        .setFundAmount("￥" + getText(etAmount) + ".00")
+                        .setFundAmount("￥" + etAmount.getText().toString() + ".00")
                         .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
                             @Override
                             public void onFinish(String str) {
@@ -104,7 +173,7 @@ public class BuyActivity extends XActivity {
 
                                 if ("123456".equals(str)) {
 //                                    showToast("密码正确");
-                                    startActivity(BuySuccessActivity.class);
+                                    startActivity(InvestSuccessActivity.class);
                                 } else {
                                     customDialog = new CustomDialog.Builder(context)
                                             .setMessage("交易密码错误，请重试")
@@ -125,9 +194,9 @@ public class BuyActivity extends XActivity {
                             }
                         }).create();
                 fundBuyDialog.show();
-
             }
         });
+
         tvChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -135,5 +204,6 @@ public class BuyActivity extends XActivity {
             }
         });
     }
+
 
 }

@@ -114,7 +114,6 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
             @Override
             public void onClick(View view) {
 
-
                 PopShow popShow = new PopShow(context, viewLine);
                 popShow.showRangeSelector(list, isSelector);
                 popShow.setOnClickPop(new PopShow.OnClickPop() {

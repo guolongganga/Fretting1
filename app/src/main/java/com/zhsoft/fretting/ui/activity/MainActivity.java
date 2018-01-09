@@ -3,6 +3,8 @@ package com.zhsoft.fretting.ui.activity;
 import android.app.Activity;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
@@ -10,9 +12,15 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.ChangeTabEvent;
+import com.zhsoft.fretting.event.OpenAccountEvent;
 import com.zhsoft.fretting.ui.fragment.fund.FundFragment;
 import com.zhsoft.fretting.ui.fragment.user.UserFragment;
 import com.zhsoft.fretting.ui.fragment.index.IndexFragment;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,14 +59,26 @@ public class MainActivity extends XActivity {
     private List<TextView> textViews;
 
     private long firstTime; //用于点击两次返回退出程序
-    private String skip;
+
+    //合理调用commitAllowingStateLoss与commit
+    //commit必须在状态保存(onSaveInstanceState)之前调用
+    //因为MainActivity启动模式使用的是singleTask，当从任务栈中复用时会调用onSaveInstanceState,此时在使用commit的话就会报出：Can not perform this action after onSaveInstanceState
+    private boolean allowStateLoss = false;
+
+    private Handler handler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 2) {
+                allowStateLoss = true;
+                show(tvUser, 2);
+            }
+        }
+    };
 
     @Override
     public void initData(Bundle savedInstanceState) {
-        if (savedInstanceState != null) {
-            skip = savedInstanceState.getString(Constant.MAIN_SKIP);
-        }
-
+        EventBus.getDefault().register(this);
         fragments = new ArrayList<>();
         fragments.add(new IndexFragment());
         fragments.add(new FundFragment());
@@ -70,11 +90,7 @@ public class MainActivity extends XActivity {
         textViews.add(tvUser);
 
         //默认显示主页
-        if (Constant.MAIN_MY.equals(skip)) {
-            show(tvUser, 2);
-        } else {
-            show(tvIndex, 0);
-        }
+        show(tvIndex, 0);
 
     }
 
@@ -152,7 +168,11 @@ public class MainActivity extends XActivity {
                 ft.hide(fragment);
             }
 
-            ft.commit();
+            if (allowStateLoss) {
+                ft.commitAllowingStateLoss();
+            } else {
+                ft.commit();
+            }
             currentTab = idx; // 更新目标tab为当前tab
         }
     }
@@ -190,6 +210,26 @@ public class MainActivity extends XActivity {
         } else {
             android.os.Process.killProcess(android.os.Process.myPid());
             System.exit(0);
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    /**
+     * 切换Tab
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.POSTING)
+    public void onChangeTabEvent(ChangeTabEvent event) {
+        String msg = event.getMsg();
+        if (Constant.MAIN_MY.equals(msg)) {
+            handler.sendEmptyMessage(2);
+            return;
         }
     }
 }

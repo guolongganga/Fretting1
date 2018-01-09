@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -18,7 +19,7 @@ import com.zhsoft.fretting.R;
 /**
  * @author ZengSuWa
  * @Description：
- * @Company：众鑫贷
+ * @Company：中融百汇
  * @Created time：2016/7/14 13:37
  */
 public class FundBuyDialog extends Dialog {
@@ -49,6 +50,7 @@ public class FundBuyDialog extends Dialog {
 
         /**
          * 设置基金名称
+         *
          * @param fundName
          * @return
          */
@@ -59,6 +61,7 @@ public class FundBuyDialog extends Dialog {
 
         /**
          * 设置基金金额
+         *
          * @param fundAmount
          * @return
          */
@@ -69,6 +72,7 @@ public class FundBuyDialog extends Dialog {
 
         /**
          * 设置密码输入完成监听
+         *
          * @param onTextFinishListener
          * @return
          */
@@ -98,7 +102,7 @@ public class FundBuyDialog extends Dialog {
             });
             ppePwd = (PayPwdEditText) layout.findViewById(R.id.ppe_pwd);
             //初始化交易密码输入框的样式
-            ppePwd.initStyle(R.drawable.edit_num_bg, 6, 0.66f, R.color.color_444444, R.color.color_444444, 20);
+            ppePwd.initStyle(R.drawable.edit_num_bg, 6, 0.44f, R.color.color_444444, R.color.color_444444, 20);
             ppePwd.setOnTextFinishListener(new PayPwdEditText.OnTextFinishListener() {
                 @Override
                 public void onFinish(String str) {//密码输入完后的回调

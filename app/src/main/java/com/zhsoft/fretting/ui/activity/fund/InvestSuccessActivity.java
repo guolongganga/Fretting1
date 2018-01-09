@@ -4,8 +4,6 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
@@ -20,27 +18,26 @@ import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
- * 作者：sunnyzeng on 2018/1/8 17:59
- * 描述：购买成功页
+ * 作者：sunnyzeng on 2018/1/9 10:57
+ * 描述：定投页面
  */
 
-public class BuySuccessActivity extends XActivity {
+public class InvestSuccessActivity extends XActivity {
     @BindView(R.id.head_back) ImageButton headBack;
     @BindView(R.id.head_title) TextView headTitle;
-    @BindView(R.id.head_right) Button headRight;
     @BindView(R.id.tv_fund_name) TextView tvFundName;
+    @BindView(R.id.tv_fund_code) TextView tvFundCode;
+    @BindView(R.id.tv_week) TextView tvWeek;
+    @BindView(R.id.tv_day) TextView tvDay;
     @BindView(R.id.tv_fund_amount) TextView tvFundAmount;
-    @BindView(R.id.iv_pay_success) ImageView ivPaySuccess;
-    @BindView(R.id.tv_pay_success) TextView tvPaySuccess;
-    @BindView(R.id.iv_sure_number) ImageView ivSureNumber;
-    @BindView(R.id.tv_sure_number) TextView tvSureNumber;
-    @BindView(R.id.iv_query_income) ImageView ivQueryIncome;
-    @BindView(R.id.tv_query_income) TextView tvQueryIncome;
-    @BindView(R.id.scroll_view) ScrollView scrollView;
+    @BindView(R.id.tv_bank_name) TextView tvBankName;
+    @BindView(R.id.tv_last_number) TextView tvLastNumber;
+    @BindView(R.id.tv_day_week) TextView tvDayWeek;
+    @BindView(R.id.sure) Button sure;
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_fund_buy_success;
+        return R.layout.activity_fund_invest_success;
     }
 
     @Override
@@ -53,14 +50,13 @@ public class BuySuccessActivity extends XActivity {
         //解决键盘弹出遮挡不滚动问题
         ChenJingET.assistActivity(context);
         headBack.setVisibility(View.GONE);
-        headTitle.setText("购买结果");
-        headRight.setText("关闭");
-        headRight.setVisibility(View.VISIBLE);
+        headTitle.setText("定投详情");
     }
 
     @Override
     public void initEvents() {
-        headRight.setOnClickListener(new View.OnClickListener() {
+
+        sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 EventBus.getDefault().post(new ChangeTabEvent(Constant.MAIN_MY));

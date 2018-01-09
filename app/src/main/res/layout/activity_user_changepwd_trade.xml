@@ -22,6 +22,16 @@
                 android:layout_width="match_parent"
                 android:layout_height="30dp"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:layout_marginLeft="@dimen/dimen_15"
+                android:layout_marginTop="@dimen/dimen_5"
+                android:text="注：密码长度为6位纯数字，但不能含3个连续相同，3个以上（含3个）的连续数字"
+                android:textColor="@color/color_696969"
+                android:textSize="@dimen/text_size_14"/>
+
             <include layout="@layout/layout_divider_horizontal"/>
             <!--旧交易密码-->
             <LinearLayout
