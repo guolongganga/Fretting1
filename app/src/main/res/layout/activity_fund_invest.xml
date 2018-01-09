@@ -103,7 +103,7 @@
                 android:text="定投周期"/>
             <!--金额输入-->
             <TextView
-                android:id="@+id/et_invest_week"
+                android:id="@+id/tv_invest_week"
                 android:layout_width="80dp"
                 android:layout_height="30dp"
                 android:layout_alignParentRight="true"
@@ -132,7 +132,7 @@
                 android:text="定投日"/>
             <!--金额输入-->
             <TextView
-                android:id="@+id/et_invest_day"
+                android:id="@+id/tv_invest_day"
                 android:layout_width="80dp"
                 android:layout_height="30dp"
                 android:layout_alignParentRight="true"

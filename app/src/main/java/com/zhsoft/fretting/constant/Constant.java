@@ -91,6 +91,15 @@ public class Constant {
     //修改手机号码成功后返回我的手机号码页面 resultcode
     public static final int SUCCESS_BACK_PHONE = 201;
 
-    public static final String MAIN_SKIP = "main_skip";
+    //投资页的类型，是定投，还是定投修改
+    public static final String INVEST_ACTIVITY_TYPE = "invest_activity_type";
+
+    //投资页的类型，定投
+    public static final String INVEST_ACTIVITY = "invest_activity";
+
+    //投资页的类型，定投修改
+    public static final String INVEST_ACTIVITY_UPDATE = "invest_activity_update";
+
+    //跳转到主页面，我的tab
     public static final String MAIN_MY = "main_my";
 }
