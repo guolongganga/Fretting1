@@ -3,13 +3,11 @@ package com.zhsoft.fretting.ui.activity.user;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
-import android.inputmethodservice.Keyboard;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -28,19 +26,16 @@ import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.model.user.ImageResp;
-import com.zhsoft.fretting.model.user.PhoneCodeResp;
 import com.zhsoft.fretting.present.user.RegisterFirstPresent;
 import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
-import com.zhsoft.fretting.ui.widget.PopShow;
 import com.zhsoft.fretting.utils.Base64ImageUtil;
 import com.zhsoft.fretting.utils.RuntimeHelper;
-import com.zhsoft.fretting.widget.ChenJingET;
+import com.zhsoft.fretting.ui.widget.ChenJingET;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
-import cn.droidlover.xdroidmvp.imageloader.ILFactory;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**

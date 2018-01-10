@@ -10,7 +10,7 @@ import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.ChangeTabEvent;
 import com.zhsoft.fretting.ui.activity.MainActivity;
-import com.zhsoft.fretting.widget.ChenJingET;
+import com.zhsoft.fretting.ui.widget.ChenJingET;
 
 import org.greenrobot.eventbus.EventBus;
 

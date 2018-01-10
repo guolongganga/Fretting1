@@ -4,10 +4,11 @@
     android:background="@color/white"
     android:orientation="vertical">
 
-    <com.zhsoft.fretting.ui.widget.TitleView
-        android:id="@+id/title_view"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+    <!--<com.zhsoft.fretting.ui.widget.TitleView-->
+        <!--android:id="@+id/title_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content" />-->
+    <include layout="@layout/layout_head"/>
 
     <ProgressBar
         android:id="@+id/pb"

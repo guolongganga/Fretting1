@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.EventLog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -28,9 +27,7 @@ import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.present.user.PhoneChangePresent;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
 import com.zhsoft.fretting.utils.Base64ImageUtil;
-import com.zhsoft.fretting.widget.ChenJingET;
-
-import org.greenrobot.eventbus.EventBus;
+import com.zhsoft.fretting.ui.widget.ChenJingET;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;

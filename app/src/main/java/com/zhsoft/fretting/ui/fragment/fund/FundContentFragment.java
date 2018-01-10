@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.model.user.NewestFundResp;
+import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.present.fund.FundContentPresent;
 import com.zhsoft.fretting.ui.adapter.fund.FundContentRecycleAdapter;
 import com.zhsoft.fretting.ui.widget.PopShow;
@@ -16,7 +16,6 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
-import cn.droidlover.xdroidmvp.mvp.XLazyFragment;
 import cn.droidlover.xdroidmvp.net.NetError;
 import cn.droidlover.xrecyclerview.RecyclerAdapter;
 import cn.droidlover.xrecyclerview.XRecyclerContentLayout;

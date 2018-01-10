@@ -1,4 +1,4 @@
-package com.zhsoft.fretting.widget;
+package com.zhsoft.fretting.ui.widget;
 
 import android.app.Activity;
 import android.graphics.Rect;

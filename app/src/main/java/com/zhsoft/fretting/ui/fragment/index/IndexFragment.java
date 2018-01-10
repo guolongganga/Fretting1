@@ -14,6 +14,7 @@ import com.zhsoft.fretting.model.index.IndexResp;
 import com.zhsoft.fretting.model.index.PopularityResp;
 import com.zhsoft.fretting.model.index.ProductModel;
 import com.zhsoft.fretting.present.index.IndexPresent;
+import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
 import com.zhsoft.fretting.ui.activity.fund.BuyActivity;
 import com.zhsoft.fretting.ui.activity.fund.InvestActivity;
 import com.zhsoft.fretting.ui.activity.index.PopularityActivity;
@@ -116,6 +117,10 @@ public class IndexFragment extends XFragment<IndexPresent> {
             @Override
             public void onClick(View view) {
                 startActivity(TimingActivity.class);
+//                Bundle bundle = new Bundle();
+//                bundle.putInt(Constant.WEB_TITLE, R.string.user_about_us);
+//                bundle.putString(Constant.WEB_LINK, "https://www.baidu.com/?tn=96928074_hao_pg");
+//                startActivity(WebPublicActivity.class, bundle);
             }
         });
 
@@ -134,8 +139,8 @@ public class IndexFragment extends XFragment<IndexPresent> {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putString(Constant.INVEST_ACTIVITY_TYPE,Constant.INVEST_ACTIVITY);
-                startActivity(InvestActivity.class,bundle);
+                bundle.putString(Constant.INVEST_ACTIVITY_TYPE, Constant.INVEST_ACTIVITY);
+                startActivity(InvestActivity.class, bundle);
 //                if (RuntimeHelper.getInstance().isLogin()) {
 //                    startActivity(InvestActivity.class);
 //                } else {

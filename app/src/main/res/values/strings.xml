@@ -26,6 +26,7 @@
     <string name="user_common_login">登录</string>
     <string name="user_common_finish">完成</string>
     <string name="user_common_save">保存</string>
+    <string name="user_common_no_login">您还没登录，是否登录</string>
     <string name="user_common_tv_hint_password">登录密码为8-16位数字、字母、特殊字符等</string>
 
 

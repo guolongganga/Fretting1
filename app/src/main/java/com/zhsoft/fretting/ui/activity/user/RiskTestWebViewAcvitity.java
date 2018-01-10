@@ -7,13 +7,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.DownloadListener;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
@@ -44,8 +47,10 @@ import cn.droidlover.xdroidmvp.utils.EncryptDecrypt;
 public class RiskTestWebViewAcvitity extends XActivity {
 
     //页面标题
-    @BindView(R.id.title_view)
-    TitleView titleView;
+//    @BindView(R.id.title_view)
+//    TitleView titleView;
+    @BindView(R.id.head_back) ImageButton headBack;
+    @BindView(R.id.head_title) TextView headTitle;
     @BindView(R.id.my_web)
     WebView mWeb;
     @BindView(R.id.pb)
@@ -89,7 +94,8 @@ public class RiskTestWebViewAcvitity extends XActivity {
         token = App.getSharedPref().getString(Constant.TOKEN, "");
         userId = App.getSharedPref().getString(Constant.USERID, "");
 
-        titleView.setTitle(context, title);
+//        titleView.setTitle(context, title);
+        headTitle.setText(title);
         pb.setMax(100);
 
         // 设置可以支持缩放
@@ -148,7 +154,7 @@ public class RiskTestWebViewAcvitity extends XActivity {
         String ua = mWeb.getSettings().getUserAgentString();
         mWeb.getSettings().setUserAgentString(ua.replace("appType", "Android"));
         link = link + "?token=" + token + "&userId=" + userId;
-        XLog.e("qqq",link);
+        XLog.e("qqq", link);
 //        mWeb.loadDataWithBaseURL(link, null, "text/html", "UTF-8", null);
         mWeb.loadUrl(link);
 
@@ -223,7 +229,49 @@ public class RiskTestWebViewAcvitity extends XActivity {
 
     }
 
+    /**
+     * 点击事件
+     */
     @Override
     public void initEvents() {
+        headBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
+    }
+
+    /**
+     * 网页能返回上一级
+     */
+    @Override
+    public void onBackPressed() {
+
+        if (null != mWeb && mWeb.canGoBack()) {
+            mWeb.goBack();// 返回前一个页面
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    /**
+     * 销毁
+     */
+    @Override
+    protected void onDestroy() {
+        try {
+            if (mWeb != null) {
+                mWeb.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
+                mWeb.clearHistory();
+
+                ((ViewGroup) mWeb.getParent()).removeView(mWeb);
+                mWeb.destroy();
+                mWeb = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        super.onDestroy();
     }
 }

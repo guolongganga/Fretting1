@@ -2,7 +2,6 @@ package com.zhsoft.fretting.ui.activity.user;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -22,7 +21,7 @@ import com.zhsoft.fretting.present.user.PersonInfoPresent;
 import com.zhsoft.fretting.ui.widget.PopShow;
 import com.zhsoft.fretting.ui.widget.PostionSelectPopupWindow;
 import com.zhsoft.fretting.utils.KeyBoardUtils;
-import com.zhsoft.fretting.widget.ChenJingET;
+import com.zhsoft.fretting.ui.widget.ChenJingET;
 
 import java.util.ArrayList;
 import java.util.Calendar;

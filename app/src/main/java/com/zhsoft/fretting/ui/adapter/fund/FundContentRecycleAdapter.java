@@ -6,11 +6,8 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
-import com.zhsoft.fretting.model.fund.FundResp;
-import com.zhsoft.fretting.model.user.NewestFundResp;
+import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
-
-import java.math.BigDecimal;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
@@ -45,7 +42,7 @@ public class FundContentRecycleAdapter extends SimpleRecAdapter<NewestFundResp, 
         holder.tvName.setText(tabname + data.get(position).getFund_name());
         holder.tvCode.setText(data.get(position).getFund_code());
         holder.tvValue.setText(BigDecimalUtil.bigdecimalToString(data.get(position).getNet_value()));
-        holder.tvRange.setText("+" + BigDecimalUtil.bigdecimalToString(data.get(position).getFund_curr_ratio()));
+        holder.tvRange.setText("+" + BigDecimalUtil.bigdecimalToString(data.get(position).getFund_rose()));
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {

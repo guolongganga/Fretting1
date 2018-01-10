@@ -17,7 +17,7 @@ import com.zhsoft.fretting.event.OpenAccountEvent;
 import com.zhsoft.fretting.model.user.BankResp;
 import com.zhsoft.fretting.present.user.RegisterSecondPresent;
 import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
-import com.zhsoft.fretting.widget.ChenJingET;
+import com.zhsoft.fretting.ui.widget.ChenJingET;
 
 import org.greenrobot.eventbus.EventBus;
 

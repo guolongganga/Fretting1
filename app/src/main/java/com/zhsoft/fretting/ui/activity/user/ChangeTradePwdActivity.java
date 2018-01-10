@@ -1,7 +1,6 @@
 package com.zhsoft.fretting.ui.activity.user;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,7 +12,7 @@ import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.present.user.ChangeTradePwdPresent;
 import com.zhsoft.fretting.utils.RuntimeHelper;
-import com.zhsoft.fretting.widget.ChenJingET;
+import com.zhsoft.fretting.ui.widget.ChenJingET;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;

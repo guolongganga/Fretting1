@@ -7,7 +7,7 @@ import com.zhsoft.fretting.model.index.IndexResp;
 import com.zhsoft.fretting.model.user.BankCardResp;
 import com.zhsoft.fretting.model.user.BankResp;
 import com.zhsoft.fretting.model.user.ImageResp;
-import com.zhsoft.fretting.model.user.NewestFundListResp;
+import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.model.user.OccupationResp;
 import com.zhsoft.fretting.model.user.PersonInfoResp;
 import com.zhsoft.fretting.model.user.PhoneResp;
@@ -99,7 +99,7 @@ public interface HttpUtil {
     //基金页
     @Headers("apptype:Android")
     @POST(newest_fund)
-    Flowable<NewestFundListResp> getNewestFund(@Body CommonReqData reqData);
+    Flowable<NewestFundResp> getNewestFund(@Body CommonReqData reqData);
 
     //主页
     @Headers("apptype:Android")

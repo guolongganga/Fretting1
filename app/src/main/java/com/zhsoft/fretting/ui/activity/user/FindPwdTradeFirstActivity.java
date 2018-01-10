@@ -24,7 +24,7 @@ import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.present.user.FindPwdTradeFirstPresent;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
 import com.zhsoft.fretting.utils.Base64ImageUtil;
-import com.zhsoft.fretting.widget.ChenJingET;
+import com.zhsoft.fretting.ui.widget.ChenJingET;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;

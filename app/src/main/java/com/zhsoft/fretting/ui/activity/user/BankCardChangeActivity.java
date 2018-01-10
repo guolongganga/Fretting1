@@ -16,7 +16,7 @@ import com.zhsoft.fretting.event.ChangeBankCardEvent;
 import com.zhsoft.fretting.model.user.BankResp;
 import com.zhsoft.fretting.present.user.BankCardChangePresent;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
-import com.zhsoft.fretting.widget.ChenJingET;
+import com.zhsoft.fretting.ui.widget.ChenJingET;
 
 import org.greenrobot.eventbus.EventBus;
 

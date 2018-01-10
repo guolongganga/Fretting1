@@ -1,16 +1,14 @@
 package com.zhsoft.fretting.ui.activity.user;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.ui.widget.PayPwdEditText;
-import com.zhsoft.fretting.widget.ChenJingET;
+import com.zhsoft.fretting.ui.widget.ChenJingET;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XActivity;

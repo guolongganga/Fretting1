@@ -8,7 +8,6 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
@@ -17,13 +16,12 @@ import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.present.user.LoginPresent;
 import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.utils.RuntimeHelper;
-import com.zhsoft.fretting.widget.ChenJingET;
+import com.zhsoft.fretting.ui.widget.ChenJingET;
 
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
-import cn.droidlover.xdroidmvp.imageloader.ILFactory;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
