@@ -81,6 +81,8 @@ public class BuyActivity extends XActivity {
         sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                final String strAmount = getText(etAmount);
+                int amount = Integer.parseInt(strAmount);
                 //表单验证通过才弹出Dialog
                 if (noNetWork()) {
                     showNetWorkError();
@@ -90,7 +92,11 @@ public class BuyActivity extends XActivity {
                     showToast("请输入购买金额");
                     return;
                 }
-
+                //TODO 如果amount小于最小购买金额，重新填写购买金额
+                if (amount < 100) {
+                    showToast("最小投资金额为100元");
+                    return;
+                }
                 //TODO 弹出框
                 fundBuyDialog = new FundBuyDialog
                         .Builder(context)

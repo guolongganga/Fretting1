@@ -6,19 +6,16 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.ui.adapter.boot.PopBottomSelectorRecycleAdapter;
+import com.zhsoft.fretting.ui.adapter.boot.SearchRecycleAdapter;
 import com.zhsoft.fretting.ui.adapter.boot.PopDropSelectorRecycleAdapter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import cn.droidlover.xrecyclerview.RecyclerItemCallback;
@@ -81,7 +78,7 @@ public class PopShow {
     }
 
     /**
-     * 纯数字显示 在底部
+     * 纯字符显示 在底部
      *
      * @param list
      */
@@ -128,6 +125,44 @@ public class PopShow {
             }
         });
         mPopWindow.showAtLocation(view, Gravity.CENTER | Gravity.BOTTOM, 0, 0);
+    }
+
+    /**
+     * 搜索下拉 未使用（用pop弹出输入框的焦点获取有问题）
+     */
+    public void showSearch(final List<NewestFundResp> list) {
+        //设置contentView
+        View contentView = LayoutInflater.from(activity).inflate(R.layout.pop_drop_selector_bg_white, null);
+        final PopupWindow mPopWindow = new PopupWindow(contentView,
+                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
+        mPopWindow.setContentView(contentView);
+        mPopWindow.setFocusable(true);
+        //外部是否可以点击
+        mPopWindow.setBackgroundDrawable(new BitmapDrawable());
+        mPopWindow.setOutsideTouchable(true);
+
+        FrameLayout flPopContent = contentView.findViewById(R.id.fl_content);
+//        flPopContent.getBackground().setAlpha(150);
+
+        XRecyclerView xrvDropSelector = contentView.findViewById(R.id.xrv_drop_selector);
+        xrvDropSelector.verticalLayoutManager(activity);
+        final SearchRecycleAdapter popAdapter = new SearchRecycleAdapter(activity);
+        xrvDropSelector.setAdapter(popAdapter);
+        popAdapter.setData(list);
+
+        popAdapter.setRecItemClick(new RecyclerItemCallback<NewestFundResp, SearchRecycleAdapter.ViewHolder>() {
+            @Override
+            public void onItemClick(int position, NewestFundResp model, int tag, SearchRecycleAdapter.ViewHolder holder) {
+                switch (tag) {
+                    case SearchRecycleAdapter.ITEM_CLICK:
+                        popAdapter.notifyDataSetChanged();
+                        onClickPop.setRange(position);
+                        mPopWindow.dismiss();
+                        break;
+                }
+            }
+        });
+        mPopWindow.showAsDropDown(view, 0, 0);
     }
 
 

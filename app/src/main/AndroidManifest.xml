@@ -83,6 +83,8 @@
         <activity android:name=".ui.activity.fund.InvestActivity"></activity>
         <!--基金定投成功页-->
         <activity android:name=".ui.activity.fund.InvestSuccessActivity"></activity>
+        <!--搜索页-->
+        <activity android:name=".ui.activity.boot.SearchActivity"></activity>
 
         <!--通用WebView-->
         <activity android:name=".ui.activity.boot.WebPublicActivity"></activity>

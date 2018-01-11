@@ -35,7 +35,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
  * 通用WebView
- * Created by sunny on 2017/4/25.implements OnChatActivityListener
+ * Created by sunny on 2017/4/25
  */
 
 public class WebPublicActivity extends XActivity {
@@ -43,10 +43,14 @@ public class WebPublicActivity extends XActivity {
     //页面标题
 //    @BindView(R.id.title_view)
 //    TitleView titleView;
+    /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
+    /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
+    /** WebView */
     @BindView(R.id.my_web)
     WebView mWeb;
+    /** 进度条 */
     @BindView(R.id.pb)
     ProgressBar pb;
     private CustomDialog loginDialog;
@@ -117,16 +121,18 @@ public class WebPublicActivity extends XActivity {
         webSettings.setJavaScriptEnabled(true);
         // 设置允许JS弹窗
         webSettings.setJavaScriptCanOpenWindowsAutomatically(true);
-        //加载视频需要
-        webSettings.setPluginState(WebSettings.PluginState.ON);// 支持插件
-        webSettings.setUseWideViewPort(true); //将图片调整到适合WebView的大小  无效
-
+        //加载视频需要 支持插件
+        webSettings.setPluginState(WebSettings.PluginState.ON);
+        //将图片调整到适合WebView的大小  无效
+        webSettings.setUseWideViewPort(true);
+        // android 5.0以上默认不支持Mixed Content
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             webSettings.setMixedContentMode(mWeb.getSettings().MIXED_CONTENT_ALWAYS_ALLOW);
         }
-
-        webSettings.setLoadsImagesAutomatically(true);  //支持自动加载图片
-        webSettings.setLoadWithOverviewMode(true); // 缩放至屏幕的大小
+        //支持自动加载图片
+        webSettings.setLoadsImagesAutomatically(true);
+        // 缩放至屏幕的大小
+        webSettings.setLoadWithOverviewMode(true);
 
         // 通过addJavascriptInterface()将Java对象映射到JS对象
         //参数1：Javascript对象名
@@ -174,6 +180,9 @@ public class WebPublicActivity extends XActivity {
 
     }
 
+    /**
+     * 事件
+     */
     @Override
     public void initEvents() {
         headBack.setOnClickListener(new View.OnClickListener() {
@@ -184,6 +193,11 @@ public class WebPublicActivity extends XActivity {
         });
     }
 
+    /**
+     * JS
+     *
+     * @param jsInterfaceUtils
+     */
     @SuppressLint("SetJavaScriptEnabled")
     @JavascriptInterface
     protected void setJSClick(JSInterfaceUtils jsInterfaceUtils) {
