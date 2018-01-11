@@ -68,7 +68,9 @@ public class SearchActivity extends XActivity<SearchPersent> {
 //        mOptionSearch.setListener(this);
         xrvHotList.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
         xrvSearchList.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
+        //设置热搜显示
         llHot.setVisibility(VISIBLE);
+        //获取热搜数据
         getP().hotListData();
     }
 
@@ -86,14 +88,17 @@ public class SearchActivity extends XActivity<SearchPersent> {
 
             }
 
+            //当输入框内容改变时调用
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (!"".equals(charSequence.toString())) {
+                    //如果输入的内容不为空，则根据关键字查询数据
                     ivDelete.setVisibility(VISIBLE);
                     xrvSearchList.setVisibility(VISIBLE);
                     llHot.setVisibility(GONE);
                     getP().searchData(getText(etSearchKey));
                 } else {
+                    //如果输入的内容为空，则显示热搜视图
                     ivDelete.setVisibility(GONE);
                     tvEmpty.setVisibility(GONE);
                     xrvSearchList.setVisibility(GONE);
@@ -142,7 +147,7 @@ public class SearchActivity extends XActivity<SearchPersent> {
     }
 
     /**
-     * 初始化 近期热搜 adapter
+     * 初始化 搜索 adapter
      *
      * @return
      */
@@ -211,6 +216,7 @@ public class SearchActivity extends XActivity<SearchPersent> {
     public void requestSearchDataSuccess(final ArrayList<NewestFundResp> list) {
 
         XLog.e("size" + list.size());
+        //如果数据为空则显示空视图
         if (list != null && list.size() > 0) {
             tvEmpty.setVisibility(GONE);
             getSearchListAdapter().addData(list);

@@ -68,6 +68,8 @@ public class HttpContent {
     public static final String trade_password_check = "noPermission/tradePassword/check";
     /** 找回交易密码 第二步 */
     public static final String trade_password_reset = "noPermission/tradepassword/reset";
+    /** 基金立即购买验证 */
+    public static final String buy_fund = "noPermission/buyFund";
 
 
 }

@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.ChangeTabEvent;
+import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.ui.activity.user.BankCardActivity;
 import com.zhsoft.fretting.ui.activity.user.BankCardChangeActivity;
 import com.zhsoft.fretting.ui.activity.user.FindPwdTradeFirstActivity;
@@ -43,6 +44,8 @@ public class BuyActivity extends XActivity {
     private FundBuyDialog fundBuyDialog;
     private CustomDialog customDialog;
 
+    private BuyFundResp buyFundResp;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_fund_buy;
@@ -56,17 +59,23 @@ public class BuyActivity extends XActivity {
     @Override
     public void initData(Bundle bundle) {
         headTitle.setText(R.string.fund_buy);
-        //获取到基金数据
-//        bankCardResp = resp;
-        //获取 图片Base64 字符串
-//        String strimage = resp.getBankLogo();
-//        if (!TextUtils.isEmpty(strimage)) {
-//            //将Base64图片串转换成Bitmap
-//            Bitmap bitmap = Base64ImageUtil.base64ToBitmap(strimage);
-//            bankImage.setImageBitmap(bitmap);
-//        }
-//        bankName.setText(resp.getBankName() + "（" + resp.getBankNoTail() + "）");
-//        bankLimit.setText("单笔限额" + resp.getLimit_per_payment() + "万，单日限额" + resp.getLimit_per_day() + "万，单月限额" + resp.getLimit_per_month() + "万");
+        if (bundle != null) {
+            buyFundResp = (BuyFundResp) bundle.getParcelable(Constant.BUY_FUND_OBJECT);
+            //获取到基金数据
+            //获取 图片Base64 字符串
+            if (buyFundResp != null) {
+                String strimage = buyFundResp.getLogo();
+                if (!TextUtils.isEmpty(strimage)) {
+                    //将Base64图片串转换成Bitmap
+                    Bitmap bitmap = Base64ImageUtil.base64ToBitmap(strimage);
+                    bankImage.setImageBitmap(bitmap);
+                }
+                bankName.setText(buyFundResp.getName());
+                bankLimit.setText(buyFundResp.getInfo());
+
+            }
+
+        }
 
     }
 

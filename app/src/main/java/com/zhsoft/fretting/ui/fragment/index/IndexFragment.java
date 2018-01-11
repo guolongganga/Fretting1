@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.index.BannerModel;
 import com.zhsoft.fretting.model.index.IndexResp;
 import com.zhsoft.fretting.model.index.PopularityResp;
@@ -128,8 +129,12 @@ public class IndexFragment extends XFragment<IndexPresent> {
         rlNameSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(SearchActivity.class);
-//                startActivity(BuyActivity.class);
+//                startActivity(SearchActivity.class);
+                String token = "0f4ddf4852e644598d7ade9edc433e87";
+                String userId = "0f4ddf4852e644598d7ade9edc433e87";
+                String fund_code = "050001";
+                getP().buyFund(token, userId, fund_code);
+
 //                if (RuntimeHelper.getInstance().isLogin()) {
 //                    startActivity(BuyActivity.class);
 //                } else {
@@ -212,6 +217,11 @@ public class IndexFragment extends XFragment<IndexPresent> {
     }
 
 
+    /**
+     * 请求主页数据
+     *
+     * @param data
+     */
     public void showIndexData(IndexResp data) {
         if (data != null) {
             //banner展示
@@ -259,5 +269,27 @@ public class IndexFragment extends XFragment<IndexPresent> {
             }
 
         }
+    }
+
+    /**
+     * 请求主业数据失败
+     */
+    public void requestIndexDataFail() {
+
+    }
+
+    /**
+     * 购买（是否符合购买资格）失败
+     */
+    public void requestBuyFundFail() {
+    }
+
+    /**
+     * 购买（是否符合购买资格）成功 跳转购买页面
+     */
+    public void requestBuyFundSuccess(BuyFundResp resp) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(Constant.BUY_FUND_OBJECT,resp);
+        startActivity(BuyActivity.class,bundle);
     }
 }

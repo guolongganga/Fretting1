@@ -115,4 +115,5 @@ public class Constant {
     //跳转到主页面，我的tab
     public static final String MAIN_MY = "main_my";
 
+    public static final String BUY_FUND_OBJECT = "buy_fund_object";
 }

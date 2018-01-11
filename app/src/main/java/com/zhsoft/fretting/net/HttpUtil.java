@@ -3,11 +3,12 @@ package com.zhsoft.fretting.net;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.model.TaetResp;
+import com.zhsoft.fretting.model.fund.BuyFundResp;
+import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.model.index.IndexResp;
 import com.zhsoft.fretting.model.user.BankCardResp;
 import com.zhsoft.fretting.model.user.BankResp;
 import com.zhsoft.fretting.model.user.ImageResp;
-import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.model.user.OccupationResp;
 import com.zhsoft.fretting.model.user.PersonInfoResp;
 import com.zhsoft.fretting.model.user.PhoneResp;
@@ -19,6 +20,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
+import static com.zhsoft.fretting.net.HttpContent.buy_fund;
 import static com.zhsoft.fretting.net.HttpContent.change_bankcard;
 import static com.zhsoft.fretting.net.HttpContent.change_bankcard_check;
 import static com.zhsoft.fretting.net.HttpContent.change_my_information;
@@ -200,6 +202,11 @@ public interface HttpUtil {
     @Headers("apptype:Android")
     @POST(trade_password_reset)
     Flowable<BaseResp> findTradePasswordReset(@Body CommonReqData reqData);
+
+    //购买基金验证
+    @Headers("apptype:Android")
+    @POST(buy_fund)
+    Flowable<BuyFundResp> buyFund(@Body CommonReqData reqData);
 
 
 }
