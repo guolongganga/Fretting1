@@ -81,7 +81,7 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
                 getP().loadPopularityData(pageno, pageSize, fundTabName);
                 break;
             case Constant.FUND_INDEX:
-                getP().loadFundData(pageno, pageSize, fundTabName, "");
+                getP().loadFundData(pageno, pageSize, "0", "3");
                 break;
         }
         list = new ArrayList<>();
@@ -94,12 +94,12 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
                 .setOnRefreshAndLoadMoreListener(new XRecyclerView.OnRefreshAndLoadMoreListener() {
                     @Override
                     public void onRefresh() {
-                        getP().loadFundData(1, 10, fundTabName, "");
+                        getP().loadFundData(1, 10, "0", "3");
                     }
 
                     @Override
                     public void onLoadMore(int page) {
-                        getP().loadFundData(page, pageSize, fundTabName, "");
+                        getP().loadFundData(page, pageSize, "0", "3");
                     }
                 });
 
@@ -180,6 +180,7 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
             contentLayout.getRecyclerView().setPage(pageno, pageno + 1);
         } else {
             //没有更多数据了
+            showToast("没有更多数据了");
             contentLayout.getRecyclerView().setPage(pageno, pageno - 1);
         }
     }

@@ -79,10 +79,10 @@ public class FundContentPresent extends XPresent<FundContentFragment> {
 //        }
         final CommonReqData reqData = new CommonReqData();
         NewestFundParams params = new NewestFundParams();
-        params.setPagesize(pagesize);
-        params.setPageno(pageno);
-        params.setType(type);
-        params.setOrderBy(orderBy);
+        params.setPageSize(pagesize);
+        params.setPageNum(pageno);
+        params.setOfund_type(type);
+        params.setPerformance_term(orderBy);
         reqData.setData(params);
 
         Api.getApi().getNewestFund(reqData)

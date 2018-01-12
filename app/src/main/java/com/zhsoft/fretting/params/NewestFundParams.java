@@ -3,43 +3,49 @@ package com.zhsoft.fretting.params;
 /**
  * 作者：sunnyzeng on 2017/12/29 10:28
  * 描述：
+ * "data":{
+ * "ofund_type":"0",
+ * "performance_term":"3",
+ * "pageNum":2,
+ * "pageSize":3
+ * }
  */
 
 public class NewestFundParams extends CommonReqData<NewestFundParams> {
-    private int pageno;
-    private int pagesize;
-    private String type;
-    private String orderBy;
+    private int pageNum;
+    private int pageSize;
+    private String ofund_type;
+    private String performance_term;
 
-    public int getPageno() {
-        return pageno;
+    public int getPageNum() {
+        return pageNum;
     }
 
-    public void setPageno(int pageno) {
-        this.pageno = pageno;
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
     }
 
-    public int getPagesize() {
-        return pagesize;
+    public int getPageSize() {
+        return pageSize;
     }
 
-    public void setPagesize(int pagesize) {
-        this.pagesize = pagesize;
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
     }
 
-    public String getType() {
-        return type;
+    public String getOfund_type() {
+        return ofund_type;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setOfund_type(String ofund_type) {
+        this.ofund_type = ofund_type;
     }
 
-    public String getOrderBy() {
-        return orderBy;
+    public String getPerformance_term() {
+        return performance_term;
     }
 
-    public void setOrderBy(String orderBy) {
-        this.orderBy = orderBy;
+    public void setPerformance_term(String performance_term) {
+        this.performance_term = performance_term;
     }
 }
