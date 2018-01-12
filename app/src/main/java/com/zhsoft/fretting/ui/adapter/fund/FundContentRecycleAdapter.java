@@ -3,6 +3,7 @@ package com.zhsoft.fretting.ui.adapter.fund;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
@@ -19,7 +20,7 @@ import cn.droidlover.xdroidmvp.kit.KnifeKit;
  */
 
 public class FundContentRecycleAdapter extends SimpleRecAdapter<NewestFundResp, FundContentRecycleAdapter.ViewHolder> {
-
+    public static final int ITEM_CLICK = 0;    //点击标识
     private String tabname;
 
     public FundContentRecycleAdapter(Context context, String tabname) {
@@ -38,15 +39,22 @@ public class FundContentRecycleAdapter extends SimpleRecAdapter<NewestFundResp, 
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.tvName.setText(tabname + data.get(position).getFund_name());
         holder.tvCode.setText(data.get(position).getFund_code());
         holder.tvValue.setText(BigDecimalUtil.bigdecimalToString(data.get(position).getNet_value()));
         holder.tvRange.setText("+" + BigDecimalUtil.bigdecimalToString(data.get(position).getFund_rose()));
+        holder.rlContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getRecItemClick().onItemClick(position, data.get(position), ITEM_CLICK, holder);
+            }
+        });
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.rl_content)
+        RelativeLayout rlContent;
         @BindView(R.id.tv_name)
         TextView tvName;
         @BindView(R.id.tv_code)

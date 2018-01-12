@@ -106,6 +106,7 @@
 
         <cn.droidlover.xrecyclerview.XRecyclerView
             android:id="@+id/xrv_hot_list"
+            android:overScrollMode="never"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </LinearLayout>

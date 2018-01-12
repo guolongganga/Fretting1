@@ -254,6 +254,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
                                             .setNegativeButton("忘记密码", new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialogInterface, int i) {
+                                                    customDialog.dismiss();
                                                     startActivity(FindPwdTradeFirstActivity.class);
                                                 }
                                             }).setPositiveButton("再试一次", new DialogInterface.OnClickListener() {

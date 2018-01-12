@@ -30,6 +30,14 @@ public class JSInterfaceUtils {
         }
     }
 
+    @JavascriptInterface
+    public void toBuy() {
+
+        if (jSInterfaceClick != null) {
+            jSInterfaceClick.toBuy();
+        }
+    }
+
     //
 //    @JavascriptInterface
 //    public void toLogin(String msg) {

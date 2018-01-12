@@ -1,6 +1,7 @@
 package com.zhsoft.fretting.ui.fragment.index;
 
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -14,15 +15,23 @@ import com.zhsoft.fretting.model.index.BannerModel;
 import com.zhsoft.fretting.model.index.IndexResp;
 import com.zhsoft.fretting.model.index.PopularityResp;
 import com.zhsoft.fretting.model.index.ProductModel;
+import com.zhsoft.fretting.net.Api;
+import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.present.index.IndexPresent;
 import com.zhsoft.fretting.ui.activity.boot.SearchActivity;
 import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
 import com.zhsoft.fretting.ui.activity.fund.BuyActivity;
+import com.zhsoft.fretting.ui.activity.fund.FundDetailWebActivity;
 import com.zhsoft.fretting.ui.activity.fund.InvestActivity;
 import com.zhsoft.fretting.ui.activity.index.PopularityActivity;
 import com.zhsoft.fretting.ui.activity.index.TimingActivity;
+import com.zhsoft.fretting.ui.activity.user.FindPwdTradeFirstActivity;
+import com.zhsoft.fretting.ui.activity.user.PersonInfoActivity;
+import com.zhsoft.fretting.ui.activity.user.RegisterSecondActivity;
+import com.zhsoft.fretting.ui.activity.user.RiskTestWebViewAcvitity;
 import com.zhsoft.fretting.ui.adapter.index.PopularityRecycleAdapter;
 import com.zhsoft.fretting.ui.adapter.user.SwitchAccountRecycleAdapter;
+import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
 
 import java.util.ArrayList;
@@ -85,6 +94,12 @@ public class IndexFragment extends XFragment<IndexPresent> {
     /** 搜索 */
     @BindView(R.id.rl_name_search)
     RelativeLayout rlNameSearch;
+    /** 立即定投 */
+    @BindView(R.id.btn_invest)
+    Button btnInvest;
+
+    private ProductModel startModel;
+
 
     @Override
     public int getLayoutId() {
@@ -129,31 +144,33 @@ public class IndexFragment extends XFragment<IndexPresent> {
         rlNameSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                startActivity(SearchActivity.class);
-                String token = "0f4ddf4852e644598d7ade9edc433e87";
-                String userId = "0f4ddf4852e644598d7ade9edc433e87";
-                String fund_code = "050001";
-                getP().buyFund(token, userId, fund_code);
+                startActivity(SearchActivity.class);
 
-//                if (RuntimeHelper.getInstance().isLogin()) {
-//                    startActivity(BuyActivity.class);
-//                } else {
-//                    startActivity(LoginActivity.class);
-//                }
             }
         });
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //跳转基金详情页
                 Bundle bundle = new Bundle();
-                bundle.putString(Constant.INVEST_ACTIVITY_TYPE, Constant.INVEST_ACTIVITY);
-                startActivity(InvestActivity.class, bundle);
+                bundle.putInt(Constant.WEB_TITLE, R.string.fund_detail);
+                bundle.putString(Constant.WEB_LINK, "file:///android_asset/javascript.html");
+                bundle.putParcelable(Constant.FUND_RESP_OBJECT, startModel);
+                startActivity(FundDetailWebActivity.class, bundle);
 //                if (RuntimeHelper.getInstance().isLogin()) {
 //                    startActivity(InvestActivity.class);
 //                } else {
 //                    startActivity(LoginActivity.class);
 //                }
 
+            }
+        });
+        btnInvest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString(Constant.INVEST_ACTIVITY_TYPE, Constant.INVEST_ACTIVITY);
+                startActivity(InvestActivity.class, bundle);
             }
         });
 
@@ -243,6 +260,7 @@ public class IndexFragment extends XFragment<IndexPresent> {
             }
             //明星基金
             if (data.getStarFound() != null) {
+                startModel = data.getStarFound();
                 tvSevenEarnings.setText(BigDecimalUtil.bigdecimalToString(data.getStarFound().getAveg()) + "%");
                 tvWanarnings.setText(data.getStarFound().getName());
             }
@@ -278,18 +296,5 @@ public class IndexFragment extends XFragment<IndexPresent> {
 
     }
 
-    /**
-     * 购买（是否符合购买资格）失败
-     */
-    public void requestBuyFundFail() {
-    }
 
-    /**
-     * 购买（是否符合购买资格）成功 跳转购买页面
-     */
-    public void requestBuyFundSuccess(BuyFundResp resp) {
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(Constant.BUY_FUND_OBJECT,resp);
-        startActivity(BuyActivity.class,bundle);
-    }
 }

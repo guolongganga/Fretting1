@@ -1,5 +1,8 @@
 package com.zhsoft.fretting.model.fund;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.zhsoft.fretting.model.BaseResp;
 
 import java.math.BigDecimal;
@@ -15,7 +18,7 @@ import java.util.ArrayList;
  * "net_value": 1.9406
  */
 
-public class NewestFundResp extends BaseResp<ArrayList<NewestFundResp>> {
+public class NewestFundResp extends BaseResp<ArrayList<NewestFundResp>> implements Parcelable {
     /**
      * 基金代码
      */
@@ -64,4 +67,39 @@ public class NewestFundResp extends BaseResp<ArrayList<NewestFundResp>> {
     public void setFund_rose(BigDecimal fund_rose) {
         this.fund_rose = fund_rose;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.fund_code);
+        dest.writeString(this.fund_name);
+        dest.writeSerializable(this.net_value);
+        dest.writeSerializable(this.fund_rose);
+    }
+
+    public NewestFundResp() {
+    }
+
+    protected NewestFundResp(Parcel in) {
+        this.fund_code = in.readString();
+        this.fund_name = in.readString();
+        this.net_value = (BigDecimal) in.readSerializable();
+        this.fund_rose = (BigDecimal) in.readSerializable();
+    }
+
+    public static final Parcelable.Creator<NewestFundResp> CREATOR = new Parcelable.Creator<NewestFundResp>() {
+        @Override
+        public NewestFundResp createFromParcel(Parcel source) {
+            return new NewestFundResp(source);
+        }
+
+        @Override
+        public NewestFundResp[] newArray(int size) {
+            return new NewestFundResp[size];
+        }
+    };
 }

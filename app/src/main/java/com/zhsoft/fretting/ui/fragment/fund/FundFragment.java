@@ -6,10 +6,12 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.ui.activity.boot.SearchActivity;
 import com.zhsoft.fretting.ui.activity.user.SwitchAccountActivity;
 import com.zhsoft.fretting.ui.adapter.fund.FundTabViewPagerAdapter;
 
@@ -31,6 +33,8 @@ public class FundFragment extends XLazyFragment {
     TabLayout mTabLayout;
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
+    @BindView(R.id.rl_name_search)
+    RelativeLayout rlNameSeach;
 
     @Override
     public int getLayoutId() {
@@ -65,6 +69,12 @@ public class FundFragment extends XLazyFragment {
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
 
+            }
+        });
+        rlNameSeach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(SearchActivity.class);
             }
         });
     }

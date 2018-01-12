@@ -95,37 +95,4 @@ public class IndexPresent extends XPresent<IndexFragment> {
                 });
     }
 
-    public void buyFund(String token, String userId, String fund_code) {
-        CommonReqData reqData = new CommonReqData();
-        reqData.setToken(token);
-        reqData.setUserId(userId);
-        BuyFundParams params = new BuyFundParams();
-        params.setFund_code(fund_code);
-        reqData.setData(params);
-
-        Api.getApi().buyFund(reqData)
-                .compose(XApi.<BuyFundResp>getApiTransformer())
-                .compose(XApi.<BuyFundResp>getScheduler())
-                .compose(getV().<BuyFundResp>bindToLifecycle())
-                .subscribe(new ApiSubscriber<BuyFundResp>() {
-                    @Override
-                    protected void onFail(NetError error) {
-                        getV().requestBuyFundFail();
-                        getV().showToast("请求失败");
-                    }
-
-                    @Override
-                    public void onNext(BuyFundResp resp) {
-                        if (resp != null && resp.getStatus() == 200) {
-
-                            getV().requestBuyFundSuccess(resp.getData());
-                        } else {
-                            getV().requestBuyFundFail();
-                            getV().showToast(resp.getMessage());
-                            XLog.e("返回数据为空");
-                        }
-                    }
-                });
-
-    }
 }

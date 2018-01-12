@@ -11,8 +11,10 @@ import android.widget.TextView;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.ChangeTabEvent;
+import com.zhsoft.fretting.model.fund.BuyNowResp;
 import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.ui.widget.ChenJingET;
+import com.zhsoft.fretting.utils.BigDecimalUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -30,6 +32,7 @@ public class BuySuccessActivity extends XActivity {
     @BindView(R.id.head_right) Button headRight;
     @BindView(R.id.tv_fund_name) TextView tvFundName;
     @BindView(R.id.tv_fund_amount) TextView tvFundAmount;
+    @BindView(R.id.tv_bank_name) TextView tvBankName;
     @BindView(R.id.iv_pay_success) ImageView ivPaySuccess;
     @BindView(R.id.tv_pay_success) TextView tvPaySuccess;
     @BindView(R.id.iv_sure_number) ImageView ivSureNumber;
@@ -37,6 +40,8 @@ public class BuySuccessActivity extends XActivity {
     @BindView(R.id.iv_query_income) ImageView ivQueryIncome;
     @BindView(R.id.tv_query_income) TextView tvQueryIncome;
     @BindView(R.id.scroll_view) ScrollView scrollView;
+    /** 购买成功传递过来的数据 */
+    private BuyNowResp buyNowResp;
 
     @Override
     public int getLayoutId() {
@@ -56,6 +61,17 @@ public class BuySuccessActivity extends XActivity {
         headTitle.setText("购买结果");
         headRight.setText("关闭");
         headRight.setVisibility(View.VISIBLE);
+        if (bundle != null) {
+            buyNowResp = (BuyNowResp) bundle.getParcelable(Constant.BUY_SUCCESS_OBJECT);
+            if (buyNowResp != null) {
+                tvFundName.setText(buyNowResp.getFund_name());
+                tvFundAmount.setText(BigDecimalUtil.bigdecimalToString(buyNowResp.getFund_amount()) + "元");
+                tvBankName.setText(buyNowResp.getBank_info());
+                tvPaySuccess.setText(buyNowResp.getSucc_time());
+                tvSureNumber.setText(buyNowResp.getConfirm_time());
+                tvQueryIncome.setText(buyNowResp.getIncome_time());
+            }
+        }
     }
 
     @Override

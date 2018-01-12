@@ -1,5 +1,8 @@
 package com.zhsoft.fretting.model.index;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.math.BigDecimal;
 
 /**
@@ -12,7 +15,8 @@ import java.math.BigDecimal;
  * "type": "股票型"
  */
 
-public class ProductModel {
+public class ProductModel implements Parcelable {
+
     /**
      * 基金名称
      */
@@ -97,4 +101,45 @@ public class ProductModel {
     public void setNetWorth(BigDecimal netWorth) {
         this.netWorth = netWorth;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.name);
+        dest.writeString(this.code);
+        dest.writeString(this.type);
+        dest.writeSerializable(this.aveg);
+        dest.writeSerializable(this.netWorth);
+        dest.writeString(this.featureOne);
+        dest.writeString(this.featureTwo);
+    }
+
+    public ProductModel() {
+    }
+
+    protected ProductModel(Parcel in) {
+        this.name = in.readString();
+        this.code = in.readString();
+        this.type = in.readString();
+        this.aveg = (BigDecimal) in.readSerializable();
+        this.netWorth = (BigDecimal) in.readSerializable();
+        this.featureOne = in.readString();
+        this.featureTwo = in.readString();
+    }
+
+    public static final Parcelable.Creator<ProductModel> CREATOR = new Parcelable.Creator<ProductModel>() {
+        @Override
+        public ProductModel createFromParcel(Parcel source) {
+            return new ProductModel(source);
+        }
+
+        @Override
+        public ProductModel[] newArray(int size) {
+            return new ProductModel[size];
+        }
+    };
 }

@@ -151,8 +151,13 @@ public class LoginActivity extends XActivity<LoginPresent> {
         //全局变量设置为登录状态
         RuntimeHelper.getInstance().setLogin(true);
 
-        startActivity(MainActivity.class);
-        finish();
+        if (Constant.WEB_ACTIVITY.equals(mRequestCode)) {
+            finish();
+        } else {
+            startActivity(MainActivity.class);
+            finish();
+        }
+
 
     }
 

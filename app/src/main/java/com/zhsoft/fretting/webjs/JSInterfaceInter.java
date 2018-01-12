@@ -8,4 +8,6 @@ package com.zhsoft.fretting.webjs;
 public interface JSInterfaceInter {
     void toLogin();
 
+    void toBuy();
+
 }

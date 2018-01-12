@@ -173,6 +173,7 @@
                 android:id="@+id/xrv_my_fund"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:overScrollMode="never"
                 android:visibility="gone"/>
 
             <TextView

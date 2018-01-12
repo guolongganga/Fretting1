@@ -8,6 +8,8 @@ import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.present.fund.FundContentPresent;
+import com.zhsoft.fretting.ui.activity.fund.FundDetailWebActivity;
+import com.zhsoft.fretting.ui.adapter.boot.SearchHotListAdapter;
 import com.zhsoft.fretting.ui.adapter.fund.FundContentRecycleAdapter;
 import com.zhsoft.fretting.ui.widget.PopShow;
 
@@ -18,6 +20,7 @@ import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
 import cn.droidlover.xdroidmvp.net.NetError;
 import cn.droidlover.xrecyclerview.RecyclerAdapter;
+import cn.droidlover.xrecyclerview.RecyclerItemCallback;
 import cn.droidlover.xrecyclerview.XRecyclerContentLayout;
 import cn.droidlover.xrecyclerview.XRecyclerView;
 
@@ -124,6 +127,25 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
                 });
             }
         });
+        adapter.setRecItemClick(new RecyclerItemCallback<NewestFundResp, FundContentRecycleAdapter.ViewHolder>() {
+            @Override
+            public void onItemClick(int position, NewestFundResp model, int tag, FundContentRecycleAdapter.ViewHolder holder) {
+                super.onItemClick(position, model, tag, holder);
+                switch (tag) {
+                    //点击
+                    case FundContentRecycleAdapter.ITEM_CLICK:
+                        showToast(model.getFund_name());
+                        //跳转基金详情页
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(Constant.WEB_TITLE, R.string.fund_detail);
+                        bundle.putString(Constant.WEB_LINK, "file:///android_asset/javascript.html");
+                        bundle.putParcelable(Constant.FUND_RESP_OBJECT, model);
+                        startActivity(FundDetailWebActivity.class, bundle);
+                        break;
+                }
+            }
+        });
+
     }
 
     /**
@@ -133,7 +155,7 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
      */
     public RecyclerAdapter getAdapter() {
         if (adapter == null) {
-            adapter = new FundContentRecycleAdapter(context,fundTabName);
+            adapter = new FundContentRecycleAdapter(context, fundTabName);
         }
         return adapter;
     }

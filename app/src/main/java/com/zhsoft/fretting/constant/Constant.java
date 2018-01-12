@@ -79,6 +79,8 @@ public class Constant {
 
     //找回交易密码 跳转登录页面 skip_sign
     public static final String FIND_TRADE_ACTIVITY = "302";
+    //web页面 跳转登录页面 skip_sign
+    public static final String WEB_ACTIVITY = "303";
 
     //人气产品
     public static final int POPULARITY = 1;
@@ -115,5 +117,27 @@ public class Constant {
     //跳转到主页面，我的tab
     public static final String MAIN_MY = "main_my";
 
+    //可以购买跳转购买页面携带参数
     public static final String BUY_FUND_OBJECT = "buy_fund_object";
+
+    //购买验证，未开户，跳转开户页面
+    public static final Object TO_OPEN_ACCOUNT = "toOpenAccount";
+
+    //购买验证，补全个人信息，跳转个人信息
+    public static final Object TO_PERSON_INFO = "toPersonInfo";
+
+    //购买验证，风险测评，跳转风险测评
+    public static final Object TO_RISK_TEST = "toRiskTest";
+
+    //购买验证，验证风险等级，弹出风险等级弹出框
+    public static final Object TO_VALIDATE = "toValidate";
+
+    //购买验证，去购买
+    public static final Object TO_BUY = "toBuy";
+
+    //购买成功传递数据
+    public static final String BUY_SUCCESS_OBJECT = "buy_success_object";
+
+    //基金列表-->基金详情页传递基金数据
+    public static final String FUND_RESP_OBJECT ="fund_resp_object" ;
 }

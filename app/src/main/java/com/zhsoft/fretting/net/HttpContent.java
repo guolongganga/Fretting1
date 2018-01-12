@@ -69,7 +69,11 @@ public class HttpContent {
     /** 找回交易密码 第二步 */
     public static final String trade_password_reset = "noPermission/tradepassword/reset";
     /** 基金立即购买验证 */
-    public static final String buy_fund = "noPermission/buyFund";
+    public static final String buy_fund = "permissionCheck/buyFund";
+    /** 基金立即购买 */
+    public static final String buy_now = "permissionCheck/buyNow";
+    /** 基金详情页 */
+    public static final String fund_detail = "htmlNoPermission/fundDetail";
 
 
 }

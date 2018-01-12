@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.ui.activity.boot.SearchActivity;
 import com.zhsoft.fretting.ui.adapter.fund.FundTabViewPagerAdapter;
 import com.zhsoft.fretting.ui.fragment.fund.FundContentFragment;
 
@@ -83,7 +84,7 @@ public class PopularityActivity extends XActivity {
         headRightImgbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("查找基金");
+                startActivity(SearchActivity.class);
             }
         });
     }

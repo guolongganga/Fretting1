@@ -11,4 +11,9 @@ public class JSInterfaceClick implements JSInterfaceInter {
     public void toLogin() {
 
     }
+
+    @Override
+    public void toBuy() {
+
+    }
 }

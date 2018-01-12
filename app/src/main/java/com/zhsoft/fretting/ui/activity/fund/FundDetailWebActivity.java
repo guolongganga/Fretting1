@@ -1,4 +1,4 @@
-package com.zhsoft.fretting.ui.activity.boot;
+package com.zhsoft.fretting.ui.activity.fund;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.DownloadListener;
@@ -15,17 +14,24 @@ import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
-import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-
+import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.model.fund.BuyFundResp;
+import com.zhsoft.fretting.model.fund.NewestFundResp;
+import com.zhsoft.fretting.net.Api;
+import com.zhsoft.fretting.net.HttpContent;
+import com.zhsoft.fretting.present.fund.FundDetailPresent;
 import com.zhsoft.fretting.ui.activity.user.LoginActivity;
+import com.zhsoft.fretting.ui.activity.user.PersonInfoActivity;
+import com.zhsoft.fretting.ui.activity.user.RegisterSecondActivity;
+import com.zhsoft.fretting.ui.activity.user.RiskTestWebViewAcvitity;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
-import com.zhsoft.fretting.ui.widget.TitleView;
+import com.zhsoft.fretting.utils.RuntimeHelper;
 import com.zhsoft.fretting.webjs.JSInterfaceClick;
 import com.zhsoft.fretting.webjs.JSInterfaceUtils;
 
@@ -38,7 +44,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  * Created by sunny on 2017/4/25
  */
 
-public class WebPublicActivity extends XActivity {
+public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
 
     //页面标题
 //    @BindView(R.id.title_view)
@@ -54,6 +60,21 @@ public class WebPublicActivity extends XActivity {
     @BindView(R.id.pb)
     ProgressBar pb;
     private CustomDialog loginDialog;
+    /** 用户登录标识 */
+    private String token;
+    /** 用户编号 */
+    private String userId;
+    /** 基金对象 */
+    private NewestFundResp fundResp;
+
+    /** 去开户 弹出框 */
+    private CustomDialog openAccountDialog;
+    /** 去补全个人信息 弹出框 */
+    private CustomDialog personInfoDialog;
+    /** 去开户 去风险测评 */
+    private CustomDialog riskTestDialog;
+    /** 风险等级 弹出框 */
+    private CustomDialog validateDialog;
 
     @Override
     public void onResume() {
@@ -78,8 +99,8 @@ public class WebPublicActivity extends XActivity {
     }
 
     @Override
-    public Object newP() {
-        return null;
+    public FundDetailPresent newP() {
+        return new FundDetailPresent();
     }
 
     @Override
@@ -87,7 +108,7 @@ public class WebPublicActivity extends XActivity {
 
         int title = bundle.getInt(Constant.WEB_TITLE);
         String link = bundle.getString(Constant.WEB_LINK);
-
+//        fundResp = (NewestFundResp) bundle.getParcelable(Constant.FUND_RESP_OBJECT);
 //        titleView.setTitle(context, title);
         headTitle.setText(title);
         pb.setMax(100);
@@ -208,6 +229,11 @@ public class WebPublicActivity extends XActivity {
             public void toLogin() {
                 baseToLogin();
             }
+
+            @Override
+            public void toBuy() {
+                baseToBuy();
+            }
         });
     }
 
@@ -235,6 +261,23 @@ public class WebPublicActivity extends XActivity {
                     }).create();
         }
         loginDialog.show();
+    }
+
+    private void baseToBuy() {
+        if (RuntimeHelper.getInstance().isLogin()) {
+//            token = App.getSharedPref().getString(Constant.TOKEN, "");
+//            userId = App.getSharedPref().getString(Constant.USERID, "");
+            token = "8d9f2d6690904d569c1b27133d692db1";
+            userId = "0f4ddf4852e644598d7ade9edc433e87";
+            String fund_code = "050001";
+
+            getP().buyFund(token, userId, fund_code);
+        } else {
+            //跳转回登录界面
+            Bundle bundle = new Bundle();
+            bundle.putString(Constant.SKIP_SIGN, Constant.WEB_ACTIVITY);
+            startActivity(LoginActivity.class,bundle);
+        }
     }
 
     /**
@@ -269,5 +312,108 @@ public class WebPublicActivity extends XActivity {
         }
 
         super.onDestroy();
+    }
+
+    /**
+     * 购买（是否符合购买资格）失败
+     */
+    public void requestBuyFundFail() {
+    }
+
+
+    /**
+     * 购买（是否符合购买资格）成功 跳转购买页面
+     */
+    public void requestBuyFundSuccess(final BuyFundResp resp) {
+        if (Constant.TO_OPEN_ACCOUNT.equals(resp.getCanBuy())) {
+            //弹出弹出框 去开户
+            if (openAccountDialog == null) {
+                openAccountDialog = new CustomDialog.Builder(context)
+                        .setMessage("您还没有开户，现在去开户！")
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                openAccountDialog.dismiss();
+                            }
+                        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                openAccountDialog.dismiss();
+                                startActivity(RegisterSecondActivity.class);
+                            }
+                        }).create();
+            }
+            openAccountDialog.show();
+        } else if (Constant.TO_PERSON_INFO.equals(resp.getCanBuy())) {
+            //弹出弹出框 去补全个人信息
+            if (personInfoDialog == null) {
+                personInfoDialog = new CustomDialog.Builder(context)
+                        .setMessage("购买基金前请先完善您的个人信息！")
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                personInfoDialog.dismiss();
+                            }
+                        }).setPositiveButton("去完成", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                personInfoDialog.dismiss();
+                                startActivity(PersonInfoActivity.class);
+                            }
+                        }).create();
+            }
+            personInfoDialog.show();
+        } else if (Constant.TO_RISK_TEST.equals(resp.getCanBuy())) {
+            //弹出弹出框 去风险测评
+            if (riskTestDialog == null) {
+                riskTestDialog = new CustomDialog.Builder(context)
+                        .setMessage("购买基金前请先完成风险等级测评！")
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                riskTestDialog.dismiss();
+                            }
+                        }).setPositiveButton("去完成", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                riskTestDialog.dismiss();
+                                Bundle bundle = new Bundle();
+                                bundle.putInt(Constant.WEB_TITLE, R.string.user_risk_test);
+                                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.risk_question);
+                                startActivity(RiskTestWebViewAcvitity.class, bundle);
+                            }
+                        }).create();
+            }
+            riskTestDialog.show();
+
+        } else if (Constant.TO_VALIDATE.equals(resp.getCanBuy())) {
+            //弹出风险等级框
+            if (validateDialog == null) {
+                validateDialog = new CustomDialog.Builder(context)
+                        .setMessage(resp.getFundRisk())
+                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                validateDialog.dismiss();
+                            }
+                        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                validateDialog.dismiss();
+                                //去购买
+                                Bundle bundle = new Bundle();
+                                bundle.putParcelable(Constant.BUY_FUND_OBJECT, resp);
+                                startActivity(BuyActivity.class, bundle);
+                            }
+                        }).create();
+            }
+            validateDialog.show();
+        } else {
+            //去购买
+            Bundle bundle = new Bundle();
+            bundle.putParcelable(Constant.BUY_FUND_OBJECT, resp);
+            startActivity(BuyActivity.class, bundle);
+        }
+
     }
 }
