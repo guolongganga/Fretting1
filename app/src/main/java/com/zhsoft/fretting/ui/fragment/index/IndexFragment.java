@@ -154,7 +154,8 @@ public class IndexFragment extends XFragment<IndexPresent> {
                 //跳转基金详情页
                 Bundle bundle = new Bundle();
                 bundle.putInt(Constant.WEB_TITLE, R.string.fund_detail);
-                bundle.putString(Constant.WEB_LINK, "file:///android_asset/javascript.html");
+                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL+HttpContent.fund_detail);
+//                bundle.putString(Constant.WEB_LINK, "file:///android_asset/javascript.html");
                 bundle.putParcelable(Constant.FUND_RESP_OBJECT, startModel);
                 startActivity(FundDetailWebActivity.class, bundle);
 //                if (RuntimeHelper.getInstance().isLogin()) {

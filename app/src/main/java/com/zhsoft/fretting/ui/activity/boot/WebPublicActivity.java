@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -115,6 +117,15 @@ public class WebPublicActivity extends XActivity {
 //                        mWeb.loadUrl("javascript:callJS('" + "123456" + "')");
 //                    }
 //                });
+            }
+
+            @Override
+            public void onReceivedSslError(WebView view,
+                                           SslErrorHandler handler, SslError error) {
+                // TODO Auto-generated method stub
+                // handler.cancel();// Android默认的处理方式
+                handler.proceed();// 接受所有网站的证书
+                // handleMessage(Message msg);// 进行其他处理
             }
         });
         // 设置WebView支持运行普通的Javascript
@@ -224,7 +235,7 @@ public class WebPublicActivity extends XActivity {
                             //跳转回登录界面
                             Bundle bundle = new Bundle();
                             bundle.putString(Constant.SKIP_SIGN, Constant.WEB_ACTIVITY);
-                            startActivity(LoginActivity.class,bundle);
+                            startActivity(LoginActivity.class, bundle);
                         }
                     })
                     .setNegativeButton("取消", new DialogInterface.OnClickListener() {

@@ -9,14 +9,14 @@
 
     <TextView
         android:id="@+id/tv_value"
-        android:layout_width="wrap_content"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:textColor="@color/color_f7182d"
         android:textSize="@dimen/text_size_26"/>
 
     <TextView
         android:id="@+id/tv_describe"
-        android:layout_width="wrap_content"
+        android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/tv_value"
         android:text="近一年的收益率"
