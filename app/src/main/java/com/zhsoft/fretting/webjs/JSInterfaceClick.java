@@ -6,14 +6,23 @@ package com.zhsoft.fretting.webjs;
  */
 
 public class JSInterfaceClick implements JSInterfaceInter {
-
+    //登录
     @Override
     public void toLogin() {
 
     }
 
+    //购买
     @Override
     public void toBuy() {
 
     }
+
+    //定投
+    @Override
+    public void toInvest() {
+
+    }
+
+
 }

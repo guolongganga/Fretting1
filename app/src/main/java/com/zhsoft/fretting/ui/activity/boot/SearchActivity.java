@@ -10,7 +10,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
+import com.zhsoft.fretting.net.Api;
+import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.present.boot.SearchPersent;
 import com.zhsoft.fretting.ui.adapter.boot.SearchHotListAdapter;
 import com.zhsoft.fretting.ui.adapter.boot.SearchRecycleAdapter;
@@ -162,7 +165,13 @@ public class SearchActivity extends XActivity<SearchPersent> {
                     //点击
                     case SearchRecycleAdapter.ITEM_CLICK:
                         showToast(model.getFund_name());
-//                        Toast.makeText(context, model.getFund_name(), Toast.LENGTH_LONG).show();
+                        //跳转基金详情页
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(Constant.WEB_TITLE, R.string.fund_detail);
+                        bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.fund_detail);
+                        bundle.putString(Constant.FUND_DETAIL_CODE, model.getFund_code());
+                        bundle.putString(Constant.FUND_DETAIL_NAME, model.getFund_name());
+                        startActivity(FundDetailWebActivity.class, bundle);
                         break;
                 }
             }

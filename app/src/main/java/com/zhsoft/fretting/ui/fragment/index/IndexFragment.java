@@ -1,16 +1,17 @@
 package com.zhsoft.fretting.ui.fragment.index;
 
 
-import android.content.DialogInterface;
 import android.os.Bundle;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.index.BannerModel;
 import com.zhsoft.fretting.model.index.IndexResp;
 import com.zhsoft.fretting.model.index.PopularityResp;
@@ -19,19 +20,14 @@ import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.present.index.IndexPresent;
 import com.zhsoft.fretting.ui.activity.boot.SearchActivity;
+import com.zhsoft.fretting.ui.activity.boot.FundDetailWebActivity;
 import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
-import com.zhsoft.fretting.ui.activity.fund.BuyActivity;
-import com.zhsoft.fretting.ui.activity.fund.FundDetailWebActivity;
 import com.zhsoft.fretting.ui.activity.fund.InvestActivity;
 import com.zhsoft.fretting.ui.activity.index.PopularityActivity;
 import com.zhsoft.fretting.ui.activity.index.TimingActivity;
-import com.zhsoft.fretting.ui.activity.user.FindPwdTradeFirstActivity;
-import com.zhsoft.fretting.ui.activity.user.PersonInfoActivity;
-import com.zhsoft.fretting.ui.activity.user.RegisterSecondActivity;
 import com.zhsoft.fretting.ui.activity.user.RiskTestWebViewAcvitity;
 import com.zhsoft.fretting.ui.adapter.index.PopularityRecycleAdapter;
 import com.zhsoft.fretting.ui.adapter.user.SwitchAccountRecycleAdapter;
-import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
 
 import java.util.ArrayList;
@@ -40,6 +36,7 @@ import java.util.List;
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.banner.FlyBanner;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
+import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
 import cn.droidlover.xrecyclerview.RecyclerItemCallback;
@@ -97,8 +94,16 @@ public class IndexFragment extends XFragment<IndexPresent> {
     /** 立即定投 */
     @BindView(R.id.btn_invest)
     Button btnInvest;
+    @BindView(R.id.scroll_view)
+    ScrollView scrollView;
+    @BindView(R.id.swipe_container)
+    SwipeRefreshLayout swipeRefreshLayout;
 
+    /** 明星基金 */
     private ProductModel startModel;
+    /** 优选定投 */
+    private ProductModel preferredVote;
+    private HttpLoadingDialog httpLoadingDialog;
 
 
     @Override
@@ -113,13 +118,22 @@ public class IndexFragment extends XFragment<IndexPresent> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        //设置刷新时动画的颜色，可以设置4个
+        swipeRefreshLayout.setColorSchemeResources(android.R.color.holo_blue_light, android.R.color.holo_red_light,
+                android.R.color.holo_orange_light, android.R.color.holo_green_light);
 
-        getPopularityAdapter();
-
-        getP().loadData();
-
+        httpLoadingDialog = new HttpLoadingDialog(context);
+//        getPopularityAdapter();
         xrvPopularity.setFocusable(false);
         xrvPopularity.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
+
+        if (noNetWork()) {
+            showNetWorkError();
+            return;
+        } else {
+            httpLoadingDialog.visible();
+            getP().loadData();
+        }
     }
 
     @Override
@@ -138,6 +152,10 @@ public class IndexFragment extends XFragment<IndexPresent> {
 //                bundle.putInt(Constant.WEB_TITLE, R.string.user_about_us);
 //                bundle.putString(Constant.WEB_LINK, "https://www.baidu.com/?tn=96928074_hao_pg");
 //                startActivity(WebPublicActivity.class, bundle);
+//                Bundle bundle = new Bundle();
+//                bundle.putInt(Constant.WEB_TITLE, R.string.user_risk_test);
+//                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.risk_question);
+//                startActivity(RiskTestWebViewAcvitity.class, bundle);
             }
         });
 
@@ -148,15 +166,17 @@ public class IndexFragment extends XFragment<IndexPresent> {
 
             }
         });
+        //购买
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //跳转基金详情页
                 Bundle bundle = new Bundle();
                 bundle.putInt(Constant.WEB_TITLE, R.string.fund_detail);
-                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL+HttpContent.fund_detail);
+                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.fund_detail);
 //                bundle.putString(Constant.WEB_LINK, "file:///android_asset/javascript.html");
-                bundle.putParcelable(Constant.FUND_RESP_OBJECT, startModel);
+                bundle.putString(Constant.FUND_DETAIL_CODE, startModel.getCode());
+                bundle.putString(Constant.FUND_DETAIL_NAME, startModel.getName());
                 startActivity(FundDetailWebActivity.class, bundle);
 //                if (RuntimeHelper.getInstance().isLogin()) {
 //                    startActivity(InvestActivity.class);
@@ -166,12 +186,34 @@ public class IndexFragment extends XFragment<IndexPresent> {
 
             }
         });
+        //立即定投
         btnInvest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+//                Bundle bundle = new Bundle();
+//                bundle.putString(Constant.INVEST_ACTIVITY_TYPE, Constant.INVEST_ACTIVITY);
+//                startActivity(InvestActivity.class, bundle);
+                //跳转基金详情页
                 Bundle bundle = new Bundle();
-                bundle.putString(Constant.INVEST_ACTIVITY_TYPE, Constant.INVEST_ACTIVITY);
-                startActivity(InvestActivity.class, bundle);
+                bundle.putInt(Constant.WEB_TITLE, R.string.fund_detail);
+                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.fund_detail);
+                bundle.putString(Constant.FUND_DETAIL_CODE, preferredVote.getCode());
+                bundle.putString(Constant.FUND_DETAIL_NAME, preferredVote.getName());
+                startActivity(FundDetailWebActivity.class, bundle);
+            }
+        });
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                if (swipeRefreshLayout != null) {
+                    swipeRefreshLayout.setEnabled(scrollView.getScrollY() == 0);
+                }
+            }
+        });
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                getP().loadData();
             }
         });
 
@@ -241,6 +283,8 @@ public class IndexFragment extends XFragment<IndexPresent> {
      * @param data
      */
     public void showIndexData(IndexResp data) {
+        swipeRefreshLayout.setRefreshing(false);
+        httpLoadingDialog.dismiss();
         if (data != null) {
             //banner展示
             if (data.getBannerList() != null && data.getBannerList().size() > 0) {
@@ -283,6 +327,7 @@ public class IndexFragment extends XFragment<IndexPresent> {
             }
             //优选定投
             if (data.getPreferredVote() != null) {
+                preferredVote = data.getPreferredVote();
                 preferredName.setText(data.getPreferredVote().getName());
                 preferredRate.setText(BigDecimalUtil.bigdecimalToString(data.getPreferredVote().getAveg()) + "%");
             }
@@ -291,10 +336,11 @@ public class IndexFragment extends XFragment<IndexPresent> {
     }
 
     /**
-     * 请求主业数据失败
+     * 请求主页数据失败
      */
     public void requestIndexDataFail() {
-
+        swipeRefreshLayout.setRefreshing(false);
+        httpLoadingDialog.dismiss();
     }
 
 

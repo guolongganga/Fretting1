@@ -64,6 +64,12 @@ public class BuyActivity extends XActivity<BuyPresent> {
     private CustomDialog customDialog;
     /** 得到的用户购买准备数据 */
     private BuyFundResp buyFundResp;
+    /** 基金代码 */
+    private String fundCode;
+    /** 基金名称 */
+    private String fundName;
+
+
 
     @Override
     public int getLayoutId() {
@@ -79,6 +85,8 @@ public class BuyActivity extends XActivity<BuyPresent> {
     public void initData(Bundle bundle) {
         headTitle.setText(R.string.fund_buy);
         if (bundle != null) {
+            fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
+            fundName = bundle.getString(Constant.FUND_DETAIL_NAME);
             buyFundResp = (BuyFundResp) bundle.getParcelable(Constant.BUY_FUND_OBJECT);
             //获取到基金数据
             //获取 图片Base64 字符串
@@ -136,7 +144,7 @@ public class BuyActivity extends XActivity<BuyPresent> {
                 //TODO 弹出框
                 fundBuyDialog = new FundBuyDialog
                         .Builder(context)
-                        .setFundName("国泰哈哈哈基金")
+                        .setFundName(fundName)
                         .setFundAmount("￥" + getText(etAmount) + ".00")
                         .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
                             @Override

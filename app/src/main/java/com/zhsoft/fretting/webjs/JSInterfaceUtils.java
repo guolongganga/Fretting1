@@ -38,6 +38,14 @@ public class JSInterfaceUtils {
         }
     }
 
+    @JavascriptInterface
+    public void toInvest() {
+
+        if (jSInterfaceClick != null) {
+            jSInterfaceClick.toInvest();
+        }
+    }
+
     //
 //    @JavascriptInterface
 //    public void toLogin(String msg) {

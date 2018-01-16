@@ -31,8 +31,6 @@ public class HttpContent {
     public static final String newest_fund = "noPermission/fundTypeListOrderBy";
     /** 主页 */
     public static final String get_home = "noPermission/getHome";
-    /** 风险测评 */
-    public static final String risk_question = "htmlNoPermission/risk/getQuestions";
     /** 我的银行卡 */
     public static final String my_bankcard = "permissionCheck/fundHome/turnToMyBankCard";
     /** 检查是否可以更换银行卡 */
@@ -73,8 +71,22 @@ public class HttpContent {
     public static final String buy_fund = "permissionCheck/buyFund";
     /** 基金立即购买 */
     public static final String buy_now = "permissionCheck/buyNow";
+    /** 基金搜索 */
+    public static final String find_fund_like = "noPermission/findFundLike";
+    /** 基金定投 */
+    public static final String fund_invest_time = "noPermission/fund/times/getData";
+    /** 定投 根据选择时间 显示下次扣款日 */
+    public static final String get_next_time = "noPermission/fund/times/getnextTime";
+    /** 定投购买 */
+    public static final String fund_times_save = "noPermission/fund/times/save";
+
+
+    /************************************************ html页面 **************************************************/
+
     /** 基金详情页 */
     public static final String fund_detail = "htmlNoPermission/fundDetail";
+    /** 风险测评 */
+    public static final String risk_question = "htmlNoPermission/risk/getQuestions";
 
 
 }

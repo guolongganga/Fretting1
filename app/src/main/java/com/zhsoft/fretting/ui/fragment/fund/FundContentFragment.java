@@ -8,8 +8,7 @@ import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.present.fund.FundContentPresent;
-import com.zhsoft.fretting.ui.activity.fund.FundDetailWebActivity;
-import com.zhsoft.fretting.ui.adapter.boot.SearchHotListAdapter;
+import com.zhsoft.fretting.ui.activity.boot.FundDetailWebActivity;
 import com.zhsoft.fretting.ui.adapter.fund.FundContentRecycleAdapter;
 import com.zhsoft.fretting.ui.widget.PopShow;
 
@@ -81,12 +80,20 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
                 getP().loadPopularityData(pageno, pageSize, fundTabName);
                 break;
             case Constant.FUND_INDEX:
-                getP().loadFundData(pageno, pageSize, "0", "3");
+                getP().loadFundData(pageno, pageSize, "0", "" + (isSelector + 1));
                 break;
         }
         list = new ArrayList<>();
-        list.add("一周涨幅");
-        list.add("近期涨幅");
+        list.add("日涨幅");
+        list.add("近7天");
+        list.add("近1月");
+        list.add("近3月");
+        list.add("近半年");
+        list.add("今年以来");
+        list.add("近1年");
+        list.add("近2年");
+        list.add("近3年");
+        list.add("成立以来");
 //        getP().loadData();
         tvRange.setText(list.get(isSelector));
 
@@ -94,12 +101,12 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
                 .setOnRefreshAndLoadMoreListener(new XRecyclerView.OnRefreshAndLoadMoreListener() {
                     @Override
                     public void onRefresh() {
-                        getP().loadFundData(1, 10, "0", "3");
+                        getP().loadFundData(1, 10, "0", "" + (isSelector + 1));
                     }
 
                     @Override
                     public void onLoadMore(int page) {
-                        getP().loadFundData(page, pageSize, "0", "3");
+                        getP().loadFundData(page, pageSize, "0", "" + (isSelector + 1));
                     }
                 });
 
@@ -123,6 +130,7 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
                     public void setRange(int position) {
                         isSelector = position;
                         tvRange.setText(list.get(position));
+                        getP().loadFundData(1, 10, "0", "" + (isSelector + 1));
                     }
                 });
             }
@@ -139,7 +147,8 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
                         Bundle bundle = new Bundle();
                         bundle.putInt(Constant.WEB_TITLE, R.string.fund_detail);
                         bundle.putString(Constant.WEB_LINK, "file:///android_asset/javascript.html");
-                        bundle.putParcelable(Constant.FUND_RESP_OBJECT, model);
+                        bundle.putString(Constant.FUND_DETAIL_CODE, model.getFund_code());
+                        bundle.putString(Constant.FUND_DETAIL_NAME, model.getFund_name());
                         startActivity(FundDetailWebActivity.class, bundle);
                         break;
                 }
@@ -180,7 +189,6 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
             contentLayout.getRecyclerView().setPage(pageno, pageno + 1);
         } else {
             //没有更多数据了
-            showToast("没有更多数据了");
             contentLayout.getRecyclerView().setPage(pageno, pageno - 1);
         }
     }

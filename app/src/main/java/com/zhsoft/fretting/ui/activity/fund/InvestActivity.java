@@ -2,7 +2,10 @@ package com.zhsoft.fretting.ui.activity.fund;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,14 +16,25 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.model.ApplyBaseInfo;
+import com.zhsoft.fretting.model.fund.BuyFundResp;
+import com.zhsoft.fretting.model.fund.GetNextTimeResp;
+import com.zhsoft.fretting.model.fund.InvestResp;
+import com.zhsoft.fretting.model.fund.InvestSureResp;
+import com.zhsoft.fretting.model.user.BankCardResp;
 import com.zhsoft.fretting.present.fund.InvestPersent;
 import com.zhsoft.fretting.ui.activity.user.BankCardActivity;
 import com.zhsoft.fretting.ui.activity.user.FindPwdTradeFirstActivity;
+import com.zhsoft.fretting.ui.widget.CitySelectPopupWindow;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.ui.widget.FundBuyDialog;
 import com.zhsoft.fretting.ui.widget.PopShow;
+import com.zhsoft.fretting.ui.widget.SelectPopupWindow;
+import com.zhsoft.fretting.utils.Base64ImageUtil;
+import com.zhsoft.fretting.utils.BigDecimalUtil;
 import com.zhsoft.fretting.utils.KeyBoardUtils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -29,6 +43,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
+import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
@@ -62,12 +77,16 @@ public class InvestActivity extends XActivity<InvestPersent> {
 
     /** 定投周期选择 */
     private int cycleSelector = 1;
-    /** 定投日选择 */
-    private int daySelector;
+    /** 定投周期选择编号 */
+    private String cycleSelectorCode;
+    /** 定投日选择编号 */
+    private String daySelectorCode;
     /** 周期集合 */
-    private List<String> cycleList;
+    private ArrayList<ApplyBaseInfo> cycleList;
     /** 周期对应的定投日总集合 */
-    private Map<String, ArrayList<String>> dayMap;
+    private Map<String, ArrayList<ApplyBaseInfo>> dayMap;
+    /** 周期弹出框 */
+    private SelectPopupWindow cyclePopupWindow;
     /** 交易密码弹出框 */
     private FundBuyDialog fundBuyDialog;
     /** 结果弹出框 */
@@ -80,6 +99,14 @@ public class InvestActivity extends XActivity<InvestPersent> {
     private String token;
     /** 用户编号 */
     private String userId;
+    /** 得到的用户购买准备数据 */
+    private InvestResp investResp;
+    /** 基金代码 */
+    private String fundCode;
+    /** 基金名称 */
+    private String fundName;
+    /** 首次交易月 */
+    private String first_trade_month;
 
     @Override
     public int getLayoutId() {
@@ -105,41 +132,121 @@ public class InvestActivity extends XActivity<InvestPersent> {
         //如果是定投页面
         if (Constant.INVEST_ACTIVITY.equals(type)) {
             sure.setText("确定购买");
-            getP().myBankCard(token, userId);
+//            getP().myBankCard(token, userId);
         } else if (Constant.INVEST_ACTIVITY_UPDATE.equals(type)) {
             sure.setText("确定修改");
-            getP().myBankCard(token, userId);
+//            getP().myBankCard(token, userId);
+        }
+        //初始化选择器数据
+        initWeeklyList();
+        //初始化选择器
+        initPopWindow();
+
+        if (bundle != null) {
+            fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
+            fundName = bundle.getString(Constant.FUND_DETAIL_NAME);
+            investResp = (InvestResp) bundle.getParcelable(Constant.INVEST_FUND_OBJECT);
+            //获取到基金数据
+            //获取 图片Base64 字符串
+            if (investResp != null) {
+                refreshBankView(investResp.getBankCardPageEntity());
+
+                //最小投资金额
+                etAmount.setHint("最低购买金额" + investResp.getMinPurchaseAmt().intValue() + "元");
+                //首次交易月
+                first_trade_month = investResp.getFirst_trade_month();
+                //下次扣款日
+                tvNextTime.setText("注：下次扣款日：" + investResp.getExchdate() + " " + investResp.getExchWeek());
+                //定投周期
+                cycleSelectorCode = investResp.getProtocol_period_unit();
+                for (int i = 0; i < cycleList.size(); i++) {
+                    if (cycleList.get(i).getCode().equals(investResp.getProtocol_period_unit())) {
+                        cycleSelector = i;
+                        etInvestWeek.setText(cycleList.get(i).getContent());
+                        break;
+                    }
+                }
+                //定投日
+                daySelectorCode = investResp.getFirst_exchdate();
+                ArrayList<ApplyBaseInfo> selectList = dayMap.get(cycleList.get(cycleSelector).getContent());
+                for (int j = 0; j < selectList.size(); j++) {
+                    if (selectList.get(j).getCode().equals(investResp.getFirst_exchdate())) {
+                        etInvestDay.setText(selectList.get(j).getContent());
+                        break;
+                    }
+                }
+
+            }
         }
 
+    }
+
+    /**
+     * 初始化周期集合
+     */
+    public void initWeeklyList() {
         //定投周期分类 集合
         cycleList = new ArrayList<>();
-        cycleList.add("每周");
-        cycleList.add("每月");
+        ApplyBaseInfo per_week = new ApplyBaseInfo("1", "每周");
+        ApplyBaseInfo per_month = new ApplyBaseInfo("0", "每月");
+        cycleList.add(per_week);
+        cycleList.add(per_month);
         //周集合
-        ArrayList<String> weekList = new ArrayList<>();
-        weekList.add("星期一");
-        weekList.add("星期二");
-        weekList.add("星期三");
-        weekList.add("星期四");
-        weekList.add("星期五");
+        ArrayList<ApplyBaseInfo> weekList = new ArrayList<>();
+        ApplyBaseInfo monday = new ApplyBaseInfo("02", "星期一");
+        ApplyBaseInfo tuesday = new ApplyBaseInfo("03", "星期二");
+        ApplyBaseInfo wednesday = new ApplyBaseInfo("04", "星期三");
+        ApplyBaseInfo thursday = new ApplyBaseInfo("05", "星期四");
+        ApplyBaseInfo friday = new ApplyBaseInfo("06", "星期五");
+        weekList.add(monday);
+        weekList.add(tuesday);
+        weekList.add(wednesday);
+        weekList.add(thursday);
+        weekList.add(friday);
+
         //日集合
-        ArrayList<String> dayList = new ArrayList<>();
+        ArrayList<ApplyBaseInfo> dayList = new ArrayList<>();
         for (int i = 1; i < 29; i++) {
-            dayList.add(i + "日");
+            String stri;
+            if (i < 10) {
+                stri = "0" + i;
+            } else {
+                stri = "" + i;
+            }
+            ApplyBaseInfo dayInfo = new ApplyBaseInfo(stri, stri);
+            dayList.add(dayInfo);
         }
 
         dayMap = new HashMap<>();
-        dayMap.put(cycleList.get(0), weekList);
-        dayMap.put(cycleList.get(1), dayList);
-        //一进入定投页面，默认周期为月
-        etInvestWeek.setText(cycleList.get(cycleSelector));
-        //TODO 定投日为明天 获取今天的日期
-        Calendar calendar = Calendar.getInstance();
-        daySelector = calendar.get(Calendar.DAY_OF_MONTH);
-
-        etInvestDay.setText(dayList.get(daySelector));
-
+        dayMap.put(cycleList.get(0).getContent(), weekList);
+        dayMap.put(cycleList.get(1).getContent(), dayList);
     }
+
+    /**
+     * 初始化弹出框
+     */
+    private void initPopWindow() {
+        //初始化周期弹出框
+        cyclePopupWindow = new SelectPopupWindow(this, cycleList);
+        cyclePopupWindow.setCallBack(new SelectPopupWindow.CallBack() {
+            @Override
+            public void onSelectChange(int currentItem, String name) {
+                //上一次选择的周期
+                String lastChoose = getText(etInvestWeek);
+                //设置选择的内容
+                etInvestWeek.setText(name);
+                //选择的位置（周期类型）
+                cycleSelector = currentItem;
+                //获得选择的周期编码
+                cycleSelectorCode = cycleList.get(currentItem).getCode();
+                //如果周期选择发生改变，则日期选择置空
+                if (!getText(etInvestWeek).equals(lastChoose)) {
+                    etInvestDay.setText("");
+                }
+            }
+        });
+    }
+
 
     @Override
     public void initEvents() {
@@ -154,21 +261,8 @@ public class InvestActivity extends XActivity<InvestPersent> {
             public void onClick(View view) {
                 //关闭当前输入框
                 KeyBoardUtils.closeKeybord(InvestActivity.this);
-                //上一次选择的周期
-                final String lastChoose = getText(etInvestWeek);
-                PopShow popShow = new PopShow(context, etInvestWeek);
-                popShow.showText(cycleList);
-                popShow.setOnClickPop(new PopShow.OnClickPop() {
-                    @Override
-                    public void setRange(int position) {
-                        etInvestWeek.setText(cycleList.get(position));
-                        cycleSelector = position;
-                        if (!getText(etInvestWeek).equals(lastChoose)) {
-                            etInvestDay.setText("");
-                        }
-                    }
-                });
-
+                //显示窗口
+                cyclePopupWindow.showAtLocation(etInvestWeek, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
             }
         });
 
@@ -177,33 +271,53 @@ public class InvestActivity extends XActivity<InvestPersent> {
             public void onClick(View view) {
                 //关闭当前输入框
                 KeyBoardUtils.closeKeybord(InvestActivity.this);
+                if (!isNotEmpty(getText(etInvestWeek))) {
+                    showToast("请选择定投周期");
+                    return;
+                }
                 //上一次选择的定投日
                 final String lastDayChoose = getText(etInvestDay);
-                final ArrayList<String> selectList = dayMap.get(cycleList.get(cycleSelector));
+                final ArrayList<ApplyBaseInfo> selectList = dayMap.get(cycleList.get(cycleSelector).getContent());
 
-                final PopShow popShow = new PopShow(context, etInvestDay);
-                popShow.showText(selectList);
-                popShow.setOnClickPop(new PopShow.OnClickPop() {
+                //初始化 日弹出框
+                SelectPopupWindow dayPopupWindow = new SelectPopupWindow(context, selectList);
+                dayPopupWindow.setCallBack(new SelectPopupWindow.CallBack() {
                     @Override
-                    public void setRange(int position) {
-                        etInvestDay.setText(selectList.get(position));
-//                        daySelector = position;
+                    public void onSelectChange(int currentItem, String name) {
+                        etInvestDay.setText(name);
+                        daySelectorCode = selectList.get(currentItem).getCode();
                         if (isNotEmpty(getText(etInvestDay)) && !getText(etInvestDay).equals(lastDayChoose)) {
-//                            showToast("内容改变啦");
                             //TODO 请求接口得到扣款日期 下次扣款时间：2017-12-18，遇非交易日顺延
-                            getP().nextDeductTime(token, userId);
-                            tvNextTime.setText("下次扣款时间：2018-1-" + (position + 1) + "，遇非交易日顺延");
+                            getP().nextDeductTime("7af37b692611438cbda677386223bd0d", "ffa68a63c1e34aa48d17088e33d39b4f",
+                                    fundCode, cycleSelectorCode, daySelectorCode);
                         }
-
                     }
                 });
+                //显示窗口
+                dayPopupWindow.showAtLocation(etInvestDay, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
+
+
+//                final PopShow popShow = new PopShow(context, etInvestDay);
+//                popShow.showTextWithCode(selectList);
+//                popShow.setOnClickPop(new PopShow.OnClickPop() {
+//                    @Override
+//                    public void setRange(int position) {
+//                        etInvestDay.setText(selectList.get(position).getContent());
+////                        daySelector = position;
+//                        if (isNotEmpty(getText(etInvestDay)) && !getText(etInvestDay).equals(lastDayChoose)) {
+////                            showToast("内容改变啦");
+//                            getP().nextDeductTime("7af37b692611438cbda677386223bd0d", "ffa68a63c1e34aa48d17088e33d39b4f",
+//                                    fundCode, cycleList.get(cycleSelector).getCode(), selectList.get(position).getCode());
+//                        }
+//
+//                    }
+//                });
             }
         });
         sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 final String strAmount = getText(etAmount);
-                int amount = Integer.parseInt(strAmount);
 
                 //表单验证通过才弹出Dialog
                 if (noNetWork()) {
@@ -214,9 +328,12 @@ public class InvestActivity extends XActivity<InvestPersent> {
                     showToast("请输入购买金额");
                     return;
                 }
+
+                int amount = Integer.parseInt(strAmount);
+                int minAmt = investResp.getMinPurchaseAmt().intValue();
                 //TODO 如果amount小于最小购买金额，重新填写购买金额
-                if (amount < 100) {
-                    showToast("最小投资金额为100元");
+                if (amount < minAmt) {
+                    showToast("最小投资金额为" + minAmt + "元");
                     return;
                 }
                 if (!isNotEmpty(getText(etInvestWeek))) {
@@ -229,43 +346,43 @@ public class InvestActivity extends XActivity<InvestPersent> {
                 }
                 fundBuyDialog = new FundBuyDialog
                         .Builder(context)
-                        .setFundName("国泰哈哈哈基金")
+                        .setFundName(fundName)
                         .setFundAmount("￥" + strAmount + ".00")
                         .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
                             @Override
                             public void onFinish(String str) {
                                 fundBuyDialog.dismiss();
-                                //TODO 判断密码是否正确
-                                if ("123456".equals(str)) {
 //                                    showToast("密码正确");
-                                    //TODO 密码正确 请求接口 跳转到定投成功
-                                    //如果是定投页面
-                                    if (Constant.INVEST_ACTIVITY.equals(type)) {
-                                        //TODO 确定购买
-                                        getP().sureInvest(token, userId, "22222222", strAmount, getText(etInvestWeek), getText(etInvestDay));
-                                    } else if (Constant.INVEST_ACTIVITY_UPDATE.equals(type)) {
-                                        //TODO 确定修改
-                                        getP().updateInvest(token, userId, "22222222", strAmount, getText(etInvestWeek), getText(etInvestDay));
-                                    }
-                                    startActivity(InvestSuccessActivity.class);
-                                } else {
-                                    customDialog = new CustomDialog.Builder(context)
-                                            .setMessage("交易密码错误，请重试")
-                                            .setNegativeButton("忘记密码", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    customDialog.dismiss();
-                                                    startActivity(FindPwdTradeFirstActivity.class);
-                                                }
-                                            }).setPositiveButton("再试一次", new DialogInterface.OnClickListener() {
-                                                @Override
-                                                public void onClick(DialogInterface dialogInterface, int i) {
-                                                    customDialog.dismiss();
-                                                    fundBuyDialog.show();
-                                                }
-                                            }).create();
-                                    customDialog.show();
+                                //TODO 密码正确 请求接口 跳转到定投成功
+                                //如果是定投页面
+                                if (Constant.INVEST_ACTIVITY.equals(type)) {
+                                    //TODO 确定购买
+                                    getP().sureInvest("7af37b692611438cbda677386223bd0d", "ffa68a63c1e34aa48d17088e33d39b4f", fundCode,
+                                            fundName, strAmount, first_trade_month, cycleSelectorCode, daySelectorCode, str);
+                                } else if (Constant.INVEST_ACTIVITY_UPDATE.equals(type)) {
+                                    //TODO 确定修改
+                                    getP().sureInvest("7af37b692611438cbda677386223bd0d", "ffa68a63c1e34aa48d17088e33d39b4f", fundCode,
+                                            fundName, strAmount, first_trade_month, cycleSelectorCode, daySelectorCode, str);
                                 }
+
+//                                } else {
+//                                    customDialog = new CustomDialog.Builder(context)
+//                                            .setMessage("交易密码错误，请重试")
+//                                            .setNegativeButton("忘记密码", new DialogInterface.OnClickListener() {
+//                                                @Override
+//                                                public void onClick(DialogInterface dialogInterface, int i) {
+//                                                    customDialog.dismiss();
+//                                                    startActivity(FindPwdTradeFirstActivity.class);
+//                                                }
+//                                            }).setPositiveButton("再试一次", new DialogInterface.OnClickListener() {
+//                                                @Override
+//                                                public void onClick(DialogInterface dialogInterface, int i) {
+//                                                    customDialog.dismiss();
+//                                                    fundBuyDialog.show();
+//                                                }
+//                                            }).create();
+//                                    customDialog.show();
+//                                }
                             }
                         }).create();
                 fundBuyDialog.show();
@@ -283,34 +400,23 @@ public class InvestActivity extends XActivity<InvestPersent> {
     /**
      * 请求我的银行卡信息成功 数据显示
      */
-    public void requestMyBankSuccess() {
-        //获取到基金数据
-//        bankCardResp = resp;
-        //获取 图片Base64 字符串
-//        String strimage = resp.getBankLogo();
-//        if (!TextUtils.isEmpty(strimage)) {
-//            //将Base64图片串转换成Bitmap
-//            Bitmap bitmap = Base64ImageUtil.base64ToBitmap(strimage);
-//            bankImage.setImageBitmap(bitmap);
-//        }
-        //银行卡名称和尾号
-//        bankName.setText(resp.getBankName() + "（" + resp.getBankNoTail() + "）");
-        //银行限额
-//        bankLimit.setText("单笔限额" + resp.getLimit_per_payment() + "万，单日限额" + resp.getLimit_per_day() + "万，单月限额" + resp.getLimit_per_month() + "万");
-
+    public void requestInvestSuccess(BankCardResp resp) {
+        //刷新银行卡数据
+        refreshBankView(resp);
     }
 
     /**
      * 请求我的银行卡信息失败
      */
-    public void requestMyBankFail() {
+    public void requestInvestFail() {
     }
 
     /**
      * 请求扣款时间成功 返回扣款时间
      */
-    public void requestDeductTimeSuccess() {
-//        tvNextTime.setText("下次扣款时间：2018-1-" + (position + 1) + "，遇非交易日顺延");
+    public void requestDeductTimeSuccess(GetNextTimeResp timeResp) {
+        first_trade_month = timeResp.getFirst_trade_month();
+        tvNextTime.setText("下次扣款日：" + timeResp.getExchdate() + " " + timeResp.getExchWeek());
     }
 
     /**
@@ -323,8 +429,9 @@ public class InvestActivity extends XActivity<InvestPersent> {
     /**
      * 确认购买成功
      */
-    public void requestSureInvestSuccess() {
-//        startActivity(InvestSuccessActivity.class);
+    public void requestSureInvestSuccess(InvestSureResp sureResp) {
+        //TODO 传值
+        startActivity(InvestSuccessActivity.class);
     }
 
     /**
@@ -355,8 +462,32 @@ public class InvestActivity extends XActivity<InvestPersent> {
             //如果修改了银行卡就刷新本页面数据
             if (Constant.CHANGE_BANK_SUCCESS.equals(isChange)) {
                 //TODO 获取银行卡数据
-                getP().myBankCard(token, userId);
+//                getP().myBankCard(token, userId);
+                token = "7af37b692611438cbda677386223bd0d";
+                userId = "ffa68a63c1e34aa48d17088e33d39b4f";
+                String fund_code = "050003";
+                //TODO 判断是否能够定投
+                getP().investTime(token, userId, fund_code, fundName);
             }
         }
+    }
+
+    /**
+     * 刷新银行卡视图
+     *
+     * @param bankCardResp
+     */
+    public void refreshBankView(BankCardResp bankCardResp) {
+        String strimage = bankCardResp.getBankLogo();
+        if (!TextUtils.isEmpty(strimage)) {
+            //将Base64图片串转换成Bitmap
+            Bitmap bitmap = Base64ImageUtil.base64ToBitmap(strimage);
+            bankImage.setImageBitmap(bitmap);
+        }
+        //银行卡名称和尾号
+        bankName.setText(bankCardResp.getBankName() + "（" + bankCardResp.getBankNoTail() + "）");
+        //银行限额
+        bankLimit.setText("单笔限额" + bankCardResp.getLimit_per_payment() + "万，单日限额" + bankCardResp.getLimit_per_day() + "万");
+
     }
 }

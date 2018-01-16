@@ -1,4 +1,4 @@
-package com.zhsoft.fretting.ui.activity.fund;
+package com.zhsoft.fretting.ui.activity.boot;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
@@ -24,10 +24,13 @@ import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
+import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.present.fund.FundDetailPresent;
+import com.zhsoft.fretting.ui.activity.fund.BuyActivity;
+import com.zhsoft.fretting.ui.activity.fund.InvestActivity;
 import com.zhsoft.fretting.ui.activity.user.LoginActivity;
 import com.zhsoft.fretting.ui.activity.user.PersonInfoActivity;
 import com.zhsoft.fretting.ui.activity.user.RegisterSecondActivity;
@@ -48,13 +51,12 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
 
-    //页面标题
-//    @BindView(R.id.title_view)
-//    TitleView titleView;
     /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
+    /** 右侧图片按钮 */
+    @BindView(R.id.head_right_imgbtn) ImageButton headRightImgbtn;
     /** WebView */
     @BindView(R.id.my_web)
     WebView mWeb;
@@ -66,8 +68,10 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
     private String token;
     /** 用户编号 */
     private String userId;
-    /** 基金对象 */
-    private NewestFundResp fundResp;
+    /** 基金代码 */
+    private String fundCode;
+    /** 基金名称 */
+    private String fundName;
 
     /** 去开户 弹出框 */
     private CustomDialog openAccountDialog;
@@ -107,11 +111,22 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
 
     @Override
     public void initData(Bundle bundle) {
-
+        //右侧搜索按钮
+        headRightImgbtn.setVisibility(View.VISIBLE);
+        headRightImgbtn.setImageResource(R.mipmap.icon_query);
+        //标题
         int title = bundle.getInt(Constant.WEB_TITLE);
+        //链接
         String link = bundle.getString(Constant.WEB_LINK);
-//        fundResp = (NewestFundResp) bundle.getParcelable(Constant.FUND_RESP_OBJECT);
-//        titleView.setTitle(context, title);
+        //基金代码
+        fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
+        //基金名称
+        fundName = bundle.getString(Constant.FUND_DETAIL_NAME);
+        //用户登录标识
+        token = App.getSharedPref().getString(Constant.TOKEN, "");
+        //用户编号
+        userId = App.getSharedPref().getString(Constant.USERID, "");
+        //设置标题
         headTitle.setText(title);
         pb.setMax(100);
 
@@ -139,6 +154,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
 //                    }
 //                });
             }
+
             @Override
             public void onReceivedSslError(WebView view,
                                            SslErrorHandler handler, SslError error) {
@@ -202,6 +218,9 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
                 headTitle.setText(title);
             }
         });
+        //添加header
+        String ua = webSettings.getUserAgentString();
+        webSettings.setUserAgentString(ua.replace("appType", "Android"));
 
         link = link + "?fund_code=050001";
         XLog.e(link);
@@ -222,6 +241,12 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             @Override
             public void onClick(View view) {
                 onBackPressed();
+            }
+        });
+        headRightImgbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(SearchActivity.class);
             }
         });
     }
@@ -246,9 +271,18 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             public void toBuy() {
                 baseToBuy();
             }
+
+            @Override
+            public void toInvest() {
+                baseToInvest();
+            }
         });
     }
 
+
+    /**
+     * 登录
+     */
     private void baseToLogin() {
         showToast("调用了Android代码");
         if (loginDialog == null) {
@@ -275,15 +309,33 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         loginDialog.show();
     }
 
+    /**
+     * 购买
+     */
     private void baseToBuy() {
+        if (RuntimeHelper.getInstance().isLogin()) {
+
+            getP().buyFund(token, userId, fundCode);
+        } else {
+            //跳转回登录界面
+            Bundle bundle = new Bundle();
+            bundle.putString(Constant.SKIP_SIGN, Constant.WEB_ACTIVITY);
+            startActivity(LoginActivity.class, bundle);
+        }
+    }
+
+    /**
+     * 定投
+     */
+    private void baseToInvest() {
         if (RuntimeHelper.getInstance().isLogin()) {
 //            token = App.getSharedPref().getString(Constant.TOKEN, "");
 //            userId = App.getSharedPref().getString(Constant.USERID, "");
-            token = "8d9f2d6690904d569c1b27133d692db1";
-            userId = "0f4ddf4852e644598d7ade9edc433e87";
-            String fund_code = "050001";
-
-            getP().buyFund(token, userId, fund_code);
+//        token = "7af37b692611438cbda677386223bd0d";
+//        userId = "ffa68a63c1e34aa48d17088e33d39b4f";
+//        String fund_code = "050003";
+        //TODO 判断是否能够定投
+        getP().investTime(token, userId, fundCode, fundName);
         } else {
             //跳转回登录界面
             Bundle bundle = new Bundle();
@@ -414,6 +466,8 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
                                 validateDialog.dismiss();
                                 //去购买
                                 Bundle bundle = new Bundle();
+                                bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
+                                bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
                                 bundle.putParcelable(Constant.BUY_FUND_OBJECT, resp);
                                 startActivity(BuyActivity.class, bundle);
                             }
@@ -421,11 +475,37 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             }
             validateDialog.show();
         } else {
+
             //去购买
             Bundle bundle = new Bundle();
+            bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
+            bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
             bundle.putParcelable(Constant.BUY_FUND_OBJECT, resp);
             startActivity(BuyActivity.class, bundle);
         }
 
+    }
+
+    /**
+     * 请求定投验证接口失败
+     */
+    public void requestInvestFail() {
+
+    }
+
+    /**
+     * 请求定投验证接口成功
+     *
+     * @param resp
+     */
+    public void requestInvestSuccess(InvestResp resp) {
+        XLog.e(resp.getBankCardPageEntity().getBankName());
+        //去定投
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.INVEST_ACTIVITY_TYPE, Constant.INVEST_ACTIVITY);
+        bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
+        bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
+        bundle.putParcelable(Constant.INVEST_FUND_OBJECT, resp);
+        startActivity(InvestActivity.class, bundle);
     }
 }

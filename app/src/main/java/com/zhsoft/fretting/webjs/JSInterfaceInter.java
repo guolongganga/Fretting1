@@ -6,8 +6,13 @@ package com.zhsoft.fretting.webjs;
  */
 
 public interface JSInterfaceInter {
+    //登录
     void toLogin();
 
+    //购买
     void toBuy();
+
+    //定投
+    void toInvest();
 
 }

@@ -1,4 +1,4 @@
-package com.zhsoft.fretting.model.user;
+package com.zhsoft.fretting.model;
 
 import java.io.Serializable;
 

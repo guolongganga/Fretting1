@@ -19,7 +19,7 @@ import com.zhsoft.fretting.model.user.OccupationResp;
 import com.zhsoft.fretting.model.user.PersonInfoResp;
 import com.zhsoft.fretting.present.user.PersonInfoPresent;
 import com.zhsoft.fretting.ui.widget.PopShow;
-import com.zhsoft.fretting.ui.widget.PostionSelectPopupWindow;
+import com.zhsoft.fretting.ui.widget.CitySelectPopupWindow;
 import com.zhsoft.fretting.utils.KeyBoardUtils;
 import com.zhsoft.fretting.ui.widget.ChenJingET;
 
@@ -84,7 +84,7 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
     /** 登录标识 */
     private String token;
     /** 地址弹出框 */
-    private PostionSelectPopupWindow popupWindow;
+    private CitySelectPopupWindow popupWindow;
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
     /** 职业集合 */
@@ -122,8 +122,8 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
         //请求个人信息接口
         getP().getUserInfo(token, userId);
 
-        popupWindow = new PostionSelectPopupWindow(this);
-        popupWindow.setCallBack(new PostionSelectPopupWindow.CallBack() {
+        popupWindow = new CitySelectPopupWindow(this);
+        popupWindow.setCallBack(new CitySelectPopupWindow.CallBack() {
             @Override
             public void onSelectChange(String name) {
                 address.setText(name);

@@ -138,6 +138,12 @@ public class Constant {
     //购买成功传递数据
     public static final String BUY_SUCCESS_OBJECT = "buy_success_object";
 
-    //基金列表-->基金详情页传递基金数据
-    public static final String FUND_RESP_OBJECT ="fund_resp_object" ;
+    //基金列表-->基金详情页传递基金代码
+    public static final String FUND_DETAIL_CODE = "fund_detail_code";
+
+    //基金列表-->基金详情页传递基金名称
+    public static final String FUND_DETAIL_NAME = "fund_detail_name";
+
+    //可以定投跳转定投页面携带参数
+    public static final String INVEST_FUND_OBJECT = "invest_fund_object";
 }

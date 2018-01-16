@@ -32,7 +32,7 @@ import javax.xml.parsers.SAXParserFactory;
  *
  * @author sunnyzeng
  */
-public class PostionSelectPopupWindow extends PopupWindow implements OnWheelChangedListener {
+public class CitySelectPopupWindow extends PopupWindow implements OnWheelChangedListener {
     private View mMenuView;
     private WheelView mViewProvince;
     private WheelView mViewCity;
@@ -48,12 +48,12 @@ public class PostionSelectPopupWindow extends PopupWindow implements OnWheelChan
         this.callBack = callBack;
     }
 
-    public PostionSelectPopupWindow(Context context) {
+    public CitySelectPopupWindow(Context context) {
         super(context);
         this.mContext = context;
         LayoutInflater inflater = (LayoutInflater) context
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mMenuView = inflater.inflate(R.layout.layout_postion_select, null);
+        mMenuView = inflater.inflate(R.layout.layout_city_select, null);
         Button onCancle = (Button) mMenuView.findViewById(R.id.btn_cancle);
         Button onComplete = (Button) mMenuView.findViewById(R.id.btn_complete);
         mViewProvince = (WheelView) mMenuView.findViewById(R.id.id_province);

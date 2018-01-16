@@ -1,8 +1,22 @@
 package com.zhsoft.fretting.present.fund;
 
+import com.zhsoft.fretting.model.ApplyBaseInfo;
+import com.zhsoft.fretting.model.BaseResp;
+import com.zhsoft.fretting.model.fund.GetNextTimeResp;
+import com.zhsoft.fretting.model.fund.InvestResp;
+import com.zhsoft.fretting.model.fund.InvestSureResp;
+import com.zhsoft.fretting.net.Api;
+import com.zhsoft.fretting.params.CommonReqData;
+import com.zhsoft.fretting.params.GetNextTimeParams;
+import com.zhsoft.fretting.params.InvestBuyParams;
+import com.zhsoft.fretting.params.InvestParams;
 import com.zhsoft.fretting.ui.activity.fund.InvestActivity;
 
+import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XPresent;
+import cn.droidlover.xdroidmvp.net.ApiSubscriber;
+import cn.droidlover.xdroidmvp.net.NetError;
+import cn.droidlover.xdroidmvp.net.XApi;
 
 /**
  * 作者：sunnyzeng on 2018/1/9 18:10
@@ -17,14 +31,38 @@ public class InvestPersent extends XPresent<InvestActivity> {
      * @param token
      * @param userId
      */
-    public void myBankCard(String token, String userId) {
-        if (true) {
-            //请求成功 返回实体
-            getV().requestMyBankSuccess();
-        } else {
-            //请求失败
-            getV().requestMyBankFail();
-        }
+    public void investTime(String token, String userId, String fund_code, String fund_name) {
+        CommonReqData reqData = new CommonReqData();
+        reqData.setToken(token);
+        reqData.setUserId(userId);
+        InvestParams params = new InvestParams();
+        params.setFundCode(fund_code);
+        params.setFund_name(fund_name);
+        reqData.setData(params);
+
+        Api.getApi().fundInvestTime(reqData)
+                .compose(XApi.<InvestResp>getApiTransformer())
+                .compose(XApi.<InvestResp>getScheduler())
+                .compose(getV().<InvestResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<InvestResp>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        getV().requestInvestFail();
+                        getV().showToast("请求失败");
+                    }
+
+                    @Override
+                    public void onNext(InvestResp resp) {
+                        if (resp != null && resp.getStatus() == 200) {
+                            getV().requestInvestSuccess(resp.getData().getBankCardPageEntity());
+                        } else {
+                            getV().requestInvestFail();
+                            getV().showToast(resp.getMessage());
+                            XLog.e("返回数据为空");
+                        }
+                    }
+                });
+
     }
 
     /**
@@ -33,33 +71,103 @@ public class InvestPersent extends XPresent<InvestActivity> {
      * @param token
      * @param userId
      */
-    public void nextDeductTime(String token, String userId) {
-        if (true) {
-            //请求成功 返回实体
-            getV().requestDeductTimeSuccess();
-        } else {
-            //请求失败
-            getV().requestDeductTimeFail();
-        }
+    public void nextDeductTime(String token, String userId, String fund_code, String protocol_period_unit, String first_exchdate) {
+        CommonReqData reqData = new CommonReqData();
+        reqData.setToken(token);
+        reqData.setUserId(userId);
+        GetNextTimeParams params = new GetNextTimeParams();
+        params.setFundCode(fund_code);
+        params.setProtocol_period_unit(protocol_period_unit);
+        params.setFirst_exchdate(first_exchdate);
+
+        reqData.setData(params);
+
+        Api.getApi()
+                .getNextTime(reqData)
+                .compose(XApi.<GetNextTimeResp>getApiTransformer())
+                .compose(XApi.<GetNextTimeResp>getScheduler())
+                .compose(getV().<GetNextTimeResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<GetNextTimeResp>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        //请求失败
+                        getV().requestDeductTimeFail();
+                        getV().showToast("请求失败");
+                    }
+
+                    @Override
+                    public void onNext(GetNextTimeResp resp) {
+                        if (resp != null && resp.getStatus() == 200) {
+                            //请求成功 返回实体
+                            getV().requestDeductTimeSuccess(resp.getData());
+                        } else {
+                            //请求失败
+                            getV().requestDeductTimeFail();
+                            getV().showToast(resp.getMessage());
+                            XLog.e("返回数据为空");
+                        }
+
+                    }
+                });
+
     }
 
     /**
-     * @param token      登录标识
-     * @param userId     用户编号
-     * @param fundCode   基金编码
-     * @param strAmount  购买金额
-     * @param investWeek 定投周期
-     * @param investDay  定投日
+     *
+     * @param token                登录标识
+     * @param userId               用户编号
+     * @param fundCode             基金编码
+     * @param fund_name            基金名称
+     * @param apply_sum            购买金额
+     * @param first_trade_month    首次交易月
+     * @param protocol_period_unit 定投周期
+     * @param fix_date             定投日
+     * @param password             密码
      */
-    public void sureInvest(String token, String userId, String fundCode, String strAmount, String investWeek, String investDay) {
+    public void sureInvest(String token, String userId, String fundCode, String fund_name, String apply_sum,
+                           String first_trade_month, String protocol_period_unit, String fix_date, String password) {
+        CommonReqData reqData = new CommonReqData();
+        reqData.setToken(token);
+        reqData.setUserId(userId);
 
-        if (true) {
-            //请求成功 返回实体
-            getV().requestSureInvestSuccess();
-        } else {
-            //请求失败
-            getV().requestSureInvestFail();
-        }
+        InvestBuyParams params = new InvestBuyParams();
+        params.setFundCode(fundCode);
+        params.setFund_name(fund_name);
+        params.setApply_sum(apply_sum);
+        params.setFirst_trade_month(first_trade_month);
+        params.setProtocol_period_unit(protocol_period_unit);
+        params.setFix_date(fix_date);
+        params.setPassword(password);
+
+        reqData.setData(params);
+
+        Api.getApi()
+                .fundTimesSave(reqData)
+                .compose(XApi.<InvestSureResp>getApiTransformer())
+                .compose(XApi.<InvestSureResp>getScheduler())
+                .compose(getV().<InvestSureResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<InvestSureResp>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        //请求失败
+                        getV().requestSureInvestFail();
+                        getV().showToast("请求失败");
+                    }
+
+                    @Override
+                    public void onNext(InvestSureResp resp) {
+                        if (resp != null && resp.getStatus() == 200) {
+                            //请求成功 返回实体
+                            getV().requestSureInvestSuccess(resp.getData());
+                        } else {
+                            //请求失败
+                            getV().requestSureInvestFail();
+                            getV().showToast(resp.getMessage());
+                            XLog.e("返回数据为空");
+                        }
+
+                    }
+                });
 
     }
 

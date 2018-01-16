@@ -95,7 +95,7 @@ public class BuyPresent extends XPresent<BuyActivity> {
                     public void onNext(BuyNowResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestBuyNowSuccess(resp.getData());
-                        } else if (resp != null && resp.getStatus() == 300) {
+                        } else if (resp != null && resp.getStatus() == 526) {
                             //密码错误状态码
                             getV().passwordError();
                         } else {

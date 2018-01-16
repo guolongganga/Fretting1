@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.zhsoft.fretting.model.BaseResp;
 
+import java.math.BigDecimal;
+
 /**
  * 作者：sunnyzeng on 2017/12/22 15:53
  * 描述：我的银行卡
@@ -21,6 +23,9 @@ public class BankCardResp extends BaseResp<BankCardResp> implements Parcelable {
     private String ta_acco;
     /** 是否能够更改银行卡  0代表不能 1代表能 */
     private String isCanChangeBankNo;
+    private String limit_per_day;
+    private String limit_per_month;
+    private String limit_per_payment;
 
     public String getBankLogo() {
         return bankLogo;
@@ -62,6 +67,30 @@ public class BankCardResp extends BaseResp<BankCardResp> implements Parcelable {
         this.isCanChangeBankNo = isCanChangeBankNo;
     }
 
+    public String getLimit_per_day() {
+        return limit_per_day;
+    }
+
+    public void setLimit_per_day(String limit_per_day) {
+        this.limit_per_day = limit_per_day;
+    }
+
+    public String getLimit_per_month() {
+        return limit_per_month;
+    }
+
+    public void setLimit_per_month(String limit_per_month) {
+        this.limit_per_month = limit_per_month;
+    }
+
+    public String getLimit_per_payment() {
+        return limit_per_payment;
+    }
+
+    public void setLimit_per_payment(String limit_per_payment) {
+        this.limit_per_payment = limit_per_payment;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -74,6 +103,9 @@ public class BankCardResp extends BaseResp<BankCardResp> implements Parcelable {
         dest.writeString(this.bankNoTail);
         dest.writeString(this.ta_acco);
         dest.writeString(this.isCanChangeBankNo);
+        dest.writeString(this.limit_per_day);
+        dest.writeString(this.limit_per_month);
+        dest.writeString(this.limit_per_payment);
     }
 
     public BankCardResp() {
@@ -85,6 +117,9 @@ public class BankCardResp extends BaseResp<BankCardResp> implements Parcelable {
         this.bankNoTail = in.readString();
         this.ta_acco = in.readString();
         this.isCanChangeBankNo = in.readString();
+        this.limit_per_day = in.readString();
+        this.limit_per_month = in.readString();
+        this.limit_per_payment = in.readString();
     }
 
     public static final Creator<BankCardResp> CREATOR = new Creator<BankCardResp>() {

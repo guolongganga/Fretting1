@@ -5,6 +5,9 @@ import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.model.TaetResp;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.BuyNowResp;
+import com.zhsoft.fretting.model.fund.GetNextTimeResp;
+import com.zhsoft.fretting.model.fund.InvestResp;
+import com.zhsoft.fretting.model.fund.InvestSureResp;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.model.index.IndexResp;
 import com.zhsoft.fretting.model.user.BankCardResp;
@@ -30,8 +33,12 @@ import static com.zhsoft.fretting.net.HttpContent.change_phone_index;
 import static com.zhsoft.fretting.net.HttpContent.change_phone_save;
 import static com.zhsoft.fretting.net.HttpContent.change_phone_sendcode;
 import static com.zhsoft.fretting.net.HttpContent.common_bank_list;
+import static com.zhsoft.fretting.net.HttpContent.find_fund_like;
 import static com.zhsoft.fretting.net.HttpContent.fund_home;
+import static com.zhsoft.fretting.net.HttpContent.fund_invest_time;
+import static com.zhsoft.fretting.net.HttpContent.fund_times_save;
 import static com.zhsoft.fretting.net.HttpContent.get_home;
+import static com.zhsoft.fretting.net.HttpContent.get_next_time;
 import static com.zhsoft.fretting.net.HttpContent.get_occupation;
 import static com.zhsoft.fretting.net.HttpContent.image_code;
 import static com.zhsoft.fretting.net.HttpContent.my_bankcard;
@@ -215,4 +222,23 @@ public interface HttpUtil {
     @POST(buy_now)
     Flowable<BuyNowResp> buyNow(@Body CommonReqData reqData);
 
+    //搜索基金
+    @Headers("appType:Android")
+    @POST(find_fund_like)
+    Flowable<NewestFundResp> findFundLike(@Body CommonReqData reqData);
+
+    //基金定投
+    @Headers("appType:Android")
+    @POST(fund_invest_time)
+    Flowable<InvestResp> fundInvestTime(@Body CommonReqData reqData);
+
+    //定投 根据选择时间 显示下次扣款日
+    @Headers("appType:Android")
+    @POST(get_next_time)
+    Flowable<GetNextTimeResp> getNextTime(@Body CommonReqData reqData);
+
+    //定投 购买
+    @Headers("appType:Android")
+    @POST(fund_times_save)
+    Flowable<InvestSureResp> fundTimesSave(@Body CommonReqData reqData);
 }
