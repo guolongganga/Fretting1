@@ -7,11 +7,14 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.ChangeTabEvent;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
@@ -67,14 +70,13 @@ public class RegisterSuccessActivity extends XActivity {
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                backDeal();
             }
         });
         btnFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(MainActivity.class);
-                finish();
+                backDeal();
             }
         });
         riskTest.setOnClickListener(new View.OnClickListener() {
@@ -89,4 +91,15 @@ public class RegisterSuccessActivity extends XActivity {
         });
     }
 
+    private void backDeal() {
+        EventBus.getDefault().post(new ChangeTabEvent(Constant.MAIN_MY));
+        startActivity(MainActivity.class);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        backDeal();
+    }
 }

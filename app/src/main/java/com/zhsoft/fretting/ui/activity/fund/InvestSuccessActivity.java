@@ -6,9 +6,12 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.ChangeTabEvent;
+import com.zhsoft.fretting.model.fund.InvestSureResp;
+import com.zhsoft.fretting.present.fund.InvestSuccessPresent;
 import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.ui.widget.ChenJingET;
 
@@ -22,7 +25,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  * 描述：定投页面
  */
 
-public class InvestSuccessActivity extends XActivity {
+public class InvestSuccessActivity extends XActivity<InvestSuccessPresent> {
     @BindView(R.id.head_back) ImageButton headBack;
     @BindView(R.id.head_title) TextView headTitle;
     @BindView(R.id.tv_fund_name) TextView tvFundName;
@@ -34,15 +37,20 @@ public class InvestSuccessActivity extends XActivity {
     @BindView(R.id.tv_last_number) TextView tvLastNumber;
     @BindView(R.id.tv_day_week) TextView tvDayWeek;
     @BindView(R.id.sure) Button sure;
-
+    private InvestSureResp sureResp;
+    /** 登录标识 */
+    private String token;
+    /** 用户编号 */
+    private String userId;
+    private String fundCode;
     @Override
     public int getLayoutId() {
         return R.layout.activity_fund_invest_success;
     }
 
     @Override
-    public Object newP() {
-        return null;
+    public InvestSuccessPresent newP() {
+        return new InvestSuccessPresent();
     }
 
     @Override
@@ -51,6 +59,20 @@ public class InvestSuccessActivity extends XActivity {
         ChenJingET.assistActivity(context);
         headBack.setVisibility(View.GONE);
         headTitle.setText("定投详情");
+        //获取缓存数据
+        token = App.getSharedPref().getString(Constant.TOKEN, "");
+        userId = App.getSharedPref().getString(Constant.USERID, "");
+        //获取页面参数
+        if (bundle != null) {
+            fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
+            sureResp = bundle.getParcelable(Constant.INVEST_SUCCESS_OBJECT);
+        }
+//        String scheduled_protocol_id = "13456777";
+        fundCode="050003";
+
+        getP().investSuccessData(token,userId,fundCode,sureResp.getScheduled_protocol_id());
+//        getP().investSuccessData(token,userId,fundCode,scheduled_protocol_id);
+
     }
 
     @Override
@@ -66,5 +88,16 @@ public class InvestSuccessActivity extends XActivity {
         });
     }
 
+    /**
+     * 请求失败
+     */
+    public void requestFail() {
+    }
 
+    /**
+     * 请求成功
+     * @param data
+     */
+    public void requestSuccess(Object data) {
+    }
 }

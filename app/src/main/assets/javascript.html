@@ -6,15 +6,16 @@
     <title>Carson_Ho</title>
 
     <script>
-         function callAndroid(){
+         function callLogin(){
             // 由于对象映射，所以调用connObj对象等于调用Android映射的对象
             connObj.toLogin();
          }
 
          // Android需要调用的方法
-   function callJS(token){
+   function callJS(token,userId){
       document.getElementById("show").value=token;
-      alert("Android调用了JS的callJS方法,token="+token);
+      document.getElementById("show2").value=userId;
+      alert("Android调用了JS的callJS方法,token="+token+",userId="+userId);
    }
 
    function callBuy(){
@@ -29,16 +30,20 @@
 
 
 
+
     </script>
 </head>
 
 <!-- 点击按钮则调用callAndroid（）方法  -->
 <body>
-<button type="button" id="button1" onclick="callAndroid()">点击调用Android代码</button>
-<button type="button" id="button2" onclick="callJS('1234')">点击调用callJS</button>
+<button type="button" id="button1" onclick="callLogin()">点击调用Android代码登录</button>
+<button type="button" id="button2" onclick="callJS('1234','12345678')">点击调用callJS</button>
 <button type="button" id="button3" onclick="callBuy()">购买</button>
 <button type="button" id="button4" onclick="callInvest()">定投</button>
+<br/>
 <input type="text" id="show"/>
+<br/>
+<input type="text" id="show2"/>
 
 </body>
 </html>

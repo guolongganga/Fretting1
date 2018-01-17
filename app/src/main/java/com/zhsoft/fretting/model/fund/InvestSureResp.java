@@ -1,5 +1,8 @@
 package com.zhsoft.fretting.model.fund;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.zhsoft.fretting.model.BaseResp;
 
 /**
@@ -7,7 +10,7 @@ import com.zhsoft.fretting.model.BaseResp;
  * 描述：
  */
 
-public class InvestSureResp extends BaseResp<InvestSureResp> {
+public class InvestSureResp extends BaseResp<InvestSureResp> implements Parcelable {
     /**
      * 申请编号 S 24 0 N v4.0.3.0
      */
@@ -44,4 +47,37 @@ public class InvestSureResp extends BaseResp<InvestSureResp> {
     public void setScheduled_protocol_id(String scheduled_protocol_id) {
         this.scheduled_protocol_id = scheduled_protocol_id;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.allot_no);
+        dest.writeString(this.next_fixrequest_date);
+        dest.writeString(this.scheduled_protocol_id);
+    }
+
+    public InvestSureResp() {
+    }
+
+    protected InvestSureResp(Parcel in) {
+        this.allot_no = in.readString();
+        this.next_fixrequest_date = in.readString();
+        this.scheduled_protocol_id = in.readString();
+    }
+
+    public static final Parcelable.Creator<InvestSureResp> CREATOR = new Parcelable.Creator<InvestSureResp>() {
+        @Override
+        public InvestSureResp createFromParcel(Parcel source) {
+            return new InvestSureResp(source);
+        }
+
+        @Override
+        public InvestSureResp[] newArray(int size) {
+            return new InvestSureResp[size];
+        }
+    };
 }

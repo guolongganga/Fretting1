@@ -13,9 +13,11 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.ChangeTabEvent;
 import com.zhsoft.fretting.event.OpenAccountEvent;
 import com.zhsoft.fretting.model.user.BankResp;
 import com.zhsoft.fretting.present.user.RegisterSecondPresent;
+import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
 import com.zhsoft.fretting.ui.widget.ChenJingET;
 
@@ -108,7 +110,7 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                backDeal();
             }
         });
 //        getVerifyCode.setOnClickListener(new View.OnClickListener() {
@@ -206,6 +208,7 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
                 httpLoadingDialog.setCanceledOnKeyBack();
                 getP().openAccount(userId, token, strUsername, strIdentity, getText(email), bankResp, strBanknumber, strPhone, strpwd);
 //                startActivity(RegisterSuccessActivity.class);
+//                finish();
             }
         });
         registerServiceSelect.setOnClickListener(new View.OnClickListener() {
@@ -274,5 +277,17 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
         bundle.putString(Constant.CERT_NO, getText(identity));
         startActivity(RegisterSuccessActivity.class, bundle);
         finish();
+    }
+
+    private void backDeal() {
+        EventBus.getDefault().post(new ChangeTabEvent(Constant.MAIN_MY));
+        startActivity(MainActivity.class);
+        finish();
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        backDeal();
     }
 }

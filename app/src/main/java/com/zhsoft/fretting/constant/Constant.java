@@ -82,29 +82,6 @@ public class Constant {
     //web页面 跳转登录页面 skip_sign
     public static final String WEB_ACTIVITY = "303";
 
-    //人气产品
-    public static final int POPULARITY = 1;
-    //基金主页
-    public static final int FUND_INDEX = 2;
-
-    //跳转银行列表 requestcode
-    public static final int BANKLIST_ACTIVITY = 100;
-
-    //银行卡列表选择之后回到之前页面 resultcode
-    public static final int BANKLIST_RESULT_CODE = 200;
-
-    //去修改手机页面 requestcode
-    public static final int CHANGE_PHONE_ACTIVITY = 101;
-
-    //修改手机号码成功后返回我的手机号码页面 resultcode
-    public static final int SUCCESS_BACK_PHONE = 201;
-
-    //定投购买 到 修改银行卡 requestcode
-    public static final int INVEST_BANK_ACTIVITY = 102;
-
-    //我的银行卡后 返回我的手机号码页面 resultcode
-    public static final int SUCCESS_BACK_BANK = 201;
-
     //投资页的类型，是定投，还是定投修改
     public static final String INVEST_ACTIVITY_TYPE = "invest_activity_type";
 
@@ -144,6 +121,42 @@ public class Constant {
     //基金列表-->基金详情页传递基金名称
     public static final String FUND_DETAIL_NAME = "fund_detail_name";
 
-    //可以定投跳转定投页面携带参数
+    //详情页点击定投跳转定投页面携带参数
     public static final String INVEST_FUND_OBJECT = "invest_fund_object";
+
+    //定投页 跳转定投成功 携带参数
+    public static final String INVEST_SUCCESS_OBJECT = "invest_success_object";
+
+
+    /********************************************* int ********************************************/
+
+    //人气产品
+    public static final int POPULARITY = 1;
+    //基金主页
+    public static final int FUND_INDEX = 2;
+
+    //跳转银行列表 requestcode
+    public static final int BANKLIST_ACTIVITY = 100;
+
+    //银行卡列表选择之后回到之前页面 resultcode
+    public static final int BANKLIST_RESULT_CODE = 200;
+
+    //去修改手机页面 requestcode
+    public static final int CHANGE_PHONE_ACTIVITY = 101;
+
+    //修改手机号码成功后返回我的手机号码页面 resultcode
+    public static final int SUCCESS_BACK_PHONE = 201;
+
+    //定投购买 到 修改银行卡 requestcode
+    public static final int INVEST_BANK_ACTIVITY = 102;
+
+    //我的银行卡后 返回我的手机号码页面 resultcode
+    public static final int SUCCESS_BACK_BANK = 202;
+
+    //跳转登录 requestcode
+    public static final int FUND_DETAIL_ACTIVITY = 103;
+
+    //登录返回基金详情页 resultcode
+    public static final int BACK_DETAIL_ACTIVITY = 203;
+
 }

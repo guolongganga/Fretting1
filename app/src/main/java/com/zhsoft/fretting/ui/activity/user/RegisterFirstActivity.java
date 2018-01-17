@@ -80,11 +80,11 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
      */
     @BindView(R.id.msg_code)
     EditText msgCode;
-    /**
-     * 选择已有账户
-     */
-    @BindView(R.id.to_login)
-    TextView toLogin;
+//    /**
+//     * 选择已有账户
+//     */
+//    @BindView(R.id.to_login)
+//    TextView toLogin;
     /**
      * 接收不到验证码
      */
@@ -158,17 +158,17 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(MainActivity.class);
+//                startActivity(MainActivity.class);
                 finish();
             }
         });
 
-        toLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(LoginActivity.class);
-            }
-        });
+//        toLogin.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(LoginActivity.class);
+//            }
+//        });
 
         messageFail.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -293,6 +293,7 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
                 getP().register(phone, pwd, code);
 
 //                startActivity(RegisterSecondActivity.class);//有接口就去掉
+//                finish();
 
             }
         });

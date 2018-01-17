@@ -19,6 +19,7 @@ import android.webkit.WebViewClient;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
@@ -126,6 +127,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         token = App.getSharedPref().getString(Constant.TOKEN, "");
         //用户编号
         userId = App.getSharedPref().getString(Constant.USERID, "");
+
         //设置标题
         headTitle.setText(title);
         pb.setMax(100);
@@ -222,7 +224,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         String ua = webSettings.getUserAgentString();
         webSettings.setUserAgentString(ua.replace("appType", "Android"));
 
-        link = link + "?fund_code=050001";
+        link = link + "?fund_code=050001&token=" + token + "&userId=" + userId;
         XLog.e(link);
         mWeb.loadUrl(link);
 
@@ -285,28 +287,47 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      */
     private void baseToLogin() {
         showToast("调用了Android代码");
-        if (loginDialog == null) {
-            loginDialog = new CustomDialog
-                    .Builder(context)
-                    .setMessage(R.string.user_common_no_login)
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            loginDialog.dismiss();
-                            //跳转回登录界面
-                            Bundle bundle = new Bundle();
-                            bundle.putString(Constant.SKIP_SIGN, Constant.WEB_ACTIVITY);
-                            startActivity(LoginActivity.class, bundle);
-                        }
-                    })
-                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            loginDialog.dismiss();
-                        }
-                    }).create();
+        if (RuntimeHelper.getInstance().isLogin()) {
+            //用户登录标识
+            token = App.getSharedPref().getString(Constant.TOKEN, "");
+            //用户编号
+            userId = App.getSharedPref().getString(Constant.USERID, "");
+            //调用js中的函数：showInfoFromJava(msg)
+            mWeb.post(new Runnable() {
+                @Override
+                public void run() {
+                    mWeb.loadUrl("javascript:callJS('" + token + "','" + userId + "')");
+                }
+            });
+
+        } else {
+            //跳转回登录界面
+            Bundle bundle = new Bundle();
+            bundle.putString(Constant.SKIP_SIGN, Constant.WEB_ACTIVITY);
+            startActivity(LoginActivity.class, bundle);
         }
-        loginDialog.show();
+//        if (loginDialog == null) {
+//            loginDialog = new CustomDialog
+//                    .Builder(context)
+//                    .setMessage(R.string.user_common_no_login)
+//                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialogInterface, int i) {
+//                            loginDialog.dismiss();
+//                            //跳转回登录界面
+//                            Bundle bundle = new Bundle();
+//                            bundle.putString(Constant.SKIP_SIGN, Constant.WEB_ACTIVITY);
+//                            startActivity(LoginActivity.class, bundle);
+//                        }
+//                    })
+//                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialogInterface, int i) {
+//                            loginDialog.dismiss();
+//                        }
+//                    }).create();
+//        }
+//        loginDialog.show();
     }
 
     /**
@@ -314,7 +335,10 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      */
     private void baseToBuy() {
         if (RuntimeHelper.getInstance().isLogin()) {
-
+            //用户登录标识
+            token = App.getSharedPref().getString(Constant.TOKEN, "");
+            //用户编号
+            userId = App.getSharedPref().getString(Constant.USERID, "");
             getP().buyFund(token, userId, fundCode);
         } else {
             //跳转回登录界面
@@ -329,13 +353,15 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      */
     private void baseToInvest() {
         if (RuntimeHelper.getInstance().isLogin()) {
-//            token = App.getSharedPref().getString(Constant.TOKEN, "");
-//            userId = App.getSharedPref().getString(Constant.USERID, "");
+            //用户登录标识
+            token = App.getSharedPref().getString(Constant.TOKEN, "");
+            //用户编号
+            userId = App.getSharedPref().getString(Constant.USERID, "");
 //        token = "7af37b692611438cbda677386223bd0d";
 //        userId = "ffa68a63c1e34aa48d17088e33d39b4f";
 //        String fund_code = "050003";
-        //TODO 判断是否能够定投
-        getP().investTime(token, userId, fundCode, fundName);
+            //TODO 判断是否能够定投
+            getP().investTime(token, userId, fundCode, fundName);
         } else {
             //跳转回登录界面
             Bundle bundle = new Bundle();

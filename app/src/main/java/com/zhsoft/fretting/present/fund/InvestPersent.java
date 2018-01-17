@@ -1,7 +1,5 @@
 package com.zhsoft.fretting.present.fund;
 
-import com.zhsoft.fretting.model.ApplyBaseInfo;
-import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.fund.GetNextTimeResp;
 import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.fund.InvestSureResp;
@@ -113,6 +111,7 @@ public class InvestPersent extends XPresent<InvestActivity> {
     }
 
     /**
+     * 确定投资
      *
      * @param token                登录标识
      * @param userId               用户编号

@@ -79,6 +79,8 @@ public class HttpContent {
     public static final String get_next_time = "noPermission/fund/times/getnextTime";
     /** 定投购买 */
     public static final String fund_times_save = "noPermission/fund/times/save";
+    /** 定投成功页 */
+    public static final String fund_times_succdetails = "noPermission/fund/times/succDetails";
 
 
     /************************************************ html页面 **************************************************/

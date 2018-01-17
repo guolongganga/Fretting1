@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -431,13 +432,18 @@ public class InvestActivity extends XActivity<InvestPersent> {
      */
     public void requestSureInvestSuccess(InvestSureResp sureResp) {
         //TODO 传值
-        startActivity(InvestSuccessActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.FUND_DETAIL_CODE,fundCode);
+        String ui = sureResp.getScheduled_protocol_id();
+        bundle.putParcelable(Constant.INVEST_SUCCESS_OBJECT,sureResp);
+        startActivity(InvestSuccessActivity.class,bundle);
     }
 
     /**
      * 确认购买失败
      */
     public void requestSureInvestFail() {
+//        startActivity(InvestSuccessActivity.class);
     }
 
     /**
