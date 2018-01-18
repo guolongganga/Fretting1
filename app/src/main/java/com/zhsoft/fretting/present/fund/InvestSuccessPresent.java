@@ -1,11 +1,8 @@
 package com.zhsoft.fretting.present.fund;
 
-import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.fund.InvestResp;
-import com.zhsoft.fretting.model.fund.InvestSureResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
-import com.zhsoft.fretting.params.InvestBuyParams;
 import com.zhsoft.fretting.params.InvestSuccessParams;
 import com.zhsoft.fretting.ui.activity.fund.InvestSuccessActivity;
 
@@ -22,7 +19,7 @@ import cn.droidlover.xdroidmvp.net.XApi;
 
 public class InvestSuccessPresent extends XPresent<InvestSuccessActivity> {
     /**
-     * 定投成功回显数据
+     * 定投成功回显 定投详情数据
      *
      * @param token
      * @param userId
@@ -42,10 +39,10 @@ public class InvestSuccessPresent extends XPresent<InvestSuccessActivity> {
 
         Api.getApi()
                 .fundTimesSuccDetails(reqData)
-                .compose(XApi.<BaseResp>getApiTransformer())
-                .compose(XApi.<BaseResp>getScheduler())
-                .compose(getV().<BaseResp>bindToLifecycle())
-                .subscribe(new ApiSubscriber<BaseResp>() {
+                .compose(XApi.<InvestResp>getApiTransformer())
+                .compose(XApi.<InvestResp>getScheduler())
+                .compose(getV().<InvestResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<InvestResp>() {
                     @Override
                     protected void onFail(NetError error) {
                         //请求失败
@@ -54,7 +51,7 @@ public class InvestSuccessPresent extends XPresent<InvestSuccessActivity> {
                     }
 
                     @Override
-                    public void onNext(BaseResp resp) {
+                    public void onNext(InvestResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             //请求成功 返回实体
                             getV().requestSuccess(resp.getData());

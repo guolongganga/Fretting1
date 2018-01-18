@@ -246,5 +246,5 @@ public interface HttpUtil {
     //定投 购买
     @Headers("appType:Android")
     @POST(fund_times_succdetails)
-    Flowable<BaseResp> fundTimesSuccDetails(@Body CommonReqData reqData);
+    Flowable<InvestResp> fundTimesSuccDetails(@Body CommonReqData reqData);
 }

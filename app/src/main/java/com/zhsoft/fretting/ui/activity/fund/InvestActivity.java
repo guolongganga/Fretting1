@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -18,7 +17,6 @@ import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.ApplyBaseInfo;
-import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.GetNextTimeResp;
 import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.fund.InvestSureResp;
@@ -26,25 +24,18 @@ import com.zhsoft.fretting.model.user.BankCardResp;
 import com.zhsoft.fretting.present.fund.InvestPersent;
 import com.zhsoft.fretting.ui.activity.user.BankCardActivity;
 import com.zhsoft.fretting.ui.activity.user.FindPwdTradeFirstActivity;
-import com.zhsoft.fretting.ui.widget.CitySelectPopupWindow;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.ui.widget.FundBuyDialog;
-import com.zhsoft.fretting.ui.widget.PopShow;
 import com.zhsoft.fretting.ui.widget.SelectPopupWindow;
 import com.zhsoft.fretting.utils.Base64ImageUtil;
-import com.zhsoft.fretting.utils.BigDecimalUtil;
 import com.zhsoft.fretting.utils.KeyBoardUtils;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
-import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
@@ -121,7 +112,9 @@ public class InvestActivity extends XActivity<InvestPersent> {
 
     @Override
     public void initData(Bundle bundle) {
+        //设置标题
         headTitle.setText("定投");
+        //初始化加载框
         httpLoadingDialog = new HttpLoadingDialog(context);
 
         //获取缓存数据
@@ -144,12 +137,16 @@ public class InvestActivity extends XActivity<InvestPersent> {
         initPopWindow();
 
         if (bundle != null) {
+            //基金代码
             fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
+            //基金名称
             fundName = bundle.getString(Constant.FUND_DETAIL_NAME);
+            //显示数据
             investResp = (InvestResp) bundle.getParcelable(Constant.INVEST_FUND_OBJECT);
             //获取到基金数据
             //获取 图片Base64 字符串
             if (investResp != null) {
+                //刷新银行卡信息
                 refreshBankView(investResp.getBankCardPageEntity());
 
                 //最小投资金额
@@ -288,15 +285,13 @@ public class InvestActivity extends XActivity<InvestPersent> {
                         etInvestDay.setText(name);
                         daySelectorCode = selectList.get(currentItem).getCode();
                         if (isNotEmpty(getText(etInvestDay)) && !getText(etInvestDay).equals(lastDayChoose)) {
-                            //TODO 请求接口得到扣款日期 下次扣款时间：2017-12-18，遇非交易日顺延
-                            getP().nextDeductTime("7af37b692611438cbda677386223bd0d", "ffa68a63c1e34aa48d17088e33d39b4f",
-                                    fundCode, cycleSelectorCode, daySelectorCode);
+                            //请求接口得到扣款日期 下次扣款时间：2017-12-18，遇非交易日顺延
+                            getP().nextDeductTime(token, userId, fundCode, cycleSelectorCode, daySelectorCode);
                         }
                     }
                 });
                 //显示窗口
                 dayPopupWindow.showAtLocation(etInvestDay, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
-
 
 //                final PopShow popShow = new PopShow(context, etInvestDay);
 //                popShow.showTextWithCode(selectList);
@@ -332,7 +327,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
 
                 int amount = Integer.parseInt(strAmount);
                 int minAmt = investResp.getMinPurchaseAmt().intValue();
-                //TODO 如果amount小于最小购买金额，重新填写购买金额
+                //如果amount小于最小购买金额，重新填写购买金额
                 if (amount < minAmt) {
                     showToast("最小投资金额为" + minAmt + "元");
                     return;
@@ -353,37 +348,17 @@ public class InvestActivity extends XActivity<InvestPersent> {
                             @Override
                             public void onFinish(String str) {
                                 fundBuyDialog.dismiss();
-//                                    showToast("密码正确");
-                                //TODO 密码正确 请求接口 跳转到定投成功
+                                //请求接口 跳转到定投成功
                                 //如果是定投页面
                                 if (Constant.INVEST_ACTIVITY.equals(type)) {
                                     //TODO 确定购买
-                                    getP().sureInvest("7af37b692611438cbda677386223bd0d", "ffa68a63c1e34aa48d17088e33d39b4f", fundCode,
-                                            fundName, strAmount, first_trade_month, cycleSelectorCode, daySelectorCode, str);
+                                    getP().sureInvest(token, userId, fundCode, fundName, strAmount,
+                                            first_trade_month, cycleSelectorCode, daySelectorCode, str);
                                 } else if (Constant.INVEST_ACTIVITY_UPDATE.equals(type)) {
                                     //TODO 确定修改
-                                    getP().sureInvest("7af37b692611438cbda677386223bd0d", "ffa68a63c1e34aa48d17088e33d39b4f", fundCode,
-                                            fundName, strAmount, first_trade_month, cycleSelectorCode, daySelectorCode, str);
+                                    getP().sureInvest(token, userId, fundCode, fundName, strAmount,
+                                            first_trade_month, cycleSelectorCode, daySelectorCode, str);
                                 }
-
-//                                } else {
-//                                    customDialog = new CustomDialog.Builder(context)
-//                                            .setMessage("交易密码错误，请重试")
-//                                            .setNegativeButton("忘记密码", new DialogInterface.OnClickListener() {
-//                                                @Override
-//                                                public void onClick(DialogInterface dialogInterface, int i) {
-//                                                    customDialog.dismiss();
-//                                                    startActivity(FindPwdTradeFirstActivity.class);
-//                                                }
-//                                            }).setPositiveButton("再试一次", new DialogInterface.OnClickListener() {
-//                                                @Override
-//                                                public void onClick(DialogInterface dialogInterface, int i) {
-//                                                    customDialog.dismiss();
-//                                                    fundBuyDialog.show();
-//                                                }
-//                                            }).create();
-//                                    customDialog.show();
-//                                }
                             }
                         }).create();
                 fundBuyDialog.show();
@@ -431,19 +406,17 @@ public class InvestActivity extends XActivity<InvestPersent> {
      * 确认购买成功
      */
     public void requestSureInvestSuccess(InvestSureResp sureResp) {
-        //TODO 传值
+        //传值定成功
         Bundle bundle = new Bundle();
-        bundle.putString(Constant.FUND_DETAIL_CODE,fundCode);
-        String ui = sureResp.getScheduled_protocol_id();
-        bundle.putParcelable(Constant.INVEST_SUCCESS_OBJECT,sureResp);
-        startActivity(InvestSuccessActivity.class,bundle);
+        bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
+        bundle.putParcelable(Constant.INVEST_SUCCESS_OBJECT, sureResp);
+        startActivity(InvestSuccessActivity.class, bundle);
     }
 
     /**
      * 确认购买失败
      */
     public void requestSureInvestFail() {
-//        startActivity(InvestSuccessActivity.class);
     }
 
     /**
@@ -457,7 +430,6 @@ public class InvestActivity extends XActivity<InvestPersent> {
      * 修改定投失败
      */
     public void requestUpdateInvestFail() {
-        //startActivity(InvestSuccessActivity.class);
     }
 
     @Override
@@ -467,13 +439,8 @@ public class InvestActivity extends XActivity<InvestPersent> {
             String isChange = data.getStringExtra(Constant.CHANGE_BANK);
             //如果修改了银行卡就刷新本页面数据
             if (Constant.CHANGE_BANK_SUCCESS.equals(isChange)) {
-                //TODO 获取银行卡数据
-//                getP().myBankCard(token, userId);
-                token = "7af37b692611438cbda677386223bd0d";
-                userId = "ffa68a63c1e34aa48d17088e33d39b4f";
-                String fund_code = "050003";
-                //TODO 判断是否能够定投
-                getP().investTime(token, userId, fund_code, fundName);
+                //获取银行卡数据 判断是否能够定投
+                getP().investTime(token, userId, fundCode, fundName);
             }
         }
     }
@@ -495,5 +462,27 @@ public class InvestActivity extends XActivity<InvestPersent> {
         //银行限额
         bankLimit.setText("单笔限额" + bankCardResp.getLimit_per_payment() + "万，单日限额" + bankCardResp.getLimit_per_day() + "万");
 
+    }
+
+    /**
+     * 提交定投数据，返回输入密码错误
+     */
+    public void passwordError() {
+        customDialog = new CustomDialog.Builder(context)
+                .setMessage("交易密码错误，请重试")
+                .setNegativeButton("忘记密码", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        customDialog.dismiss();
+                        startActivity(FindPwdTradeFirstActivity.class);
+                    }
+                }).setPositiveButton("再试一次", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        customDialog.dismiss();
+                        fundBuyDialog.show();
+                    }
+                }).create();
+        customDialog.show();
     }
 }

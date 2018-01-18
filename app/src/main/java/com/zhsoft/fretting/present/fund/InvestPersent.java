@@ -158,6 +158,8 @@ public class InvestPersent extends XPresent<InvestActivity> {
                         if (resp != null && resp.getStatus() == 200) {
                             //请求成功 返回实体
                             getV().requestSureInvestSuccess(resp.getData());
+                        } else if (resp != null && resp.getStatus() == 300) {
+                            getV().passwordError();
                         } else {
                             //请求失败
                             getV().requestSureInvestFail();

@@ -357,9 +357,6 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             token = App.getSharedPref().getString(Constant.TOKEN, "");
             //用户编号
             userId = App.getSharedPref().getString(Constant.USERID, "");
-//        token = "7af37b692611438cbda677386223bd0d";
-//        userId = "ffa68a63c1e34aa48d17088e33d39b4f";
-//        String fund_code = "050003";
             //TODO 判断是否能够定投
             getP().investTime(token, userId, fundCode, fundName);
         } else {
