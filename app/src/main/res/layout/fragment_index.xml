@@ -88,6 +88,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_star"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal"
@@ -300,6 +301,7 @@
                     android:paddingBottom="@dimen/dimen_20">
 
                     <RelativeLayout
+                        android:id="@+id/rl_finger_one"
                         android:layout_width="@dimen/dimen_0"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
@@ -344,6 +346,7 @@
                         android:background="@color/color_e7e7e7"/>
 
                     <RelativeLayout
+                        android:id="@+id/rl_finger_two"
                         android:layout_width="@dimen/dimen_0"
                         android:layout_height="wrap_content"
                         android:layout_weight="1">
@@ -422,6 +425,7 @@
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/ll_prefer_vote"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal"
@@ -464,7 +468,6 @@
                         android:textStyle="bold"/>
 
                 </LinearLayout>
-
 
             </LinearLayout>
 

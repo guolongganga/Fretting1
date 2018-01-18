@@ -21,11 +21,9 @@ import cn.droidlover.xdroidmvp.kit.KnifeKit;
 
 public class FundContentRecycleAdapter extends SimpleRecAdapter<NewestFundResp, FundContentRecycleAdapter.ViewHolder> {
     public static final int ITEM_CLICK = 0;    //点击标识
-    private String tabname;
 
-    public FundContentRecycleAdapter(Context context, String tabname) {
+    public FundContentRecycleAdapter(Context context) {
         super(context);
-        this.tabname = tabname;
     }
 
     @Override
@@ -40,7 +38,7 @@ public class FundContentRecycleAdapter extends SimpleRecAdapter<NewestFundResp, 
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.tvName.setText(tabname + data.get(position).getFund_name());
+        holder.tvName.setText(data.get(position).getFund_name());
         holder.tvCode.setText(data.get(position).getFund_code());
         holder.tvValue.setText(BigDecimalUtil.bigdecimalToString(data.get(position).getNet_value()));
         holder.tvRange.setText("+" + BigDecimalUtil.bigdecimalToString(data.get(position).getFund_rose()));

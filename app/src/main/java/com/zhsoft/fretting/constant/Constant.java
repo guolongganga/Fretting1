@@ -44,6 +44,30 @@ public class Constant {
     //基金页面中的tab名称
     public static final String FUND_TAB_NAME = BASE_CONSTANT + "fund_tab_name";
 
+    //股票型 参数
+    public static final String FUND_TAB_SHARES_TYPE = "B";
+
+    //混合型 参数
+    public static final String FUND_TAB_BLEND_TYPE = "A";
+
+    //债券型 参数
+    public static final String FUND_TAB_BOND_TYPE = "E";
+
+    //指数型 参数
+    public static final String FUND_TAB_FINGER_TYPE = "F";
+
+    //股票型 名称
+    public static final String FUND_TAB_SHARES = "股票型";
+
+    //混合型 名称
+    public static final String FUND_TAB_BLEND =  "混合型";
+
+    //债券型 名称
+    public static final String FUND_TAB_BOND =  "债券型";
+
+    //指数型 名称
+    public static final String FUND_TAB_FINGER = "指数型";
+
     //页面名称，人气产品或基金
     public static final String ACTIVITY_NAME = BASE_CONSTANT + "activity_name";
 

@@ -23,9 +23,9 @@ public class BuyFundResp extends BaseResp<BuyFundResp> implements Parcelable {
     private String name;
     /** 银行logo */
     private String logo;
-    /** 是否能够购买 */
-    private String fundRisk;
     /** 风险等级 */
+    private String fundRisk;
+    /** 是否能够购买 */
     private String canBuy;
     /** 银行限额 */
     private String info;

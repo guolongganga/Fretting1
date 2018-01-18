@@ -38,6 +38,7 @@ import static com.zhsoft.fretting.net.HttpContent.fund_home;
 import static com.zhsoft.fretting.net.HttpContent.fund_invest_time;
 import static com.zhsoft.fretting.net.HttpContent.fund_times_save;
 import static com.zhsoft.fretting.net.HttpContent.fund_times_succdetails;
+import static com.zhsoft.fretting.net.HttpContent.fund_type_fixed;
 import static com.zhsoft.fretting.net.HttpContent.get_home;
 import static com.zhsoft.fretting.net.HttpContent.get_next_time;
 import static com.zhsoft.fretting.net.HttpContent.get_occupation;
@@ -247,4 +248,9 @@ public interface HttpUtil {
     @Headers("appType:Android")
     @POST(fund_times_succdetails)
     Flowable<InvestResp> fundTimesSuccDetails(@Body CommonReqData reqData);
+
+    //优选定投
+    @Headers("appType:Android")
+    @POST(fund_type_fixed)
+    Flowable<NewestFundResp> fundTypeFixedOrderBy(@Body CommonReqData reqData);
 }

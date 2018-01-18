@@ -6,7 +6,10 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.model.ApplyBaseInfo;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
+import com.zhsoft.fretting.net.Api;
+import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.present.fund.FundContentPresent;
 import com.zhsoft.fretting.ui.activity.boot.FundDetailWebActivity;
 import com.zhsoft.fretting.ui.adapter.fund.FundContentRecycleAdapter;
@@ -38,13 +41,15 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
     XRecyclerContentLayout contentLayout;
 
     private FundContentRecycleAdapter adapter;
-    private List<String> list;
+    private List<ApplyBaseInfo> list;
 
     private int isSelector = 0;
     private String fundTabName;
     private int activityName;
     private int pageno = 1;
     private final int pageSize = 10;
+    /** 基金类型 */
+    private String tabType;
 
     @Override
     public int getLayoutId() {
@@ -60,9 +65,13 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
     public void initData(Bundle bundle) {
         //tab类型 请求接口的时候需要
         fundTabName = bundle.getString(Constant.FUND_TAB_NAME, "");
+        tabType = fundTabType(fundTabName);
+
         //页面（基金页面或者人气产品）
         activityName = bundle.getInt(Constant.ACTIVITY_NAME, 0);
-
+        //初始化排序条件的集合
+        initOrderList();
+        tvRange.setText(list.get(isSelector).getContent());
         contentLayout.getSwipeRefreshLayout().setColorSchemeResources(
                 R.color.color_main,
                 cn.droidlover.xrecyclerview.R.color.x_blue,
@@ -74,39 +83,28 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
         contentLayout.getRecyclerView()
                 .setAdapter(getAdapter());
         contentLayout.getRecyclerView().horizontalDivider(R.color.color_e7e7e7, R.dimen.dimen_1);  //设置divider
-
+        //判断是哪个Activity
         switch (activityName) {
-            case Constant.POPULARITY:
-                getP().loadPopularityData(pageno, pageSize, fundTabName);
+            case Constant.POPULARITY://人气产品
+                //0表示tab的类型
+                getP().loadFundData(pageno, pageSize, tabType, list.get(isSelector).getCode());
                 break;
-            case Constant.FUND_INDEX:
-                getP().loadFundData(pageno, pageSize, "0", "" + (isSelector + 1));
+            case Constant.FUND_INDEX://基金主页
+                //0表示tab的类型
+                getP().loadFundData(pageno, pageSize, tabType, list.get(isSelector).getCode());
                 break;
         }
-        list = new ArrayList<>();
-        list.add("日涨幅");
-        list.add("近7天");
-        list.add("近1月");
-        list.add("近3月");
-        list.add("近半年");
-        list.add("今年以来");
-        list.add("近1年");
-        list.add("近2年");
-        list.add("近3年");
-        list.add("成立以来");
-//        getP().loadData();
-        tvRange.setText(list.get(isSelector));
 
         contentLayout.getRecyclerView()
                 .setOnRefreshAndLoadMoreListener(new XRecyclerView.OnRefreshAndLoadMoreListener() {
                     @Override
                     public void onRefresh() {
-                        getP().loadFundData(1, 10, "0", "" + (isSelector + 1));
+                        getP().loadFundData(1, pageSize, tabType, list.get(isSelector).getCode());
                     }
 
                     @Override
                     public void onLoadMore(int page) {
-                        getP().loadFundData(page, pageSize, "0", "" + (isSelector + 1));
+                        getP().loadFundData(page, pageSize, tabType, list.get(isSelector).getCode());
                     }
                 });
 
@@ -114,6 +112,56 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
         contentLayout.showLoading();
         contentLayout.getRecyclerView().useDefLoadMoreView();
 
+    }
+
+    /**
+     * 根据tab类型请求相对应类型的基金
+     *
+     * @param fundTabName
+     * @return
+     */
+    private String fundTabType(String fundTabName) {
+        if (Constant.FUND_TAB_SHARES.equals(fundTabName)) {
+            //股票型
+            return Constant.FUND_TAB_SHARES_TYPE;
+        } else if (Constant.FUND_TAB_BLEND.equals(fundTabName)) {
+            //混合型
+            return Constant.FUND_TAB_BLEND_TYPE;
+        } else if (Constant.FUND_TAB_BOND.equals(fundTabName)) {
+            //债券型
+            return Constant.FUND_TAB_BOND_TYPE;
+        } else if (Constant.FUND_TAB_FINGER.equals(fundTabName)) {
+            //指数型
+            return Constant.FUND_TAB_FINGER_TYPE;
+        }
+        return "";
+    }
+
+    /**
+     * 初始化排序条件的集合
+     */
+    private void initOrderList() {
+        list = new ArrayList<>();
+        ApplyBaseInfo baseInfo1 = new ApplyBaseInfo("1", "日涨幅");
+        ApplyBaseInfo baseInfo2 = new ApplyBaseInfo("2", "近7天");
+        ApplyBaseInfo baseInfo3 = new ApplyBaseInfo("3", "近1月");
+        ApplyBaseInfo baseInfo4 = new ApplyBaseInfo("4", "近3月");
+        ApplyBaseInfo baseInfo5 = new ApplyBaseInfo("5", "近半年");
+        ApplyBaseInfo baseInfo6 = new ApplyBaseInfo("6", "今年以来");
+        ApplyBaseInfo baseInfo7 = new ApplyBaseInfo("7", "近1年");
+        ApplyBaseInfo baseInfo8 = new ApplyBaseInfo("8", "近2年");
+        ApplyBaseInfo baseInfo9 = new ApplyBaseInfo("9", "近3年");
+        ApplyBaseInfo baseInfo10 = new ApplyBaseInfo("10", "成立以来");
+        list.add(baseInfo1);
+        list.add(baseInfo2);
+        list.add(baseInfo3);
+        list.add(baseInfo4);
+        list.add(baseInfo5);
+        list.add(baseInfo6);
+        list.add(baseInfo7);
+        list.add(baseInfo8);
+        list.add(baseInfo9);
+        list.add(baseInfo10);
     }
 
     @Override
@@ -129,8 +177,10 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
                     @Override
                     public void setRange(int position) {
                         isSelector = position;
-                        tvRange.setText(list.get(position));
-                        getP().loadFundData(1, 10, "0", "" + (isSelector + 1));
+                        tvRange.setText(list.get(position).getContent());
+                        //回到顶部
+                        contentLayout.getRecyclerView().scrollToPosition(0);
+                        getP().loadFundData(1, pageSize, tabType, list.get(isSelector).getCode());
                     }
                 });
             }
@@ -146,7 +196,7 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
                         //跳转基金详情页
                         Bundle bundle = new Bundle();
                         bundle.putInt(Constant.WEB_TITLE, R.string.fund_detail);
-                        bundle.putString(Constant.WEB_LINK, "file:///android_asset/javascript.html");
+                        bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.fund_detail);
                         bundle.putString(Constant.FUND_DETAIL_CODE, model.getFund_code());
                         bundle.putString(Constant.FUND_DETAIL_NAME, model.getFund_name());
                         startActivity(FundDetailWebActivity.class, bundle);
@@ -164,7 +214,7 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
      */
     public RecyclerAdapter getAdapter() {
         if (adapter == null) {
-            adapter = new FundContentRecycleAdapter(context, fundTabName);
+            adapter = new FundContentRecycleAdapter(context);
         }
         return adapter;
     }
@@ -176,9 +226,6 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
      * @param item
      */
     public void showData(int pageno, List<NewestFundResp> item) {
-//        list = new ArrayList<>();
-//        list.add("一周涨幅");
-//        list.add("近期涨幅");
 
         if (item != null && item.size() > 1) {
             if (pageno > 1) {
@@ -188,12 +235,17 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
             }
             contentLayout.getRecyclerView().setPage(pageno, pageno + 1);
         } else {
-            //没有更多数据了
-            contentLayout.getRecyclerView().setPage(pageno, pageno - 1);
+            if (pageno == 1) {
+                contentLayout.showEmpty();
+            } else {
+                //没有更多数据了
+                contentLayout.getRecyclerView().setPage(pageno, pageno - 1);
+            }
+
         }
     }
 
     public void showError(NetError error) {
-
+        contentLayout.showError();
     }
 }

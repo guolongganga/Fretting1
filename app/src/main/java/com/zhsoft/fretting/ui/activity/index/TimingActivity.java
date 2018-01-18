@@ -38,6 +38,7 @@ public class TimingActivity extends XActivity {
     @BindView(R.id.tab_layout) TabLayout mTabLayout;
     /** 滑动内容 */
     @BindView(R.id.view_pager) ViewPager mViewPager;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_index_popularity;
@@ -100,10 +101,10 @@ public class TimingActivity extends XActivity {
         List<Fragment> fragmentList = new ArrayList<>();
 
         List<String> tabName = new ArrayList<>();
-        tabName.add("股票型");
-        tabName.add("混合型");
-        tabName.add("债券型");
-        tabName.add("指数型");
+        tabName.add(Constant.FUND_TAB_SHARES);
+        tabName.add(Constant.FUND_TAB_BLEND);
+        tabName.add(Constant.FUND_TAB_BOND);
+        tabName.add(Constant.FUND_TAB_FINGER);
 
         int fragmentSize = tabName.size();
 

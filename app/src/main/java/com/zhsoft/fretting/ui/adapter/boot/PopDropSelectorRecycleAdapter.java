@@ -9,6 +9,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
+import com.zhsoft.fretting.model.ApplyBaseInfo;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
@@ -20,7 +21,7 @@ import cn.droidlover.xdroidmvp.kit.KnifeKit;
  * data: 2017/12/14
  */
 
-public class PopDropSelectorRecycleAdapter extends SimpleRecAdapter<String, PopDropSelectorRecycleAdapter.ViewHolder> {
+public class PopDropSelectorRecycleAdapter extends SimpleRecAdapter<ApplyBaseInfo, PopDropSelectorRecycleAdapter.ViewHolder> {
 
     public static final int ITEM_CLICK = 0;    //点击标识
 
@@ -48,7 +49,7 @@ public class PopDropSelectorRecycleAdapter extends SimpleRecAdapter<String, PopD
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        holder.tvName.setText(data.get(position));
+        holder.tvName.setText(data.get(position).getContent());
 
         if (isSelector == position) {
             holder.ivSelector.setVisibility(View.VISIBLE);

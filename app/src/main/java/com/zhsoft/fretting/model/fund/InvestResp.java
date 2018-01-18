@@ -106,6 +106,16 @@ public class InvestResp extends BaseResp<InvestResp> implements Parcelable {
      */
     private String first_exchdate;
 
+    /**
+     * 是否能够购买
+     */
+    private String canBuy;
+
+    /**
+     * 风险等级
+     */
+    private String fundRisk;
+
     public String getFixDateDetails() {
         return fixDateDetails;
     }
@@ -250,6 +260,22 @@ public class InvestResp extends BaseResp<InvestResp> implements Parcelable {
         this.first_exchdate = first_exchdate;
     }
 
+    public String getCanBuy() {
+        return canBuy;
+    }
+
+    public void setCanBuy(String canBuy) {
+        this.canBuy = canBuy;
+    }
+
+    public String getFundRisk() {
+        return fundRisk;
+    }
+
+    public void setFundRisk(String fundRisk) {
+        this.fundRisk = fundRisk;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -275,6 +301,8 @@ public class InvestResp extends BaseResp<InvestResp> implements Parcelable {
         dest.writeString(this.trade_period);
         dest.writeString(this.scheduled_protocol_id);
         dest.writeString(this.first_exchdate);
+        dest.writeString(this.canBuy);
+        dest.writeString(this.fundRisk);
     }
 
     public InvestResp() {
@@ -299,6 +327,8 @@ public class InvestResp extends BaseResp<InvestResp> implements Parcelable {
         this.trade_period = in.readString();
         this.scheduled_protocol_id = in.readString();
         this.first_exchdate = in.readString();
+        this.canBuy = in.readString();
+        this.fundRisk = in.readString();
     }
 
     public static final Creator<InvestResp> CREATOR = new Creator<InvestResp>() {

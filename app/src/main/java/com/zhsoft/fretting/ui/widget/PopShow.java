@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
+import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.ApplyBaseInfo;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
@@ -43,7 +44,7 @@ public class PopShow {
     /**
      * 涨幅选择
      */
-    public void showRangeSelector(final List<String> list, int isSelector) {
+    public void showRangeSelector(final List<ApplyBaseInfo> list, int isSelector) {
         //设置contentView
         View contentView = LayoutInflater.from(activity).inflate(R.layout.pop_drop_selector, null);
         final PopupWindow mPopWindow = new PopupWindow(contentView,
@@ -64,9 +65,9 @@ public class PopShow {
         popAdapter.setData(list);
         popAdapter.setIsSelector(isSelector);//默认选中项
 
-        popAdapter.setRecItemClick(new RecyclerItemCallback<String, PopDropSelectorRecycleAdapter.ViewHolder>() {
+        popAdapter.setRecItemClick(new RecyclerItemCallback<ApplyBaseInfo, PopDropSelectorRecycleAdapter.ViewHolder>() {
             @Override
-            public void onItemClick(int position, String model, int tag, PopDropSelectorRecycleAdapter.ViewHolder holder) {
+            public void onItemClick(int position, ApplyBaseInfo model, int tag, PopDropSelectorRecycleAdapter.ViewHolder holder) {
                 switch (tag) {
                     case PopDropSelectorRecycleAdapter.ITEM_CLICK:
                         popAdapter.setIsSelector(position);
@@ -131,7 +132,7 @@ public class PopShow {
     }
 
     /**
-     * 纯字符显示 在底部
+     * 纯字符显示 在底部，带编码
      *
      * @param list
      */

@@ -6,6 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
@@ -55,6 +56,9 @@ public class IndexFragment extends XFragment<IndexPresent> {
     /** 人气产品 更多 */
     @BindView(R.id.popularity_more)
     TextView popularityMore;
+    /** 明星基金 */
+    @BindView(R.id.ll_star)
+    LinearLayout llStar;
     /** 明星基金 收益率 */
     @BindView(R.id.tv_seven_earnings)
     TextView tvSevenEarnings;
@@ -64,12 +68,18 @@ public class IndexFragment extends XFragment<IndexPresent> {
     /** 明星基金 购买 */
     @BindView(R.id.btn_buy)
     Button btnBuy;
+    /** 指数基金产品1 */
+    @BindView(R.id.rl_finger_one)
+    RelativeLayout rlFingerOne;
     /** 指数基金产品1 名称 */
     @BindView(R.id.tv_nvshen)
     TextView tvNvshen;
     /** 指数基金产品1 收益 */
     @BindView(R.id.tv_nvshen_shouyi)
     TextView tvNvshenShouyi;
+    /** 指数基金产品2 */
+    @BindView(R.id.rl_finger_two)
+    RelativeLayout rlFingerTwo;
     /** 指数基金产品2 名称 */
     @BindView(R.id.tv_chihuo)
     TextView tvChihuo;
@@ -79,6 +89,9 @@ public class IndexFragment extends XFragment<IndexPresent> {
     /** 优选定投 更多 */
     @BindView(R.id.timing_more)
     TextView timingMore;
+    /** 优选定投 */
+    @BindView(R.id.ll_prefer_vote)
+    LinearLayout llPreferVote;
     /** 优选定投 名称 */
     @BindView(R.id.preferred_name)
     TextView preferredName;
@@ -100,6 +113,11 @@ public class IndexFragment extends XFragment<IndexPresent> {
     private ProductModel startModel;
     /** 优选定投 */
     private ProductModel preferredVote;
+    /** 指数基金1 */
+    private ProductModel fingerOne;
+    /** 指数基金2 */
+    private ProductModel fingertwo;
+    /** 加载圈 */
     private HttpLoadingDialog httpLoadingDialog;
 
 
@@ -135,69 +153,44 @@ public class IndexFragment extends XFragment<IndexPresent> {
 
     @Override
     public void initEvents() {
+        //人气产品 更多
         popularityMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(PopularityActivity.class);
             }
         });
+        //优选定投 更多
         timingMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(TimingActivity.class);
-//                Bundle bundle = new Bundle();
-//                bundle.putInt(Constant.WEB_TITLE, R.string.user_about_us);
-//                bundle.putString(Constant.WEB_LINK, "https://www.baidu.com/?tn=96928074_hao_pg");
-//                startActivity(WebPublicActivity.class, bundle);
-//                Bundle bundle = new Bundle();
-//                bundle.putInt(Constant.WEB_TITLE, R.string.user_risk_test);
-//                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.risk_question);
-//                startActivity(RiskTestWebViewAcvitity.class, bundle);
             }
         });
-
+        //搜索
         rlNameSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(SearchActivity.class);
-
             }
         });
-        //购买
+        //明星基金 购买
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //跳转基金详情页
-                Bundle bundle = new Bundle();
-                bundle.putInt(Constant.WEB_TITLE, R.string.fund_detail);
-                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.fund_detail);
-                bundle.putString(Constant.FUND_DETAIL_CODE, startModel.getCode());
-                bundle.putString(Constant.FUND_DETAIL_NAME, startModel.getName());
-                startActivity(FundDetailWebActivity.class, bundle);
-//                if (RuntimeHelper.getInstance().isLogin()) {
-//                    startActivity(InvestActivity.class);
-//                } else {
-//                    startActivity(LoginActivity.class);
-//                }
-
+                startDetaiActivity(startModel);
             }
         });
-        //立即定投
+        //优选定投 立即定投
         btnInvest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Bundle bundle = new Bundle();
-//                bundle.putString(Constant.INVEST_ACTIVITY_TYPE, Constant.INVEST_ACTIVITY);
-//                startActivity(InvestActivity.class, bundle);
                 //跳转基金详情页
-                Bundle bundle = new Bundle();
-                bundle.putInt(Constant.WEB_TITLE, R.string.fund_detail);
-                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.fund_detail);
-                bundle.putString(Constant.FUND_DETAIL_CODE, preferredVote.getCode());
-                bundle.putString(Constant.FUND_DETAIL_NAME, preferredVote.getName());
-                startActivity(FundDetailWebActivity.class, bundle);
+                startDetaiActivity(preferredVote);
             }
         });
+        //滑动
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
             public void onScrollChanged() {
@@ -206,12 +199,48 @@ public class IndexFragment extends XFragment<IndexPresent> {
                 }
             }
         });
+        //下拉刷新
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 getP().loadData();
             }
         });
+        //明星基金 模块
+        llStar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //跳转基金详情页
+                startDetaiActivity(startModel);
+            }
+        });
+        //指数基金1 模块
+        rlFingerOne.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //跳转基金详情页
+                startDetaiActivity(fingerOne);
+            }
+        });
+        //指数基金2 模块
+        rlFingerTwo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //跳转基金详情页
+                startDetaiActivity(fingertwo);
+            }
+        });
+
+        //优选定投 模块
+        llPreferVote.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //跳转基金详情页
+                startDetaiActivity(preferredVote);
+
+            }
+        });
+
 
     }
 
@@ -253,7 +282,7 @@ public class IndexFragment extends XFragment<IndexPresent> {
                 switch (tag) {
                     //点击
                     case SwitchAccountRecycleAdapter.ITEM_CLICK:
-                        showToast(model.getName());
+                        startDetaiActivity(model);
                         break;
                 }
             }
@@ -312,12 +341,14 @@ public class IndexFragment extends XFragment<IndexPresent> {
             }
             //指数基金1
             if (data.getFirstIndexFound() != null) {
+                fingerOne = data.getFirstIndexFound();
                 tvNvshen.setText(data.getFirstIndexFound().getName());
                 tvNvshenShouyi.setText("+" + BigDecimalUtil.bigdecimalToString(data.getFirstIndexFound().getAveg()) + "%");
 
             }
             //指数基金2
             if (data.getSecondIndexFound() != null) {
+                fingertwo = data.getSecondIndexFound();
                 tvChihuo.setText(data.getSecondIndexFound().getName());
                 tvChihuoShouyi.setText("+" + BigDecimalUtil.bigdecimalToString(data.getSecondIndexFound().getAveg()) + "%");
             }
@@ -337,6 +368,16 @@ public class IndexFragment extends XFragment<IndexPresent> {
     public void requestIndexDataFail() {
         swipeRefreshLayout.setRefreshing(false);
         httpLoadingDialog.dismiss();
+    }
+
+    private void startDetaiActivity(ProductModel model) {
+        //跳转基金详情页
+        Bundle bundle = new Bundle();
+        bundle.putInt(Constant.WEB_TITLE, R.string.fund_detail);
+        bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.fund_detail);
+        bundle.putString(Constant.FUND_DETAIL_CODE, model.getCode());
+        bundle.putString(Constant.FUND_DETAIL_NAME, model.getName());
+        startActivity(FundDetailWebActivity.class, bundle);
     }
 
 

@@ -95,6 +95,7 @@
         android:visibility="gone">
         <!--近期热搜-->
         <TextView
+            android:visibility="gone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/dimen_10"

@@ -77,7 +77,7 @@ public class FundContentPresent extends XPresent<FundContentFragment> {
 //                }
 //                break;
 //        }
-        final CommonReqData reqData = new CommonReqData();
+        CommonReqData reqData = new CommonReqData();
         NewestFundParams params = new NewestFundParams();
         params.setPageSize(pagesize);
         params.setPageNum(pageno);

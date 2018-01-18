@@ -42,8 +42,8 @@ public class SearchActivity extends XActivity<SearchPersent> {
     @BindView(R.id.tv_cancle) TextView tvCancle;
     /** 线 */
     @BindView(R.id.view_line) View viewLine;
-    /** 近期热搜 */
-    @BindView(R.id.xrv_hot_list) XRecyclerView xrvHotList;
+//    /** 近期热搜 */
+//    @BindView(R.id.xrv_hot_list) XRecyclerView xrvHotList;
     /** 搜索结果 */
     @BindView(R.id.xrv_search_list) XRecyclerView xrvSearchList;
     /** 近期热搜视图 */
@@ -69,12 +69,12 @@ public class SearchActivity extends XActivity<SearchPersent> {
     @Override
     public void initData(Bundle bundle) {
 //        mOptionSearch.setListener(this);
-        xrvHotList.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
+//        xrvHotList.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
         xrvSearchList.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
         //设置热搜显示
         llHot.setVisibility(VISIBLE);
         //获取热搜数据
-        getP().hotListData();
+//        getP().hotListData();
     }
 
     @Override
@@ -133,7 +133,7 @@ public class SearchActivity extends XActivity<SearchPersent> {
      */
     public SimpleRecAdapter getHotListAdapter() {
         SearchHotListAdapter hotListAdapter = new SearchHotListAdapter(context);
-        xrvHotList.setAdapter(hotListAdapter);
+//        xrvHotList.setAdapter(hotListAdapter);
         hotListAdapter.setRecItemClick(new RecyclerItemCallback<NewestFundResp, SearchHotListAdapter.ViewHolder>() {
             @Override
             public void onItemClick(int position, NewestFundResp model, int tag, SearchHotListAdapter.ViewHolder holder) {
