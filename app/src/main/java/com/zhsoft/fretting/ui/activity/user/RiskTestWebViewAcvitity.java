@@ -247,12 +247,12 @@ public class RiskTestWebViewAcvitity extends XActivity {
      */
     @Override
     public void onBackPressed() {
-
-        if (null != mWeb && mWeb.canGoBack()) {
-            mWeb.goBack();// 返回前一个页面
-        } else {
-            super.onBackPressed();
-        }
+        super.onBackPressed();
+//        if (null != mWeb && mWeb.canGoBack()) {
+//            mWeb.goBack();// 返回前一个页面
+//        } else {
+//            super.onBackPressed();
+//        }
     }
 
     /**

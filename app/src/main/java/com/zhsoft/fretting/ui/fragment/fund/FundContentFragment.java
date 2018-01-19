@@ -192,7 +192,6 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
                 switch (tag) {
                     //点击
                     case FundContentRecycleAdapter.ITEM_CLICK:
-                        showToast(model.getFund_name());
                         //跳转基金详情页
                         Bundle bundle = new Bundle();
                         bundle.putInt(Constant.WEB_TITLE, R.string.fund_detail);

@@ -164,7 +164,6 @@ public class SearchActivity extends XActivity<SearchPersent> {
                 switch (tag) {
                     //点击
                     case SearchRecycleAdapter.ITEM_CLICK:
-                        showToast(model.getFund_name());
                         //跳转基金详情页
                         Bundle bundle = new Bundle();
                         bundle.putInt(Constant.WEB_TITLE, R.string.fund_detail);

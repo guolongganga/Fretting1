@@ -12,22 +12,20 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.event.ChangeTabEvent;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.BuyNowResp;
 import com.zhsoft.fretting.present.fund.BuyPresent;
 import com.zhsoft.fretting.ui.activity.user.BankCardActivity;
-import com.zhsoft.fretting.ui.activity.user.BankCardChangeActivity;
 import com.zhsoft.fretting.ui.activity.user.FindPwdTradeFirstActivity;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.ui.widget.FundBuyDialog;
 import com.zhsoft.fretting.utils.Base64ImageUtil;
 
-import org.greenrobot.eventbus.EventBus;
-
 import butterknife.BindView;
+import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
@@ -68,7 +66,12 @@ public class BuyActivity extends XActivity<BuyPresent> {
     private String fundCode;
     /** 基金名称 */
     private String fundName;
-
+    /** 登录标识 */
+    private String token;
+    /** 用户编号 */
+    private String userId;
+    /** 加载框 */
+    private HttpLoadingDialog httpLoadingDialog;
 
 
     @Override
@@ -84,6 +87,10 @@ public class BuyActivity extends XActivity<BuyPresent> {
     @Override
     public void initData(Bundle bundle) {
         headTitle.setText(R.string.fund_buy);
+        httpLoadingDialog = new HttpLoadingDialog(context);
+        //获取缓存数据
+        token = App.getSharedPref().getString(Constant.TOKEN, "");
+        userId = App.getSharedPref().getString(Constant.USERID, "");
         if (bundle != null) {
             fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
             fundName = bundle.getString(Constant.FUND_DETAIL_NAME);
@@ -149,13 +156,9 @@ public class BuyActivity extends XActivity<BuyPresent> {
                         .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
                             @Override
                             public void onFinish(String str) {
-                                //TODO 判断密码是否正确
                                 fundBuyDialog.dismiss();
-                                String token = "8d9f2d6690904d569c1b27133d692db1";
-                                String userId = "0f4ddf4852e644598d7ade9edc433e87";
-                                String fund_code = "050001";
-
-                                getP().buyNow(token, userId, fund_code, strAmount, str);
+                                httpLoadingDialog.visible();
+                                getP().buyNow(token, userId, fundCode, strAmount, str);
 
                             }
                         }).create();
@@ -179,10 +182,8 @@ public class BuyActivity extends XActivity<BuyPresent> {
             //如果修改了银行卡就刷新本页面数据
             if (Constant.CHANGE_BANK_SUCCESS.equals(isChange)) {
                 //TODO 获取银行卡数据
-                String token = "8d9f2d6690904d569c1b27133d692db1";
-                String userId = "0f4ddf4852e644598d7ade9edc433e87";
-                String fund_code = "050001";
-                getP().buyFund(token, userId, fund_code);
+                httpLoadingDialog.visible();
+                getP().buyFund(token, userId, fundCode);
             }
         }
     }
@@ -191,12 +192,14 @@ public class BuyActivity extends XActivity<BuyPresent> {
      * 刷新银行卡信息 失败
      */
     public void requestBuyFundFail() {
+        httpLoadingDialog.dismiss();
     }
 
     /**
      * 刷新银行卡信息 成功
      */
     public void requestBuyFundSuccess(BuyFundResp data) {
+        httpLoadingDialog.dismiss();
         refreshBankView(data);
     }
 
@@ -204,6 +207,7 @@ public class BuyActivity extends XActivity<BuyPresent> {
      * 立即购买请求失败
      */
     public void requestBuyNowFail() {
+        httpLoadingDialog.dismiss();
     }
 
     /**
@@ -212,6 +216,7 @@ public class BuyActivity extends XActivity<BuyPresent> {
      * @param data
      */
     public void requestBuyNowSuccess(BuyNowResp data) {
+        httpLoadingDialog.dismiss();
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constant.BUY_SUCCESS_OBJECT, data);
         startActivity(BuySuccessActivity.class, bundle);
@@ -221,9 +226,9 @@ public class BuyActivity extends XActivity<BuyPresent> {
 
     /**
      * 立即购买 密码错误
-     *
      */
     public void passwordError() {
+        httpLoadingDialog.dismiss();
         if (customDialog == null) {
             customDialog = new CustomDialog.Builder(context)
                     .setMessage("交易密码错误，请重试")

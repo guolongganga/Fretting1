@@ -352,6 +352,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
                                 //如果是定投页面
                                 if (Constant.INVEST_ACTIVITY.equals(type)) {
                                     //TODO 确定购买
+                                    httpLoadingDialog.visible();
                                     getP().sureInvest(token, userId, fundCode, fundName, strAmount,
                                             first_trade_month, cycleSelectorCode, daySelectorCode, str);
                                 } else if (Constant.INVEST_ACTIVITY_UPDATE.equals(type)) {
@@ -377,6 +378,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
      * 请求我的银行卡信息成功 数据显示
      */
     public void requestInvestSuccess(BankCardResp resp) {
+        httpLoadingDialog.dismiss();
         //刷新银行卡数据
         refreshBankView(resp);
     }
@@ -385,6 +387,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
      * 请求我的银行卡信息失败
      */
     public void requestInvestFail() {
+        httpLoadingDialog.dismiss();
     }
 
     /**
@@ -406,6 +409,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
      * 确认购买成功
      */
     public void requestSureInvestSuccess(InvestSureResp sureResp) {
+        httpLoadingDialog.dismiss();
         //传值定成功
         Bundle bundle = new Bundle();
         bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
@@ -417,6 +421,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
      * 确认购买失败
      */
     public void requestSureInvestFail() {
+        httpLoadingDialog.dismiss();
     }
 
     /**
@@ -440,6 +445,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
             //如果修改了银行卡就刷新本页面数据
             if (Constant.CHANGE_BANK_SUCCESS.equals(isChange)) {
                 //获取银行卡数据 判断是否能够定投
+                httpLoadingDialog.visible();
                 getP().investTime(token, userId, fundCode, fundName);
             }
         }
@@ -468,6 +474,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
      * 提交定投数据，返回输入密码错误
      */
     public void passwordError() {
+        httpLoadingDialog.dismiss();
         customDialog = new CustomDialog.Builder(context)
                 .setMessage("交易密码错误，请重试")
                 .setNegativeButton("忘记密码", new DialogInterface.OnClickListener() {

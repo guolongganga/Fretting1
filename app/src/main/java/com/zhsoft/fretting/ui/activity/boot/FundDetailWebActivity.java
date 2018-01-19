@@ -3,6 +3,7 @@ package com.zhsoft.fretting.ui.activity.boot;
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
@@ -13,6 +14,9 @@ import android.webkit.DownloadListener;
 import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceError;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebResourceResponse;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -42,6 +46,7 @@ import com.zhsoft.fretting.webjs.JSInterfaceClick;
 import com.zhsoft.fretting.webjs.JSInterfaceUtils;
 
 import butterknife.BindView;
+import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
@@ -59,12 +64,9 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
     /** 右侧图片按钮 */
     @BindView(R.id.head_right_imgbtn) ImageButton headRightImgbtn;
     /** WebView */
-    @BindView(R.id.my_web)
-    WebView mWeb;
+    @BindView(R.id.my_web) WebView mWeb;
     /** 进度条 */
-    @BindView(R.id.pb)
-    ProgressBar pb;
-    private CustomDialog loginDialog;
+    @BindView(R.id.pb) ProgressBar pb;
     /** 用户登录标识 */
     private String token;
     /** 用户编号 */
@@ -73,6 +75,8 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
     private String fundCode;
     /** 基金名称 */
     private String fundName;
+    /** 加载圈 */
+    private HttpLoadingDialog httpLoadingDialog;
 
     /** 去开户 弹出框 */
     private CustomDialog openAccountDialog;
@@ -115,6 +119,8 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         //右侧搜索按钮
         headRightImgbtn.setVisibility(View.VISIBLE);
         headRightImgbtn.setImageResource(R.mipmap.icon_query);
+        httpLoadingDialog = new HttpLoadingDialog(context);
+        httpLoadingDialog.visible();
         //标题
         int title = bundle.getInt(Constant.WEB_TITLE);
         //链接
@@ -123,11 +129,12 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
         //基金名称
         fundName = bundle.getString(Constant.FUND_DETAIL_NAME);
-        //用户登录标识
-        token = App.getSharedPref().getString(Constant.TOKEN, "");
-        //用户编号
-        userId = App.getSharedPref().getString(Constant.USERID, "");
-
+        if (RuntimeHelper.getInstance().isLogin()) {
+            //用户登录标识
+            token = App.getSharedPref().getString(Constant.TOKEN, "");
+            //用户编号
+            userId = App.getSharedPref().getString(Constant.USERID, "");
+        }
         //设置标题
         headTitle.setText(title);
         pb.setMax(100);
@@ -140,14 +147,20 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
 
         // 设置WebViewClient，保证新的链接地址不打开系统的浏览器窗口
         mWeb.setWebViewClient(new WebViewClient() {
+
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                httpLoadingDialog.visible();
                 return super.shouldOverrideUrlLoading(view, url);
             }
 
+            /**
+             * 在结束加载网页时会回调
+             */
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                httpLoadingDialog.dismiss();
                 /**
                  *  如果紧跟着
                  *  webView.loadUrl(file:///android_asset/index.html);
@@ -213,6 +226,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
                 pb.setProgress(newProgress);
                 if (newProgress == 100) {
                     pb.setVisibility(View.GONE);
+                    httpLoadingDialog.dismiss();
                 }
                 super.onProgressChanged(view, newProgress);
             }
@@ -380,6 +394,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
     public void onBackPressed() {
 
         if (null != mWeb && mWeb.canGoBack()) {
+            httpLoadingDialog.visible();
             mWeb.goBack();// 返回前一个页面
         } else {
             super.onBackPressed();

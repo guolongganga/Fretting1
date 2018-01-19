@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 
 /**
  * 作者：sunnyzeng on 2018/1/16 10:03
- * 描述：
+ * 描述：定投数据
  */
 
 public class InvestResp extends BaseResp<InvestResp> implements Parcelable {
