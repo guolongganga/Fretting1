@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.text.Html;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
@@ -91,9 +92,21 @@ public class FundBuyDialog extends Dialog {
                     LayoutParams.FILL_PARENT, LayoutParams.WRAP_CONTENT));
 
             //购买的基金名称
-            ((TextView) layout.findViewById(R.id.tv_fund_name)).setText(fundName);
+            if (TextUtils.isEmpty(fundName)) {
+                layout.findViewById(R.id.tv_fund_name).setVisibility(View.GONE);
+            } else {
+                layout.findViewById(R.id.tv_fund_name).setVisibility(View.VISIBLE);
+                ((TextView) layout.findViewById(R.id.tv_fund_name)).setText(fundName);
+            }
+
             //购买的基金金额
-            ((TextView) layout.findViewById(R.id.tv_fund_amount)).setText(fundAmount);
+            if (TextUtils.isEmpty(fundAmount)) {
+                layout.findViewById(R.id.tv_fund_amount).setVisibility(View.GONE);
+            } else {
+                layout.findViewById(R.id.tv_fund_amount).setVisibility(View.VISIBLE);
+                ((TextView) layout.findViewById(R.id.tv_fund_amount)).setText(fundAmount);
+            }
+
             layout.findViewById(R.id.iv_close).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

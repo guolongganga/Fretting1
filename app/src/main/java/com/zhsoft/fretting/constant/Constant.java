@@ -160,6 +160,9 @@ public class Constant {
     //定投计划状态 终止
     public static final String INVEST_PLAN_END = "终止";
 
+    //定投状态
+    public static final String INVEST_STATUS = BASE_CONSTANT + "invest_status";
+
     /********************************************* int ********************************************/
 
     //人气产品

@@ -47,7 +47,7 @@ public class SwitchAccountRecycleAdapter extends SimpleRecAdapter<String, Switch
 
     @Override
     public int getLayoutId() {
-        return R.layout.adapter_switch_account_rv_item;
+        return R.layout.adapter_user_switch_account_rv_item;
     }
 
     @Override

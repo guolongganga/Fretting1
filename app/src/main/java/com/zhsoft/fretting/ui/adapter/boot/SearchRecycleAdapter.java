@@ -35,7 +35,7 @@ public class SearchRecycleAdapter extends SimpleRecAdapter<NewestFundResp, Searc
 
     @Override
     public int getLayoutId() {
-        return R.layout.adapter_search_rv_item;
+        return R.layout.adapter_boot_search_rv_item;
     }
 
     @Override

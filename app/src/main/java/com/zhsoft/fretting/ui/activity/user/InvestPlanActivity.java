@@ -27,7 +27,7 @@ import cn.droidlover.xrecyclerview.XRecyclerView;
 
 /**
  * 作者：sunnyzeng on 2018/1/22 11:38
- * 描述：
+ * 描述：定投计划
  */
 
 public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
@@ -98,7 +98,7 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
     }
 
     /**
-     * 初始化我的基金adapter
+     * 初始化定投计划adapter
      *
      * @return
      */
@@ -112,7 +112,9 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
                 switch (tag) {
                     //点击
                     case MyFundRecyleAdapter.ITEM_CLICK:
-                        showToast(model.getFundName());
+                        Bundle bundle = new Bundle();
+                        bundle.putString(Constant.INVEST_STATUS,model.getInvestStatus());
+                        startActivity(InvestDeatilActivity.class,bundle);
                         break;
                 }
             }

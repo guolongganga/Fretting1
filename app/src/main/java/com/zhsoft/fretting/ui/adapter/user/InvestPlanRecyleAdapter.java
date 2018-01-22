@@ -3,15 +3,12 @@ package com.zhsoft.fretting.ui.adapter.user;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.model.user.FoundResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
-import com.zhsoft.fretting.utils.BigDecimalUtil;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
@@ -19,7 +16,7 @@ import cn.droidlover.xdroidmvp.kit.KnifeKit;
 
 /**
  * 作者：sunnyzeng on 2017/12/18 14:07
- * 描述：
+ * 描述：定投计划
  */
 
 public class InvestPlanRecyleAdapter extends SimpleRecAdapter<InvestPlanResp, InvestPlanRecyleAdapter.ViewHolder> {
@@ -36,7 +33,7 @@ public class InvestPlanRecyleAdapter extends SimpleRecAdapter<InvestPlanResp, In
 
     @Override
     public int getLayoutId() {
-        return R.layout.adapter_invest_plan_rv_item;
+        return R.layout.adapter_user_invest_plan_rv_item;
     }
 
     @Override
