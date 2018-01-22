@@ -85,7 +85,7 @@
 
     <Button
         android:id="@+id/btn_change"
-        style="@style/common_blue_button"
+        style="@style/common_blue_button_circle"
         android:layout_width="@dimen/dimen_200"
         android:layout_gravity="center_horizontal"
         android:text="@string/user_bank_card_change"/>

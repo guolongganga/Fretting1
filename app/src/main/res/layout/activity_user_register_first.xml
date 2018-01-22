@@ -273,7 +273,7 @@
 
             <Button
                 android:id="@+id/btn_next"
-                style="@style/common_blue_button"
+                style="@style/common_blue_button_circle"
                 android:text="@string/user_common_next"/>
         </LinearLayout>
     </ScrollView>

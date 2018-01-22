@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+    <include layout="@layout/layout_head"/>
+
+    <cn.droidlover.xrecyclerview.XRecyclerView
+        android:layout_marginTop="@dimen/dimen_66"
+        android:id="@+id/xrv_my_invest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:overScrollMode="never"/>
+
+    <Button
+        android:id="@+id/btn_add_invest"
+        style="@style/common_blue_button_rect"
+        android:text="+新增定投"
+        />
+</RelativeLayout>

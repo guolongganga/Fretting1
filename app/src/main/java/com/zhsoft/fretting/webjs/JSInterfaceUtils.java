@@ -46,6 +46,14 @@ public class JSInterfaceUtils {
         }
     }
 
+    @JavascriptInterface
+    public void toInvestPlan() {
+
+        if (jSInterfaceClick != null) {
+            jSInterfaceClick.toInvestPlan();
+        }
+    }
+
     //
 //    @JavascriptInterface
 //    public void toLogin(String msg) {

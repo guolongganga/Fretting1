@@ -24,7 +24,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
  * 作者：sunnyzeng on 2017/12/21 17:52
- * 描述：优选排行 定投排行
+ * 描述：定投排行
  */
 
 public class TimingActivity extends XActivity {

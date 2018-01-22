@@ -155,7 +155,7 @@
 
         <Button
             android:id="@+id/sure"
-            style="@style/common_blue_button"
+            style="@style/common_blue_button_circle"
             android:text=""
             android:textSize="@dimen/text_size_14"/>
 

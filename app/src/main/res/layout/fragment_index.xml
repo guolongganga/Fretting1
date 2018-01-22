@@ -458,7 +458,7 @@
 
                     <Button
                         android:id="@+id/btn_invest"
-                        style="@style/common_blue_button"
+                        style="@style/common_blue_button_circle"
                         android:layout_width="@dimen/dimen_180"
                         android:layout_height="@dimen/dimen_35"
                         android:layout_marginTop="@dimen/dimen_10"

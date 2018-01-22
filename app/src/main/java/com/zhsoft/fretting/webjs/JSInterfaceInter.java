@@ -15,4 +15,7 @@ public interface JSInterfaceInter {
     //定投
     void toInvest();
 
+    //定投计划
+    void toInvestPlan();
+
 }

@@ -466,7 +466,7 @@
             <!--下一步-->
             <Button
                 android:id="@+id/btn_save"
-                style="@style/common_blue_button"
+                style="@style/common_blue_button_circle"
                 android:text="保 存"/>
 
         </LinearLayout>

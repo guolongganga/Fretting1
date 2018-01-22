@@ -151,6 +151,14 @@ public class Constant {
     //定投页 跳转定投成功 携带参数
     public static final String INVEST_SUCCESS_OBJECT = "invest_success_object";
 
+    //定投计划状态 定投中
+    public static final String INVEST_PLAN_ING = "定投中";
+
+    //定投计划状态 暂停
+    public static final String INVEST_PLAN_STOP = "暂停";
+
+    //定投计划状态 终止
+    public static final String INVEST_PLAN_END = "终止";
 
     /********************************************* int ********************************************/
 

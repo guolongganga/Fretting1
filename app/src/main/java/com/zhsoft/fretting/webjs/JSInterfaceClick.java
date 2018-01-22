@@ -24,5 +24,10 @@ public class JSInterfaceClick implements JSInterfaceInter {
 
     }
 
+    //定投计划
+    @Override
+    public void toInvestPlan() {
+
+    }
 
 }
