@@ -41,7 +41,7 @@ public class FundContentRecycleAdapter extends SimpleRecAdapter<NewestFundResp, 
         holder.tvName.setText(data.get(position).getFund_name());
         holder.tvCode.setText(data.get(position).getFund_code());
         holder.tvValue.setText(BigDecimalUtil.bigdecimalToString(data.get(position).getNet_value()));
-        holder.tvRange.setText("+" + BigDecimalUtil.bigdecimalToString(data.get(position).getFund_rose()));
+        holder.tvRange.setText("+" + BigDecimalUtil.bigdecimalToString(data.get(position).getFund_rose()) + "%");
         holder.rlContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

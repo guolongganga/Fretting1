@@ -42,7 +42,7 @@ public class TimingRecycleAdapter extends SimpleRecAdapter<NewestFundResp, Timin
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.tvName.setText(data.get(position).getFund_name());
         holder.tvCode.setText(data.get(position).getFund_code());
-        holder.tvRange.setText("+" + BigDecimalUtil.bigdecimalToString(data.get(position).getFund_rose()));
+        holder.tvRange.setText("+" + BigDecimalUtil.bigdecimalToString(data.get(position).getFund_rose()) + "%");
         holder.rlContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

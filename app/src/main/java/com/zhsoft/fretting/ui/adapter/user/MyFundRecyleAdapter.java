@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.user.FoundResp;
 import com.zhsoft.fretting.model.user.MyFundResp;
+import com.zhsoft.fretting.utils.BigDecimalUtil;
 
 import java.math.BigDecimal;
 
@@ -41,9 +42,9 @@ public class MyFundRecyleAdapter extends SimpleRecAdapter<FoundResp, MyFundRecyl
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.tvName.setText(data.get(position).getFundName());
-        holder.tvMoney.setText(data.get(position).getTotalEarn().setScale(2, BigDecimal.ROUND_HALF_UP).toString());
-        holder.tvYesterday.setText("+" + data.get(position).getEarningsLastDay().setScale(2, BigDecimal.ROUND_HALF_UP));
-        holder.tvHold.setText("-" + data.get(position).getHoldAmount().setScale(2, BigDecimal.ROUND_HALF_UP));
+        holder.tvMoney.setText(BigDecimalUtil.bigdecimalToString(data.get(position).getTotalEarn()));
+        holder.tvYesterday.setText("+" + BigDecimalUtil.bigdecimalToString(data.get(position).getEarningsLastDay()));
+        holder.tvHold.setText("-" + BigDecimalUtil.bigdecimalToString(data.get(position).getHoldAmount()));
         if (data.size() - 1 == position) {
             holder.viewLine.setVisibility(View.GONE);
         } else {
