@@ -60,10 +60,10 @@ public class Constant {
     public static final String FUND_TAB_SHARES = "股票型";
 
     //混合型 名称
-    public static final String FUND_TAB_BLEND =  "混合型";
+    public static final String FUND_TAB_BLEND = "混合型";
 
     //债券型 名称
-    public static final String FUND_TAB_BOND =  "债券型";
+    public static final String FUND_TAB_BOND = "债券型";
 
     //指数型 名称
     public static final String FUND_TAB_FINGER = "指数型";
@@ -188,10 +188,9 @@ public class Constant {
     //我的银行卡后 返回我的手机号码页面 resultcode
     public static final int SUCCESS_BACK_BANK = 202;
 
-    //跳转登录 requestcode
-    public static final int FUND_DETAIL_ACTIVITY = 103;
+    //定投计划 跳转 定投详情页
+    public static final int INVEST_PLAN_ACTIVITY = 103;
 
-    //登录返回基金详情页 resultcode
-    public static final int BACK_DETAIL_ACTIVITY = 203;
-
+    //定投详情 返回 定投计划页
+    public static final int INVEST_DETAIL_BACK = 203;
 }

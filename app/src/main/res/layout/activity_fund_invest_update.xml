@@ -149,9 +149,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/dimen_10"
-            android:layout_gravity="center_horizontal"
-            android:textColor="@color/color_1862b7"
-            android:text="下次扣款时间：2017-12-18，遇非交易日顺延"/>
+            android:layout_marginLeft="@dimen/dimen_30"
+            android:textColor="@color/color_696969"
+            android:text="注：下次扣款日：2017-12-18"/>
 
         <Button
             android:id="@+id/sure"

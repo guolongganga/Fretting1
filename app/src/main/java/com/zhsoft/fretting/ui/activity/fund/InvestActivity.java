@@ -395,7 +395,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
      */
     public void requestDeductTimeSuccess(GetNextTimeResp timeResp) {
         first_trade_month = timeResp.getFirst_trade_month();
-        tvNextTime.setText("下次扣款日：" + timeResp.getExchdate() + " " + timeResp.getExchWeek());
+        tvNextTime.setText("注：下次扣款日：" + timeResp.getExchdate() + " " + timeResp.getExchWeek());
     }
 
     /**

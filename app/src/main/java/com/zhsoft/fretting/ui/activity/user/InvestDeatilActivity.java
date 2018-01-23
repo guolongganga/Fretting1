@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
 import com.zhsoft.fretting.model.user.InvestRecordResp;
 import com.zhsoft.fretting.present.user.InvestDetailPresent;
@@ -67,6 +68,15 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
     /** 输入密码弹框 */
     private FundBuyDialog endPasswordDialog;
 
+    /** 暂停弹框 */
+    private CustomDialog stopDialog;
+    /** 输入密码弹框 */
+    private FundBuyDialog stopPasswordDialog;
+    /** 基金代码 */
+    private String fundCode;
+    /** 基金名称 */
+    private String fundName;
+
     @Override
     public int getLayoutId() {
         return R.layout.activity_user_invest_detail;
@@ -85,6 +95,10 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
         userId = App.getSharedPref().getString(Constant.USERID, "");
         if (bundle != null) {
             investStatus = bundle.getString(Constant.INVEST_STATUS);
+            //基金代码
+            fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
+            //基金名称
+            fundName = bundle.getString(Constant.FUND_DETAIL_NAME);
         }
 
         if (Constant.INVEST_PLAN_STOP.equals(investStatus)) {
@@ -132,21 +146,25 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     endDialog.dismiss();
                                     //TODO 弹出框
-                                    endPasswordDialog = new FundBuyDialog
-                                            .Builder(context)
-                                            .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
-                                                @Override
-                                                public void onFinish(String str) {
-                                                    endPasswordDialog.dismiss();
-                                                    //TODO 请求终止接口
-                                                    if (str.equals("123456")) {
-                                                        showToast("密码正确");
-                                                    } else {
-                                                        showToast("密码错误");
-                                                    }
+                                    if (endPasswordDialog == null) {
+                                        endPasswordDialog = new FundBuyDialog
+                                                .Builder(context)
+                                                .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
+                                                    @Override
+                                                    public void onFinish(String str) {
+                                                        endPasswordDialog.dismiss();
+                                                        //TODO 请求终止接口
+                                                        if (str.equals("123456")) {
+                                                            showToast("密码正确");
+                                                            setResult(Constant.INVEST_DETAIL_BACK);
+                                                            finish();
+                                                        } else {
+                                                            showToast("密码错误");
+                                                        }
 
-                                                }
-                                            }).create();
+                                                    }
+                                                }).create();
+                                    }
                                     endPasswordDialog.show();
 
                                 }
@@ -158,13 +176,51 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (stopDialog == null) {
+                    stopDialog = new CustomDialog.Builder(context)
+                            .setMessage("暂停后将不再执行定期扣款，确定要暂停定投吗？")
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    stopDialog.dismiss();
+                                }
+                            }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    stopDialog.dismiss();
+                                    //TODO 弹出框
+                                    if (stopPasswordDialog == null) {
+                                        stopPasswordDialog = new FundBuyDialog
+                                                .Builder(context)
+                                                .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
+                                                    @Override
+                                                    public void onFinish(String str) {
+                                                        stopPasswordDialog.dismiss();
+                                                        //TODO 请求终止接口
+                                                        if (str.equals("123456")) {
+                                                            showToast("密码正确");
+                                                            setResult(Constant.INVEST_DETAIL_BACK);
+                                                            finish();
+                                                        } else {
+                                                            showToast("密码错误");
+                                                        }
 
+                                                    }
+                                                }).create();
+                                    }
+                                    stopPasswordDialog.show();
+
+                                }
+                            }).create();
+                }
+                stopDialog.show();
             }
         });
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                //修改定投
+                getP().investTime(token, userId, fundCode, fundName);
             }
         });
     }
@@ -205,5 +261,49 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
      * 请求定投详情接口数据失败
      */
     public void requestInvestDetailFail() {
+    }
+
+    /**
+     * 请求修改定投接口失败
+     */
+    public void requestInvestFail() {
+
+    }
+
+    /**
+     * 请求修改定投接口成功
+     *
+     * @param resp
+     */
+    public void requestInvestSuccess(final InvestResp resp) {
+        //去修改定投
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.INVEST_ACTIVITY_TYPE, Constant.INVEST_ACTIVITY_UPDATE);
+        bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
+        bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
+        bundle.putParcelable(Constant.INVEST_FUND_OBJECT, resp);
+        startActivity(InvestActivity.class, bundle);
+
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (endDialog != null) {
+            endDialog.dismiss();
+            endDialog = null;
+        }
+        if (endPasswordDialog != null) {
+            endPasswordDialog.dismiss();
+            endPasswordDialog = null;
+        }
+        if (stopDialog != null) {
+            stopDialog.dismiss();
+            stopDialog = null;
+        }
+        if (stopPasswordDialog != null) {
+            stopPasswordDialog.dismiss();
+            stopPasswordDialog = null;
+        }
+        super.onDestroy();
     }
 }

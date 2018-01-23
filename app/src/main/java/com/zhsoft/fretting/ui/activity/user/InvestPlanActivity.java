@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.ui.activity.user;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -113,8 +114,10 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
                     //点击
                     case MyFundRecyleAdapter.ITEM_CLICK:
                         Bundle bundle = new Bundle();
-                        bundle.putString(Constant.INVEST_STATUS,model.getInvestStatus());
-                        startActivity(InvestDeatilActivity.class,bundle);
+                        bundle.putString(Constant.INVEST_STATUS, model.getInvestStatus());
+                        bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
+                        bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
+                        startActivity(InvestDeatilActivity.class, bundle, Constant.INVEST_PLAN_ACTIVITY);
                         break;
                 }
             }
@@ -157,6 +160,15 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
         bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
         bundle.putParcelable(Constant.INVEST_FUND_OBJECT, resp);
         startActivity(InvestActivity.class, bundle);
+    }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constant.INVEST_PLAN_ACTIVITY && resultCode == Constant.INVEST_DETAIL_BACK) {
+            showToast("刷新页面数据");
+            httpLoadingDialog.visible();
+            getP().investPlanData(token, userId);
+        }
     }
 }
