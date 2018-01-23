@@ -27,10 +27,16 @@ public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
         reqData.setUserId(userId);
 
         ArrayList<InvestRecordResp> list = new ArrayList<>();
-        InvestRecordResp resp = new InvestRecordResp("2017-10-17", "星期一", "10.00", "定投成功");
-        InvestRecordResp resp2 = new InvestRecordResp("2017-10-28", "星期三", "20.00", "定投成功");
-        list.add(resp);
+        InvestRecordResp resp1 = new InvestRecordResp("2017-10-17", "星期一", "10.00", "定投成功");
+        InvestRecordResp resp2 = new InvestRecordResp("2017-10-17", "星期一", "10.00", "确认成功");
+        InvestRecordResp resp3 = new InvestRecordResp("2017-10-17", "星期一", "10.00", "撤单成功");
+        InvestRecordResp resp4 = new InvestRecordResp("2017-10-28", "星期三", "20.00", "支付失败");
+        InvestRecordResp resp5 = new InvestRecordResp("2017-10-28", "星期三", "20.00", "确认失败");
+        list.add(resp1);
         list.add(resp2);
+        list.add(resp3);
+        list.add(resp4);
+        list.add(resp5);
 
         if (true) {
             getV().requestInvestDetailSuccess(list);

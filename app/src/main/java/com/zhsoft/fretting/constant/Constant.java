@@ -163,6 +163,9 @@ public class Constant {
     //定投状态
     public static final String INVEST_STATUS = BASE_CONSTANT + "invest_status";
 
+    //定投记录状态
+    public static final String INVEST_RECORD_STATUS = "invest_record_status";
+
     /********************************************* int ********************************************/
 
     //人气产品
@@ -193,4 +196,5 @@ public class Constant {
 
     //定投详情 返回 定投计划页
     public static final int INVEST_DETAIL_BACK = 203;
+
 }

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.App;
@@ -18,6 +19,7 @@ import com.zhsoft.fretting.ui.activity.fund.InvestActivity;
 import com.zhsoft.fretting.ui.adapter.user.InvestPlanRecyleAdapter;
 import com.zhsoft.fretting.ui.adapter.user.InvestRecordRecyleAdapter;
 import com.zhsoft.fretting.ui.adapter.user.MyFundRecyleAdapter;
+import com.zhsoft.fretting.ui.widget.ChenJingET;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.ui.widget.FundBuyDialog;
 
@@ -67,7 +69,6 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
     private CustomDialog endDialog;
     /** 输入密码弹框 */
     private FundBuyDialog endPasswordDialog;
-
     /** 暂停弹框 */
     private CustomDialog stopDialog;
     /** 输入密码弹框 */
@@ -115,7 +116,8 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
             tvNextTimeHint.setText("将进行新一期定投扣款，请保持账户资金充足");
             btnStop.setVisibility(View.VISIBLE);
         }
-
+        //防止一进页面显示在最底部
+        xrvInvestRecord.setFocusable(false);
         xrvInvestRecord.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
         getP().investDetailData(token, userId);
 
@@ -240,7 +242,10 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
                 switch (tag) {
                     //点击
                     case MyFundRecyleAdapter.ITEM_CLICK:
-                        showToast(model.getDay());
+//                        showToast(model.getDay());
+                        Bundle bundle = new Bundle();
+                        bundle.putString(Constant.INVEST_RECORD_STATUS, model.getStatus());
+                        startActivity(TransactionDetailActivity.class, bundle);
                         break;
                 }
             }

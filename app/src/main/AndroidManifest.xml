@@ -91,6 +91,8 @@
         <activity android:name=".ui.activity.user.InvestPlanActivity"></activity>
         <!--定投详情-->
         <activity android:name=".ui.activity.user.InvestDeatilActivity"></activity>
+        <!--交易详情-->
+        <activity android:name=".ui.activity.user.TransactionDetailActivity"></activity>
 
         <!--通用WebView-->
         <activity android:name=".ui.activity.boot.WebPublicActivity"></activity>
