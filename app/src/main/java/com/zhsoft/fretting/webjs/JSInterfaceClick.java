@@ -30,4 +30,10 @@ public class JSInterfaceClick implements JSInterfaceInter {
 
     }
 
+    //变更分红方式
+    @Override
+    public void toBonus() {
+
+    }
+
 }

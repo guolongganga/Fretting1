@@ -18,4 +18,7 @@ public interface JSInterfaceInter {
     //定投计划
     void toInvestPlan();
 
+    //变更分红方式
+    void toBonus();
+
 }

@@ -18,6 +18,12 @@
       alert("Android调用了JS的callJS方法,token="+token+",userId="+userId);
    }
 
+   //修改分红方式
+   function callChangeBonus(chooseStyle){
+      document.getElementById("bonus").value=chooseStyle;
+
+   }
+
    function callBuy(){
             // 由于对象映射，所以调用connObj对象等于调用Android映射的对象
             connObj.toBuy();
@@ -30,6 +36,11 @@
          function callInvestPlan(){
             connObj.toInvestPlan();
          }
+         //分红方式
+         function callBonus(){
+            connObj.toBonus();
+         }
+
 
 
 
@@ -48,6 +59,9 @@
 <br/>
 <input type="text" id="show2"/>
 <button type="button" id="button5" onclick="callInvestPlan()">定投计划</button>
+<br/>
+<input type="text" id="bonus" value="现金分红"/>
+<button type="button" id="button6" onclick="callBonus()">分红方式</button>
 <br/>
 
 </body>

@@ -54,6 +54,14 @@ public class JSInterfaceUtils {
         }
     }
 
+    @JavascriptInterface
+    public void toBonus() {
+
+        if (jSInterfaceClick != null) {
+            jSInterfaceClick.toBonus();
+        }
+    }
+
     //
 //    @JavascriptInterface
 //    public void toLogin(String msg) {

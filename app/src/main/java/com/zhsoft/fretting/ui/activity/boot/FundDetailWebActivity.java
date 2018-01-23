@@ -37,6 +37,7 @@ import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.present.fund.FundDetailPresent;
 import com.zhsoft.fretting.ui.activity.fund.BuyActivity;
 import com.zhsoft.fretting.ui.activity.fund.InvestActivity;
+import com.zhsoft.fretting.ui.activity.user.BonusChangeActivity;
 import com.zhsoft.fretting.ui.activity.user.InvestPlanActivity;
 import com.zhsoft.fretting.ui.activity.user.LoginActivity;
 import com.zhsoft.fretting.ui.activity.user.PersonInfoActivity;
@@ -306,8 +307,14 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             public void toInvestPlan() {
                 baseToInvestPlan();
             }
+
+            @Override
+            public void toBonus() {
+                baseToBonus();
+            }
         });
     }
+
 
     /**
      * 登录
@@ -401,6 +408,13 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
         bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
         startActivity(InvestPlanActivity.class, bundle);
+    }
+
+    /**
+     * 变更分红方式
+     */
+    private void baseToBonus() {
+        startActivity(BonusChangeActivity.class, Constant.WEB_BONUS_ACTIVITY);
     }
 
 
@@ -613,5 +627,19 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         }
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == Constant.WEB_BONUS_ACTIVITY && resultCode == Constant.BONUS_BACK_ACTIVITY) {
+            final String chooseStyle = data.getStringExtra(Constant.BONUS_TYPE);
+            showToast("哈哈哈哈");
+            //调用js中的函数：showInfoFromJava(msg)
+            mWeb.post(new Runnable() {
+                @Override
+                public void run() {
+                    mWeb.loadUrl("javascript:callChangeBonus('" + chooseStyle + "')");
+                }
+            });
+        }
+    }
 }

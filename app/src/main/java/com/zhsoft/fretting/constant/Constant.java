@@ -166,6 +166,9 @@ public class Constant {
     //定投记录状态
     public static final String INVEST_RECORD_STATUS = "invest_record_status";
 
+    //分红方式
+    public static final String BONUS_TYPE = "bonus_type";
+
     /********************************************* int ********************************************/
 
     //人气产品
@@ -191,10 +194,15 @@ public class Constant {
     //我的银行卡后 返回我的手机号码页面 resultcode
     public static final int SUCCESS_BACK_BANK = 202;
 
-    //定投计划 跳转 定投详情页
+    //定投计划 跳转 定投详情页 requestcode
     public static final int INVEST_PLAN_ACTIVITY = 103;
 
-    //定投详情 返回 定投计划页
+    //定投详情 返回 定投计划页 resultcode
     public static final int INVEST_DETAIL_BACK = 203;
 
+    //详情页 到 分红方式 requestcode
+    public static final int WEB_BONUS_ACTIVITY = 104;
+
+    //分红方式修改成功后返回 resultcode
+    public static final int BONUS_BACK_ACTIVITY = 204;
 }

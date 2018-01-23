@@ -449,7 +449,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:src="@drawable/register_iv_select"/>
+                    android:src="@drawable/register_iv_selector"/>
                 <!--我同意《xxx协议》-->
                 <TextView
                     android:id="@+id/register_service"
