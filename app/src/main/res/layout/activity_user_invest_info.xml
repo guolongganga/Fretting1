@@ -2,22 +2,19 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
-
     <!--我的定投-->
     <LinearLayout
         android:id="@+id/ll_head_content"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
         <include layout="@layout/layout_head"/>
 
         <RelativeLayout
-            android:id="@+id/rl_selector"
-            android:background="@color/white"
+
             android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40"
-            android:visibility="gone">
+            android:layout_height="@dimen/dimen_40">
 
             <!--基金排序-->
             <TextView
@@ -44,13 +41,10 @@
                 android:text="全部定投状态"
                 android:textColor="@color/color_333333"/>
 
+
         </RelativeLayout>
-        <View
-            android:id="@+id/view_line"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_01"
-            android:background="@color/color_666666" />
     </LinearLayout>
+
 
     <cn.droidlover.xrecyclerview.XRecyclerView
         android:id="@+id/xrv_my_invest"

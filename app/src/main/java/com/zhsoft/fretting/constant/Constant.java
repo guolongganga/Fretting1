@@ -169,6 +169,12 @@ public class Constant {
     //分红方式
     public static final String BONUS_TYPE = "bonus_type";
 
+    //页面名称，定投计划
+    public static final String INVEST_PLAN = BASE_CONSTANT + "invest_plan";
+
+    //页面名称，我的定投
+    public static final String MY_INVEST = BASE_CONSTANT + "my_invest";
+
     /********************************************* int ********************************************/
 
     //人气产品

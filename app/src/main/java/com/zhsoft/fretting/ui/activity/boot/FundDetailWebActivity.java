@@ -405,6 +405,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      */
     private void baseToInvestPlan() {
         Bundle bundle = new Bundle();
+        bundle.putString(Constant.ACTIVITY_NAME,Constant.INVEST_PLAN);
         bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
         bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
         startActivity(InvestPlanActivity.class, bundle);
