@@ -1,4 +1,4 @@
-package com.zhsoft.fretting.ui.fragment.fund;
+package com.zhsoft.fretting.ui.activity.user;
 
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -6,39 +6,40 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.View;
-import android.widget.RelativeLayout;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.ui.activity.boot.SearchActivity;
-import com.zhsoft.fretting.ui.activity.user.SwitchAccountActivity;
 import com.zhsoft.fretting.ui.adapter.fund.FundTabViewPagerAdapter;
+import com.zhsoft.fretting.ui.fragment.index.TimingFragment;
+import com.zhsoft.fretting.ui.fragment.user.TransactionContentFragment;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import cn.droidlover.xdroidmvp.mvp.XFragment;
-import cn.droidlover.xdroidmvp.mvp.XLazyFragment;
+import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
- * 作者：sunnyzeng on 2017/12/5
- * 描述：基金
+ * 作者：sunnyzeng on 2017/12/21 17:52
+ * 描述：交易查询
  */
 
-public class FundFragment extends XLazyFragment {
-
-    @BindView(R.id.tab_layout)
-    TabLayout mTabLayout;
-    @BindView(R.id.view_pager)
-    ViewPager mViewPager;
-    @BindView(R.id.rl_name_search)
-    RelativeLayout rlNameSeach;
+public class TransactionQueryActivity extends XActivity {
+    /** 返回按钮 */
+    @BindView(R.id.head_back) ImageButton headBack;
+    /** 标题 */
+    @BindView(R.id.head_title) TextView headTitle;
+    /** 页卡标题 */
+    @BindView(R.id.tab_layout) TabLayout mTabLayout;
+    /** 滑动内容 */
+    @BindView(R.id.view_pager) ViewPager mViewPager;
 
     @Override
     public int getLayoutId() {
-        return R.layout.fragment_fund;
+        return R.layout.activity_index_popularity;
     }
 
     @Override
@@ -46,10 +47,12 @@ public class FundFragment extends XLazyFragment {
         return null;
     }
 
-
     @Override
-    public void initData(Bundle savedInstanceState) {
+    public void initData(Bundle bundle) {
+        headTitle.setText("交易查询");
+
         showChannel();
+
     }
 
     @Override
@@ -71,12 +74,13 @@ public class FundFragment extends XLazyFragment {
 
             }
         });
-        rlNameSeach.setOnClickListener(new View.OnClickListener() {
+        headBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(SearchActivity.class);
+                finish();
             }
         });
+
     }
 
     /**
@@ -84,31 +88,29 @@ public class FundFragment extends XLazyFragment {
      */
     public void showChannel() {
 
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getSupportFragmentManager();
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         List<Fragment> fragmentList = new ArrayList<>();
 
         List<String> tabName = new ArrayList<>();
-        tabName.add(Constant.FUND_TAB_SHARES);
-        tabName.add(Constant.FUND_TAB_BLEND);
-        tabName.add(Constant.FUND_TAB_BOND);
-        tabName.add(Constant.FUND_TAB_FINGER);
+        tabName.add(Constant.TRANSACTION_TAB_PURCHASE);
+        tabName.add(Constant.TRANSACTION_TAB_SELLOUT);
+        tabName.add(Constant.TRANSACTION_TAB_ONPASSAGE);
+        tabName.add(Constant.TRANSACTION_TAB_BONUS);
 
         int fragmentSize = tabName.size();
 
         for (int i = 0; i < fragmentSize; i++) {
-            FundContentFragment fragment = new FundContentFragment();
+            TransactionContentFragment fragment = new TransactionContentFragment();
             Bundle bundle = new Bundle();
             bundle.putString(Constant.FUND_TAB_NAME, tabName.get(i));
-            bundle.putInt(Constant.ACTIVITY_NAME, Constant.FUND_INDEX);
             fragment.setArguments(bundle);
             fragmentList.add(fragment);
         }
 
         FundTabViewPagerAdapter adapter = new FundTabViewPagerAdapter(fragmentManager, fragmentList, tabName);
-        mViewPager.setAdapter(adapter);
+        mViewPager.setAdapter(adapter);//将viewPager与Adapter关联
 
-        mTabLayout.setupWithViewPager(mViewPager);
+        mTabLayout.setupWithViewPager(mViewPager);  //将TabLayout和ViewPager关联起来。
     }
-
 }

@@ -175,6 +175,20 @@ public class Constant {
     //页面名称，我的定投
     public static final String MY_INVEST = BASE_CONSTANT + "my_invest";
 
+    //股票型 名称
+    public static final String TRANSACTION_TAB_PURCHASE = "买入";
+
+    //混合型 名称
+    public static final String TRANSACTION_TAB_SELLOUT = "卖出";
+
+    //债券型 名称
+    public static final String TRANSACTION_TAB_ONPASSAGE = "在途交易";
+
+    //指数型 名称
+    public static final String TRANSACTION_TAB_BONUS = "分红";
+
+
+
     /********************************************* int ********************************************/
 
     //人气产品

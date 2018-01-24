@@ -54,6 +54,7 @@ public class TimingActivity extends XActivity {
         headTitle.setText("定投排行");
         headRightImgbtn.setVisibility(View.VISIBLE);
         headRightImgbtn.setImageResource(R.mipmap.icon_query);
+
         showChannel();
 
     }
@@ -97,7 +98,7 @@ public class TimingActivity extends XActivity {
     public void showChannel() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-
+        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         List<Fragment> fragmentList = new ArrayList<>();
 
         List<String> tabName = new ArrayList<>();
@@ -115,7 +116,6 @@ public class TimingActivity extends XActivity {
             fragment.setArguments(bundle);
             fragmentList.add(fragment);
         }
-
         FundTabViewPagerAdapter adapter = new FundTabViewPagerAdapter(fragmentManager, fragmentList, tabName);
         mViewPager.setAdapter(adapter);
 

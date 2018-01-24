@@ -97,6 +97,8 @@
         <activity android:name=".ui.activity.user.BonusChangeActivity"></activity>
         <!--自选基金-->
         <activity android:name=".ui.activity.user.SelfChooseActivity"></activity>
+        <!--交易查询-->
+        <activity android:name=".ui.activity.user.TransactionQueryActivity"></activity>
 
         <!--通用WebView-->
         <activity android:name=".ui.activity.boot.WebPublicActivity"></activity>

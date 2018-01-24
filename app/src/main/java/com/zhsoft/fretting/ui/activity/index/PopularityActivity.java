@@ -95,14 +95,14 @@ public class PopularityActivity extends XActivity {
     public void showChannel() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-
+        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         List<Fragment> fragmentList = new ArrayList<>();
 
         List<String> tabName = new ArrayList<>();
-        tabName.add("股票型");
-        tabName.add("混合型");
-        tabName.add("债券型");
-        tabName.add("指数型");
+        tabName.add(Constant.FUND_TAB_SHARES);
+        tabName.add(Constant.FUND_TAB_BLEND);
+        tabName.add(Constant.FUND_TAB_BOND);
+        tabName.add(Constant.FUND_TAB_FINGER);
 
         int fragmentSize = tabName.size();
 
@@ -114,7 +114,6 @@ public class PopularityActivity extends XActivity {
             fragment.setArguments(bundle);
             fragmentList.add(fragment);
         }
-
         FundTabViewPagerAdapter adapter = new FundTabViewPagerAdapter(fragmentManager, fragmentList, tabName);
         mViewPager.setAdapter(adapter);
 

@@ -25,6 +25,7 @@ import com.zhsoft.fretting.ui.activity.user.RegisterFirstActivity;
 import com.zhsoft.fretting.ui.activity.user.RegisterSecondActivity;
 import com.zhsoft.fretting.ui.activity.user.SelfChooseActivity;
 import com.zhsoft.fretting.ui.activity.user.SettingActivity;
+import com.zhsoft.fretting.ui.activity.user.TransactionQueryActivity;
 import com.zhsoft.fretting.ui.adapter.user.MyFundRecyleAdapter;
 import com.zhsoft.fretting.utils.RuntimeHelper;
 
@@ -196,7 +197,7 @@ public class UserFragment extends XFragment<UserPresent> {
         transaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("交易查询");
+                startActivity(TransactionQueryActivity.class);
             }
         });
 
