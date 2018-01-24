@@ -80,8 +80,7 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
         );
 
         contentLayout.getRecyclerView().verticalLayoutManager(context);
-        contentLayout.getRecyclerView()
-                .setAdapter(getAdapter());
+        contentLayout.getRecyclerView().setAdapter(getAdapter());
         contentLayout.getRecyclerView().horizontalDivider(R.color.color_e7e7e7, R.dimen.dimen_1);  //设置divider
         //判断是哪个Activity
         switch (activityName) {

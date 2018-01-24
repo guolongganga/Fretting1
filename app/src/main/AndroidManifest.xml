@@ -95,6 +95,8 @@
         <activity android:name=".ui.activity.user.TransactionDetailActivity"></activity>
         <!--分红方式变更-->
         <activity android:name=".ui.activity.user.BonusChangeActivity"></activity>
+        <!--自选基金-->
+        <activity android:name=".ui.activity.user.SelfChooseActivity"></activity>
 
         <!--通用WebView-->
         <activity android:name=".ui.activity.boot.WebPublicActivity"></activity>

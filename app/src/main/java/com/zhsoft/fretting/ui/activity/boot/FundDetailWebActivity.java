@@ -632,7 +632,6 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constant.WEB_BONUS_ACTIVITY && resultCode == Constant.BONUS_BACK_ACTIVITY) {
             final String chooseStyle = data.getStringExtra(Constant.BONUS_TYPE);
-            showToast("哈哈哈哈");
             //调用js中的函数：showInfoFromJava(msg)
             mWeb.post(new Runnable() {
                 @Override

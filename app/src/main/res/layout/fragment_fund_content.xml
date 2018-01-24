@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,14 +15,14 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dimen_15"
             android:text="基金名称"
-            android:textColor="@color/color_333333" />
+            android:textColor="@color/color_333333"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="净值"
-            android:textColor="@color/color_333333" />
+            android:textColor="@color/color_333333"/>
 
         <TextView
             android:id="@+id/tv_range"
@@ -31,10 +31,10 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/dimen_15"
-            android:padding="@dimen/dimen_4"
             android:background="@drawable/shape_blue_line_rect"
+            android:padding="@dimen/dimen_4"
             android:text=""
-            android:textColor="@color/color_333333" />
+            android:textColor="@color/color_333333"/>
 
 
     </RelativeLayout>
@@ -43,9 +43,10 @@
         android:id="@+id/view_line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_01"
-        android:background="@color/color_666666" />
+        android:background="@color/color_666666"/>
 
-    <cn.droidlover.xrecyclerview.XRecyclerContentLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <cn.droidlover.xrecyclerview.XRecyclerContentLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/content_layout"
         android:layout_width="match_parent"
@@ -55,7 +56,7 @@
         android:background="@color/white"
         app:recyclerBackgroundColor="@color/white"
         app:recyclerScrollbarNone="true"
-        app:recyclerScrollbarStyle="outsideOverlay" />
+        app:recyclerScrollbarStyle="outsideOverlay"/>
 
 
 </LinearLayout>
