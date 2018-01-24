@@ -85,7 +85,6 @@ public class FundFragment extends XLazyFragment {
     public void showChannel() {
 
         FragmentManager fragmentManager = getFragmentManager();
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         List<Fragment> fragmentList = new ArrayList<>();
 
         List<String> tabName = new ArrayList<>();

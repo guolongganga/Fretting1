@@ -21,14 +21,13 @@ import cn.droidlover.xrecyclerview.XRecyclerView;
 
 /**
  * 作者：sunnyzeng on 2018/1/24 15:46
- * 描述：
+ * 描述：交易查询
  */
 
 public class TransactionContentFragment extends XFragment<TransactionContentPresent> {
 
     @BindView(R.id.content_layout) XRecyclerContentLayout contentLayout;
     private TransactionContentRecycleAdapter adapter;
-    private int pageno = 1;
     private final int pageSize = 10;
     /** 基金类型 */
     private String tabType;
@@ -103,8 +102,8 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
         } else if (Constant.TRANSACTION_TAB_ONPASSAGE.equals(fundTabName)) {
             //在途交易
             return "103";
-        } else if (Constant.TRANSACTION_TAB_BONUS.equals(fundTabName)) {
-            //分红
+        } else if (Constant.TRANSACTION_TAB_BONUS.equals(fundTabName) || "我的分红".equals(fundTabName)) {
+            //分红、我的分红
             return "104";
         }
         return "";
@@ -118,7 +117,7 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
      */
     public RecyclerAdapter getAdapter() {
         if (adapter == null) {
-            adapter = new TransactionContentRecycleAdapter(context,fundTabName);
+            adapter = new TransactionContentRecycleAdapter(context, fundTabName);
         }
         return adapter;
     }

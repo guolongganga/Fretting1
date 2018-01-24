@@ -98,7 +98,6 @@ public class TimingActivity extends XActivity {
     public void showChannel() {
 
         FragmentManager fragmentManager = getSupportFragmentManager();
-        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         List<Fragment> fragmentList = new ArrayList<>();
 
         List<String> tabName = new ArrayList<>();

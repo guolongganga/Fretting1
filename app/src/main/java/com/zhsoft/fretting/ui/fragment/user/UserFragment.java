@@ -19,6 +19,7 @@ import com.zhsoft.fretting.model.user.FoundResp;
 import com.zhsoft.fretting.model.user.MyFundResp;
 import com.zhsoft.fretting.model.user.UserAccountResp;
 import com.zhsoft.fretting.present.user.UserPresent;
+import com.zhsoft.fretting.ui.activity.user.BonusActivity;
 import com.zhsoft.fretting.ui.activity.user.InvestPlanActivity;
 import com.zhsoft.fretting.ui.activity.user.LoginActivity;
 import com.zhsoft.fretting.ui.activity.user.RegisterFirstActivity;
@@ -204,7 +205,7 @@ public class UserFragment extends XFragment<UserPresent> {
         profit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("分红");
+                startActivity(BonusActivity.class);
             }
         });
 

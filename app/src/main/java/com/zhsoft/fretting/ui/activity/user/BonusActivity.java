@@ -11,9 +11,8 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.ui.activity.boot.SearchActivity;
 import com.zhsoft.fretting.ui.adapter.fund.FundTabViewPagerAdapter;
-import com.zhsoft.fretting.ui.fragment.index.TimingFragment;
+import com.zhsoft.fretting.ui.fragment.user.BonusModeFragment;
 import com.zhsoft.fretting.ui.fragment.user.TransactionContentFragment;
 
 import java.util.ArrayList;
@@ -24,10 +23,10 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
  * 作者：sunnyzeng on 2017/12/21 17:52
- * 描述：交易查询
+ * 描述：分红
  */
 
-public class TransactionQueryActivity extends XActivity {
+public class BonusActivity extends XActivity {
     /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
@@ -49,7 +48,7 @@ public class TransactionQueryActivity extends XActivity {
 
     @Override
     public void initData(Bundle bundle) {
-        headTitle.setText("交易查询");
+        headTitle.setText("分红");
 
         showChannel();
 
@@ -92,20 +91,17 @@ public class TransactionQueryActivity extends XActivity {
         List<Fragment> fragmentList = new ArrayList<>();
 
         List<String> tabName = new ArrayList<>();
-        tabName.add(Constant.TRANSACTION_TAB_PURCHASE);
-        tabName.add(Constant.TRANSACTION_TAB_SELLOUT);
-        tabName.add(Constant.TRANSACTION_TAB_ONPASSAGE);
-        tabName.add(Constant.TRANSACTION_TAB_BONUS);
+        tabName.add("我的分红");
+        tabName.add("修改分红方式");
 
-        int fragmentSize = tabName.size();
+        TransactionContentFragment fragment = new TransactionContentFragment();
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.FUND_TAB_NAME, tabName.get(1));
+        fragment.setArguments(bundle);
+        fragmentList.add(fragment);
 
-        for (int i = 0; i < fragmentSize; i++) {
-            TransactionContentFragment fragment = new TransactionContentFragment();
-            Bundle bundle = new Bundle();
-            bundle.putString(Constant.FUND_TAB_NAME, tabName.get(i));
-            fragment.setArguments(bundle);
-            fragmentList.add(fragment);
-        }
+        BonusModeFragment bonusModeFragment = new BonusModeFragment();
+        fragmentList.add(bonusModeFragment);
 
         FundTabViewPagerAdapter adapter = new FundTabViewPagerAdapter(fragmentManager, fragmentList, tabName);
         mViewPager.setAdapter(adapter);//将viewPager与Adapter关联
