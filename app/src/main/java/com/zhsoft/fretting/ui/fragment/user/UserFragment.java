@@ -19,6 +19,7 @@ import com.zhsoft.fretting.ui.activity.user.BonusActivity;
 import com.zhsoft.fretting.ui.activity.user.CancleOrderActivity;
 import com.zhsoft.fretting.ui.activity.user.InvestPlanActivity;
 import com.zhsoft.fretting.ui.activity.user.LoginActivity;
+import com.zhsoft.fretting.ui.activity.user.MyInvestActivity;
 import com.zhsoft.fretting.ui.activity.user.RegisterFirstActivity;
 import com.zhsoft.fretting.ui.activity.user.RegisterSecondActivity;
 import com.zhsoft.fretting.ui.activity.user.SelfChooseActivity;
@@ -186,7 +187,7 @@ public class UserFragment extends XFragment<UserPresent> {
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putString(Constant.ACTIVITY_NAME, Constant.MY_INVEST);
-                startActivity(InvestPlanActivity.class, bundle);
+                startActivity(MyInvestActivity.class, bundle);
             }
         });
 

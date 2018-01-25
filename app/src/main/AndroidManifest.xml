@@ -87,6 +87,8 @@
         <activity android:name=".ui.activity.boot.SearchActivity"></activity>
         <!--基金详情页-->
         <activity android:name=".ui.activity.boot.FundDetailWebActivity"></activity>
+        <!--我的定投-->
+        <activity android:name=".ui.activity.user.MyInvestActivity"></activity>
         <!--定投计划-->
         <activity android:name=".ui.activity.user.InvestPlanActivity"></activity>
         <!--定投详情-->

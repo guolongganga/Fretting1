@@ -12,6 +12,8 @@ import com.zhsoft.fretting.model.index.IndexResp;
 import com.zhsoft.fretting.model.user.BankCardResp;
 import com.zhsoft.fretting.model.user.BankResp;
 import com.zhsoft.fretting.model.user.ImageResp;
+import com.zhsoft.fretting.model.user.InvestInfoResp;
+import com.zhsoft.fretting.model.user.InvestPlanResp;
 import com.zhsoft.fretting.model.user.OccupationResp;
 import com.zhsoft.fretting.model.user.PersonInfoResp;
 import com.zhsoft.fretting.model.user.PhoneResp;
@@ -45,6 +47,7 @@ import static com.zhsoft.fretting.net.HttpContent.get_occupation;
 import static com.zhsoft.fretting.net.HttpContent.image_code;
 import static com.zhsoft.fretting.net.HttpContent.my_bankcard;
 import static com.zhsoft.fretting.net.HttpContent.my_informationpage;
+import static com.zhsoft.fretting.net.HttpContent.my_times_buy_index;
 import static com.zhsoft.fretting.net.HttpContent.newest_fund;
 import static com.zhsoft.fretting.net.HttpContent.open_account;
 import static com.zhsoft.fretting.net.HttpContent.password_change_login;
@@ -253,4 +256,9 @@ public interface HttpUtil {
     @Headers("appType:Android")
     @POST(user_follow_data)
     Flowable<SelfChooseResp> selfChooseFund(@Body CommonReqData reqData);
+
+    //我的定投
+    @Headers("appType:Android")
+    @POST(my_times_buy_index)
+    Flowable<InvestPlanResp> myTimesBuyIndex(@Body CommonReqData reqData);
 }

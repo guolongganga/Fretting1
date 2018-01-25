@@ -12,52 +12,27 @@
 
         <include layout="@layout/layout_head"/>
 
-        <RelativeLayout
-            android:id="@+id/rl_selector"
-            android:background="@color/white"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_40"
-            android:visibility="gone">
-
-            <!--基金排序-->
-            <TextView
-                android:id="@+id/tv_fund"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentLeft="true"
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="@dimen/dimen_15"
-                android:background="@drawable/shape_blue_line_rect"
-                android:padding="@dimen/dimen_5"
-                android:text="基金名称"
-                android:textColor="@color/color_333333"/>
-
-            <TextView
-                android:id="@+id/tv_range"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_marginRight="@dimen/dimen_15"
-                android:background="@drawable/shape_blue_line_rect"
-                android:padding="@dimen/dimen_5"
-                android:text="全部定投状态"
-                android:textColor="@color/color_333333"/>
-
-        </RelativeLayout>
-        <View
-            android:id="@+id/view_line"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_01"
-            android:background="@color/color_666666" />
     </LinearLayout>
 
-    <cn.droidlover.xrecyclerview.XRecyclerView
-        android:id="@+id/xrv_my_invest"
+    <!--<cn.droidlover.xrecyclerview.XRecyclerView-->
+    <!--android:id="@+id/xrv_my_invest"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@id/ll_head_content"-->
+    <!--android:overScrollMode="never"/>-->
+    <cn.droidlover.xrecyclerview.XRecyclerContentLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/content_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_below="@id/ll_head_content"
-        android:overScrollMode="never"/>
+        android:layout_marginBottom="@dimen/dimen_45"
+        android:background="@color/white"
+        app:recyclerBackgroundColor="@color/white"
+        app:recyclerScrollbarNone="true"
+        app:recyclerScrollbarStyle="outsideOverlay"
+        app:x_emptyLayoutId="@layout/view_empty"/>
 
     <Button
         android:id="@+id/btn_add_invest"

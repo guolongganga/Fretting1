@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.model.user.InvestInfoResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
 
 import butterknife.BindView;
@@ -19,7 +20,7 @@ import cn.droidlover.xdroidmvp.kit.KnifeKit;
  * 描述：定投计划
  */
 
-public class InvestPlanRecyleAdapter extends SimpleRecAdapter<InvestPlanResp, InvestPlanRecyleAdapter.ViewHolder> {
+public class InvestPlanRecyleAdapter extends SimpleRecAdapter<InvestInfoResp, InvestPlanRecyleAdapter.ViewHolder> {
     public static final int ITEM_CLICK = 0;    //点击标识
 
     public InvestPlanRecyleAdapter(Context context) {
@@ -38,22 +39,22 @@ public class InvestPlanRecyleAdapter extends SimpleRecAdapter<InvestPlanResp, In
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        InvestPlanResp planResp = data.get(position);
-        holder.tvFundName.setText(planResp.getFundName());
-        holder.tvFundCode.setText("(" + planResp.getFundCode() + ")");
-        holder.tvInvesType.setText(planResp.getInvesType());
-        holder.tvBankName.setText(planResp.getBankName());
-        holder.tvBankTail.setText("(" + planResp.getBankTail() + ")");
-        holder.tvNextTime.setText(planResp.getNextTime());
-        holder.tvInvestStatus.setText("【" + planResp.getInvestStatus() + "】");
+        InvestInfoResp planResp = data.get(position);
+        holder.tvFundName.setText(planResp.getFund_name());
+        holder.tvFundCode.setText("(" + planResp.getFund_code() + ")");
+        holder.tvInvesType.setText(planResp.getDt_way());
+        holder.tvBankName.setText(planResp.getBank_name());
+        holder.tvBankTail.setText("(" + planResp.getBank_account() + ")");
+        holder.tvNextTime.setText(planResp.getNext_fixrequest_date());
+        holder.tvInvestStatus.setText("【" + planResp.getScheduled_protocol_state() + "】");
 
-        if (Constant.INVEST_PLAN_ING.equals(planResp.getInvestStatus())) {
+        if (Constant.INVEST_PLAN_ING.equals(planResp.getScheduled_protocol_state())) {
             //定投中 蓝色
             holder.tvInvestStatus.setTextColor(getColor(R.color.color_1a7bcd));
-        } else if (Constant.INVEST_PLAN_STOP.equals(planResp.getInvestStatus())) {
+        } else if (Constant.INVEST_PLAN_STOP.equals(planResp.getScheduled_protocol_state())) {
             //暂停 红色
             holder.tvInvestStatus.setTextColor(getColor(R.color.color_f7182d));
-        } else if (Constant.INVEST_PLAN_END.equals(planResp.getInvestStatus())) {
+        } else if (Constant.INVEST_PLAN_END.equals(planResp.getScheduled_protocol_state())) {
             //终止 灰色
             holder.tvInvestStatus.setTextColor(getColor(R.color.color_696969));
         }

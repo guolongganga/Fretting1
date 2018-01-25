@@ -16,11 +16,11 @@ import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.user.InvestInfoResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
 import com.zhsoft.fretting.present.user.InvestPlanPresent;
+import com.zhsoft.fretting.present.user.MyInvestPresent;
 import com.zhsoft.fretting.ui.activity.fund.InvestActivity;
 import com.zhsoft.fretting.ui.activity.index.TimingActivity;
 import com.zhsoft.fretting.ui.adapter.user.InvestPlanRecyleAdapter;
 import com.zhsoft.fretting.ui.adapter.user.MyFundRecyleAdapter;
-import com.zhsoft.fretting.ui.adapter.user.TransactionContentRecycleAdapter;
 import com.zhsoft.fretting.ui.widget.PopShow;
 
 import java.util.ArrayList;
@@ -36,53 +36,71 @@ import cn.droidlover.xrecyclerview.XRecyclerView;
 
 /**
  * 作者：sunnyzeng on 2018/1/22 11:38
- * 描述：定投计划/我的定投
+ * 描述：我的定投
  */
 
-public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
+public class MyInvestActivity extends XActivity<MyInvestPresent> {
     /** 返回 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
+    /** 条件选择 */
+    @BindView(R.id.rl_selector) RelativeLayout rlSelector;
+    /** 基金名称选择 */
+    @BindView(R.id.tv_fund) TextView tvFund;
+    /** 定投状态 */
+    @BindView(R.id.tv_range) TextView tvRange;
     /** 我的定投计划 */
-//    @BindView(R.id.xrv_my_invest) XRecyclerView xrvMyInvest;
     @BindView(R.id.content_layout) XRecyclerContentLayout contentLayout;
     /** 新增定投 */
     @BindView(R.id.btn_add_invest) Button btnAddInvest;
     /** 线 */
     @BindView(R.id.view_line) View viewLine;
 
+    /** adapter */
     private InvestPlanRecyleAdapter adapter;
+    /** 每页显示条数 */
+    private int pageSize = 10;
     /** 登录标识 */
     private String token;
     /** 用户编号 */
     private String userId;
-    /** 基金代码 */
-    private String fundCode;
-    /** 基金名称 */
-    private String fundName;
     /** 加载圈 */
     private HttpLoadingDialog httpLoadingDialog;
-    /** 每页显示数量 */
-    private int pageSize = 10;
+    /** 基金选择 */
+    private int fundSelector = 0;
+    /** 状态选择 */
+    private int statusSelector = 0;
+    /** 基金选择集合 */
+    private List<ApplyBaseInfo> fundList;
+    /** 状态选择集合 */
+    private List<ApplyBaseInfo> statusList;
+    /** 全部状态 */
+    private ApplyBaseInfo allStatus;
+    /** 全部基金 */
+    private ApplyBaseInfo allFund;
+
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_user_invest_plan;
+        return R.layout.activity_user_my_invest;
     }
 
     @Override
-    public InvestPlanPresent newP() {
-        return new InvestPlanPresent();
+    public MyInvestPresent newP() {
+        return new MyInvestPresent();
     }
 
     @Override
     public void initData(Bundle bundle) {
-        headTitle.setText("定投计划");
+        headTitle.setText("我的定投");
 
         httpLoadingDialog = new HttpLoadingDialog(context);
         token = App.getSharedPref().getString(Constant.TOKEN, "");
         userId = App.getSharedPref().getString(Constant.USERID, "");
+
+        allStatus = new ApplyBaseInfo("0", "全部状态");
+        allFund = new ApplyBaseInfo("0", "全部基金");
 
         contentLayout.getSwipeRefreshLayout().setColorSchemeResources(
                 R.color.color_main,
@@ -95,31 +113,24 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
         contentLayout.getRecyclerView().setAdapter(getAdapter());
         contentLayout.getRecyclerView().horizontalDivider(R.color.color_e7e7e7, R.dimen.dimen_1);  //设置divider
 
-        if (bundle != null) {
-            fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
-            fundName = bundle.getString(Constant.FUND_DETAIL_NAME);
-            httpLoadingDialog.visible();
-            getP().investPlanData(1, pageSize, token, userId);
-
-        }
+        httpLoadingDialog.visible();
+        getP().myInvestData(1, pageSize, token, userId);
 
         contentLayout.getRecyclerView()
                 .setOnRefreshAndLoadMoreListener(new XRecyclerView.OnRefreshAndLoadMoreListener() {
                     @Override
                     public void onRefresh() {
-                        getP().investPlanData(1, pageSize, token, userId);
+                        getP().myInvestData(1, pageSize, token, userId);
                     }
 
                     @Override
                     public void onLoadMore(int page) {
-                        getP().investPlanData(page, pageSize, token, userId);
+                        getP().myInvestData(page, pageSize, token, userId);
                     }
                 });
 
         contentLayout.loadingView(View.inflate(context, R.layout.view_loading, null));
         contentLayout.getRecyclerView().useDefLoadMoreView();
-//        xrvMyInvest.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
-
 
     }
 
@@ -132,12 +143,58 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
                 finish();
             }
         });
+        tvFund.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //上一次选择的条件
+                final String lastChooseFund = getText(tvFund);
 
+                PopShow popShow = new PopShow(context, viewLine);
+                popShow.showRangeSelector(fundList, fundSelector);
+                popShow.setOnClickPop(new PopShow.OnClickPop() {
+                    @Override
+                    public void setRange(int position) {
+                        fundSelector = position;
+                        tvFund.setText(fundList.get(position).getContent());
+                        //如果选项改变
+                        if (!lastChooseFund.equals(getText(tvFund))) {
+                            //TODO 需要传 fundList.get(fundSelector).getCode()，statusList.get(position).getCode()
+                            httpLoadingDialog.visible();
+                            getP().myInvestData(1, pageSize, token, userId);
+                        }
+
+                    }
+                });
+            }
+        });
+        tvRange.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //上一次选择的条件
+                final String lastChooseStatus = getText(tvRange);
+
+                PopShow popShow = new PopShow(context, viewLine);
+                popShow.showRangeSelector(statusList, statusSelector);
+                popShow.setOnClickPop(new PopShow.OnClickPop() {
+                    @Override
+                    public void setRange(int position) {
+                        statusSelector = position;
+                        tvRange.setText(statusList.get(position).getContent());
+                        //如果选项改变
+                        if (!lastChooseStatus.equals(getText(tvRange))) {
+                            //TODO 需要传 fundList.get(fundSelector).getCode()，statusList.get(position).getCode()
+                            httpLoadingDialog.visible();
+                            getP().myInvestData(1, pageSize, token, userId);
+                        }
+                    }
+                });
+            }
+        });
         btnAddInvest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                getP().investTime(token, userId, fundCode, fundName);
+                startActivity(TimingActivity.class);
             }
         });
 
@@ -148,6 +205,7 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
                 switch (tag) {
                     //点击
                     case MyFundRecyleAdapter.ITEM_CLICK:
+                        //定投详情
                         Bundle bundle = new Bundle();
                         bundle.putString(Constant.INVEST_STATUS, model.getScheduled_protocol_state());
                         bundle.putString(Constant.FUND_DETAIL_CODE, model.getFund_code());
@@ -181,14 +239,26 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
     /**
      * 请求我的定投计划数据成功
      */
-    public void requestDataSuccess(int pageno, ArrayList<InvestPlanResp> list) {
+    public void requestDataSuccess(int pageno, InvestPlanResp resp) {
         httpLoadingDialog.dismiss();
+        //初始化基金选择框
+        fundList = new ArrayList<>();
+        fundList.add(allFund);
+        fundList.addAll(resp.getAllFunds());
 
-        if (list != null && list.size() > 1) {
+        //初始化状态选择框
+        statusList = new ArrayList<>();
+        statusList.add(allStatus);
+        statusList.addAll(resp.getAllStatus());
+
+        tvFund.setText(fundList.get(fundSelector).getContent());
+        tvRange.setText(statusList.get(statusSelector).getContent());
+
+        if (resp.getResResult() != null && resp.getResResult().size() > 1) {
             if (pageno > 1) {
-                getAdapter().addData(list);
+                getAdapter().addData(resp.getResResult());
             } else {
-                getAdapter().setData(list);
+                getAdapter().setData(resp.getResResult());
             }
             contentLayout.getRecyclerView().setPage(pageno, pageno + 1);
         } else {
@@ -202,35 +272,13 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
         }
     }
 
-    /**
-     * 请求定投验证接口失败
-     */
-    public void requestInvestFail() {
-
-    }
-
-    /**
-     * 请求定投验证接口成功
-     *
-     * @param resp
-     */
-    public void requestInvestSuccess(final InvestResp resp) {
-        //去定投
-        Bundle bundle = new Bundle();
-        bundle.putString(Constant.INVEST_ACTIVITY_TYPE, Constant.INVEST_ACTIVITY);
-        bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
-        bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
-        bundle.putParcelable(Constant.INVEST_FUND_OBJECT, resp);
-        startActivity(InvestActivity.class, bundle);
-    }
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constant.INVEST_PLAN_ACTIVITY && resultCode == Constant.INVEST_DETAIL_BACK) {
             showToast("刷新页面数据");
             httpLoadingDialog.visible();
-            getP().investPlanData(1, pageSize, token, userId);
+            getP().myInvestData(1, pageSize, token, userId);
         }
     }
 }

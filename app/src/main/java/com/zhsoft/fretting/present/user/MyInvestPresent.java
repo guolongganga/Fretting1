@@ -1,11 +1,15 @@
 package com.zhsoft.fretting.present.user;
 
-import com.zhsoft.fretting.model.fund.InvestResp;
+import com.zhsoft.fretting.model.BaseResp;
+import com.zhsoft.fretting.model.fund.NewestFundResp;
+import com.zhsoft.fretting.model.user.InvestInfoResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
+import com.zhsoft.fretting.model.user.SelfChooseResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
-import com.zhsoft.fretting.params.InvestParams;
-import com.zhsoft.fretting.ui.activity.user.InvestPlanActivity;
+import com.zhsoft.fretting.params.NewestFundParams;
+import com.zhsoft.fretting.params.SelfChooseParams;
+import com.zhsoft.fretting.ui.activity.user.MyInvestActivity;
 
 import java.util.ArrayList;
 
@@ -20,12 +24,11 @@ import cn.droidlover.xdroidmvp.net.XApi;
  * 描述：
  */
 
-public class InvestPlanPresent extends XPresent<InvestPlanActivity> {
+public class MyInvestPresent extends XPresent<MyInvestActivity> {
 
-    public void investPlanData(int pageno, int pageSize, String token, String userId) {
-//        CommonReqData reqData = new CommonReqData();
-//        reqData.setToken(token);
-//        reqData.setUserId(userId);
+    public void myInvestData(final int pageno, int pageSize, String token, String userId) {
+
+
 //        ArrayList<InvestPlanResp> list = new ArrayList<>();
 //        InvestPlanResp resp1 = new InvestPlanResp("博时精选基金" + 1, "05000" + 1, "每周三定投11.00元",
 //                "招商银行 储蓄卡", "2339", "2017-12-27", "定投中");
@@ -41,39 +44,38 @@ public class InvestPlanPresent extends XPresent<InvestPlanActivity> {
 //        } else {
 //            getV().requestDataFail();
 //        }
-    }
-
-    public void investTime(String token, String userId, String fund_code, String fund_name) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
-        InvestParams params = new InvestParams();
-        params.setFundCode(fund_code);
-        params.setFund_name(fund_name);
+
+        NewestFundParams params = new NewestFundParams();
+        params.setPageNum(pageno);
+        params.setPageSize(pageSize);
         reqData.setData(params);
 
-        Api.getApi().fundInvestTime(reqData)
-                .compose(XApi.<InvestResp>getApiTransformer())
-                .compose(XApi.<InvestResp>getScheduler())
-                .compose(getV().<InvestResp>bindToLifecycle())
-                .subscribe(new ApiSubscriber<InvestResp>() {
+        Api.getApi()
+                .myTimesBuyIndex(reqData)
+                .compose(XApi.<InvestPlanResp>getApiTransformer())
+                .compose(XApi.<InvestPlanResp>getScheduler())
+                .compose(getV().<InvestPlanResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<InvestPlanResp>() {
                     @Override
                     protected void onFail(NetError error) {
-                        getV().requestInvestFail();
-                        getV().showToast("请求失败");
+                        error.printStackTrace();
+                        getV().requestDataFail();
                     }
 
                     @Override
-                    public void onNext(InvestResp resp) {
-                        if (resp != null && resp.getStatus() == 200) {
-                            getV().requestInvestSuccess(resp.getData());
+                    public void onNext(InvestPlanResp model) {
+                        if (model != null && model.getStatus() == 200) {
+                            getV().requestDataSuccess(pageno,model.getData());
                         } else {
-                            getV().requestInvestFail();
-                            getV().showToast(resp.getMessage());
+                            getV().showToast(model.getMessage());
+                            getV().requestDataFail();
                             XLog.e("返回数据为空");
                         }
                     }
                 });
-
     }
+
 }
