@@ -21,4 +21,10 @@ public interface JSInterfaceInter {
     //变更分红方式
     void toBonus();
 
+    //交易记录
+    void toRecord();
+
+    //卖出
+    void toSellOut();
+
 }

@@ -3,6 +3,7 @@ package com.zhsoft.fretting.ui.adapter.user;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -52,6 +53,13 @@ public class TransactionContentRecycleAdapter extends SimpleRecAdapter<Transacti
             holder.tvStatus.setTextColor(getColor(R.color.color_696969));
         }
 
+        if ("我的分红".equals(tabType)) {
+            //我的分红
+            holder.ivArrow.setVisibility(View.VISIBLE);
+        } else {
+            holder.ivArrow.setVisibility(View.GONE);
+        }
+
         if ("申购".equals(resp.getType())) {
             //申购
             holder.tvAmount.setText(resp.getAmount() + "元");
@@ -72,7 +80,7 @@ public class TransactionContentRecycleAdapter extends SimpleRecAdapter<Transacti
 
         } else if ("分红再投资".equals(resp.getType())) {
             //分红再投资
-            holder.tvAmount.setText(resp.getAmount() + "份");
+            holder.tvAmount.setText(resp.getAmount() + "份额");
             holder.tvStatus.setVisibility(View.GONE);
 
         } else if ("现金分红".equals(resp.getType())) {
@@ -130,6 +138,12 @@ public class TransactionContentRecycleAdapter extends SimpleRecAdapter<Transacti
          */
         @BindView(R.id.tv_status)
         TextView tvStatus;
+
+        /**
+         * 箭头
+         */
+        @BindView(R.id.iv_arrow)
+        ImageView ivArrow;
 
 
         public ViewHolder(View itemView) {

@@ -6,7 +6,7 @@ package com.zhsoft.fretting.webjs;
  */
 
 public class JSInterfaceClick implements JSInterfaceInter {
-    //登录
+    //登录 然后关注
     @Override
     public void toLogin() {
 
@@ -33,6 +33,18 @@ public class JSInterfaceClick implements JSInterfaceInter {
     //变更分红方式
     @Override
     public void toBonus() {
+
+    }
+
+    //交易记录
+    @Override
+    public void toRecord() {
+
+    }
+
+    //卖出
+    @Override
+    public void toSellOut() {
 
     }
 

@@ -65,7 +65,16 @@ public class TransactionContentPresent extends XPresent<TransactionContentFragme
             list.add(resp4);
             list.add(resp5);
             list.add(resp6);
+
         } else if ("104".equals(tabType)) {
+            TransactionResp resp1 = new TransactionResp("分红再投资", "博时精选基金1",
+                    "050001", "2017-12-15 17:59", "13 .00", null);
+            TransactionResp resp2 = new TransactionResp("现金分红", "博时精选基金2",
+                    "050001", "2017-12-16 17:59", "125.00", null);
+            list.add(resp1);
+            list.add(resp2);
+
+        } else if ("105".equals(tabType)) {
             TransactionResp resp1 = new TransactionResp("分红再投资", "博时精选基金1",
                     "050001", "2017-12-15 17:59", "13 .00", null);
             TransactionResp resp2 = new TransactionResp("现金分红", "博时精选基金2",

@@ -62,11 +62,21 @@ public class JSInterfaceUtils {
         }
     }
 
-    //
-//    @JavascriptInterface
-//    public void toLogin(String msg) {
-//        System.out.println("JS调用了Android的hello方法");
-//    }
+    @JavascriptInterface
+    public void toRecord() {
+
+        if (jSInterfaceClick != null) {
+            jSInterfaceClick.toRecord();
+        }
+    }
+
+    @JavascriptInterface
+    public void toSellOut() {
+
+        if (jSInterfaceClick != null) {
+            jSInterfaceClick.toSellOut();
+        }
+    }
 
     private JSInterfaceClick jSInterfaceClick;
 
@@ -74,25 +84,4 @@ public class JSInterfaceUtils {
         this.jSInterfaceClick = jSInterfaceClick;
     }
 
-//    public void openActivity(Class<?> pClass) {
-//        openActivity(pClass, null, null);
-//    }
-//
-//    public void openActivity(Class<?> pClass, Bundle bundle) {
-//        openActivity(pClass, bundle, null);
-//    }
-//
-//    /**
-//     * @param pClass 要启动的Activity 的CLass类
-//     * @param bundle 储存封装值的Bundle
-//     * @param uri
-//     */
-//    public void openActivity(Class<?> pClass, Bundle bundle, Uri uri) {
-//        Intent intent = new Intent(context, pClass);
-//        if (bundle != null)
-//            intent.putExtras(bundle);
-//        if (uri != null)
-//            intent.setData(uri);
-//        context.startActivity(intent);
-//    }
 }

@@ -8,7 +8,9 @@ import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.model.user.TransactionResp;
 import com.zhsoft.fretting.present.user.TransactionContentPresent;
+import com.zhsoft.fretting.ui.activity.user.BonusChangeActivity;
 import com.zhsoft.fretting.ui.adapter.user.TransactionContentRecycleAdapter;
+import com.zhsoft.fretting.ui.adapter.user.UpdateBonusRecycleAdapter;
 
 import java.util.List;
 
@@ -16,6 +18,7 @@ import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
 import cn.droidlover.xdroidmvp.net.NetError;
 import cn.droidlover.xrecyclerview.RecyclerAdapter;
+import cn.droidlover.xrecyclerview.RecyclerItemCallback;
 import cn.droidlover.xrecyclerview.XRecyclerContentLayout;
 import cn.droidlover.xrecyclerview.XRecyclerView;
 
@@ -83,7 +86,19 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
 
     @Override
     public void initEvents() {
-
+        adapter.setRecItemClick(new RecyclerItemCallback<TransactionResp, TransactionContentRecycleAdapter.ViewHolder>() {
+            @Override
+            public void onItemClick(int position, TransactionResp model, int tag, TransactionContentRecycleAdapter.ViewHolder holder) {
+                super.onItemClick(position, model, tag, holder);
+                switch (tag) {
+                    //点击
+                    case TransactionContentRecycleAdapter.ITEM_CLICK:
+                        //跳转 结果页
+                        showToast("点了" + model.getType());
+                        break;
+                }
+            }
+        });
     }
 
     /**
@@ -102,9 +117,12 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
         } else if (Constant.TRANSACTION_TAB_ONPASSAGE.equals(fundTabName)) {
             //在途交易
             return "103";
-        } else if (Constant.TRANSACTION_TAB_BONUS.equals(fundTabName) || "我的分红".equals(fundTabName)) {
-            //分红、我的分红
+        } else if (Constant.TRANSACTION_TAB_BONUS.equals(fundTabName)) {
+            //分红
             return "104";
+        } else if ("我的分红".equals(fundTabName)) {
+            //我的分红
+            return "105";
         }
         return "";
     }

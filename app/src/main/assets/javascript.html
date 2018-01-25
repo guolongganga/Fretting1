@@ -6,31 +6,46 @@
     <title>Carson_Ho</title>
 
     <script>
+
+
+         // Android调用html js 的方法
+
+         //关注
+         function callJS(token,userId){
+            document.getElementById("show").value=token;
+            document.getElementById("show2").value=userId;
+            alert("Android调用了JS的callJS方法,token="+token+",userId="+userId);
+         }
+
+         //修改分红方式
+         function callChangeBonus(chooseStyle){
+            document.getElementById("bonus").value=chooseStyle;
+
+         }
+
+         //html调用Android js方法
+
+         //登录并关注
          function callLogin(){
             // 由于对象映射，所以调用connObj对象等于调用Android映射的对象
             connObj.toLogin();
          }
-
-         // Android需要调用的方法
-   function callJS(token,userId){
-      document.getElementById("show").value=token;
-      document.getElementById("show2").value=userId;
-      alert("Android调用了JS的callJS方法,token="+token+",userId="+userId);
-   }
-
-   //修改分红方式
-   function callChangeBonus(chooseStyle){
-      document.getElementById("bonus").value=chooseStyle;
-
-   }
-
-   function callBuy(){
+         //购买
+         function callBuy(){
             // 由于对象映射，所以调用connObj对象等于调用Android映射的对象
             connObj.toBuy();
          }
-
+         //定投
          function callInvest(){
             connObj.toInvest();
+         }
+         //卖出
+         function callSellOut(){
+            connObj.toSellOut();
+         }
+         //交易记录
+         function callRecord(){
+            connObj.toRecord();
          }
          //定投计划
          function callInvestPlan(){
@@ -40,7 +55,6 @@
          function callBonus(){
             connObj.toBonus();
          }
-
 
 
 
@@ -62,6 +76,10 @@
 <br/>
 <input type="text" id="bonus" value="现金分红"/>
 <button type="button" id="button6" onclick="callBonus()">分红方式</button>
+<br/>
+<button type="button" id="button7" onclick="callRecord()">交易记录</button>
+<br/>
+<button type="button" id="button8" onclick="callSellOut()">卖出</button>
 <br/>
 
 </body>

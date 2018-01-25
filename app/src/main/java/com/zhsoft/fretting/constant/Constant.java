@@ -187,6 +187,8 @@ public class Constant {
     //指数型 名称
     public static final String TRANSACTION_TAB_BONUS = "分红";
 
+    //页面需要传递的对象
+    public static final String ACTIVITY_OBJECT = BASE_CONSTANT + "activity_object";
 
 
     /********************************************* int ********************************************/
@@ -225,4 +227,5 @@ public class Constant {
 
     //分红方式修改成功后返回 resultcode
     public static final int BONUS_BACK_ACTIVITY = 204;
+
 }

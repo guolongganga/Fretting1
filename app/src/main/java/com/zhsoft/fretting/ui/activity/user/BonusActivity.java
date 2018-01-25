@@ -96,7 +96,8 @@ public class BonusActivity extends XActivity {
 
         TransactionContentFragment fragment = new TransactionContentFragment();
         Bundle bundle = new Bundle();
-        bundle.putString(Constant.FUND_TAB_NAME, tabName.get(1));
+        //tabName.get(0) 才是 我的分红方式
+        bundle.putString(Constant.FUND_TAB_NAME, tabName.get(0));
         fragment.setArguments(bundle);
         fragmentList.add(fragment);
 

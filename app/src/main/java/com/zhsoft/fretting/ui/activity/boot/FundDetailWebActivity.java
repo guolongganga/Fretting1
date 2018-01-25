@@ -43,6 +43,7 @@ import com.zhsoft.fretting.ui.activity.user.LoginActivity;
 import com.zhsoft.fretting.ui.activity.user.PersonInfoActivity;
 import com.zhsoft.fretting.ui.activity.user.RegisterSecondActivity;
 import com.zhsoft.fretting.ui.activity.user.RiskTestWebViewAcvitity;
+import com.zhsoft.fretting.ui.activity.user.TransactionQueryActivity;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.utils.RuntimeHelper;
 import com.zhsoft.fretting.webjs.JSInterfaceClick;
@@ -312,12 +313,21 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             public void toBonus() {
                 baseToBonus();
             }
+
+            @Override
+            public void toRecord() {
+                baseToRecord();
+            }
+
+            @Override
+            public void toSellOut() {
+                baseToSellOut();
+            }
         });
     }
 
-
     /**
-     * 登录
+     * 登录 关注
      */
     private void baseToLogin() {
         if (RuntimeHelper.getInstance().isLogin()) {
@@ -339,28 +349,6 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             bundle.putString(Constant.SKIP_SIGN, Constant.WEB_ACTIVITY);
             startActivity(LoginActivity.class, bundle);
         }
-//        if (loginDialog == null) {
-//            loginDialog = new CustomDialog
-//                    .Builder(context)
-//                    .setMessage(R.string.user_common_no_login)
-//                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialogInterface, int i) {
-//                            loginDialog.dismiss();
-//                            //跳转回登录界面
-//                            Bundle bundle = new Bundle();
-//                            bundle.putString(Constant.SKIP_SIGN, Constant.WEB_ACTIVITY);
-//                            startActivity(LoginActivity.class, bundle);
-//                        }
-//                    })
-//                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-//                        @Override
-//                        public void onClick(DialogInterface dialogInterface, int i) {
-//                            loginDialog.dismiss();
-//                        }
-//                    }).create();
-//        }
-//        loginDialog.show();
     }
 
     /**
@@ -405,7 +393,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      */
     private void baseToInvestPlan() {
         Bundle bundle = new Bundle();
-        bundle.putString(Constant.ACTIVITY_NAME,Constant.INVEST_PLAN);
+        bundle.putString(Constant.ACTIVITY_NAME, Constant.INVEST_PLAN);
         bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
         bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
         startActivity(InvestPlanActivity.class, bundle);
@@ -415,7 +403,24 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      * 变更分红方式
      */
     private void baseToBonus() {
+        //TODO 需要传递参数
         startActivity(BonusChangeActivity.class, Constant.WEB_BONUS_ACTIVITY);
+    }
+
+    /**
+     * 交易记录
+     */
+    private void baseToRecord() {
+        //TODO 需要传fundCode userId token
+        startActivity(TransactionQueryActivity.class);
+    }
+
+    /**
+     * 卖出
+     */
+    private void baseToSellOut() {
+        //TODO 卖出
+        showToast("卖出");
     }
 
 
