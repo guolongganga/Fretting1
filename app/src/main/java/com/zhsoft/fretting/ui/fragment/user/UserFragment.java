@@ -12,14 +12,11 @@ import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.OpenAccountEvent;
-import com.zhsoft.fretting.model.Happ;
-import com.zhsoft.fretting.model.TaetResp;
-import com.zhsoft.fretting.model.fund.FundResp;
 import com.zhsoft.fretting.model.user.FoundResp;
-import com.zhsoft.fretting.model.user.MyFundResp;
 import com.zhsoft.fretting.model.user.UserAccountResp;
 import com.zhsoft.fretting.present.user.UserPresent;
 import com.zhsoft.fretting.ui.activity.user.BonusActivity;
+import com.zhsoft.fretting.ui.activity.user.CancleOrderActivity;
 import com.zhsoft.fretting.ui.activity.user.InvestPlanActivity;
 import com.zhsoft.fretting.ui.activity.user.LoginActivity;
 import com.zhsoft.fretting.ui.activity.user.RegisterFirstActivity;
@@ -35,16 +32,13 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
-import cn.droidlover.xdroidmvp.event.BusProvider;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
 import cn.droidlover.xrecyclerview.RecyclerItemCallback;
 import cn.droidlover.xrecyclerview.XRecyclerView;
-import io.reactivex.functions.Consumer;
 
 /**
  * 作者：sunnyzeng on 2017/12/5
@@ -212,7 +206,7 @@ public class UserFragment extends XFragment<UserPresent> {
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showToast("撤销");
+                startActivity(CancleOrderActivity.class);
             }
         });
 
@@ -237,11 +231,6 @@ public class UserFragment extends XFragment<UserPresent> {
     @Override
     public UserPresent newP() {
         return new UserPresent();
-    }
-
-    public void showData(TaetResp data) {
-        List<Happ> list = data.getDictData();
-        list.get(0);
     }
 
     /**

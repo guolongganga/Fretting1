@@ -2,7 +2,6 @@ package com.zhsoft.fretting.net;
 
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.LoginResp;
-import com.zhsoft.fretting.model.TaetResp;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.BuyNowResp;
 import com.zhsoft.fretting.model.fund.GetNextTimeResp;
@@ -55,7 +54,6 @@ import static com.zhsoft.fretting.net.HttpContent.password_reset;
 import static com.zhsoft.fretting.net.HttpContent.phone_code;
 import static com.zhsoft.fretting.net.HttpContent.risk_question;
 import static com.zhsoft.fretting.net.HttpContent.send_phone_code;
-import static com.zhsoft.fretting.net.HttpContent.test_test;
 import static com.zhsoft.fretting.net.HttpContent.trade_password_check;
 import static com.zhsoft.fretting.net.HttpContent.trade_password_phonecode;
 import static com.zhsoft.fretting.net.HttpContent.trade_password_reset;
@@ -68,11 +66,6 @@ import static com.zhsoft.fretting.net.HttpContent.user_register;
  */
 
 public interface HttpUtil {
-
-    //获取首页商品列表数据
-    @Headers("appType:Android")
-    @POST(test_test)
-    Flowable<TaetResp> getTest(@Body CommonReqData request);
 
     //登录
     @Headers("appType:Android")

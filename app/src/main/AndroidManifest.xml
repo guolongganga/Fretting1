@@ -101,6 +101,8 @@
         <activity android:name=".ui.activity.user.TransactionQueryActivity"></activity>
         <!--分红方式-->
         <activity android:name=".ui.activity.user.BonusActivity"></activity>
+        <!--撤单-->
+        <activity android:name=".ui.activity.user.CancleOrderActivity"></activity>
 
         <!--通用WebView-->
         <activity android:name=".ui.activity.boot.WebPublicActivity"></activity>
