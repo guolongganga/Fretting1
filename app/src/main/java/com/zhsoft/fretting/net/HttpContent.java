@@ -81,6 +81,8 @@ public class HttpContent {
     public static final String fund_times_succdetails = "noPermission/fund/times/succDetails";
     /** 优选定投 */
     public static final String fund_type_fixed = "noPermission/fundTypeFixedOrderBy";
+    /** 自选基金 */
+    public static final String user_follow_data = "noPermission/user/follow/data";
 
 
     /************************************************ html页面 **************************************************/

@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
+import com.zhsoft.fretting.model.user.SelfChooseResp;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
 
 import butterknife.BindView;
@@ -19,7 +20,7 @@ import cn.droidlover.xdroidmvp.kit.KnifeKit;
  * data: 2017/12/19
  */
 
-public class SelfChooseRecycleAdapter extends SimpleRecAdapter<NewestFundResp, SelfChooseRecycleAdapter.ViewHolder> {
+public class SelfChooseRecycleAdapter extends SimpleRecAdapter<SelfChooseResp, SelfChooseRecycleAdapter.ViewHolder> {
     public static final int ITEM_CLICK = 0;    //点击标识
 
     public SelfChooseRecycleAdapter(Context context) {
@@ -40,10 +41,10 @@ public class SelfChooseRecycleAdapter extends SimpleRecAdapter<NewestFundResp, S
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         holder.tvName.setText(data.get(position).getFund_name());
         holder.tvCode.setText(data.get(position).getFund_code());
-        holder.tvValue.setText(BigDecimalUtil.bigdecimalToString(data.get(position).getNet_value()));
-        holder.tvRange.setText("+" + BigDecimalUtil.bigdecimalToString(data.get(position).getFund_rose()) + "%");
-        //1代表持有
-        if ("1".equals(data.get(position).getIsOwn())) {
+        holder.tvValue.setText(data.get(position).getNet_value());
+        holder.tvRange.setText("+" + data.get(position).getDay_rose() + "%");
+        //1代表持有,0代表未持有
+        if ("1".equals(data.get(position).getHasBuy())) {
             holder.tvOwn.setVisibility(View.VISIBLE);
         } else {
             holder.tvOwn.setVisibility(View.GONE);

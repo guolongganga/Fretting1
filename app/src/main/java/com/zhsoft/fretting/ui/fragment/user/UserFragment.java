@@ -84,12 +84,13 @@ public class UserFragment extends XFragment<UserPresent> {
     /** 去开户 */
     @BindView(R.id.to_finish_register) Button toFinishRegister;
 
-    /** 是否登录标识 */
-//    private boolean isLogin = false;
-
+    /** 是否开户 */
     private String isOpenAccount;
+    /**用户编号*/
     private String userId;
+    /**登录标识 */
     private String token;
+    /**加载圈*/
     private HttpLoadingDialog httpLoadingDialog;
 
     @Override

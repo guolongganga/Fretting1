@@ -35,10 +35,6 @@ public class NewestFundResp extends BaseResp<ArrayList<NewestFundResp>> implemen
      * 基金涨跌幅（用来展示具体涨幅：日涨幅、周涨幅、月涨幅等）
      */
     private BigDecimal fund_rose;
-    /**
-     * 是否持有
-     */
-    private String isOwn;//TODO 自选基金 增加的 如果不用这个实体，可以去掉
 
     public String getFund_code() {
         return fund_code;
@@ -72,14 +68,6 @@ public class NewestFundResp extends BaseResp<ArrayList<NewestFundResp>> implemen
         this.fund_rose = fund_rose;
     }
 
-    public String getIsOwn() {
-        return isOwn;
-    }
-
-    public void setIsOwn(String isOwn) {
-        this.isOwn = isOwn;
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -91,7 +79,6 @@ public class NewestFundResp extends BaseResp<ArrayList<NewestFundResp>> implemen
         dest.writeString(this.fund_name);
         dest.writeSerializable(this.net_value);
         dest.writeSerializable(this.fund_rose);
-        dest.writeString(this.isOwn);
     }
 
     public NewestFundResp() {
@@ -102,7 +89,6 @@ public class NewestFundResp extends BaseResp<ArrayList<NewestFundResp>> implemen
         this.fund_name = in.readString();
         this.net_value = (BigDecimal) in.readSerializable();
         this.fund_rose = (BigDecimal) in.readSerializable();
-        this.isOwn = in.readString();
     }
 
     public static final Creator<NewestFundResp> CREATOR = new Creator<NewestFundResp>() {

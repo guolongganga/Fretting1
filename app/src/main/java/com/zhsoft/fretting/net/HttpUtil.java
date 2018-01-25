@@ -15,6 +15,7 @@ import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.model.user.OccupationResp;
 import com.zhsoft.fretting.model.user.PersonInfoResp;
 import com.zhsoft.fretting.model.user.PhoneResp;
+import com.zhsoft.fretting.model.user.SelfChooseResp;
 import com.zhsoft.fretting.model.user.UserAccountResp;
 import com.zhsoft.fretting.params.CommonReqData;
 
@@ -57,6 +58,7 @@ import static com.zhsoft.fretting.net.HttpContent.send_phone_code;
 import static com.zhsoft.fretting.net.HttpContent.trade_password_check;
 import static com.zhsoft.fretting.net.HttpContent.trade_password_phonecode;
 import static com.zhsoft.fretting.net.HttpContent.trade_password_reset;
+import static com.zhsoft.fretting.net.HttpContent.user_follow_data;
 import static com.zhsoft.fretting.net.HttpContent.user_login;
 import static com.zhsoft.fretting.net.HttpContent.user_register;
 
@@ -246,4 +248,9 @@ public interface HttpUtil {
     @Headers("appType:Android")
     @POST(fund_type_fixed)
     Flowable<NewestFundResp> fundTypeFixedOrderBy(@Body CommonReqData reqData);
+
+    //自选基金
+    @Headers("appType:Android")
+    @POST(user_follow_data)
+    Flowable<SelfChooseResp> selfChooseFund(@Body CommonReqData reqData);
 }
