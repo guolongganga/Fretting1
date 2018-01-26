@@ -105,6 +105,10 @@
         <activity android:name=".ui.activity.user.BonusActivity"></activity>
         <!--撤单-->
         <activity android:name=".ui.activity.user.CancleOrderActivity"></activity>
+        <!--卖出-->
+        <activity android:name=".ui.activity.fund.SellActivity"></activity>
+        <!--卖出成功-->
+        <activity android:name=".ui.activity.fund.SellSuccessActivity"></activity>
 
         <!--通用WebView-->
         <activity android:name=".ui.activity.boot.WebPublicActivity"></activity>

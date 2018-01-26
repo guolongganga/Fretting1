@@ -18,6 +18,7 @@ import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.BuyNowResp;
 import com.zhsoft.fretting.present.fund.BuyPresent;
+import com.zhsoft.fretting.present.fund.SellPresent;
 import com.zhsoft.fretting.ui.activity.user.BankCardActivity;
 import com.zhsoft.fretting.ui.activity.user.FindPwdTradeFirstActivity;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
@@ -33,7 +34,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  * 描述：基金详情页-购买页面
  */
 
-public class BuyActivity extends XActivity<BuyPresent> {
+public class SellActivity extends XActivity<SellPresent> {
     /** 返回 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
@@ -46,12 +47,10 @@ public class BuyActivity extends XActivity<BuyPresent> {
     @BindView(R.id.bank_limit) TextView bankLimit;
     /** 更换银行卡 */
     @BindView(R.id.tv_change) TextView tvChange;
-    /** 申购费 */
-    @BindView(R.id.tv_apply_fee) TextView tvApplyFee;
-    /** 确认份额时间 */
-    @BindView(R.id.tv_sure_time) TextView tvSureTime;
-    /** 查看收益时间 */
-    @BindView(R.id.tv_look_time) TextView tvLookTime;
+    /** 可用份额 */
+    @BindView(R.id.available_share) TextView availableShare;
+    /** 全部份额 */
+    @BindView(R.id.btn_all_share) Button btnAllShare;
     /** 购买金额 */
     @BindView(R.id.et_amount) EditText etAmount;
     /** 确认购买 */
@@ -72,21 +71,23 @@ public class BuyActivity extends XActivity<BuyPresent> {
     private String userId;
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
+    /** 最大份额 */
+    private int maxShare = 50;
 
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_fund_buy;
+        return R.layout.activity_fund_sell;
     }
 
     @Override
-    public BuyPresent newP() {
-        return new BuyPresent();
+    public SellPresent newP() {
+        return new SellPresent();
     }
 
     @Override
     public void initData(Bundle bundle) {
-        headTitle.setText(R.string.fund_buy);
+        headTitle.setText("卖出");
         httpLoadingDialog = new HttpLoadingDialog(context);
         //获取缓存数据
         token = App.getSharedPref().getString(Constant.TOKEN, "");
@@ -94,21 +95,15 @@ public class BuyActivity extends XActivity<BuyPresent> {
         if (bundle != null) {
             fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
             fundName = bundle.getString(Constant.FUND_DETAIL_NAME);
-            buyFundResp = (BuyFundResp) bundle.getParcelable(Constant.BUY_FUND_OBJECT);
-            //获取到基金数据
-            //获取 图片Base64 字符串
-            if (buyFundResp != null) {
-                refreshBankView(buyFundResp);
-                //确认时间
-                tvSureTime.setText(buyFundResp.getInfo1());
-                //查看收益时间
-                tvLookTime.setText(buyFundResp.getInfo2());
-            }
+
+            httpLoadingDialog.visible();
+            getP().buyFund(token, userId, fundCode);
         }
 
     }
 
     public void refreshBankView(BuyFundResp fundResp) {
+        availableShare.setText(maxShare + "");
         String strimage = fundResp.getLogo();
         if (!TextUtils.isEmpty(strimage)) {
             //将Base64图片串转换成Bitmap
@@ -143,9 +138,9 @@ public class BuyActivity extends XActivity<BuyPresent> {
                     showToast("请输入购买金额");
                     return;
                 }
-                //TODO 如果amount小于最小购买金额，重新填写购买金额
-                if (amount < 100) {
-                    showToast("最小投资金额为100元");
+                //TODO 如果amount大于可用份额，重新填写购买金额
+                if (amount > maxShare) {
+                    showToast("你的可用份额为" + maxShare + "份");
                     return;
                 }
                 //TODO 弹出框
@@ -158,7 +153,8 @@ public class BuyActivity extends XActivity<BuyPresent> {
                             public void onFinish(String str) {
                                 fundBuyDialog.dismiss();
                                 httpLoadingDialog.visible();
-                                getP().buyNow(token, userId, fundCode, strAmount, str);
+                                //TODO 卖出接口
+                                getP().sellFund(token, userId, fundCode, strAmount, str);
 
                             }
                         }).create();
@@ -170,6 +166,12 @@ public class BuyActivity extends XActivity<BuyPresent> {
             @Override
             public void onClick(View view) {
                 startActivity(BankCardActivity.class, Constant.INVEST_BANK_ACTIVITY);
+            }
+        });
+        btnAllShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                etAmount.setText(maxShare + "");
             }
         });
     }
@@ -204,22 +206,21 @@ public class BuyActivity extends XActivity<BuyPresent> {
     }
 
     /**
-     * 立即购买请求失败
+     * 立即卖出请求失败
      */
-    public void requestBuyNowFail() {
+    public void requestSellFail() {
         httpLoadingDialog.dismiss();
     }
 
     /**
-     * 立即购买成功
-     *
-     * @param data
+     * 立即卖出成功
      */
-    public void requestBuyNowSuccess(BuyNowResp data) {
+    public void requestSellSuccess() {
         httpLoadingDialog.dismiss();
-        Bundle bundle = new Bundle();
-        bundle.putParcelable(Constant.BUY_SUCCESS_OBJECT, data);
-        startActivity(BuySuccessActivity.class, bundle);
+//        Bundle bundle = new Bundle();
+//        bundle.putParcelable(Constant.BUY_SUCCESS_OBJECT, data);
+//        startActivity(SellSuccessActivity.class, bundle);
+        startActivity(SellSuccessActivity.class);
         finish();
 
     }

@@ -26,7 +26,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  * 描述：购买成功页
  */
 
-public class BuySuccessActivity extends XActivity {
+public class SellSuccessActivity extends XActivity {
     @BindView(R.id.head_back) ImageButton headBack;
     @BindView(R.id.head_title) TextView headTitle;
     @BindView(R.id.head_right) Button headRight;
@@ -45,7 +45,7 @@ public class BuySuccessActivity extends XActivity {
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_fund_buy_success;
+        return R.layout.activity_fund_sell_success;
     }
 
     @Override
@@ -61,17 +61,17 @@ public class BuySuccessActivity extends XActivity {
         headTitle.setText("购买结果");
         headRight.setText("关闭");
         headRight.setVisibility(View.VISIBLE);
-        if (bundle != null) {
-            buyNowResp = (BuyNowResp) bundle.getParcelable(Constant.BUY_SUCCESS_OBJECT);
-            if (buyNowResp != null) {
-                tvFundName.setText(buyNowResp.getFund_name());
-                tvFundAmount.setText(BigDecimalUtil.bigdecimalToString(buyNowResp.getFund_amount()) + "元");
-                tvBankName.setText(buyNowResp.getBank_info());
-                tvPaySuccess.setText(buyNowResp.getSucc_time());
-                tvSureNumber.setText(buyNowResp.getConfirm_time());
-                tvQueryIncome.setText(buyNowResp.getIncome_time());
-            }
-        }
+//        if (bundle != null) {
+//            buyNowResp = (BuyNowResp) bundle.getParcelable(Constant.BUY_SUCCESS_OBJECT);
+//            if (buyNowResp != null) {
+//                tvFundName.setText(buyNowResp.getFund_name());
+//                tvFundAmount.setText(BigDecimalUtil.bigdecimalToString(buyNowResp.getFund_amount()) + "元");
+//                tvBankName.setText(buyNowResp.getBank_info());
+//                tvPaySuccess.setText(buyNowResp.getSucc_time());
+//                tvSureNumber.setText(buyNowResp.getConfirm_time());
+//                tvQueryIncome.setText(buyNowResp.getIncome_time());
+//            }
+//        }
     }
 
     @Override
@@ -95,6 +95,5 @@ public class BuySuccessActivity extends XActivity {
         startActivity(MainActivity.class);
         finish();
     }
-
 
 }

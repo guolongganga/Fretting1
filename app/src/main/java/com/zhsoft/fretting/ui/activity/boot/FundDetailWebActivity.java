@@ -37,6 +37,7 @@ import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.present.fund.FundDetailPresent;
 import com.zhsoft.fretting.ui.activity.fund.BuyActivity;
 import com.zhsoft.fretting.ui.activity.fund.InvestActivity;
+import com.zhsoft.fretting.ui.activity.fund.SellActivity;
 import com.zhsoft.fretting.ui.activity.user.BonusChangeActivity;
 import com.zhsoft.fretting.ui.activity.user.InvestPlanActivity;
 import com.zhsoft.fretting.ui.activity.user.LoginActivity;
@@ -423,7 +424,10 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      */
     private void baseToSellOut() {
         //TODO 卖出
-        showToast("卖出");
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
+        bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
+        startActivity(SellActivity.class, bundle);
     }
 
 
