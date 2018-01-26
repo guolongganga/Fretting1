@@ -68,6 +68,10 @@ public class MyInvestActivity extends XActivity<MyInvestPresent> {
     private int fundSelector = 0;
     /** 状态选择 */
     private int statusSelector = 0;
+    /** 基金选择 */
+    private String fundSelectorCode;
+    /** 状态选择 */
+    private String statusSelectorCode;
     /** 基金选择集合 */
     private List<ApplyBaseInfo> fundList;
     /** 状态选择集合 */
@@ -76,6 +80,7 @@ public class MyInvestActivity extends XActivity<MyInvestPresent> {
     private ApplyBaseInfo allStatus;
     /** 全部基金 */
     private ApplyBaseInfo allFund;
+    private String isFirst = "1";
 
 
     @Override
@@ -111,24 +116,39 @@ public class MyInvestActivity extends XActivity<MyInvestPresent> {
         contentLayout.getRecyclerView().horizontalDivider(R.color.color_e7e7e7, R.dimen.dimen_1);  //设置divider
 
         httpLoadingDialog.visible();
-        getP().myInvestData(1, pageSize, token, userId);
+        getP().myInvestData(1, pageSize, token, userId, null, null, isFirst);
 
         contentLayout.getRecyclerView()
                 .setOnRefreshAndLoadMoreListener(new XRecyclerView.OnRefreshAndLoadMoreListener() {
                     @Override
                     public void onRefresh() {
-                        getP().myInvestData(1, pageSize, token, userId);
+                        codeInfo(fundSelector, statusSelector);
+                        getP().myInvestData(1, pageSize, token, userId, fundSelectorCode, statusSelectorCode, null);
                     }
 
                     @Override
                     public void onLoadMore(int page) {
-                        getP().myInvestData(page, pageSize, token, userId);
+                        codeInfo(fundSelector, statusSelector);
+                        getP().myInvestData(page, pageSize, token, userId, fundSelectorCode, statusSelectorCode, null);
                     }
                 });
 
         contentLayout.loadingView(View.inflate(context, R.layout.view_loading, null));
         contentLayout.getRecyclerView().useDefLoadMoreView();
 
+    }
+
+    private void codeInfo(int fundSelector, int statusSelector) {
+        if (fundSelector == 0) {
+            fundSelectorCode = null;
+        } else {
+            fundSelectorCode = fundList.get(fundSelector).getCode();
+        }
+        if (statusSelector == 0) {
+            statusSelectorCode = null;
+        } else {
+            statusSelectorCode = statusList.get(statusSelector).getCode();
+        }
     }
 
 
@@ -152,12 +172,13 @@ public class MyInvestActivity extends XActivity<MyInvestPresent> {
                     @Override
                     public void setRange(int position) {
                         fundSelector = position;
-                        tvFund.setText(fundList.get(position).getContent());
+                        tvFund.setText(fundList.get(fundSelector).getContent());
                         //如果选项改变
                         if (!lastChooseFund.equals(getText(tvFund))) {
                             //TODO 需要传 fundList.get(fundSelector).getCode()，statusList.get(position).getCode()
                             httpLoadingDialog.visible();
-                            getP().myInvestData(1, pageSize, token, userId);
+                            codeInfo(fundSelector, statusSelector);
+                            getP().myInvestData(1, pageSize, token, userId, fundSelectorCode, statusSelectorCode, null);
                         }
 
                     }
@@ -176,12 +197,13 @@ public class MyInvestActivity extends XActivity<MyInvestPresent> {
                     @Override
                     public void setRange(int position) {
                         statusSelector = position;
-                        tvRange.setText(statusList.get(position).getContent());
+                        tvRange.setText(statusList.get(statusSelector).getContent());
                         //如果选项改变
                         if (!lastChooseStatus.equals(getText(tvRange))) {
                             //TODO 需要传 fundList.get(fundSelector).getCode()，statusList.get(position).getCode()
                             httpLoadingDialog.visible();
-                            getP().myInvestData(1, pageSize, token, userId);
+                            codeInfo(fundSelector, statusSelector);
+                            getP().myInvestData(1, pageSize, token, userId, fundSelectorCode, statusSelectorCode, null);
                         }
                     }
                 });
@@ -239,33 +261,40 @@ public class MyInvestActivity extends XActivity<MyInvestPresent> {
     public void requestDataSuccess(int pageno, InvestPlanResp resp) {
         httpLoadingDialog.dismiss();
         //初始化基金选择框
-        fundList = new ArrayList<>();
-        fundList.add(allFund);
-        fundList.addAll(resp.getAllFunds());
+        if (resp != null) {
 
-        //初始化状态选择框
-        statusList = new ArrayList<>();
-        statusList.add(allStatus);
-        statusList.addAll(resp.getAllStatus());
-
-        tvFund.setText(fundList.get(fundSelector).getContent());
-        tvRange.setText(statusList.get(statusSelector).getContent());
-
-        if (resp.getResResult() != null && resp.getResResult().size() > 1) {
-            if (pageno > 1) {
-                getAdapter().addData(resp.getResResult());
-            } else {
-                getAdapter().setData(resp.getResResult());
-            }
-            contentLayout.getRecyclerView().setPage(pageno, pageno + 1);
-        } else {
-            if (pageno == 1) {
-                contentLayout.showEmpty();
-            } else {
-                //没有更多数据了
-                contentLayout.getRecyclerView().setPage(pageno, pageno - 1);
+            fundList = new ArrayList<>();
+            fundList.add(allFund);
+            if (resp.getAllFunds() != null && resp.getAllFunds().size() > 0) {
+                fundList.addAll(resp.getAllFunds());
             }
 
+            //初始化状态选择框
+            statusList = new ArrayList<>();
+            statusList.add(allStatus);
+            if (resp.getAllStatus() != null && resp.getAllStatus().size() > 0) {
+                statusList.addAll(resp.getAllStatus());
+            }
+
+            tvFund.setText(fundList.get(fundSelector).getContent());
+            tvRange.setText(statusList.get(statusSelector).getContent());
+
+            if (resp.getResResult() != null && resp.getResResult().size() > 0) {
+                if (pageno > 1) {
+                    getAdapter().addData(resp.getResResult());
+                } else {
+                    getAdapter().setData(resp.getResResult());
+                }
+                contentLayout.getRecyclerView().setPage(pageno, pageno + 1);
+            } else {
+                if (pageno == 1) {
+                    contentLayout.showEmpty();
+                } else {
+                    //没有更多数据了
+                    contentLayout.getRecyclerView().setPage(pageno, pageno - 1);
+                }
+
+            }
         }
     }
 
@@ -275,7 +304,8 @@ public class MyInvestActivity extends XActivity<MyInvestPresent> {
         if (requestCode == Constant.INVEST_PLAN_ACTIVITY && resultCode == Constant.INVEST_DETAIL_BACK) {
             showToast("刷新页面数据");
             httpLoadingDialog.visible();
-            getP().myInvestData(1, pageSize, token, userId);
+            codeInfo(fundSelector, statusSelector);
+            getP().myInvestData(1, pageSize, token, userId, fundSelectorCode, statusSelectorCode, null);
         }
     }
 }

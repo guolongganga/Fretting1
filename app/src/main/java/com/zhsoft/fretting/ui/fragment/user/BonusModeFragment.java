@@ -123,7 +123,7 @@ public class BonusModeFragment extends XFragment<BonusModePresent> {
      */
     public void showData(int pageno, List<UpdateBonusResp> item) {
 
-        if (item != null && item.size() > 1) {
+        if (item != null && item.size() > 0) {
             if (pageno > 1) {
                 getAdapter().addData(item);
             } else {

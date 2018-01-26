@@ -10,6 +10,7 @@ import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.model.user.TransactionResp;
 import com.zhsoft.fretting.present.user.TransactionContentPresent;
 import com.zhsoft.fretting.ui.activity.user.BonusChangeActivity;
+import com.zhsoft.fretting.ui.activity.user.TransactionDetailActivity;
 import com.zhsoft.fretting.ui.adapter.user.TransactionContentRecycleAdapter;
 import com.zhsoft.fretting.ui.adapter.user.UpdateBonusRecycleAdapter;
 
@@ -104,7 +105,12 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
                     //点击
                     case TransactionContentRecycleAdapter.ITEM_CLICK:
                         //跳转 结果页
-                        showToast("点了" + model.getType());
+                        Bundle bundle = new Bundle();
+                        //交易流水号
+                        bundle.putString(Constant.INVEST_PROTOCOL_ID,model.getAllot_no());
+                        //TODO 得写动态的
+                        bundle.putString(Constant.INVEST_RECORD_STATUS, "定投成功");
+                        startActivity(TransactionDetailActivity.class, bundle);
                         break;
                 }
             }

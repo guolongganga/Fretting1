@@ -249,11 +249,11 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
 
         link = link + "?fund_code=" + fundCode + "&token=" + token + "&userId=" + userId;
         XLog.e(link);
-//        mWeb.loadUrl(link);
+        mWeb.loadUrl(link);
 
         // 加载JS代码
         // 格式规定为:file:///android_asset/文件名.html
-        mWeb.loadUrl("file:///android_asset/javascript.html");
+//        mWeb.loadUrl("file:///android_asset/javascript.html");
 //        mWeb.loadUrl("https://20.1.149.118:8443/htmlNoPermission/fundDetail?fund_code=050001");
 //        mWeb.loadUrl("http://pdf.dfcfw.com/pdf/H2_AN201801091075420691_1.pdf");
 
@@ -392,11 +392,14 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      * 定投计划
      */
     private void baseToInvestPlan() {
-        Bundle bundle = new Bundle();
-        bundle.putString(Constant.ACTIVITY_NAME, Constant.INVEST_PLAN);
-        bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
-        bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
-        startActivity(InvestPlanActivity.class, bundle);
+//        httpLoadingDialog.visible();
+        getP().buyOnFundData(token, userId, fundCode);
+
+//        Bundle bundle = new Bundle();
+//        bundle.putString(Constant.ACTIVITY_NAME, Constant.INVEST_PLAN);
+//        bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
+//        bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
+//        startActivity(InvestPlanActivity.class, bundle);
     }
 
     /**
@@ -563,6 +566,34 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
 
     }
 
+
+    /***
+     * 去定投计划成功
+     * @param planResp
+     */
+    public void requestInvestPlanSuccess(InvestPlanResp planResp) {
+//        httpLoadingDialog.dismiss();
+        //1有 0没有 定投
+        if ("0".equals(planResp.getHasDt())) {
+            //跳转定投购买
+            //判断是否能够定投
+            getP().investTime(token, userId, fundCode, fundName);
+        } else {
+            Bundle bundle = new Bundle();
+            bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
+            bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
+            bundle.putParcelableArrayList(Constant.ACTIVITY_OBJECT, planResp.getResResult());
+            startActivity(InvestPlanActivity.class, bundle);
+        }
+    }
+
+    /***
+     * 去定投计划失败
+     */
+    public void requestInvestPlanFail() {
+//        httpLoadingDialog.dismiss();
+    }
+
     /**
      * 三种弹出框
      *
@@ -638,13 +669,14 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constant.WEB_BONUS_ACTIVITY && resultCode == Constant.BONUS_BACK_ACTIVITY) {
             final String chooseStyle = data.getStringExtra(Constant.BONUS_TYPE);
-            //调用js中的函数：showInfoFromJava(msg)
+            //调用js中的函数：bonusJS(value) 修改分红方式
             mWeb.post(new Runnable() {
                 @Override
                 public void run() {
-                    mWeb.loadUrl("javascript:callChangeBonus('" + chooseStyle + "')");
+                    mWeb.loadUrl("javascript:bonusJS('" + chooseStyle + "')");
                 }
             });
         }
     }
+
 }

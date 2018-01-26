@@ -1,5 +1,8 @@
 package com.zhsoft.fretting.model.user;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.zhsoft.fretting.model.BaseResp;
 
 import java.util.List;
@@ -9,7 +12,7 @@ import java.util.List;
  * 描述：
  */
 
-public class InvestInfoResp {
+public class InvestInfoResp implements Parcelable {
 
     private String scheduled_protocol_id;//协议id
     private String scheduled_protocol_state;
@@ -83,4 +86,47 @@ public class InvestInfoResp {
     public void setNext_fixrequest_date(String next_fixrequest_date) {
         this.next_fixrequest_date = next_fixrequest_date;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.scheduled_protocol_id);
+        dest.writeString(this.scheduled_protocol_state);
+        dest.writeString(this.fund_name);
+        dest.writeString(this.fund_code);
+        dest.writeString(this.dt_way);
+        dest.writeString(this.bank_name);
+        dest.writeString(this.bank_account);
+        dest.writeString(this.next_fixrequest_date);
+    }
+
+    public InvestInfoResp() {
+    }
+
+    protected InvestInfoResp(Parcel in) {
+        this.scheduled_protocol_id = in.readString();
+        this.scheduled_protocol_state = in.readString();
+        this.fund_name = in.readString();
+        this.fund_code = in.readString();
+        this.dt_way = in.readString();
+        this.bank_name = in.readString();
+        this.bank_account = in.readString();
+        this.next_fixrequest_date = in.readString();
+    }
+
+    public static final Parcelable.Creator<InvestInfoResp> CREATOR = new Parcelable.Creator<InvestInfoResp>() {
+        @Override
+        public InvestInfoResp createFromParcel(Parcel source) {
+            return new InvestInfoResp(source);
+        }
+
+        @Override
+        public InvestInfoResp[] newArray(int size) {
+            return new InvestInfoResp[size];
+        }
+    };
 }

@@ -14,7 +14,10 @@ import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.OpenAccountEvent;
 import com.zhsoft.fretting.model.user.FoundResp;
 import com.zhsoft.fretting.model.user.UserAccountResp;
+import com.zhsoft.fretting.net.Api;
+import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.present.user.UserPresent;
+import com.zhsoft.fretting.ui.activity.boot.FundDetailWebActivity;
 import com.zhsoft.fretting.ui.activity.user.BonusActivity;
 import com.zhsoft.fretting.ui.activity.user.CancleOrderActivity;
 import com.zhsoft.fretting.ui.activity.user.InvestPlanActivity;
@@ -87,11 +90,11 @@ public class UserFragment extends XFragment<UserPresent> {
 
     /** 是否开户 */
     private String isOpenAccount;
-    /**用户编号*/
+    /** 用户编号 */
     private String userId;
-    /**登录标识 */
+    /** 登录标识 */
     private String token;
-    /**加载圈*/
+    /** 加载圈 */
     private HttpLoadingDialog httpLoadingDialog;
 
     @Override
@@ -250,7 +253,13 @@ public class UserFragment extends XFragment<UserPresent> {
                 switch (tag) {
                     //点击
                     case MyFundRecyleAdapter.ITEM_CLICK:
-                        showToast(model.getFundName());
+                        //跳转基金详情页
+                        Bundle bundle = new Bundle();
+                        bundle.putInt(Constant.WEB_TITLE, R.string.fund_detail);
+                        bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.hold_fund_detail);
+                        bundle.putString(Constant.FUND_DETAIL_CODE, model.getFundCode());
+                        bundle.putString(Constant.FUND_DETAIL_NAME, model.getFundName());
+                        startActivity(FundDetailWebActivity.class, bundle);
                         break;
                 }
             }

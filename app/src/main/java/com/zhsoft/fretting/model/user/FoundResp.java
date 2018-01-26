@@ -13,6 +13,10 @@ public class FoundResp {
      */
     private String fundName;
     /**
+     * 基金代码
+     */
+    private String fundCode;
+    /**
      * 持仓金额
      */
     private BigDecimal holdAmount;
@@ -31,6 +35,14 @@ public class FoundResp {
 
     public void setFundName(String fundName) {
         this.fundName = fundName;
+    }
+
+    public String getFundCode() {
+        return fundCode;
+    }
+
+    public void setFundCode(String fundCode) {
+        this.fundCode = fundCode;
     }
 
     public BigDecimal getHoldAmount() {

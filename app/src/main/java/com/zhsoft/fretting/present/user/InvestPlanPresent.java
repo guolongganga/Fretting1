@@ -22,25 +22,43 @@ import cn.droidlover.xdroidmvp.net.XApi;
 
 public class InvestPlanPresent extends XPresent<InvestPlanActivity> {
 
-    public void investPlanData(int pageno, int pageSize, String token, String userId) {
-//        CommonReqData reqData = new CommonReqData();
-//        reqData.setToken(token);
-//        reqData.setUserId(userId);
-//        ArrayList<InvestPlanResp> list = new ArrayList<>();
-//        InvestPlanResp resp1 = new InvestPlanResp("博时精选基金" + 1, "05000" + 1, "每周三定投11.00元",
-//                "招商银行 储蓄卡", "2339", "2017-12-27", "定投中");
-//        InvestPlanResp resp2 = new InvestPlanResp("博时精选基金" + 2, "05000" + 2, "每周三定投12.00元",
-//                "招商银行 储蓄卡", "2339", "2017-12-28", "暂停");
-//        InvestPlanResp resp3 = new InvestPlanResp("博时精选基金" + 3, "05000" + 3, "每周三定投13.00元",
-//                "招商银行 储蓄卡", "2339", "2017-12-29", "终止");
-//        list.add(resp1);
-//        list.add(resp2);
-//        list.add(resp3);
-//        if (true) {
-//            getV().requestDataSuccess(pageno,list);
-//        } else {
-//            getV().requestDataFail();
-//        }
+    /**
+     * 定投计划
+     * @param token
+     * @param userId
+     * @param fundCode
+     */
+    public void buyOnFundData(String token, String userId, String fundCode) {
+        CommonReqData reqData = new CommonReqData();
+        reqData.setToken(token);
+        reqData.setUserId(userId);
+        InvestParams params = new InvestParams();
+        params.setFundCode(fundCode);
+        reqData.setData(params);
+
+        Api.getApi().buyOnFundData(reqData)
+                .compose(XApi.<InvestPlanResp>getApiTransformer())
+                .compose(XApi.<InvestPlanResp>getScheduler())
+                .compose(getV().<InvestPlanResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<InvestPlanResp>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        getV().requestInvestPlanFail();
+                        getV().showToast("请求失败");
+                    }
+
+                    @Override
+                    public void onNext(InvestPlanResp resp) {
+                        if (resp != null && resp.getStatus() == 200) {
+                            getV().requestInvestPlanSuccess(resp.getData());
+                        } else {
+                            getV().requestInvestPlanFail();
+                            getV().showToast(resp.getMessage());
+                            XLog.e("返回数据为空");
+                        }
+                    }
+                });
+
     }
 
     public void investTime(String token, String userId, String fund_code, String fund_name) {

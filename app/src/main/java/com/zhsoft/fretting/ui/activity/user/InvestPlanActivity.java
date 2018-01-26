@@ -30,7 +30,7 @@ import cn.droidlover.xrecyclerview.XRecyclerView;
 
 /**
  * 作者：sunnyzeng on 2018/1/22 11:38
- * 描述：定投计划/我的定投
+ * 描述：定投计划
  */
 
 public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
@@ -39,14 +39,12 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
     /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
     /** 我的定投计划 */
-//    @BindView(R.id.xrv_my_invest) XRecyclerView xrvMyInvest;
-    @BindView(R.id.content_layout) XRecyclerContentLayout contentLayout;
+    @BindView(R.id.xrv_my_invest) XRecyclerView xrvMyInvest;
     /** 新增定投 */
     @BindView(R.id.btn_add_invest) Button btnAddInvest;
-    /** 线 */
-    @BindView(R.id.view_line) View viewLine;
+//    /** 线 */
+//    @BindView(R.id.view_line) View viewLine;
 
-    private InvestPlanRecyleAdapter adapter;
     /** 登录标识 */
     private String token;
     /** 用户编号 */
@@ -59,6 +57,9 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
     private HttpLoadingDialog httpLoadingDialog;
     /** 每页显示数量 */
     private int pageSize = 10;
+    /** 定投计划数据 */
+    private ArrayList<InvestInfoResp> planResp;
+
 
     @Override
     public int getLayoutId() {
@@ -75,45 +76,22 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
         headTitle.setText("定投计划");
 
         httpLoadingDialog = new HttpLoadingDialog(context);
+        xrvMyInvest.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
+        xrvMyInvest.setFocusable(false);
+
         token = App.getSharedPref().getString(Constant.TOKEN, "");
         userId = App.getSharedPref().getString(Constant.USERID, "");
 
-        contentLayout.getSwipeRefreshLayout().setColorSchemeResources(
-                R.color.color_main,
-                cn.droidlover.xrecyclerview.R.color.x_blue,
-                cn.droidlover.xrecyclerview.R.color.x_yellow,
-                cn.droidlover.xrecyclerview.R.color.x_green
-        );
-
-        contentLayout.getRecyclerView().verticalLayoutManager(context);
-        contentLayout.getRecyclerView().setAdapter(getAdapter());
-        contentLayout.getRecyclerView().horizontalDivider(R.color.color_e7e7e7, R.dimen.dimen_1);  //设置divider
-
         if (bundle != null) {
+            //基金代码
             fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
+            //基金名称
             fundName = bundle.getString(Constant.FUND_DETAIL_NAME);
-            httpLoadingDialog.visible();
-            getP().investPlanData(1, pageSize, token, userId);
-
+            planResp = bundle.getParcelableArrayList(Constant.ACTIVITY_OBJECT);
+            if (planResp != null && planResp.size() > 0) {
+                getAdapter().addData(planResp);
+            }
         }
-
-        contentLayout.getRecyclerView()
-                .setOnRefreshAndLoadMoreListener(new XRecyclerView.OnRefreshAndLoadMoreListener() {
-                    @Override
-                    public void onRefresh() {
-                        getP().investPlanData(1, pageSize, token, userId);
-                    }
-
-                    @Override
-                    public void onLoadMore(int page) {
-                        getP().investPlanData(page, pageSize, token, userId);
-                    }
-                });
-
-        contentLayout.loadingView(View.inflate(context, R.layout.view_loading, null));
-        contentLayout.getRecyclerView().useDefLoadMoreView();
-//        xrvMyInvest.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
-
 
     }
 
@@ -135,22 +113,7 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
             }
         });
 
-        adapter.setRecItemClick(new RecyclerItemCallback<InvestInfoResp, InvestPlanRecyleAdapter.ViewHolder>() {
-            @Override
-            public void onItemClick(int position, InvestInfoResp model, int tag, InvestPlanRecyleAdapter.ViewHolder holder) {
-                super.onItemClick(position, model, tag, holder);
-                switch (tag) {
-                    //点击
-                    case MyFundRecyleAdapter.ITEM_CLICK:
-                        Bundle bundle = new Bundle();
-                        bundle.putString(Constant.INVEST_PROTOCOL_ID, model.getScheduled_protocol_state());
-                        bundle.putString(Constant.FUND_DETAIL_CODE, model.getFund_code());
-                        bundle.putString(Constant.FUND_DETAIL_NAME, model.getFund_name());
-                        startActivity(InvestDeatilActivity.class, bundle, Constant.INVEST_PLAN_ACTIVITY);
-                        break;
-                }
-            }
-        });
+
     }
 
     /**
@@ -159,41 +122,27 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
      * @return
      */
     public SimpleRecAdapter getAdapter() {
-        if (adapter == null) {
-            adapter = new InvestPlanRecyleAdapter(context);
-        }
+        InvestPlanRecyleAdapter adapter = new InvestPlanRecyleAdapter(context);
+        xrvMyInvest.setAdapter(adapter);
+        adapter.setRecItemClick(new RecyclerItemCallback<InvestInfoResp, InvestPlanRecyleAdapter.ViewHolder>() {
+            @Override
+            public void onItemClick(int position, InvestInfoResp model, int tag, InvestPlanRecyleAdapter.ViewHolder holder) {
+                super.onItemClick(position, model, tag, holder);
+                switch (tag) {
+                    //点击
+                    case MyFundRecyleAdapter.ITEM_CLICK:
+                        //终止 不能点击
+                        if (!"终止".equals(model.getScheduled_protocol_state())) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString(Constant.INVEST_PROTOCOL_ID, model.getScheduled_protocol_id());
+                            bundle.putString(Constant.INVEST_STATUS, model.getScheduled_protocol_state());
+                            startActivity(InvestDeatilActivity.class, bundle, Constant.INVEST_PLAN_ACTIVITY);
+                        }
+                        break;
+                }
+            }
+        });
         return adapter;
-    }
-
-    /**
-     * 请求我的定投计划数据失败
-     */
-    public void requestDataFail() {
-        httpLoadingDialog.dismiss();
-    }
-
-    /**
-     * 请求我的定投计划数据成功
-     */
-    public void requestDataSuccess(int pageno, ArrayList<InvestPlanResp> list) {
-        httpLoadingDialog.dismiss();
-
-        if (list != null && list.size() > 1) {
-            if (pageno > 1) {
-                getAdapter().addData(list);
-            } else {
-                getAdapter().setData(list);
-            }
-            contentLayout.getRecyclerView().setPage(pageno, pageno + 1);
-        } else {
-            if (pageno == 1) {
-                contentLayout.showEmpty();
-            } else {
-                //没有更多数据了
-                contentLayout.getRecyclerView().setPage(pageno, pageno - 1);
-            }
-
-        }
     }
 
     /**
@@ -218,13 +167,32 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
         startActivity(InvestActivity.class, bundle);
     }
 
+    /***
+     * 去定投计划成功
+     * @param planResp
+     */
+    public void requestInvestPlanSuccess(InvestPlanResp planResp) {
+        httpLoadingDialog.dismiss();
+        //刷新页面数据
+        if (planResp.getResResult() != null && planResp.getResResult().size() > 0) {
+            getAdapter().addData(planResp.getResResult());
+        }
+    }
+
+    /***
+     * 去定投计划失败
+     */
+    public void requestInvestPlanFail() {
+        httpLoadingDialog.dismiss();
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == Constant.INVEST_PLAN_ACTIVITY && resultCode == Constant.INVEST_DETAIL_BACK) {
             showToast("刷新页面数据");
             httpLoadingDialog.visible();
-            getP().investPlanData(1, pageSize, token, userId);
+            getP().buyOnFundData(token, userId, fundCode);
         }
     }
 }

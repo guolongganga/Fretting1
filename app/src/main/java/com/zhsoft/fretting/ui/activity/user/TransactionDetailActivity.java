@@ -72,6 +72,8 @@ public class TransactionDetailActivity extends XActivity {
     private String recordStatus;
     /** 终止弹框 */
     private CustomDialog customDialog;
+    /** 交易流水号 */
+    private String allot_no;
 
     @Override
     public int getLayoutId() {
@@ -87,6 +89,7 @@ public class TransactionDetailActivity extends XActivity {
     public void initData(Bundle bundle) {
         if (bundle != null) {
             recordStatus = bundle.getString(Constant.INVEST_RECORD_STATUS);
+            allot_no = bundle.getString(Constant.INVEST_PROTOCOL_ID);
         }
         headTitle.setText("交易详情");
 

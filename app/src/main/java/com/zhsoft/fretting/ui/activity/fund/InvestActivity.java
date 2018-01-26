@@ -99,6 +99,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
     private String fundName;
     /** 首次交易月 */
     private String first_trade_month;
+    private String protocol_id;
 
     @Override
     public int getLayoutId() {
@@ -141,6 +142,8 @@ public class InvestActivity extends XActivity<InvestPersent> {
             fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
             //基金名称
             fundName = bundle.getString(Constant.FUND_DETAIL_NAME);
+            //协议编号
+            protocol_id = bundle.getString(Constant.INVEST_PROTOCOL_ID);
             //显示数据
             investResp = (InvestResp) bundle.getParcelable(Constant.INVEST_FUND_OBJECT);
             //获取到基金数据
@@ -354,11 +357,11 @@ public class InvestActivity extends XActivity<InvestPersent> {
                                     //TODO 确定购买
                                     httpLoadingDialog.visible();
                                     getP().sureInvest(token, userId, fundCode, fundName, strAmount,
-                                            first_trade_month, cycleSelectorCode, daySelectorCode, str);
+                                            first_trade_month, cycleSelectorCode, daySelectorCode, str, null);
                                 } else if (Constant.INVEST_ACTIVITY_UPDATE.equals(type)) {
                                     //TODO 确定修改
                                     getP().sureInvest(token, userId, fundCode, fundName, strAmount,
-                                            first_trade_month, cycleSelectorCode, daySelectorCode, str);
+                                            first_trade_month, cycleSelectorCode, daySelectorCode, str, protocol_id);
                                 }
                             }
                         }).create();

@@ -197,8 +197,8 @@ public class Constant {
     //定投详情状态 启动
     public static final String INVEST_STATE_ING = "A";
 
-    //定投计划状态 定投中
-    public static final String INVEST_PLAN_ING = "定投中";
+    //定投计划状态 启用
+    public static final String INVEST_PLAN_ING = "启用";
 
     //定投计划状态 暂停
     public static final String INVEST_PLAN_STOP = "暂停";

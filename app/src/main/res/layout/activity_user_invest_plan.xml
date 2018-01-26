@@ -14,25 +14,27 @@
 
     </LinearLayout>
 
-    <!--<cn.droidlover.xrecyclerview.XRecyclerView-->
-    <!--android:id="@+id/xrv_my_invest"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_below="@id/ll_head_content"-->
-    <!--android:overScrollMode="never"/>-->
-    <cn.droidlover.xrecyclerview.XRecyclerContentLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/content_layout"
+    <cn.droidlover.xrecyclerview.XRecyclerView
+        android:id="@+id/xrv_my_invest"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_below="@id/ll_head_content"
         android:layout_marginBottom="@dimen/dimen_45"
-        android:background="@color/white"
-        app:recyclerBackgroundColor="@color/white"
-        app:recyclerScrollbarNone="true"
-        app:recyclerScrollbarStyle="outsideOverlay"
-        app:x_emptyLayoutId="@layout/view_empty"/>
+        android:overScrollMode="never"/>
+
+    <!--<cn.droidlover.xrecyclerview.XRecyclerContentLayout-->
+        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+        <!--android:id="@+id/content_layout"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_below="@id/ll_head_content"-->
+        <!--android:layout_marginBottom="@dimen/dimen_45"-->
+        <!--android:background="@color/white"-->
+        <!--app:recyclerBackgroundColor="@color/white"-->
+        <!--app:recyclerScrollbarNone="true"-->
+        <!--app:recyclerScrollbarStyle="outsideOverlay"-->
+        <!--app:x_emptyLayoutId="@layout/view_empty"/>-->
 
     <Button
         android:id="@+id/btn_add_invest"

@@ -312,6 +312,7 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
         bundle.putString(Constant.INVEST_ACTIVITY_TYPE, Constant.INVEST_ACTIVITY_UPDATE);
         bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
         bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
+        bundle.putString(Constant.INVEST_PROTOCOL_ID, protocol_id);
         bundle.putParcelable(Constant.INVEST_FUND_OBJECT, resp);
         startActivity(InvestActivity.class, bundle);
 

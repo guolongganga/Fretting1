@@ -225,7 +225,7 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
      */
     public void showData(int pageno, List<NewestFundResp> item) {
 
-        if (item != null && item.size() > 1) {
+        if (item != null && item.size() > 0) {
             if (pageno > 1) {
                 getAdapter().addData(item);
             } else {

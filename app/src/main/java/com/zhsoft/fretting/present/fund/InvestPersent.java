@@ -124,7 +124,7 @@ public class InvestPersent extends XPresent<InvestActivity> {
      * @param password             密码
      */
     public void sureInvest(String token, String userId, String fundCode, String fund_name, String apply_sum,
-                           String first_trade_month, String protocol_period_unit, String fix_date, String password) {
+                           String first_trade_month, String protocol_period_unit, String fix_date, String password, String protocol_id) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -137,6 +137,7 @@ public class InvestPersent extends XPresent<InvestActivity> {
         params.setProtocol_period_unit(protocol_period_unit);
         params.setFix_date(fix_date);
         params.setPassword(password);
+        params.setScheduled_protocol_id(protocol_id);
 
         reqData.setData(params);
 

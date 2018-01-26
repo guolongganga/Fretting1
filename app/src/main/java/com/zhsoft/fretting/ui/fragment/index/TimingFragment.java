@@ -192,7 +192,7 @@ public class TimingFragment extends XFragment<TimingPresent> {
      */
     public void showData(int page, List<NewestFundResp> item) {
 
-        if (item != null && item.size() > 1) {
+        if (item != null && item.size() > 0) {
             if (page > 1) {
                 getAdapter().addData(item);
             } else {

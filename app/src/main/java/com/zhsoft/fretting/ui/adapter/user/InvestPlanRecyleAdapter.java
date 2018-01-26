@@ -3,6 +3,7 @@ package com.zhsoft.fretting.ui.adapter.user;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -49,13 +50,16 @@ public class InvestPlanRecyleAdapter extends SimpleRecAdapter<InvestInfoResp, In
         holder.tvInvestStatus.setText("【" + planResp.getScheduled_protocol_state() + "】");
 
         if (Constant.INVEST_PLAN_ING.equals(planResp.getScheduled_protocol_state())) {
-            //定投中 蓝色
+            //启用 蓝色
+            holder.ivArrow.setVisibility(View.VISIBLE);
             holder.tvInvestStatus.setTextColor(getColor(R.color.color_1a7bcd));
         } else if (Constant.INVEST_PLAN_STOP.equals(planResp.getScheduled_protocol_state())) {
             //暂停 红色
+            holder.ivArrow.setVisibility(View.VISIBLE);
             holder.tvInvestStatus.setTextColor(getColor(R.color.color_f7182d));
         } else if (Constant.INVEST_PLAN_END.equals(planResp.getScheduled_protocol_state())) {
             //终止 灰色
+            holder.ivArrow.setVisibility(View.GONE);
             holder.tvInvestStatus.setTextColor(getColor(R.color.color_696969));
         }
 
@@ -84,6 +88,8 @@ public class InvestPlanRecyleAdapter extends SimpleRecAdapter<InvestInfoResp, In
         @BindView(R.id.tv_next_time) TextView tvNextTime;
         /** 定投计划状态 */
         @BindView(R.id.tv_invest_status) TextView tvInvestStatus;
+        /** 箭头 */
+        @BindView(R.id.iv_arrow) ImageView ivArrow;
 
         public ViewHolder(View itemView) {
             super(itemView);

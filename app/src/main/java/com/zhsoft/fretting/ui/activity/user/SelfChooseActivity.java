@@ -164,7 +164,7 @@ public class SelfChooseActivity extends XActivity<SelfChoosePresent> {
      */
     public void showData(List<SelfChooseResp> item) {
         httpLoadingDialog.dismiss();
-        if (item != null && item.size() > 1) {
+        if (item != null && item.size() > 0) {
             tvEmpty.setVisibility(View.GONE);
             getAdapter().addData(item);
         } else {

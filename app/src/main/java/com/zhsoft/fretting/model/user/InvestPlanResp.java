@@ -3,6 +3,7 @@ package com.zhsoft.fretting.model.user;
 import com.zhsoft.fretting.model.ApplyBaseInfo;
 import com.zhsoft.fretting.model.BaseResp;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,10 +11,19 @@ import java.util.List;
  * 描述：
  */
 
-public class InvestPlanResp extends BaseResp<InvestPlanResp> {
+public class InvestPlanResp extends BaseResp<InvestPlanResp>{
+    private String hasDt;
     private List<ApplyBaseInfo> allFunds;
     private List<ApplyBaseInfo> allStatus;
-    private List<InvestInfoResp> resResult;
+    private ArrayList<InvestInfoResp> resResult;
+
+    public String getHasDt() {
+        return hasDt;
+    }
+
+    public void setHasDt(String hasDt) {
+        this.hasDt = hasDt;
+    }
 
     public List<ApplyBaseInfo> getAllFunds() {
         return allFunds;
@@ -31,11 +41,11 @@ public class InvestPlanResp extends BaseResp<InvestPlanResp> {
         this.allStatus = allStatus;
     }
 
-    public List<InvestInfoResp> getResResult() {
+    public ArrayList<InvestInfoResp> getResResult() {
         return resResult;
     }
 
-    public void setResResult(List<InvestInfoResp> resResult) {
+    public void setResResult(ArrayList<InvestInfoResp> resResult) {
         this.resResult = resResult;
     }
 }

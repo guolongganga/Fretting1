@@ -1,17 +1,11 @@
 package com.zhsoft.fretting.present.user;
 
-import com.zhsoft.fretting.model.BaseResp;
-import com.zhsoft.fretting.model.fund.NewestFundResp;
-import com.zhsoft.fretting.model.user.InvestInfoResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
-import com.zhsoft.fretting.model.user.SelfChooseResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
+import com.zhsoft.fretting.params.MyInvestParams;
 import com.zhsoft.fretting.params.NewestFundParams;
-import com.zhsoft.fretting.params.SelfChooseParams;
 import com.zhsoft.fretting.ui.activity.user.MyInvestActivity;
-
-import java.util.ArrayList;
 
 import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XPresent;
@@ -26,7 +20,7 @@ import cn.droidlover.xdroidmvp.net.XApi;
 
 public class MyInvestPresent extends XPresent<MyInvestActivity> {
 
-    public void myInvestData(final int pageno, int pageSize, String token, String userId) {
+    public void myInvestData(final int pageno, int pageSize, String token, String userId, String fundCode, String dtStatus, String isFirst) {
 
 
 //        ArrayList<InvestPlanResp> list = new ArrayList<>();
@@ -48,9 +42,12 @@ public class MyInvestPresent extends XPresent<MyInvestActivity> {
         reqData.setToken(token);
         reqData.setUserId(userId);
 
-        NewestFundParams params = new NewestFundParams();
+        MyInvestParams params = new MyInvestParams();
         params.setPageNum(pageno);
         params.setPageSize(pageSize);
+        params.setFundCode(fundCode);
+        params.setDtStatus(dtStatus);
+        params.setIsFirst(isFirst);
         reqData.setData(params);
 
         Api.getApi()
@@ -68,7 +65,7 @@ public class MyInvestPresent extends XPresent<MyInvestActivity> {
                     @Override
                     public void onNext(InvestPlanResp model) {
                         if (model != null && model.getStatus() == 200) {
-                            getV().requestDataSuccess(pageno,model.getData());
+                            getV().requestDataSuccess(pageno, model.getData());
                         } else {
                             getV().showToast(model.getMessage());
                             getV().requestDataFail();

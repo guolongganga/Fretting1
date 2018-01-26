@@ -29,6 +29,7 @@ import retrofit2.http.POST;
 
 import static com.zhsoft.fretting.net.HttpContent.buy_fund;
 import static com.zhsoft.fretting.net.HttpContent.buy_now;
+import static com.zhsoft.fretting.net.HttpContent.buy_on_fund;
 import static com.zhsoft.fretting.net.HttpContent.buy_updata_data;
 import static com.zhsoft.fretting.net.HttpContent.change_bankcard;
 import static com.zhsoft.fretting.net.HttpContent.change_bankcard_check;
@@ -282,8 +283,13 @@ public interface HttpUtil {
     @POST(trade_query)
     Flowable<TransactionResp> tradeQueryData(@Body CommonReqData reqData);
 
-    //修改定投 getMyTimesBuyUpdataData
+    //修改定投
     @Headers("appType:Android")
     @POST(buy_updata_data)
     Flowable<InvestResp> buyUpdataData(@Body CommonReqData reqData);
+
+    //定投计划
+    @Headers("appType:Android")
+    @POST(buy_on_fund)
+    Flowable<InvestPlanResp> buyOnFundData(@Body CommonReqData reqData);
 }

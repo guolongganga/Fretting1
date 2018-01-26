@@ -93,6 +93,8 @@ public class HttpContent {
     public static final String trade_query = "permissionCheck/myFound/tradeQuery";
     /** 修改定投 */
     public static final String buy_updata_data = "noPermission/fund/times/getMyTimesBuyUpdataData";
+    /** 定投计划 */
+    public static final String buy_on_fund = "noPermission/fund/times/myTimesBuyOnFundData";
 
 
     /************************************************ html页面 **************************************************/
@@ -101,6 +103,8 @@ public class HttpContent {
     public static final String fund_detail = "htmlNoPermission/fundDetail";
     /** 风险测评 */
     public static final String risk_question = "htmlNoPermission/risk/getQuestions";
+    /** 持有基金详情页 */
+    public static final String hold_fund_detail = "htmlNoPermission/myFound/holdFundDetail";
 
 
 }

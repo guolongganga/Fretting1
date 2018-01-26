@@ -44,6 +44,18 @@ public class InvestBuyParams extends CommonReqData<InvestBuyParams> {
      * 协议周期单位
      */
     private String protocol_period_unit;
+    /**
+     * 协议编号
+     */
+    private String scheduled_protocol_id;
+
+    public String getScheduled_protocol_id() {
+        return scheduled_protocol_id;
+    }
+
+    public void setScheduled_protocol_id(String scheduled_protocol_id) {
+        this.scheduled_protocol_id = scheduled_protocol_id;
+    }
 
     public String getFundCode() {
         return fundCode;

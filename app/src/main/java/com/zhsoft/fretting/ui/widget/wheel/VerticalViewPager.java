@@ -2420,7 +2420,7 @@ public class VerticalViewPager extends ViewGroup {
                 }
             }
             if (!isChild) {
-                // This would cause the focus search down below to fail in fun ways.
+                // This would cause the focus icon_query down below to fail in fun ways.
                 final StringBuilder sb = new StringBuilder();
                 sb.append(currentFocused.getClass().getSimpleName());
                 for (ViewParent parent = currentFocused.getParent(); parent instanceof ViewGroup;
@@ -2537,7 +2537,7 @@ public class VerticalViewPager extends ViewGroup {
 
         // we add ourselves (if focusable) in all cases except for when we are
         // FOCUS_AFTER_DESCENDANTS and there are some descendants focusable.  this is
-        // to avoid the focus search finding layouts when a more precise search
+        // to avoid the focus icon_query finding layouts when a more precise icon_query
         // among the focusable children would be more interesting.
         if (
                 descendantFocusability != FOCUS_AFTER_DESCENDANTS ||
