@@ -89,6 +89,10 @@ public class HttpContent {
     public static final String my_times_buy_detail = "noPermission/fund/times/myTimesBuyDetail";
     /** 定投变更状态 */
     public static final String my_times_buy_state_change = "noPermission/fund/times/myTimesBuyStateChange";
+    /** 交易查询 */
+    public static final String trade_query = "permissionCheck/myFound/tradeQuery";
+    /** 修改定投 */
+    public static final String buy_updata_data = "noPermission/fund/times/getMyTimesBuyUpdataData";
 
 
     /************************************************ html页面 **************************************************/

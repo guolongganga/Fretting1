@@ -82,20 +82,18 @@ public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
      *
      * @param token
      * @param userId
-     * @param fund_code
-     * @param fund_name
+     * @param protocol_id
      */
-    public void investTime(String token, String userId, String fund_code, String fund_name) {
+    public void investTimeUpdata(String token, String userId, String protocol_id) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
-        InvestParams params = new InvestParams();
-        params.setFundCode(fund_code);
-        params.setFund_name(fund_name);
+        InvestSuccessParams params = new InvestSuccessParams();
+        params.setScheduled_protocol_id(protocol_id);
         reqData.setData(params);
 
         //TODO 换修改接口
-        Api.getApi().fundInvestTime(reqData)
+        Api.getApi().buyUpdataData(reqData)
                 .compose(XApi.<InvestResp>getApiTransformer())
                 .compose(XApi.<InvestResp>getScheduler())
                 .compose(getV().<InvestResp>bindToLifecycle())

@@ -18,6 +18,7 @@ import com.zhsoft.fretting.model.user.OccupationResp;
 import com.zhsoft.fretting.model.user.PersonInfoResp;
 import com.zhsoft.fretting.model.user.PhoneResp;
 import com.zhsoft.fretting.model.user.SelfChooseResp;
+import com.zhsoft.fretting.model.user.TransactionResp;
 import com.zhsoft.fretting.model.user.UserAccountResp;
 import com.zhsoft.fretting.params.CommonReqData;
 
@@ -28,6 +29,7 @@ import retrofit2.http.POST;
 
 import static com.zhsoft.fretting.net.HttpContent.buy_fund;
 import static com.zhsoft.fretting.net.HttpContent.buy_now;
+import static com.zhsoft.fretting.net.HttpContent.buy_updata_data;
 import static com.zhsoft.fretting.net.HttpContent.change_bankcard;
 import static com.zhsoft.fretting.net.HttpContent.change_bankcard_check;
 import static com.zhsoft.fretting.net.HttpContent.change_my_information;
@@ -63,6 +65,7 @@ import static com.zhsoft.fretting.net.HttpContent.send_phone_code;
 import static com.zhsoft.fretting.net.HttpContent.trade_password_check;
 import static com.zhsoft.fretting.net.HttpContent.trade_password_phonecode;
 import static com.zhsoft.fretting.net.HttpContent.trade_password_reset;
+import static com.zhsoft.fretting.net.HttpContent.trade_query;
 import static com.zhsoft.fretting.net.HttpContent.user_follow_data;
 import static com.zhsoft.fretting.net.HttpContent.user_login;
 import static com.zhsoft.fretting.net.HttpContent.user_register;
@@ -273,4 +276,14 @@ public interface HttpUtil {
     @Headers("appType:Android")
     @POST(my_times_buy_state_change)
     Flowable<BaseResp> myTimesBuyStateChange(@Body CommonReqData reqData);
+
+    //交易查询
+    @Headers("appType:Android")
+    @POST(trade_query)
+    Flowable<TransactionResp> tradeQueryData(@Body CommonReqData reqData);
+
+    //修改定投 getMyTimesBuyUpdataData
+    @Headers("appType:Android")
+    @POST(buy_updata_data)
+    Flowable<InvestResp> buyUpdataData(@Body CommonReqData reqData);
 }

@@ -3,6 +3,7 @@ package com.zhsoft.fretting.ui.fragment.user;
 import android.os.Bundle;
 import android.view.View;
 
+import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
@@ -15,6 +16,7 @@ import com.zhsoft.fretting.ui.adapter.user.UpdateBonusRecycleAdapter;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
 import cn.droidlover.xdroidmvp.net.NetError;
 import cn.droidlover.xrecyclerview.RecyclerAdapter;
@@ -35,6 +37,12 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
     /** 基金类型 */
     private String tabType;
     private String fundTabName;
+    /** 登录标识 */
+    private String token;
+    /** 用户编号 */
+    private String userId;
+    /** 加载圈 */
+    private HttpLoadingDialog httpLoadingDialog;
 
     @Override
     public int getLayoutId() {
@@ -48,6 +56,8 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
 
     @Override
     public void initData(Bundle bundle) {
+        token = App.getSharedPref().getString(Constant.TOKEN, "");
+        userId = App.getSharedPref().getString(Constant.USERID, "");
         //tab类型 请求接口的时候需要
         fundTabName = bundle.getString(Constant.FUND_TAB_NAME, "");
         tabType = fundTabType(fundTabName);
@@ -63,18 +73,18 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
         contentLayout.getRecyclerView().setAdapter(getAdapter());
         contentLayout.getRecyclerView().horizontalDivider(R.color.color_e7e7e7, R.dimen.dimen_1);  //设置divider
         //0表示tab的类型
-        getP().loadTransactionData(1, pageSize, tabType);
+        getP().loadTransactionData(token,userId,1, pageSize, tabType);
 
         contentLayout.getRecyclerView()
                 .setOnRefreshAndLoadMoreListener(new XRecyclerView.OnRefreshAndLoadMoreListener() {
                     @Override
                     public void onRefresh() {
-                        getP().loadTransactionData(1, pageSize, tabType);
+                        getP().loadTransactionData(token,userId,1, pageSize, tabType);
                     }
 
                     @Override
                     public void onLoadMore(int page) {
-                        getP().loadTransactionData(page, pageSize, tabType);
+                        getP().loadTransactionData(token,userId,page, pageSize, tabType);
                     }
                 });
 
@@ -110,16 +120,16 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
     private String fundTabType(String fundTabName) {
         if (Constant.TRANSACTION_TAB_PURCHASE.equals(fundTabName)) {
             //买入
-            return "101";
+            return "1";
         } else if (Constant.TRANSACTION_TAB_SELLOUT.equals(fundTabName)) {
             //卖出
-            return "102";
+            return "0";
         } else if (Constant.TRANSACTION_TAB_ONPASSAGE.equals(fundTabName)) {
             //在途交易
-            return "103";
+            return "9";
         } else if (Constant.TRANSACTION_TAB_BONUS.equals(fundTabName)) {
             //分红
-            return "104";
+            return "8";
         } else if ("我的分红".equals(fundTabName)) {
             //我的分红
             return "105";
@@ -148,7 +158,7 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
      */
     public void showData(int pageno, List<TransactionResp> item) {
 
-        if (item != null && item.size() > 1) {
+        if (item != null && item.size() > 0) {
             if (pageno > 1) {
                 getAdapter().addData(item);
             } else {
@@ -166,7 +176,7 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
         }
     }
 
-    public void showError(NetError error) {
+    public void showError() {
         contentLayout.showError();
     }
 

@@ -232,7 +232,7 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
             public void onClick(View view) {
                 //修改定投
                 httpLoadingDialog.visible();
-                getP().investTime(token, userId, fundCode, fundName);
+                getP().investTimeUpdata(token, userId, protocol_id);
             }
         });
     }

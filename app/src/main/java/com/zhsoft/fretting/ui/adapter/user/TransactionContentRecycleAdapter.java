@@ -64,19 +64,19 @@ public class TransactionContentRecycleAdapter extends SimpleRecAdapter<Transacti
             //申购
             holder.tvAmount.setText(resp.getAmount() + "元");
             holder.tvStatus.setVisibility(View.VISIBLE);
-            holder.tvStatus.setText(resp.getStatus());
+            holder.tvStatus.setText(resp.getTans_status());
 
         } else if ("定投".equals(resp.getType())) {
             //定投
             holder.tvAmount.setText(resp.getAmount() + "元");
             holder.tvStatus.setVisibility(View.VISIBLE);
-            holder.tvStatus.setText(resp.getStatus());
+            holder.tvStatus.setText(resp.getTans_status());
 
         } else if ("卖出".equals(resp.getType())) {
             //卖出
             holder.tvAmount.setText(resp.getAmount() + "份");
             holder.tvStatus.setVisibility(View.VISIBLE);
-            holder.tvStatus.setText(resp.getStatus());
+            holder.tvStatus.setText(resp.getTans_status());
 
         } else if ("分红再投资".equals(resp.getType())) {
             //分红再投资
