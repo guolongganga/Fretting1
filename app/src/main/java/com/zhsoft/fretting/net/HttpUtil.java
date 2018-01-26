@@ -49,6 +49,7 @@ import static com.zhsoft.fretting.net.HttpContent.my_bankcard;
 import static com.zhsoft.fretting.net.HttpContent.my_informationpage;
 import static com.zhsoft.fretting.net.HttpContent.my_times_buy_detail;
 import static com.zhsoft.fretting.net.HttpContent.my_times_buy_index;
+import static com.zhsoft.fretting.net.HttpContent.my_times_buy_state_change;
 import static com.zhsoft.fretting.net.HttpContent.newest_fund;
 import static com.zhsoft.fretting.net.HttpContent.open_account;
 import static com.zhsoft.fretting.net.HttpContent.password_change_login;
@@ -268,4 +269,8 @@ public interface HttpUtil {
     @POST(my_times_buy_detail)
     Flowable<InvestResp> myTimesBuyDetail(@Body CommonReqData reqData);
 
+    //改变状态
+    @Headers("appType:Android")
+    @POST(my_times_buy_state_change)
+    Flowable<BaseResp> myTimesBuyStateChange(@Body CommonReqData reqData);
 }

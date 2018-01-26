@@ -31,6 +31,8 @@ import cn.droidlover.xrecyclerview.XRecyclerView;
 /**
  * 作者：sunnyzeng on 2018/1/22 17:03
  * 描述： 定投详情页
+ * <p>
+ * 状态： A：启用 P：暂停 H：终止
  */
 
 public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
@@ -101,8 +103,9 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
             protocol_id = bundle.getString(Constant.INVEST_PROTOCOL_ID);
             investStatus = bundle.getString(Constant.INVEST_STATUS);
         }
-        getP().investDetailData(token, userId, protocol_id);
 
+        httpLoadingDialog.visible();
+        getP().investDetailData(token, userId, protocol_id);
 
         if (Constant.INVEST_PLAN_STOP.equals(investStatus)) {
             //如果是暂停状态，显示 暂停，下次扣款时间：--，请保持账户资金充足 暂停按钮消失
@@ -119,18 +122,18 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
             btnStop.setVisibility(View.VISIBLE);
         }
 
-//        getP().investDetailData(token, userId);
-
     }
 
     @Override
     public void initEvents() {
+        //返回
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+        //终止
         btnEnd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -156,13 +159,15 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
                                                     public void onFinish(String str) {
                                                         endPasswordDialog.dismiss();
                                                         //TODO 请求终止接口
-                                                        if (str.equals("123456")) {
-                                                            showToast("密码正确");
-                                                            setResult(Constant.INVEST_DETAIL_BACK);
-                                                            finish();
-                                                        } else {
-                                                            showToast("密码错误");
-                                                        }
+                                                        httpLoadingDialog.visible();
+                                                        getP().changeState(token, userId, protocol_id, Constant.INVEST_STATE_END, str);
+//                                                        if (str.equals("123456")) {
+//                                                            showToast("密码正确");
+//                                                            setResult(Constant.INVEST_DETAIL_BACK);
+//                                                            finish();
+//                                                        } else {
+//                                                            showToast("密码错误");
+//                                                        }
 
                                                     }
                                                 }).create();
@@ -175,6 +180,7 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
                 endDialog.show();
             }
         });
+        //暂停
         btnStop.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -198,14 +204,16 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
                                                     @Override
                                                     public void onFinish(String str) {
                                                         stopPasswordDialog.dismiss();
-                                                        //TODO 请求终止接口
-                                                        if (str.equals("123456")) {
-                                                            showToast("密码正确");
-                                                            setResult(Constant.INVEST_DETAIL_BACK);
-                                                            finish();
-                                                        } else {
-                                                            showToast("密码错误");
-                                                        }
+                                                        //TODO 请求暂停接口
+                                                        httpLoadingDialog.visible();
+                                                        getP().changeState(token, userId, protocol_id, Constant.INVEST_STATE_STOP, str);
+//                                                        if (str.equals("123456")) {
+//                                                            showToast("密码正确");
+//                                                            setResult(Constant.INVEST_DETAIL_BACK);
+//                                                            finish();
+//                                                        } else {
+//                                                            showToast("密码错误");
+//                                                        }
 
                                                     }
                                                 }).create();
@@ -218,10 +226,12 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
                 stopDialog.show();
             }
         });
+        //修改定投
         btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //修改定投
+                httpLoadingDialog.visible();
                 getP().investTime(token, userId, fundCode, fundName);
             }
         });
@@ -257,11 +267,12 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
      * 请求定投详情接口数据成功
      */
     public void requestInvestDetailSuccess(InvestResp resp) {
-
-//        getInvestRecordAdapter().addData(list);
+        httpLoadingDialog.dismiss();
         if (resp != null) {
-            tvFundName.setText(resp.getFund_name());
-            tvFundCode.setText("(" + resp.getFundCode() + ")");
+            fundName = resp.getFund_name();
+            fundCode = resp.getFundCode();
+            tvFundName.setText(fundName);
+            tvFundCode.setText("(" + fundCode + ")");
             tvInvestDay.setText(resp.getFixDateDetails());
             tvSum.setText(resp.getApply_sum() + ".00");
             tvTotal.setText(resp.getTotal_succ_sum());
@@ -278,12 +289,14 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
      * 请求定投详情接口数据失败
      */
     public void requestInvestDetailFail() {
+        httpLoadingDialog.dismiss();
     }
 
     /**
      * 请求修改定投接口失败
      */
     public void requestInvestFail() {
+        httpLoadingDialog.dismiss();
 
     }
 
@@ -293,6 +306,7 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
      * @param resp
      */
     public void requestInvestSuccess(final InvestResp resp) {
+        httpLoadingDialog.dismiss();
         //去修改定投
         Bundle bundle = new Bundle();
         bundle.putString(Constant.INVEST_ACTIVITY_TYPE, Constant.INVEST_ACTIVITY_UPDATE);
@@ -322,5 +336,22 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
             stopPasswordDialog = null;
         }
         super.onDestroy();
+    }
+
+    /**
+     * 修改状态成功
+     */
+    public void requestChangeStateSuccess() {
+        httpLoadingDialog.dismiss();
+        setResult(Constant.INVEST_DETAIL_BACK);
+        finish();
+
+    }
+
+    /**
+     * 修改状态失败
+     */
+    public void requestChangeStateFail() {
+        httpLoadingDialog.dismiss();
     }
 }

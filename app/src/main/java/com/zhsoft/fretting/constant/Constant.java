@@ -44,30 +44,6 @@ public class Constant {
     //基金页面中的tab名称
     public static final String FUND_TAB_NAME = BASE_CONSTANT + "fund_tab_name";
 
-    //股票型 参数
-    public static final String FUND_TAB_SHARES_TYPE = "B";
-
-    //混合型 参数
-    public static final String FUND_TAB_BLEND_TYPE = "A";
-
-    //债券型 参数
-    public static final String FUND_TAB_BOND_TYPE = "E";
-
-    //指数型 参数
-    public static final String FUND_TAB_FINGER_TYPE = "F";
-
-    //股票型 名称
-    public static final String FUND_TAB_SHARES = "股票型";
-
-    //混合型 名称
-    public static final String FUND_TAB_BLEND = "混合型";
-
-    //债券型 名称
-    public static final String FUND_TAB_BOND = "债券型";
-
-    //指数型 名称
-    public static final String FUND_TAB_FINGER = "指数型";
-
     //页面名称，人气产品或基金
     public static final String ACTIVITY_NAME = BASE_CONSTANT + "activity_name";
 
@@ -103,6 +79,7 @@ public class Constant {
 
     //找回交易密码 跳转登录页面 skip_sign
     public static final String FIND_TRADE_ACTIVITY = "302";
+
     //web页面 跳转登录页面 skip_sign
     public static final String WEB_ACTIVITY = "303";
 
@@ -121,21 +98,6 @@ public class Constant {
     //可以购买跳转购买页面携带参数
     public static final String BUY_FUND_OBJECT = "buy_fund_object";
 
-    //购买验证，未开户，跳转开户页面
-    public static final Object TO_OPEN_ACCOUNT = "toOpenAccount";
-
-    //购买验证，补全个人信息，跳转个人信息
-    public static final Object TO_PERSON_INFO = "toPersonInfo";
-
-    //购买验证，风险测评，跳转风险测评
-    public static final Object TO_RISK_TEST = "toRiskTest";
-
-    //购买验证，验证风险等级，弹出风险等级弹出框
-    public static final Object TO_VALIDATE = "toValidate";
-
-    //购买验证，去购买
-    public static final Object TO_BUY = "toBuy";
-
     //购买成功传递数据
     public static final String BUY_SUCCESS_OBJECT = "buy_success_object";
 
@@ -150,15 +112,6 @@ public class Constant {
 
     //定投页 跳转定投成功 携带参数
     public static final String INVEST_SUCCESS_OBJECT = "invest_success_object";
-
-    //定投计划状态 定投中
-    public static final String INVEST_PLAN_ING = "定投中";
-
-    //定投计划状态 暂停
-    public static final String INVEST_PLAN_STOP = "暂停";
-
-    //定投计划状态 终止
-    public static final String INVEST_PLAN_END = "终止";
 
     //定投编号
     public static final String INVEST_PROTOCOL_ID = BASE_CONSTANT + "invest_protocol_id";
@@ -178,6 +131,51 @@ public class Constant {
     //页面名称，我的定投
     public static final String MY_INVEST = BASE_CONSTANT + "my_invest";
 
+    //页面需要传递的对象
+    public static final String ACTIVITY_OBJECT = BASE_CONSTANT + "activity_object";
+
+
+    /********************************************* 固定值 ********************************************/
+
+    //股票型 参数
+    public static final String FUND_TAB_SHARES_TYPE = "B";
+
+    //混合型 参数
+    public static final String FUND_TAB_BLEND_TYPE = "A";
+
+    //债券型 参数
+    public static final String FUND_TAB_BOND_TYPE = "E";
+
+    //指数型 参数
+    public static final String FUND_TAB_FINGER_TYPE = "F";
+
+    //股票型 名称
+    public static final String FUND_TAB_SHARES = "股票型";
+
+    //混合型 名称
+    public static final String FUND_TAB_BLEND = "混合型";
+
+    //债券型 名称
+    public static final String FUND_TAB_BOND = "债券型";
+
+    //指数型 名称
+    public static final String FUND_TAB_FINGER = "指数型";
+
+    //购买验证，未开户，跳转开户页面
+    public static final Object TO_OPEN_ACCOUNT = "toOpenAccount";
+
+    //购买验证，补全个人信息，跳转个人信息
+    public static final Object TO_PERSON_INFO = "toPersonInfo";
+
+    //购买验证，风险测评，跳转风险测评
+    public static final Object TO_RISK_TEST = "toRiskTest";
+
+    //购买验证，验证风险等级，弹出风险等级弹出框
+    public static final Object TO_VALIDATE = "toValidate";
+
+    //购买验证，去购买
+    public static final Object TO_BUY = "toBuy";
+
     //股票型 名称
     public static final String TRANSACTION_TAB_PURCHASE = "买入";
 
@@ -190,8 +188,23 @@ public class Constant {
     //指数型 名称
     public static final String TRANSACTION_TAB_BONUS = "分红";
 
-    //页面需要传递的对象
-    public static final String ACTIVITY_OBJECT = BASE_CONSTANT + "activity_object";
+    //定投详情状态 终止
+    public static final String INVEST_STATE_END = "H";
+
+    //定投详情状态 暂停
+    public static final String INVEST_STATE_STOP = "P";
+
+    //定投详情状态 启动
+    public static final String INVEST_STATE_ING = "A";
+
+    //定投计划状态 定投中
+    public static final String INVEST_PLAN_ING = "定投中";
+
+    //定投计划状态 暂停
+    public static final String INVEST_PLAN_STOP = "暂停";
+
+    //定投计划状态 终止
+    public static final String INVEST_PLAN_END = "终止";
 
 
     /********************************************* int ********************************************/
@@ -230,5 +243,6 @@ public class Constant {
 
     //分红方式修改成功后返回 resultcode
     public static final int BONUS_BACK_ACTIVITY = 204;
+
 
 }

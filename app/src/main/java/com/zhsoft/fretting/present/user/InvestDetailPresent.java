@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.index.IndexResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
@@ -8,6 +9,7 @@ import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.params.InvestParams;
 import com.zhsoft.fretting.params.InvestSuccessParams;
+import com.zhsoft.fretting.params.StateChangeParams;
 import com.zhsoft.fretting.ui.activity.user.InvestDeatilActivity;
 
 import java.util.ArrayList;
@@ -116,5 +118,48 @@ public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
                     }
                 });
 
+    }
+
+    /**
+     * 修改定投状态
+     *
+     * @param token
+     * @param userId
+     * @param protocol_id
+     * @param investState
+     * @param password
+     */
+    public void changeState(String token, String userId, String protocol_id, String investState, String password) {
+        CommonReqData reqData = new CommonReqData();
+        reqData.setToken(token);
+        reqData.setUserId(userId);
+        StateChangeParams params = new StateChangeParams();
+        params.setScheduled_protocol_id(protocol_id);
+        params.setScheduled_protocol_state(investState);
+        params.setPassword(password);
+        reqData.setData(params);
+
+        Api.getApi().myTimesBuyStateChange(reqData)
+                .compose(XApi.<BaseResp>getApiTransformer())
+                .compose(XApi.<BaseResp>getScheduler())
+                .compose(getV().<BaseResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<BaseResp>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        getV().requestChangeStateFail();
+                        getV().showToast("请求失败");
+                    }
+
+                    @Override
+                    public void onNext(BaseResp resp) {
+                        if (resp != null && resp.getStatus() == 200) {
+                            getV().requestChangeStateSuccess();
+                        } else {
+                            getV().requestChangeStateFail();
+                            getV().showToast(resp.getMessage());
+                            XLog.e("返回数据为空");
+                        }
+                    }
+                });
     }
 }
