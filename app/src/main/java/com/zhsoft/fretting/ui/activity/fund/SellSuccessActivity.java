@@ -58,8 +58,8 @@ public class SellSuccessActivity extends XActivity {
         //解决键盘弹出遮挡不滚动问题
         ChenJingET.assistActivity(context);
         headBack.setVisibility(View.GONE);
-        headTitle.setText("购买结果");
-        headRight.setText("关闭");
+        headTitle.setText("卖出详情");
+        headRight.setText("完成");
         headRight.setVisibility(View.VISIBLE);
 //        if (bundle != null) {
 //            buyNowResp = (BuyNowResp) bundle.getParcelable(Constant.BUY_SUCCESS_OBJECT);
