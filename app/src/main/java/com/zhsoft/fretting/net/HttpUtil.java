@@ -47,6 +47,7 @@ import static com.zhsoft.fretting.net.HttpContent.get_occupation;
 import static com.zhsoft.fretting.net.HttpContent.image_code;
 import static com.zhsoft.fretting.net.HttpContent.my_bankcard;
 import static com.zhsoft.fretting.net.HttpContent.my_informationpage;
+import static com.zhsoft.fretting.net.HttpContent.my_times_buy_detail;
 import static com.zhsoft.fretting.net.HttpContent.my_times_buy_index;
 import static com.zhsoft.fretting.net.HttpContent.newest_fund;
 import static com.zhsoft.fretting.net.HttpContent.open_account;
@@ -261,4 +262,10 @@ public interface HttpUtil {
     @Headers("appType:Android")
     @POST(my_times_buy_index)
     Flowable<InvestPlanResp> myTimesBuyIndex(@Body CommonReqData reqData);
+
+    //定投详情
+    @Headers("appType:Android")
+    @POST(my_times_buy_detail)
+    Flowable<InvestResp> myTimesBuyDetail(@Body CommonReqData reqData);
+
 }

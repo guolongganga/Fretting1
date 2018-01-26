@@ -115,6 +115,22 @@ public class InvestResp extends BaseResp<InvestResp> implements Parcelable {
      * 风险等级
      */
     private String fundRisk;
+    /**
+     * 定投协议状态
+     */
+    private String scheduled_protocol_state;
+    /**
+     * 下次日期
+     */
+    private String next_fixrequest_date;
+    /**
+     * 累计金额
+     */
+    private String total_succ_sum;
+    /**
+     * 已投期数
+     */
+    private String total_succ_time;
 
     public String getFixDateDetails() {
         return fixDateDetails;
@@ -276,6 +292,39 @@ public class InvestResp extends BaseResp<InvestResp> implements Parcelable {
         this.fundRisk = fundRisk;
     }
 
+    public String getScheduled_protocol_state() {
+        return scheduled_protocol_state;
+    }
+
+    public void setScheduled_protocol_state(String scheduled_protocol_state) {
+        this.scheduled_protocol_state = scheduled_protocol_state;
+    }
+
+    public String getNext_fixrequest_date() {
+        return next_fixrequest_date;
+    }
+
+    public void setNext_fixrequest_date(String next_fixrequest_date) {
+        this.next_fixrequest_date = next_fixrequest_date;
+    }
+
+    public String getTotal_succ_sum() {
+        return total_succ_sum;
+    }
+
+    public void setTotal_succ_sum(String total_succ_sum) {
+        this.total_succ_sum = total_succ_sum;
+    }
+
+    public String getTotal_succ_time() {
+        return total_succ_time;
+    }
+
+    public void setTotal_succ_time(String total_succ_time) {
+        this.total_succ_time = total_succ_time;
+    }
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -303,6 +352,10 @@ public class InvestResp extends BaseResp<InvestResp> implements Parcelable {
         dest.writeString(this.first_exchdate);
         dest.writeString(this.canBuy);
         dest.writeString(this.fundRisk);
+        dest.writeString(this.scheduled_protocol_state);
+        dest.writeString(this.next_fixrequest_date);
+        dest.writeString(this.total_succ_sum);
+        dest.writeString(this.total_succ_time);
     }
 
     public InvestResp() {
@@ -329,6 +382,10 @@ public class InvestResp extends BaseResp<InvestResp> implements Parcelable {
         this.first_exchdate = in.readString();
         this.canBuy = in.readString();
         this.fundRisk = in.readString();
+        this.scheduled_protocol_state = in.readString();
+        this.next_fixrequest_date = in.readString();
+        this.total_succ_sum = in.readString();
+        this.total_succ_time = in.readString();
     }
 
     public static final Creator<InvestResp> CREATOR = new Creator<InvestResp>() {

@@ -86,6 +86,8 @@ public class HttpContent {
     /** 我的定投 */
     public static final String my_times_buy_index = "noPermission/fund/times/myTimesBuyIndex";
     /** 定投详情 */
+    public static final String my_times_buy_detail = "noPermission/fund/times/myTimesBuyDetail";
+    /** 定投变更状态 */
     public static final String my_times_buy_state_change = "noPermission/fund/times/myTimesBuyStateChange";
 
 

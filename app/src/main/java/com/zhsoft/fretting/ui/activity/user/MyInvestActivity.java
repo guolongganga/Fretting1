@@ -12,12 +12,9 @@ import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.ApplyBaseInfo;
-import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.user.InvestInfoResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
-import com.zhsoft.fretting.present.user.InvestPlanPresent;
 import com.zhsoft.fretting.present.user.MyInvestPresent;
-import com.zhsoft.fretting.ui.activity.fund.InvestActivity;
 import com.zhsoft.fretting.ui.activity.index.TimingActivity;
 import com.zhsoft.fretting.ui.adapter.user.InvestPlanRecyleAdapter;
 import com.zhsoft.fretting.ui.adapter.user.MyFundRecyleAdapter;
@@ -207,9 +204,9 @@ public class MyInvestActivity extends XActivity<MyInvestPresent> {
                     case MyFundRecyleAdapter.ITEM_CLICK:
                         //定投详情
                         Bundle bundle = new Bundle();
+                        //协议号
+                        bundle.putString(Constant.INVEST_PROTOCOL_ID, model.getScheduled_protocol_id());
                         bundle.putString(Constant.INVEST_STATUS, model.getScheduled_protocol_state());
-                        bundle.putString(Constant.FUND_DETAIL_CODE, model.getFund_code());
-                        bundle.putString(Constant.FUND_DETAIL_NAME, model.getFund_name());
                         startActivity(InvestDeatilActivity.class, bundle, Constant.INVEST_PLAN_ACTIVITY);
                         break;
                 }

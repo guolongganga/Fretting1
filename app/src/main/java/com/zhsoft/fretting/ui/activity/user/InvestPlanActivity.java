@@ -5,26 +5,20 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.model.ApplyBaseInfo;
 import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.user.InvestInfoResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
 import com.zhsoft.fretting.present.user.InvestPlanPresent;
 import com.zhsoft.fretting.ui.activity.fund.InvestActivity;
-import com.zhsoft.fretting.ui.activity.index.TimingActivity;
 import com.zhsoft.fretting.ui.adapter.user.InvestPlanRecyleAdapter;
 import com.zhsoft.fretting.ui.adapter.user.MyFundRecyleAdapter;
-import com.zhsoft.fretting.ui.adapter.user.TransactionContentRecycleAdapter;
-import com.zhsoft.fretting.ui.widget.PopShow;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
@@ -149,7 +143,7 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
                     //点击
                     case MyFundRecyleAdapter.ITEM_CLICK:
                         Bundle bundle = new Bundle();
-                        bundle.putString(Constant.INVEST_STATUS, model.getScheduled_protocol_state());
+                        bundle.putString(Constant.INVEST_PROTOCOL_ID, model.getScheduled_protocol_state());
                         bundle.putString(Constant.FUND_DETAIL_CODE, model.getFund_code());
                         bundle.putString(Constant.FUND_DETAIL_NAME, model.getFund_name());
                         startActivity(InvestDeatilActivity.class, bundle, Constant.INVEST_PLAN_ACTIVITY);

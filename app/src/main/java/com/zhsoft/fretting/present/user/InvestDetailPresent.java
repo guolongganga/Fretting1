@@ -1,10 +1,13 @@
 package com.zhsoft.fretting.present.user;
 
 import com.zhsoft.fretting.model.fund.InvestResp;
+import com.zhsoft.fretting.model.index.IndexResp;
+import com.zhsoft.fretting.model.user.InvestPlanResp;
 import com.zhsoft.fretting.model.user.InvestRecordResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.params.InvestParams;
+import com.zhsoft.fretting.params.InvestSuccessParams;
 import com.zhsoft.fretting.ui.activity.user.InvestDeatilActivity;
 
 import java.util.ArrayList;
@@ -21,28 +24,55 @@ import cn.droidlover.xdroidmvp.net.XApi;
  */
 
 public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
-    public void investDetailData(String token, String userId) {
+    public void investDetailData(String token, String userId, String protocol_id) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
 
-        ArrayList<InvestRecordResp> list = new ArrayList<>();
-        InvestRecordResp resp1 = new InvestRecordResp("2017-10-17", "星期一", "10.00", "定投成功");
-        InvestRecordResp resp2 = new InvestRecordResp("2017-10-17", "星期一", "10.00", "确认成功");
-        InvestRecordResp resp3 = new InvestRecordResp("2017-10-17", "星期一", "10.00", "撤单成功");
-        InvestRecordResp resp4 = new InvestRecordResp("2017-10-28", "星期三", "20.00", "支付失败");
-        InvestRecordResp resp5 = new InvestRecordResp("2017-10-28", "星期三", "20.00", "确认失败");
-        list.add(resp1);
-        list.add(resp2);
-        list.add(resp3);
-        list.add(resp4);
-        list.add(resp5);
+        InvestSuccessParams params = new InvestSuccessParams();
+        params.setScheduled_protocol_id(protocol_id);
+        reqData.setData(params);
 
-        if (true) {
-            getV().requestInvestDetailSuccess(list);
-        } else {
-            getV().requestInvestDetailFail();
-        }
+//        ArrayList<InvestRecordResp> list = new ArrayList<>();
+//        InvestRecordResp resp1 = new InvestRecordResp("2017-10-17", "星期一", "10.00", "定投成功");
+//        InvestRecordResp resp2 = new InvestRecordResp("2017-10-17", "星期一", "10.00", "确认成功");
+//        InvestRecordResp resp3 = new InvestRecordResp("2017-10-17", "星期一", "10.00", "撤单成功");
+//        InvestRecordResp resp4 = new InvestRecordResp("2017-10-28", "星期三", "20.00", "支付失败");
+//        InvestRecordResp resp5 = new InvestRecordResp("2017-10-28", "星期三", "20.00", "确认失败");
+//        list.add(resp1);
+//        list.add(resp2);
+//        list.add(resp3);
+//        list.add(resp4);
+//        list.add(resp5);
+        Api.getApi()
+                .myTimesBuyDetail(reqData)
+                .compose(XApi.<InvestResp>getApiTransformer())
+                .compose(XApi.<InvestResp>getScheduler())
+                .compose(getV().<InvestResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<InvestResp>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        error.printStackTrace();
+                        getV().requestInvestDetailFail();
+                    }
+
+                    @Override
+                    public void onNext(InvestResp model) {
+                        if (model != null && model.getStatus() == 200) {
+                            getV().requestInvestDetailSuccess(model.getData());
+                        } else {
+                            getV().showToast(model.getMessage());
+                            getV().requestInvestDetailFail();
+                            XLog.e("返回数据为空");
+                        }
+                    }
+                });
+
+//        if (true) {
+//            getV().requestInvestDetailSuccess(list);
+//        } else {
+//            getV().requestInvestDetailFail();
+//        }
     }
 
     /**

@@ -5,21 +5,17 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.InvestResp;
-import com.zhsoft.fretting.model.user.InvestPlanResp;
 import com.zhsoft.fretting.model.user.InvestRecordResp;
 import com.zhsoft.fretting.present.user.InvestDetailPresent;
 import com.zhsoft.fretting.ui.activity.fund.InvestActivity;
-import com.zhsoft.fretting.ui.adapter.user.InvestPlanRecyleAdapter;
 import com.zhsoft.fretting.ui.adapter.user.InvestRecordRecyleAdapter;
 import com.zhsoft.fretting.ui.adapter.user.MyFundRecyleAdapter;
-import com.zhsoft.fretting.ui.widget.ChenJingET;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.ui.widget.FundBuyDialog;
 
@@ -57,12 +53,15 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
     @BindView(R.id.btn_end) Button btnEnd;
     @BindView(R.id.btn_stop) Button btnStop;
     @BindView(R.id.btn_update) Button btnUpdate;
+
     /** 登录标识 */
     private String token;
     /** 用户编号 */
     private String userId;
     /** 加载圈 */
     private HttpLoadingDialog httpLoadingDialog;
+    /** 协议编号 */
+    private String protocol_id;
     /** 定投状态 */
     private String investStatus;
     /** 终止弹框 */
@@ -94,13 +93,16 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
         httpLoadingDialog = new HttpLoadingDialog(context);
         token = App.getSharedPref().getString(Constant.TOKEN, "");
         userId = App.getSharedPref().getString(Constant.USERID, "");
+        //防止一进页面显示在最底部
+        xrvInvestRecord.setFocusable(false);
+        xrvInvestRecord.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
+
         if (bundle != null) {
+            protocol_id = bundle.getString(Constant.INVEST_PROTOCOL_ID);
             investStatus = bundle.getString(Constant.INVEST_STATUS);
-            //基金代码
-            fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
-            //基金名称
-            fundName = bundle.getString(Constant.FUND_DETAIL_NAME);
         }
+        getP().investDetailData(token, userId, protocol_id);
+
 
         if (Constant.INVEST_PLAN_STOP.equals(investStatus)) {
             //如果是暂停状态，显示 暂停，下次扣款时间：--，请保持账户资金充足 暂停按钮消失
@@ -116,10 +118,8 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
             tvNextTimeHint.setText("将进行新一期定投扣款，请保持账户资金充足");
             btnStop.setVisibility(View.VISIBLE);
         }
-        //防止一进页面显示在最底部
-        xrvInvestRecord.setFocusable(false);
-        xrvInvestRecord.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
-        getP().investDetailData(token, userId);
+
+//        getP().investDetailData(token, userId);
 
     }
 
@@ -255,11 +255,23 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
 
     /**
      * 请求定投详情接口数据成功
-     *
-     * @param list
      */
-    public void requestInvestDetailSuccess(ArrayList<InvestRecordResp> list) {
-        getInvestRecordAdapter().addData(list);
+    public void requestInvestDetailSuccess(InvestResp resp) {
+
+//        getInvestRecordAdapter().addData(list);
+        if (resp != null) {
+            tvFundName.setText(resp.getFund_name());
+            tvFundCode.setText("(" + resp.getFundCode() + ")");
+            tvInvestDay.setText(resp.getFixDateDetails());
+            tvSum.setText(resp.getApply_sum() + ".00");
+            tvTotal.setText(resp.getTotal_succ_sum());
+            tvStage.setText(resp.getTotal_succ_time());
+            tvBankName.setText(resp.getBankCardPageEntity().getBankName());
+            tvBankTail.setText("(" + resp.getBankCardPageEntity().getBankNoTail() + ")");
+            tvProtocolNumber.setText(resp.getScheduled_protocol_id());
+            tvDayWeek.setText(resp.getNext_fixrequest_date() + "  " + resp.getExchWeek());
+        }
+
     }
 
     /**
