@@ -63,6 +63,7 @@ import static com.zhsoft.fretting.net.HttpContent.password_reset;
 import static com.zhsoft.fretting.net.HttpContent.phone_code;
 import static com.zhsoft.fretting.net.HttpContent.risk_question;
 import static com.zhsoft.fretting.net.HttpContent.send_phone_code;
+import static com.zhsoft.fretting.net.HttpContent.single_trade_query;
 import static com.zhsoft.fretting.net.HttpContent.trade_password_check;
 import static com.zhsoft.fretting.net.HttpContent.trade_password_phonecode;
 import static com.zhsoft.fretting.net.HttpContent.trade_password_reset;
@@ -282,6 +283,11 @@ public interface HttpUtil {
     @Headers("appType:Android")
     @POST(trade_query)
     Flowable<TransactionResp> tradeQueryData(@Body CommonReqData reqData);
+
+    //单只基金 交易查询
+    @Headers("appType:Android")
+    @POST(single_trade_query)
+    Flowable<TransactionResp> singleTradeQueryData(@Body CommonReqData reqData);
 
     //修改定投
     @Headers("appType:Android")

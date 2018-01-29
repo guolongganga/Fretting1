@@ -101,6 +101,8 @@
         <activity android:name=".ui.activity.user.SelfChooseActivity"></activity>
         <!--交易查询-->
         <activity android:name=".ui.activity.user.TransactionQueryActivity"></activity>
+        <!--单只基金交易查询-->
+        <activity android:name=".ui.activity.user.TransactionQuerySingleActivity"></activity>
         <!--分红方式-->
         <activity android:name=".ui.activity.user.BonusActivity"></activity>
         <!--撤单-->

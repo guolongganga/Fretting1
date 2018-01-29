@@ -45,6 +45,7 @@ import com.zhsoft.fretting.ui.activity.user.PersonInfoActivity;
 import com.zhsoft.fretting.ui.activity.user.RegisterSecondActivity;
 import com.zhsoft.fretting.ui.activity.user.RiskTestWebViewAcvitity;
 import com.zhsoft.fretting.ui.activity.user.TransactionQueryActivity;
+import com.zhsoft.fretting.ui.activity.user.TransactionQuerySingleActivity;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.utils.RuntimeHelper;
 import com.zhsoft.fretting.webjs.JSInterfaceClick;
@@ -416,7 +417,9 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      */
     private void baseToRecord() {
         //TODO 需要传fundCode userId token
-        startActivity(TransactionQueryActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
+        startActivity(TransactionQuerySingleActivity.class, bundle);
     }
 
     /**

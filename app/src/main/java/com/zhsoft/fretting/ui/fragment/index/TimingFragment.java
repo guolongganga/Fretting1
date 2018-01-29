@@ -93,7 +93,7 @@ public class TimingFragment extends XFragment<TimingPresent> {
                 });
 
         contentLayout.loadingView(View.inflate(getContext(), R.layout.view_loading, null));
-        contentLayout.showLoading();
+//        contentLayout.showLoading();
         contentLayout.getRecyclerView().useDefLoadMoreView();
 
     }

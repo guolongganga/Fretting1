@@ -4,7 +4,7 @@ import com.zhsoft.fretting.model.user.TransactionResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.params.TransactionQueryParams;
-import com.zhsoft.fretting.ui.fragment.user.TransactionContentFragment;
+import com.zhsoft.fretting.ui.fragment.user.TransactionSingleContentFragment;
 
 import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XPresent;
@@ -17,9 +17,9 @@ import cn.droidlover.xdroidmvp.net.XApi;
  * 描述：
  */
 
-public class TransactionContentPresent extends XPresent<TransactionContentFragment> {
+public class TransactionSingleContentPresent extends XPresent<TransactionSingleContentFragment> {
 
-    public void loadTransactionData(String token, String userId, final int pageno, int pageSize, String tabType) {
+    public void loadTransactionSingleData(String token, String userId, final int pageno, int pageSize, String tabType, String fundCode) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -28,10 +28,11 @@ public class TransactionContentPresent extends XPresent<TransactionContentFragme
         params.setPageNum(pageno);
         params.setPageSize(pageSize);
         params.setType(tabType);
+        params.setFundCode(fundCode);
         reqData.setData(params);
 
         Api.getApi()
-                .tradeQueryData(reqData)
+                .singleTradeQueryData(reqData)
                 .compose(XApi.<TransactionResp>getApiTransformer())
                 .compose(XApi.<TransactionResp>getScheduler())
                 .compose(getV().<TransactionResp>bindToLifecycle())
@@ -53,8 +54,6 @@ public class TransactionContentPresent extends XPresent<TransactionContentFragme
                         }
                     }
                 });
-
-
 
 
 //        ArrayList<TransactionResp> list = new ArrayList();

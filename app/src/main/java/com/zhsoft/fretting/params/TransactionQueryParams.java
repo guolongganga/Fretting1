@@ -9,6 +9,15 @@ public class TransactionQueryParams extends CommonReqData<TransactionQueryParams
     private int pageNum;
     private int pageSize;
     private String type;
+    private String fundCode;
+
+    public String getFundCode() {
+        return fundCode;
+    }
+
+    public void setFundCode(String fundCode) {
+        this.fundCode = fundCode;
+    }
 
     public int getPageNum() {
         return pageNum;
