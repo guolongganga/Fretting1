@@ -62,7 +62,8 @@ public class MainActivity extends XActivity {
 
     //合理调用commitAllowingStateLoss与commit
     //commit必须在状态保存(onSaveInstanceState)之前调用
-    //因为MainActivity启动模式使用的是singleTask，当从任务栈中复用时会调用onSaveInstanceState,此时在使用commit的话就会报出：Can not perform this action after onSaveInstanceState
+    //因为MainActivity启动模式使用的是singleTask，当从任务栈中复用时会调用onSaveInstanceState,
+    // 此时在使用commit的话就会报出：Can not perform this action after onSaveInstanceState
     private boolean allowStateLoss = false;
 
     private Handler handler = new Handler() {

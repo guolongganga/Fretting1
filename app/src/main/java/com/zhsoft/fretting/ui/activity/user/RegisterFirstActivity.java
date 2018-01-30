@@ -44,7 +44,6 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  */
 
 public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
-//    private static final String PHONE = "phone";
     /**
      * 返回按钮
      */
@@ -80,11 +79,6 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
      */
     @BindView(R.id.msg_code)
     EditText msgCode;
-//    /**
-//     * 选择已有账户
-//     */
-//    @BindView(R.id.to_login)
-//    TextView toLogin;
     /**
      * 接收不到验证码
      */
@@ -93,25 +87,30 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
     /**
      * 下一步
      */
-
     @BindView(R.id.btn_next)
     Button btnNext;
-    /** 图片验证码 */
-//    @BindView(R.id.image_code) EditText imageCode;
-    /** 图片验证码显示 */
-//    @BindView(R.id.image) ImageView image;
     /**
      * 加载圈
      */
     private HttpLoadingDialog httpLoadingDialog;
-    /** 图片加载 */
-    private ImageLoader imageLoader = ImageLoader.getInstance();
     /**
      * 图片验证码id
      */
     private String image_code_id;
-    /** 短信验证码 */
-    private String messageCode;
+//    /**
+//     * 选择已有账户
+//     */
+//    @BindView(R.id.to_login)
+//    TextView toLogin;
+//    /** 图片验证码 */
+//    @BindView(R.id.image_code) EditText imageCode;
+//    /** 图片验证码显示 */
+//    @BindView(R.id.image) ImageView image;
+//    /** 图片加载 */
+//    private ImageLoader imageLoader = ImageLoader.getInstance();
+
+//    /** 短信验证码 */
+//    private String messageCode;
 
     //验证码pop
     PopupWindow mPopWindow;
@@ -300,7 +299,6 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
     }
 
 
-
     /**
      * 获取图片验证码
      */
@@ -437,7 +435,6 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
      */
     public void commitSuccess(LoginResp model) {
         httpLoadingDialog.dismiss();
-        showToast(model.getToken());
 
         //缓存用户userId,token,username,is_open_account
         App.getSharedPref().putString(Constant.USERID, model.getUserId());

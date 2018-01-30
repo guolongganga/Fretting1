@@ -33,7 +33,8 @@
 
     <string name="user_about_us">关于我们</string>
     <string name="user_risk_test">风险测评</string>
-    <string name="user_register_service">注册协议</string>
+    <string name="user_register_service1">微动利证券投资基金投资人权益须知</string>
+    <string name="user_register_service2">微动利基金销售服务协议</string>
     <string name="index_banner">广告</string>
 
     <string name="switch_account">切换账户</string>

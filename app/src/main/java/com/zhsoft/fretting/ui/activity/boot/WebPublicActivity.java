@@ -87,11 +87,11 @@ public class WebPublicActivity extends XActivity {
     @Override
     public void initData(Bundle bundle) {
 
-        int title = bundle.getInt(Constant.WEB_TITLE);
+//        int title = bundle.getInt(Constant.WEB_TITLE);
         String link = bundle.getString(Constant.WEB_LINK);
 
 //        titleView.setTitle(context, title);
-        headTitle.setText(title);
+//        headTitle.setText(title);
         pb.setMax(100);
 
         WebSettings webSettings = mWeb.getSettings();

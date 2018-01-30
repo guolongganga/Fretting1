@@ -140,7 +140,7 @@ public class SettingActivity extends XActivity<SettingPresent> {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putInt(Constant.WEB_TITLE, R.string.user_about_us);
+//                bundle.putInt(Constant.WEB_TITLE, R.string.user_about_us);
                 bundle.putString(Constant.WEB_LINK, "https://www.baidu.com/?tn=96928074_hao_pg");
                 startActivity(WebPublicActivity.class, bundle);
             }

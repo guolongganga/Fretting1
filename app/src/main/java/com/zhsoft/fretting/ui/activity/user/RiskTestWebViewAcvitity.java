@@ -155,7 +155,6 @@ public class RiskTestWebViewAcvitity extends XActivity {
         mWeb.getSettings().setUserAgentString(ua.replace("appType", "Android"));
         link = link + "?token=" + token + "&userId=" + userId;
         XLog.e("qqq", link);
-//        mWeb.loadDataWithBaseURL(link, null, "text/html", "UTF-8", null);
         mWeb.loadUrl(link);
 
         //添加token userid

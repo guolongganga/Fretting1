@@ -455,10 +455,11 @@
                     android:id="@+id/register_service"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:lineSpacingMultiplier="1.1"
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/dimen_10"
                     android:layout_weight="1"
-                    android:text="我同意《xxx协议》"
+                    android:text="我已阅读并同意微动利证券投资基金投资人权益须知 和微动利基金销售服务协议"
                     android:textColor="@color/color_f7182d"/>
 
             </LinearLayout>

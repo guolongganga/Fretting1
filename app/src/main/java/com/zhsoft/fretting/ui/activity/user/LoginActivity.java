@@ -73,9 +73,6 @@ public class LoginActivity extends XActivity<LoginPresent> {
         } else {
             mRequestCode = "";
         }
-//        String url = "http://img4.imgtn.bdimg.com/it/u=2430963138,1300578556&fm=23&gp=0.jpg";
-//        String urls = "https://travel.12306.cn/imgs/resources/uploadfiles/images/a9b9c76d-36ba-4e4a-8e02-9e6a1a991da0_news_W540_H300.jpg";
-//        ILFactory.getLoader().loadNet(testImage, urls, null);
 
     }
 
@@ -118,7 +115,6 @@ public class LoginActivity extends XActivity<LoginPresent> {
                     showToast("密码不能为空");
                     return;
                 }
-                //TODO 登录接口
                 //请求登录接口
                 httpLoadingDialog.visible("登录中...");
                 getP().login(strname, strpwd);
@@ -132,8 +128,6 @@ public class LoginActivity extends XActivity<LoginPresent> {
      */
     public void showData(LoginResp model) {
         httpLoadingDialog.dismiss();
-//        showToast("userID" + model.getUserId() + "，token=" + model.getToken());
-        showToast("登录成功");
 
         //缓存用户userId,token,username,is_open_account
         App.getSharedPref().putString(Constant.USERID, model.getUserId());
@@ -166,7 +160,6 @@ public class LoginActivity extends XActivity<LoginPresent> {
      */
     public void loginFail() {
         httpLoadingDialog.dismiss();
-        showToast("登录失败");
     }
 
     /**

@@ -57,7 +57,7 @@ public class InvestSuccessActivity extends XActivity<InvestSuccessPresent> {
     /** 基金代码 */
     private String fundCode;
     /** 加载圈 */
-    private HttpLoadingDialog dialog;
+    private HttpLoadingDialog httpLoadingDialog;
 
     @Override
     public int getLayoutId() {
@@ -74,7 +74,7 @@ public class InvestSuccessActivity extends XActivity<InvestSuccessPresent> {
         //解决键盘弹出遮挡不滚动问题
         ChenJingET.assistActivity(context);
         //初始化加载圈
-        dialog = new HttpLoadingDialog(context);
+        httpLoadingDialog = new HttpLoadingDialog(context);
         //标题设置
         headBack.setVisibility(View.GONE);
         headTitle.setText("定投详情");
@@ -87,7 +87,7 @@ public class InvestSuccessActivity extends XActivity<InvestSuccessPresent> {
             sureResp = bundle.getParcelable(Constant.INVEST_SUCCESS_OBJECT);
         }
         //请求定投详情数据
-        dialog.visible();
+        httpLoadingDialog.visible();
         getP().investSuccessData(token, userId, fundCode, sureResp.getScheduled_protocol_id());
 
     }
@@ -107,7 +107,7 @@ public class InvestSuccessActivity extends XActivity<InvestSuccessPresent> {
      * 请求失败
      */
     public void requestFail() {
-        dialog.dismiss();
+        httpLoadingDialog.dismiss();
     }
 
     /**
@@ -116,7 +116,7 @@ public class InvestSuccessActivity extends XActivity<InvestSuccessPresent> {
      * @param investResp
      */
     public void requestSuccess(InvestResp investResp) {
-        dialog.dismiss();
+        httpLoadingDialog.dismiss();
         if (investResp != null) {
             //基金名称
             tvFundName.setText(investResp.getFund_name());

@@ -103,6 +103,16 @@ public class MyInvestActivity extends XActivity<MyInvestPresent> {
 
         allStatus = new ApplyBaseInfo("0", "全部状态");
         allFund = new ApplyBaseInfo("0", "全部基金");
+        //初始化基金选项框
+        fundList = new ArrayList<>();
+        fundList.add(allFund);
+
+        //初始化状态选择框
+        statusList = new ArrayList<>();
+        statusList.add(allStatus);
+        //初始化为 全部基金，全部状态
+        tvFund.setText(fundList.get(fundSelector).getContent());
+        tvRange.setText(statusList.get(statusSelector).getContent());
 
         contentLayout.getSwipeRefreshLayout().setColorSchemeResources(
                 R.color.color_main,
@@ -258,26 +268,19 @@ public class MyInvestActivity extends XActivity<MyInvestPresent> {
     /**
      * 请求我的定投计划数据成功
      */
-    public void requestDataSuccess(int pageno, InvestPlanResp resp) {
+    public void requestDataSuccess(int pageno, InvestPlanResp resp, boolean first) {
         httpLoadingDialog.dismiss();
         //初始化基金选择框
         if (resp != null) {
 
-            fundList = new ArrayList<>();
-            fundList.add(allFund);
-            if (resp.getAllFunds() != null && resp.getAllFunds().size() > 0) {
-                fundList.addAll(resp.getAllFunds());
+            if (first) {
+                if (resp.getAllFunds() != null && resp.getAllFunds().size() > 0) {
+                    fundList.addAll(resp.getAllFunds());
+                }
+                if (resp.getAllStatus() != null && resp.getAllStatus().size() > 0) {
+                    statusList.addAll(resp.getAllStatus());
+                }
             }
-
-            //初始化状态选择框
-            statusList = new ArrayList<>();
-            statusList.add(allStatus);
-            if (resp.getAllStatus() != null && resp.getAllStatus().size() > 0) {
-                statusList.addAll(resp.getAllStatus());
-            }
-
-            tvFund.setText(fundList.get(fundSelector).getContent());
-            tvRange.setText(statusList.get(statusSelector).getContent());
 
             if (resp.getResResult() != null && resp.getResResult().size() > 0) {
                 if (pageno > 1) {

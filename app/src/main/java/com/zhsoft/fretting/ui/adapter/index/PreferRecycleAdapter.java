@@ -3,13 +3,12 @@ package com.zhsoft.fretting.ui.adapter.index;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
-import com.zhsoft.fretting.model.index.PopularityResp;
 import com.zhsoft.fretting.model.index.ProductModel;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
 
@@ -18,16 +17,16 @@ import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
 import cn.droidlover.xdroidmvp.kit.KnifeKit;
 
 /**
- * 人气产品
+ * 优选定投
  * Created by ${zengsuwa}
  * data: 2017/12/14
  */
 
-public class PopularityRecycleAdapter extends SimpleRecAdapter<ProductModel, PopularityRecycleAdapter.ViewHolder> {
+public class PreferRecycleAdapter extends SimpleRecAdapter<ProductModel, PreferRecycleAdapter.ViewHolder> {
 
     public static final int ITEM_CLICK = 0;    //点击标识
 
-    public PopularityRecycleAdapter(Context context) {
+    public PreferRecycleAdapter(Context context) {
         super(context);
     }
 
@@ -38,25 +37,23 @@ public class PopularityRecycleAdapter extends SimpleRecAdapter<ProductModel, Pop
 
     @Override
     public int getLayoutId() {
-        return R.layout.adapter_index_popularity_rv_item;
+        return R.layout.adapter_index_prefer_rv_item;
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
-        holder.tvValue.setText(BigDecimalUtil.bigdecimalToString(data.get(position).getFund_rose()) + "%");
-        holder.tvDescribe.setText(data.get(position).getRiseTermDesc());
-        holder.tvTitle.setText(data.get(position).getFund_name());
-        holder.tvLocationOne.setText(data.get(position).getFeatureone());
-        holder.tvLocationTwo.setText(data.get(position).getFeaturetwo());
+        holder.preferredName.setText(data.get(position).getFund_name());
+        holder.preferredRate.setText(BigDecimalUtil.bigdecimalToString(data.get(position).getFund_rose()) + "%");
+        holder.tvRateDesc.setText(data.get(position).getRiseTermDesc());
 
-        if (data.size() - 1 == position) {
-            holder.viewLine.setVisibility(View.GONE);
-        } else {
-            holder.viewLine.setVisibility(View.VISIBLE);
-        }
-
-        holder.rlContent.setOnClickListener(new View.OnClickListener() {
+        holder.btnInvest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getRecItemClick().onItemClick(position, data.get(position), ITEM_CLICK, holder);
+            }
+        });
+        holder.llContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getRecItemClick().onItemClick(position, data.get(position), ITEM_CLICK, holder);
@@ -66,18 +63,16 @@ public class PopularityRecycleAdapter extends SimpleRecAdapter<ProductModel, Pop
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.rl_content)
-        RelativeLayout rlContent;
-        @BindView(R.id.tv_value)
-        TextView tvValue;
-        @BindView(R.id.tv_describe)
-        TextView tvDescribe;
-        @BindView(R.id.tv_title)
-        TextView tvTitle;
-        @BindView(R.id.tv_location_one)
-        TextView tvLocationOne;
-        @BindView(R.id.tv_location_two)
-        TextView tvLocationTwo;
+        @BindView(R.id.ll_content)
+        LinearLayout llContent;
+        @BindView(R.id.preferred_name)
+        TextView preferredName;
+        @BindView(R.id.preferred_rate)
+        TextView preferredRate;
+        @BindView(R.id.tv_rate_desc)
+        TextView tvRateDesc;
+        @BindView(R.id.btn_invest)
+        Button btnInvest;
         @BindView(R.id.view_line)
         View viewLine;
 

@@ -128,7 +128,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         httpLoadingDialog = new HttpLoadingDialog(context);
         httpLoadingDialog.visible();
         //标题
-        int title = bundle.getInt(Constant.WEB_TITLE);
+//        int title = bundle.getInt(Constant.WEB_TITLE);
         //链接
         String link = bundle.getString(Constant.WEB_LINK);
         //基金代码
@@ -142,7 +142,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             userId = App.getSharedPref().getString(Constant.USERID, "");
         }
         //设置标题
-        headTitle.setText(title);
+//        headTitle.setText(title);
         pb.setMax(100);
 
         WebSettings webSettings = mWeb.getSettings();
@@ -465,7 +465,26 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        //关闭弹出框 避免has leaked window android.widget
+        if (httpLoadingDialog != null) {
+            httpLoadingDialog.dismiss();
+        }
+        if (openAccountDialog != null) {
+            openAccountDialog.dismiss();
+            openAccountDialog = null;
+        }
+        if (personInfoDialog != null) {
+            personInfoDialog.dismiss();
+            personInfoDialog = null;
+        }
+        if (riskTestDialog != null) {
+            riskTestDialog.dismiss();
+            riskTestDialog = null;
+        }
+        if (validateDialog != null) {
+            validateDialog.dismiss();
+            validateDialog = null;
+        }
         super.onDestroy();
     }
 

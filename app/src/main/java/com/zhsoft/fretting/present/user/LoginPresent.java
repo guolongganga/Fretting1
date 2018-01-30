@@ -24,6 +24,7 @@ public class LoginPresent extends XPresent<LoginActivity> {
 
     /**
      * 登录
+     *
      * @param username 用户名
      * @param password 密码
      */
@@ -46,6 +47,7 @@ public class LoginPresent extends XPresent<LoginActivity> {
                     protected void onFail(NetError error) {
                         error.printStackTrace();
                         getV().loginFail();
+                        getV().showToast("登录失败");
                     }
 
                     @Override

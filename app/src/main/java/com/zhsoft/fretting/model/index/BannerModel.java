@@ -3,87 +3,97 @@ package com.zhsoft.fretting.model.index;
 /**
  * 作者：sunnyzeng on 2018/1/2 10:40
  * 描述：广告banner实体
- * "bannerImageUrl": "2",
- * "bannerLink": "3",
- * "bannerName": "4",
- * "bannerRemark": "remark2!",
- * "bannerSort": 6,
- * "bannerType": "7",
- * "id": 1,
- * "isEnable": "0"
  */
 
 public class BannerModel {
-    private String bannerImageUrl;
-    private String bannerLink;
-    private String bannerName;
-    private String bannerRemark;
-    private Integer bannerSort;
-    private String bannerType;
-    private Integer id;
-    private String isEnable;
+    private String appurl;
+    private String id;
+    private String imgtype;
+    private String imgurl;
+    private String name;
+    private String realimgurl;
+    private String sort;
+    private String title;
+    private String uptime;
+    private String useable;
 
-    public String getBannerImageUrl() {
-        return bannerImageUrl;
+    public String getAppurl() {
+        return appurl;
     }
 
-    public void setBannerImageUrl(String bannerImageUrl) {
-        this.bannerImageUrl = bannerImageUrl;
+    public void setAppurl(String appurl) {
+        this.appurl = appurl;
     }
 
-    public String getBannerLink() {
-        return bannerLink;
-    }
-
-    public void setBannerLink(String bannerLink) {
-        this.bannerLink = bannerLink;
-    }
-
-    public String getBannerName() {
-        return bannerName;
-    }
-
-    public void setBannerName(String bannerName) {
-        this.bannerName = bannerName;
-    }
-
-    public String getBannerRemark() {
-        return bannerRemark;
-    }
-
-    public void setBannerRemark(String bannerRemark) {
-        this.bannerRemark = bannerRemark;
-    }
-
-    public Integer getBannerSort() {
-        return bannerSort;
-    }
-
-    public void setBannerSort(Integer bannerSort) {
-        this.bannerSort = bannerSort;
-    }
-
-    public String getBannerType() {
-        return bannerType;
-    }
-
-    public void setBannerType(String bannerType) {
-        this.bannerType = bannerType;
-    }
-
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public String getIsEnable() {
-        return isEnable;
+    public String getImgtype() {
+        return imgtype;
     }
 
-    public void setIsEnable(String isEnable) {
-        this.isEnable = isEnable;
+    public void setImgtype(String imgtype) {
+        this.imgtype = imgtype;
+    }
+
+    public String getImgurl() {
+        return imgurl;
+    }
+
+    public void setImgurl(String imgurl) {
+        this.imgurl = imgurl;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getRealimgurl() {
+        return realimgurl;
+    }
+
+    public void setRealimgurl(String realimgurl) {
+        this.realimgurl = realimgurl;
+    }
+
+    public String getSort() {
+        return sort;
+    }
+
+    public void setSort(String sort) {
+        this.sort = sort;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getUptime() {
+        return uptime;
+    }
+
+    public void setUptime(String uptime) {
+        this.uptime = uptime;
+    }
+
+    public String getUseable() {
+        return useable;
+    }
+
+    public void setUseable(String useable) {
+        this.useable = useable;
     }
 }

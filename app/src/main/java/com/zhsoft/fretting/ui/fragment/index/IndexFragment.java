@@ -27,6 +27,7 @@ import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
 import com.zhsoft.fretting.ui.activity.index.PopularityActivity;
 import com.zhsoft.fretting.ui.activity.index.TimingActivity;
 import com.zhsoft.fretting.ui.adapter.index.PopularityRecycleAdapter;
+import com.zhsoft.fretting.ui.adapter.index.PreferRecycleAdapter;
 import com.zhsoft.fretting.ui.adapter.user.SwitchAccountRecycleAdapter;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
 
@@ -65,6 +66,9 @@ public class IndexFragment extends XFragment<IndexPresent> {
     /** 明星基金 收益率 */
     @BindView(R.id.tv_seven_earnings)
     TextView tvSevenEarnings;
+    /** 明星基金 收益率描述 */
+    @BindView(R.id.tv_star_rate_desc)
+    TextView tvStarRateDesc;
     /** 明星基金 名称 */
     @BindView(R.id.tv_wan_earnings)
     TextView tvWanarnings;
@@ -80,6 +84,9 @@ public class IndexFragment extends XFragment<IndexPresent> {
     /** 指数基金产品1 收益 */
     @BindView(R.id.tv_nvshen_shouyi)
     TextView tvNvshenShouyi;
+    /** 指数基金产品1 收益描述 */
+    @BindView(R.id.tv_finger_one_desc)
+    TextView tvFingerOneDesc;
     /** 指数基金产品2 */
     @BindView(R.id.rl_finger_two)
     RelativeLayout rlFingerTwo;
@@ -89,18 +96,24 @@ public class IndexFragment extends XFragment<IndexPresent> {
     /** 指数基金产品2 收益 */
     @BindView(R.id.tv_chihuo_shouyi)
     TextView tvChihuoShouyi;
+    /** 指数基金产品2 收益描述 */
+    @BindView(R.id.tv_finger_two_desc)
+    TextView tvFingerTwoDesc;
     /** 优选定投 更多 */
     @BindView(R.id.timing_more)
     TextView timingMore;
     /** 优选定投 */
-    @BindView(R.id.ll_prefer_vote)
-    LinearLayout llPreferVote;
-    /** 优选定投 名称 */
-    @BindView(R.id.preferred_name)
-    TextView preferredName;
-    /** 优选定投 利率 */
-    @BindView(R.id.preferred_rate)
-    TextView preferredRate;
+    @BindView(R.id.xrv_prefer)
+    XRecyclerView xrvPrefer;
+
+//    @BindView(R.id.ll_prefer_vote)
+//    LinearLayout llPreferVote;
+//    /** 优选定投 名称 */
+//    @BindView(R.id.preferred_name)
+//    TextView preferredName;
+//    /** 优选定投 利率 */
+//    @BindView(R.id.preferred_rate)
+//    TextView preferredRate;
     /** 搜索 */
     @BindView(R.id.rl_name_search)
     RelativeLayout rlNameSearch;
@@ -113,20 +126,25 @@ public class IndexFragment extends XFragment<IndexPresent> {
     /** 专题三 */
     @BindView(R.id.iv_theme_three)
     ImageView ivThemeThree;
-    /** 立即定投 */
-    @BindView(R.id.btn_invest)
-    Button btnInvest;
+//    /** 立即定投 */
+//    @BindView(R.id.btn_invest)
+//    Button btnInvest;
     /** ScrollView */
     @BindView(R.id.scroll_view)
     ScrollView scrollView;
     /** 下拉刷新 */
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout swipeRefreshLayout;
+    /** 网络错误，点击重试 */
+    @BindView(R.id.error_view)
+    TextView errorView;
+
 
     /** 明星基金 */
     private ProductModel startModel;
-    /** 优选定投 */
-    private ProductModel preferredVote;
+    private ArrayList<BannerModel> themeList;
+//    /** 优选定投 */
+//    private ProductModel preferredVote;
     /** 指数基金1 */
     private ProductModel fingerOne;
     /** 指数基金2 */
@@ -152,17 +170,14 @@ public class IndexFragment extends XFragment<IndexPresent> {
                 android.R.color.holo_orange_light, android.R.color.holo_green_light);
 
         httpLoadingDialog = new HttpLoadingDialog(context);
-//        getPopularityAdapter();
+
         xrvPopularity.setFocusable(false);
         xrvPopularity.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
+        xrvPrefer.setFocusable(false);
+        xrvPrefer.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
 
-        if (noNetWork()) {
-            showNetWorkError();
-            return;
-        } else {
-            httpLoadingDialog.visible();
-            getP().loadData();
-        }
+        httpLoadingDialog.visible();
+        getP().loadData();
     }
 
     @Override
@@ -192,18 +207,20 @@ public class IndexFragment extends XFragment<IndexPresent> {
         btnBuy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //跳转基金详情页
-                startDetaiActivity(startModel);
+                if (startModel != null) {
+                    //跳转基金详情页
+                    startDetaiActivity(startModel);
+                }
             }
         });
-        //优选定投 立即定投
-        btnInvest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //跳转基金详情页
-                startDetaiActivity(preferredVote);
-            }
-        });
+//        //优选定投 立即定投
+//        btnInvest.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //跳转基金详情页
+//                startDetaiActivity(preferredVote);
+//            }
+//        });
         //滑动
         scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
             @Override
@@ -220,71 +237,91 @@ public class IndexFragment extends XFragment<IndexPresent> {
                 getP().loadData();
             }
         });
+        //网络错误，请重试
+        errorView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                httpLoadingDialog.visible();
+                getP().loadData();
+            }
+        });
+
         //明星基金 模块
         llStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //跳转基金详情页
-                startDetaiActivity(startModel);
+                if (startModel != null) {
+                    //跳转基金详情页
+                    startDetaiActivity(startModel);
+                }
             }
         });
         //指数基金1 模块
         rlFingerOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //跳转基金详情页
-                startDetaiActivity(fingerOne);
+                if (fingerOne != null) {
+                    //跳转基金详情页
+                    startDetaiActivity(fingerOne);
+                }
             }
         });
         //指数基金2 模块
         rlFingerTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //跳转基金详情页
-                startDetaiActivity(fingertwo);
+                if (fingertwo != null) {
+                    //跳转基金详情页
+                    startDetaiActivity(fingertwo);
+                }
             }
         });
 
-        //优选定投 模块
-        llPreferVote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //跳转基金详情页
-                startDetaiActivity(preferredVote);
-
-            }
-        });
+//        //优选定投 模块
+//        llPreferVote.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //跳转基金详情页
+//                startDetaiActivity(preferredVote);
+//
+//            }
+//        });
         //专题一
         ivThemeOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putInt(Constant.WEB_TITLE, R.string.index_banner);
-                bundle.putString(Constant.WEB_LINK, "https://www.baidu.com/?tn=96928074_hao_pg");
-                startActivity(WebPublicActivity.class, bundle);
+                if (themeList != null) {
+                    Bundle bundle = new Bundle();
+//                    bundle.putInt(Constant.WEB_TITLE, R.string.index_banner);
+                    bundle.putString(Constant.WEB_LINK, themeList.get(0).getAppurl());
+                    startActivity(WebPublicActivity.class, bundle);
+                }
             }
         });
         //专题二
         ivThemeTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putInt(Constant.WEB_TITLE, R.string.index_banner);
-                bundle.putString(Constant.WEB_LINK, "https://www.baidu.com/?tn=96928074_hao_pg");
-                startActivity(WebPublicActivity.class, bundle);
+                if (themeList != null) {
+                    Bundle bundle = new Bundle();
+//                    bundle.putInt(Constant.WEB_TITLE, R.string.index_banner);
+                    bundle.putString(Constant.WEB_LINK, themeList.get(1).getAppurl());
+                    startActivity(WebPublicActivity.class, bundle);
+                }
             }
         });
         //专题三
         ivThemeThree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putInt(Constant.WEB_TITLE, R.string.index_banner);
-                bundle.putString(Constant.WEB_LINK, "https://www.baidu.com/?tn=96928074_hao_pg");
-                startActivity(WebPublicActivity.class, bundle);
+                if (themeList != null) {
+                    Bundle bundle = new Bundle();
+//                    bundle.putInt(Constant.WEB_TITLE, R.string.index_banner);
+                    bundle.putString(Constant.WEB_LINK, themeList.get(1).getAppurl());
+                    startActivity(WebPublicActivity.class, bundle);
+                }
             }
         });
-
 
     }
 
@@ -325,7 +362,30 @@ public class IndexFragment extends XFragment<IndexPresent> {
                 super.onItemClick(position, model, tag, holder);
                 switch (tag) {
                     //点击
-                    case SwitchAccountRecycleAdapter.ITEM_CLICK:
+                    case PopularityRecycleAdapter.ITEM_CLICK:
+                        startDetaiActivity(model);
+                        break;
+                }
+            }
+        });
+        return adapter;
+    }
+
+    /**
+     * 初始化优选定投adapter
+     *
+     * @return
+     */
+    public SimpleRecAdapter getPreferAdapter() {
+        PreferRecycleAdapter adapter = new PreferRecycleAdapter(context);
+        xrvPrefer.setAdapter(adapter);
+        adapter.setRecItemClick(new RecyclerItemCallback<ProductModel, PreferRecycleAdapter.ViewHolder>() {
+            @Override
+            public void onItemClick(int position, ProductModel model, int tag, PreferRecycleAdapter.ViewHolder holder) {
+                super.onItemClick(position, model, tag, holder);
+                switch (tag) {
+                    //点击
+                    case PreferRecycleAdapter.ITEM_CLICK:
                         startDetaiActivity(model);
                         break;
                 }
@@ -351,16 +411,20 @@ public class IndexFragment extends XFragment<IndexPresent> {
      *
      * @param data
      */
-    public void showIndexData(IndexResp data) {
+    public void showIndexData(final IndexResp data) {
         swipeRefreshLayout.setRefreshing(false);
         httpLoadingDialog.dismiss();
         if (data != null) {
+            swipeRefreshLayout.setVisibility(View.VISIBLE);
+            errorView.setVisibility(View.GONE);
             //banner展示
             if (data.getBannerList() != null && data.getBannerList().size() > 0) {
+                final ArrayList<BannerModel> bannerList = data.getBannerList();
+                //图片地址
                 List<String> bannerUrlList = new ArrayList<>();
-                for (BannerModel bannerModel : data.getBannerList()) {
-                    XLog.e("qqq", bannerModel.getBannerImageUrl());
-                    bannerUrlList.add(bannerModel.getBannerImageUrl());
+                for (BannerModel bannerModel : bannerList) {
+                    XLog.e("qqq", bannerModel.getImgurl());
+                    bannerUrlList.add(bannerModel.getImgurl());
                 }
                 XLog.e("qqq", bannerUrlList.size() + "");
                 banner.setImagesUrl(bannerUrlList);
@@ -370,53 +434,61 @@ public class IndexFragment extends XFragment<IndexPresent> {
                     public void onItemClick(int position) {
                         showToast("点击了第" + position + "张图片");
                         Bundle bundle = new Bundle();
-                        bundle.putInt(Constant.WEB_TITLE, R.string.index_banner);
-                        bundle.putString(Constant.WEB_LINK, "https://www.baidu.com/?tn=96928074_hao_pg");
+//                        bundle.putInt(Constant.WEB_TITLE, R.string.index_banner);
+                        bundle.putString(Constant.WEB_LINK, bannerList.get(position).getAppurl());
                         startActivity(WebPublicActivity.class, bundle);
                     }
                 });
             }
+
             //明星基金
-            if (data.getStarFound() != null) {
-                startModel = data.getStarFound();
-                tvSevenEarnings.setText(BigDecimalUtil.bigdecimalToString(data.getStarFound().getAveg()) + "%");
-                tvWanarnings.setText(data.getStarFound().getName());
+            if (data.getStarFund() != null) {
+                startModel = data.getStarFund();
+                tvSevenEarnings.setText(BigDecimalUtil.bigdecimalToString(startModel.getFund_rose()) + "%");
+                tvStarRateDesc.setText(startModel.getRiseTermDesc());
+                tvWanarnings.setText(startModel.getFund_name());
             }
-            //初始化图片
-            ArrayList<String> mImageUrls = new ArrayList<>();
-            mImageUrls.add("http://pics.sc.chinaz.com/files/pic/pic9/201801/zzpic9486.jpg");
-            mImageUrls.add("http://pics.sc.chinaz.com/files/pic/pic9/201712/zzpic8810.jpg");
-            mImageUrls.add("http://pics.sc.chinaz.com/files/pic/pic9/201712/zzpic8867.jpg");
 
             //微银专题
-            ILFactory.getLoader().loadNet(ivThemeOne, mImageUrls.get(0), null);
-            ILFactory.getLoader().loadNet(ivThemeTwo, mImageUrls.get(1), null);
-            ILFactory.getLoader().loadNet(ivThemeThree, mImageUrls.get(2), null);
+            if (data.getThemeList() != null && data.getThemeList().size() > 0) {
+                themeList = data.getThemeList();
+                ILFactory.getLoader().loadNet(ivThemeOne, themeList.get(0).getImgurl(), null);
+                ILFactory.getLoader().loadNet(ivThemeTwo, themeList.get(1).getImgurl(), null);
+                ILFactory.getLoader().loadNet(ivThemeThree, themeList.get(2).getImgurl(), null);
+
+            }
 
             //人气产品
-            if (data.getHotFoundList() != null && data.getHotFoundList().size() > 0) {
-                getPopularityAdapter().addData(data.getHotFoundList());
+            if (data.getHotFunds() != null && data.getHotFunds().size() > 0) {
+                getPopularityAdapter().addData(data.getHotFunds());
             }
-            //指数基金1
-            if (data.getFirstIndexFound() != null) {
-                fingerOne = data.getFirstIndexFound();
-                tvNvshen.setText(data.getFirstIndexFound().getName());
-                tvNvshenShouyi.setText("+" + BigDecimalUtil.bigdecimalToString(data.getFirstIndexFound().getAveg()) + "%");
+            if (data.getIndexFunds() != null && data.getIndexFunds().size() > 1) {
 
+                //指数基金1
+                if (data.getIndexFunds().get(0) != null) {
+                    fingerOne = data.getIndexFunds().get(0);
+                    tvNvshen.setText(fingerOne.getFund_name());
+                    tvNvshenShouyi.setText("+" + BigDecimalUtil.bigdecimalToString(fingerOne.getFund_rose()) + "%");
+                    tvFingerOneDesc.setText(fingerOne.getRiseTermDesc());
+
+                }
+                //指数基金2
+                if (data.getIndexFunds().get(1) != null) {
+                    fingertwo = data.getIndexFunds().get(1);
+                    tvChihuo.setText(fingertwo.getFund_name());
+                    tvChihuoShouyi.setText("+" + BigDecimalUtil.bigdecimalToString(fingertwo.getFund_rose()) + "%");
+                    tvFingerTwoDesc.setText(fingertwo.getRiseTermDesc());
+                }
             }
-            //指数基金2
-            if (data.getSecondIndexFound() != null) {
-                fingertwo = data.getSecondIndexFound();
-                tvChihuo.setText(data.getSecondIndexFound().getName());
-                tvChihuoShouyi.setText("+" + BigDecimalUtil.bigdecimalToString(data.getSecondIndexFound().getAveg()) + "%");
-            }
+
             //优选定投
-            if (data.getPreferredVote() != null) {
-                preferredVote = data.getPreferredVote();
-                preferredName.setText(data.getPreferredVote().getName());
-                preferredRate.setText(BigDecimalUtil.bigdecimalToString(data.getPreferredVote().getAveg()) + "%");
+            if (data.getFixedFunds() != null && data.getFixedFunds().size() > 0) {
+                getPreferAdapter().addData(data.getFixedFunds());
             }
 
+        } else {
+            swipeRefreshLayout.setVisibility(View.GONE);
+            errorView.setVisibility(View.VISIBLE);
         }
     }
 
@@ -433,8 +505,8 @@ public class IndexFragment extends XFragment<IndexPresent> {
         Bundle bundle = new Bundle();
         bundle.putInt(Constant.WEB_TITLE, R.string.fund_detail);
         bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.fund_detail);
-        bundle.putString(Constant.FUND_DETAIL_CODE, model.getCode());
-        bundle.putString(Constant.FUND_DETAIL_NAME, model.getName());
+        bundle.putString(Constant.FUND_DETAIL_CODE, model.getFund_code());
+        bundle.putString(Constant.FUND_DETAIL_NAME, model.getFund_name());
         startActivity(FundDetailWebActivity.class, bundle);
     }
 

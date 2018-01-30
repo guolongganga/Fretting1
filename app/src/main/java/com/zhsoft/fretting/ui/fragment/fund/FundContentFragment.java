@@ -14,6 +14,7 @@ import com.zhsoft.fretting.present.fund.FundContentPresent;
 import com.zhsoft.fretting.ui.activity.boot.FundDetailWebActivity;
 import com.zhsoft.fretting.ui.adapter.fund.FundContentRecycleAdapter;
 import com.zhsoft.fretting.ui.widget.PopShow;
+import com.zhsoft.fretting.ui.widget.StateView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,7 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
     private final int pageSize = 10;
     /** 基金类型 */
     private String tabType;
+    StateView errorView;
 
     @Override
     public int getLayoutId() {
@@ -82,17 +84,8 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
         contentLayout.getRecyclerView().verticalLayoutManager(context);
         contentLayout.getRecyclerView().setAdapter(getAdapter());
         contentLayout.getRecyclerView().horizontalDivider(R.color.color_e7e7e7, R.dimen.dimen_1);  //设置divider
-        //判断是哪个Activity
-        switch (activityName) {
-            case Constant.POPULARITY://人气产品
-                //0表示tab的类型
-                getP().loadFundData(pageno, pageSize, tabType, list.get(isSelector).getCode());
-                break;
-            case Constant.FUND_INDEX://基金主页
-                //0表示tab的类型
-                getP().loadFundData(pageno, pageSize, tabType, list.get(isSelector).getCode());
-                break;
-        }
+
+        refreshFundData(activityName);
 
         contentLayout.getRecyclerView()
                 .setOnRefreshAndLoadMoreListener(new XRecyclerView.OnRefreshAndLoadMoreListener() {
@@ -107,10 +100,34 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
                     }
                 });
 
+        if (errorView == null) {
+            errorView = new StateView(context);
+        }
+        contentLayout.errorView(errorView);
+
         contentLayout.loadingView(View.inflate(getContext(), R.layout.view_loading, null));
 //        contentLayout.showLoading();
         contentLayout.getRecyclerView().useDefLoadMoreView();
 
+    }
+
+    /**
+     * 刷新基金数据
+     *
+     * @param activityName
+     */
+    private void refreshFundData(int activityName) {
+        //判断是哪个Activity
+        switch (activityName) {
+            case Constant.POPULARITY://人气产品
+                //0表示tab的类型
+                getP().loadFundData(pageno, pageSize, tabType, list.get(isSelector).getCode());
+                break;
+            case Constant.FUND_INDEX://基金主页
+                //0表示tab的类型
+                getP().loadFundData(pageno, pageSize, tabType, list.get(isSelector).getCode());
+                break;
+        }
     }
 
     /**
@@ -244,6 +261,40 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
     }
 
     public void showError(NetError error) {
+        if (error != null) {
+            switch (error.getType()) {
+                case NetError.ParseError:
+                    errorView.setMsg("数据解析异常");
+                    break;
+
+                case NetError.AuthError:
+                    errorView.setMsg("身份验证异常");
+                    break;
+
+                case NetError.BusinessError:
+                    errorView.setMsg("业务异常");
+                    break;
+
+                case NetError.NoConnectError:
+                    errorView.setMsg("网络无连接，点击重试");
+                    errorView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            refreshFundData(activityName);
+                        }
+                    });
+                    break;
+
+                case NetError.NoDataError:
+                    errorView.setMsg("数据为空");
+                    break;
+
+                case NetError.OtherError:
+                    errorView.setMsg("其他异常");
+                    break;
+            }
+            contentLayout.showError();
+        }
         contentLayout.showError();
     }
 }

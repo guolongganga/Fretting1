@@ -56,7 +56,7 @@ public class RegisterSuccessActivity extends XActivity {
     @Override
     public void initData(Bundle bundle) {
         headTitle.setText("基金开户");
-        //TODO 获取用户名和身份证号
+        // 获取用户名和身份证号
         username = bundle.getString(Constant.NAME, "");
         certNo = bundle.getString(Constant.CERT_NO, "");
 
@@ -82,7 +82,7 @@ public class RegisterSuccessActivity extends XActivity {
         riskTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //TODO 跳转风险测评
+                // 跳转风险测评
                 Bundle bundle = new Bundle();
                 bundle.putInt(Constant.WEB_TITLE, R.string.user_risk_test);
                 bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.risk_question);

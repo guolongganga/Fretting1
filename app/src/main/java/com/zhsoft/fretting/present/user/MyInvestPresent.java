@@ -20,7 +20,7 @@ import cn.droidlover.xdroidmvp.net.XApi;
 
 public class MyInvestPresent extends XPresent<MyInvestActivity> {
 
-    public void myInvestData(final int pageno, int pageSize, String token, String userId, String fundCode, String dtStatus, String isFirst) {
+    public void myInvestData(final int pageno, int pageSize, String token, String userId, String fundCode, String dtStatus, final String isFirst) {
 
 
 //        ArrayList<InvestPlanResp> list = new ArrayList<>();
@@ -65,7 +65,11 @@ public class MyInvestPresent extends XPresent<MyInvestActivity> {
                     @Override
                     public void onNext(InvestPlanResp model) {
                         if (model != null && model.getStatus() == 200) {
-                            getV().requestDataSuccess(pageno, model.getData());
+                            boolean first = false;
+                            if (isFirst != null && "1".equals(isFirst)) {
+                                first = true;
+                            }
+                            getV().requestDataSuccess(pageno, model.getData(), first);
                         } else {
                             getV().showToast(model.getMessage());
                             getV().requestDataFail();

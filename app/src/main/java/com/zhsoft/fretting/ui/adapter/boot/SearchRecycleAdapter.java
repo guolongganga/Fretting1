@@ -42,7 +42,7 @@ public class SearchRecycleAdapter extends SimpleRecAdapter<NewestFundResp, Searc
     public void onBindViewHolder(final ViewHolder holder, final int position) {
 
         holder.tvFundName.setText(data.get(position).getFund_name());
-        holder.tvFundRate.setText(BigDecimalUtil.bigdecimalToString(data.get(position).getFund_rose()));
+        holder.tvFundRate.setText(BigDecimalUtil.bigdecimalToString(data.get(position).getFund_rose()) + "%");
         holder.tvFundCode.setText(data.get(position).getFund_code());
         holder.tvFundPerTime.setText("近一年");
 

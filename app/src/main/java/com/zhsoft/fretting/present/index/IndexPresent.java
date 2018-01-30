@@ -1,20 +1,9 @@
 package com.zhsoft.fretting.present.index;
 
-import com.zhsoft.fretting.model.BaseResp;
-import com.zhsoft.fretting.model.fund.BuyFundResp;
-import com.zhsoft.fretting.model.index.BannerModel;
 import com.zhsoft.fretting.model.index.IndexResp;
-import com.zhsoft.fretting.model.index.PopularityResp;
 import com.zhsoft.fretting.net.Api;
-import com.zhsoft.fretting.params.BuyFundParams;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.ui.fragment.index.IndexFragment;
-
-import org.reactivestreams.Subscriber;
-import org.reactivestreams.Subscription;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XPresent;
@@ -84,7 +73,6 @@ public class IndexPresent extends XPresent<IndexFragment> {
                     @Override
                     public void onNext(IndexResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
-                            List<BannerModel> bannerList = resp.getData().getBannerList();
                             getV().showIndexData(resp.getData());
                         }else {
                             getV().requestIndexDataFail();

@@ -17,28 +17,24 @@ public class IndexResp extends BaseResp<IndexResp> {
     /**
      * 微银专题
      */
-    private ArrayList<String> objList;
+    private ArrayList<BannerModel> themeList;
     /**
      * 明星基金
      */
-    private ProductModel starFound;
+    private ProductModel starFund;
     /**
      * 人气产品
      */
-    private ArrayList<ProductModel> hotFoundList;
+    private ArrayList<ProductModel> hotFunds;
     /**
-     * 指数基金1
+     * 指数基金
      */
-    private ProductModel firstIndexFound;
-    /**
-     * 指数基金2
-     */
-    private ProductModel secondIndexFound;
+    private ArrayList<ProductModel> indexFunds;
 
     /**
      * 优选定投
      */
-    private ProductModel preferredVote;
+    private ArrayList<ProductModel> fixedFunds;
 
     public ArrayList<BannerModel> getBannerList() {
         return bannerList;
@@ -48,51 +44,43 @@ public class IndexResp extends BaseResp<IndexResp> {
         this.bannerList = bannerList;
     }
 
-    public ArrayList<String> getObjList() {
-        return objList;
+    public ArrayList<BannerModel> getThemeList() {
+        return themeList;
     }
 
-    public void setObjList(ArrayList<String> objList) {
-        this.objList = objList;
+    public void setThemeList(ArrayList<BannerModel> themeList) {
+        this.themeList = themeList;
     }
 
-    public ProductModel getStarFound() {
-        return starFound;
+    public ProductModel getStarFund() {
+        return starFund;
     }
 
-    public void setStarFound(ProductModel starFound) {
-        this.starFound = starFound;
+    public void setStarFund(ProductModel starFund) {
+        this.starFund = starFund;
     }
 
-    public ProductModel getFirstIndexFound() {
-        return firstIndexFound;
+    public ArrayList<ProductModel> getHotFunds() {
+        return hotFunds;
     }
 
-    public void setFirstIndexFound(ProductModel firstIndexFound) {
-        this.firstIndexFound = firstIndexFound;
+    public void setHotFunds(ArrayList<ProductModel> hotFunds) {
+        this.hotFunds = hotFunds;
     }
 
-    public ProductModel getSecondIndexFound() {
-        return secondIndexFound;
+    public ArrayList<ProductModel> getIndexFunds() {
+        return indexFunds;
     }
 
-    public void setSecondIndexFound(ProductModel secondIndexFound) {
-        this.secondIndexFound = secondIndexFound;
+    public void setIndexFunds(ArrayList<ProductModel> indexFunds) {
+        this.indexFunds = indexFunds;
     }
 
-    public ProductModel getPreferredVote() {
-        return preferredVote;
+    public ArrayList<ProductModel> getFixedFunds() {
+        return fixedFunds;
     }
 
-    public void setPreferredVote(ProductModel preferredVote) {
-        this.preferredVote = preferredVote;
-    }
-
-    public ArrayList<ProductModel> getHotFoundList() {
-        return hotFoundList;
-    }
-
-    public void setHotFoundList(ArrayList<ProductModel> hotFoundList) {
-        this.hotFoundList = hotFoundList;
+    public void setFixedFunds(ArrayList<ProductModel> fixedFunds) {
+        this.fixedFunds = fixedFunds;
     }
 }

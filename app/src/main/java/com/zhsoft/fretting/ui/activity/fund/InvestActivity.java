@@ -354,12 +354,13 @@ public class InvestActivity extends XActivity<InvestPersent> {
                                 //请求接口 跳转到定投成功
                                 //如果是定投页面
                                 if (Constant.INVEST_ACTIVITY.equals(type)) {
-                                    //TODO 确定购买
+                                    //确定购买
                                     httpLoadingDialog.visible();
                                     getP().sureInvest(token, userId, fundCode, fundName, strAmount,
                                             first_trade_month, cycleSelectorCode, daySelectorCode, str, null);
                                 } else if (Constant.INVEST_ACTIVITY_UPDATE.equals(type)) {
-                                    //TODO 确定修改
+                                    //确定修改 增加protocol_id
+                                    httpLoadingDialog.visible();
                                     getP().sureInvest(token, userId, fundCode, fundName, strAmount,
                                             first_trade_month, cycleSelectorCode, daySelectorCode, str, protocol_id);
                                 }
@@ -392,6 +393,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
     public void requestInvestFail() {
         httpLoadingDialog.dismiss();
     }
+
 
     /**
      * 请求扣款时间成功 返回扣款时间

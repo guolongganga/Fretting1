@@ -1,7 +1,14 @@
 package com.zhsoft.fretting.ui.activity.user;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.method.LinkMovementMethod;
+import android.text.style.ClickableSpan;
+import android.text.style.ForegroundColorSpan;
+import android.text.style.UnderlineSpan;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -9,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
@@ -16,10 +24,14 @@ import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.ChangeTabEvent;
 import com.zhsoft.fretting.event.OpenAccountEvent;
 import com.zhsoft.fretting.model.user.BankResp;
+import com.zhsoft.fretting.net.Api;
+import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.present.user.RegisterSecondPresent;
 import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
 import com.zhsoft.fretting.ui.widget.ChenJingET;
+import com.zhsoft.fretting.ui.widget.MyClickText;
+import com.zhsoft.fretting.ui.widget.OnTvClick;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -97,6 +109,7 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
         //设置标题
         headTitle.setText("基金开户");
         registerServiceSelect.setSelected(true);
+        registerServiceText();
         //获取用户缓存的userid 和 token
         userId = App.getSharedPref().getString(Constant.USERID, "");
         token = App.getSharedPref().getString(Constant.TOKEN, "");
@@ -203,7 +216,7 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
                     showToast("请阅读并同意协议");
                     return;
                 }
-                //TODO 下一步 请求注册接口
+                //下一步 请求注册接口
                 httpLoadingDialog.visible("开户中...");
                 httpLoadingDialog.setCanceledOnKeyBack();
                 getP().openAccount(userId, token, strUsername, strIdentity, getText(email), bankResp, strBanknumber, strPhone, strpwd);
@@ -231,15 +244,15 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
             }
         });
 
-        registerService.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putInt(Constant.WEB_TITLE, R.string.user_register_service);
-                bundle.putString(Constant.WEB_LINK, "https://www.baidu.com/?tn=96928074_hao_pg");
-                startActivity(WebPublicActivity.class, bundle);
-            }
-        });
+//        registerService.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                Bundle bundle = new Bundle();
+//                bundle.putInt(Constant.WEB_TITLE, R.string.user_register_service);
+//                bundle.putString(Constant.WEB_LINK, "https://www.baidu.com/?tn=96928074_hao_pg");
+//                startActivity(WebPublicActivity.class, bundle);
+//            }
+//        });
     }
 
 
@@ -289,5 +302,45 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
     public void onBackPressed() {
         super.onBackPressed();
         backDeal();
+    }
+
+    /**
+     * 协议设置下划线和点击事件
+     *
+     * @return
+     */
+    public void registerServiceText() {
+
+        SpannableString spannableString = new SpannableString("我已阅读并同意微动利证券投资基金投资人权益须知和微动利基金销售服务协议");
+
+        MyClickText click1 = new MyClickText(this);
+        click1.setOnTvClick(new OnTvClick() {
+            @Override
+            public void onClick(View widget) {
+                Bundle bundle = new Bundle();
+//                bundle.putInt(Constant.WEB_TITLE, R.string.user_register_service1);
+                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.openaccount_instructions);
+                startActivity(WebPublicActivity.class, bundle);
+            }
+        });
+
+        MyClickText click2 = new MyClickText(this);
+        click2.setOnTvClick(new OnTvClick() {
+            @Override
+            public void onClick(View widget) {
+                Bundle bundle = new Bundle();
+//                bundle.putInt(Constant.WEB_TITLE, R.string.user_register_service2);
+                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.openaccount_agreement);
+                startActivity(WebPublicActivity.class, bundle);
+            }
+        });
+        //设置下划线
+        spannableString.setSpan(click1, 7, 23, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        spannableString.setSpan(click2, 24, 35, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        //当然这里也可以通过setSpan来设置哪些位置的文本哪些颜色
+        registerService.setText(spannableString);
+        registerService.setMovementMethod(LinkMovementMethod.getInstance());
+        registerService.setHighlightColor(Color.TRANSPARENT); //设置点击后的颜色为透明
+
     }
 }

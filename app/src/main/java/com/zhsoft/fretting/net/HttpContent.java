@@ -107,6 +107,10 @@ public class HttpContent {
     public static final String risk_question = "htmlNoPermission/risk/getQuestions";
     /** 持有基金详情页 */
     public static final String hold_fund_detail = "htmlNoPermission/myFound/holdFundDetail";
+    /** 权益须知 */
+    public static final String openaccount_agreement = "htmlNoPermission/openAccount/agreement";
+    /** 服务协议 */
+    public static final String openaccount_instructions = "htmlNoPermission/openAccount/instructions";
 
 
 }
