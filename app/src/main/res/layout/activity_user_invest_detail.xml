@@ -347,6 +347,15 @@
             android:layout_margin="@dimen/dimen_5"
             android:layout_weight="1"
             android:text="修改"/>
+        <!--恢复-->
+        <Button
+            android:id="@+id/btn_recovery"
+            style="@style/common_blue_button_circle"
+            android:layout_width="0dp"
+            android:layout_margin="@dimen/dimen_5"
+            android:layout_weight="1"
+            android:visibility="gone"
+            android:text="恢复"/>
     </LinearLayout>
 
 </FrameLayout>

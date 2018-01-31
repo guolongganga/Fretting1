@@ -144,20 +144,22 @@ public class SellActivity extends XActivity<SellPresent> {
                     return;
                 }
                 //TODO 弹出框
-                fundBuyDialog = new FundBuyDialog
-                        .Builder(context)
-                        .setFundName(fundName)
-                        .setFundAmount("￥" + getText(etAmount) + ".00")
-                        .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
-                            @Override
-                            public void onFinish(String str) {
-                                fundBuyDialog.dismiss();
-                                httpLoadingDialog.visible();
-                                //TODO 卖出接口
-                                getP().sellFund(token, userId, fundCode, strAmount, str);
+                if (fundBuyDialog == null) {
+                    fundBuyDialog = new FundBuyDialog
+                            .Builder(context)
+                            .setFundName(fundName)
+                            .setFundAmount("￥" + getText(etAmount) + ".00")
+                            .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
+                                @Override
+                                public void onFinish(String str) {
+                                    fundBuyDialog.dismiss();
+                                    httpLoadingDialog.visible();
+                                    //TODO 卖出接口
+                                    getP().sellFund(token, userId, fundCode, strAmount, str);
 
-                            }
-                        }).create();
+                                }
+                            }).create();
+                }
                 fundBuyDialog.show();
 
             }
@@ -226,7 +228,7 @@ public class SellActivity extends XActivity<SellPresent> {
     }
 
     /**
-     * 立即购买 密码错误
+     * 卖出 密码错误
      */
     public void passwordError() {
         httpLoadingDialog.dismiss();
@@ -248,5 +250,18 @@ public class SellActivity extends XActivity<SellPresent> {
                     }).create();
         }
         customDialog.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (customDialog != null) {
+            customDialog.dismiss();
+            customDialog = null;
+        }
+        if (fundBuyDialog != null) {
+            fundBuyDialog.dismiss();
+            fundBuyDialog = null;
+        }
+        super.onDestroy();
     }
 }

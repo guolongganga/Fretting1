@@ -11,12 +11,14 @@ import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.model.index.IndexResp;
 import com.zhsoft.fretting.model.user.BankCardResp;
 import com.zhsoft.fretting.model.user.BankResp;
+import com.zhsoft.fretting.model.user.CancleOrderResp;
 import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.model.user.InvestInfoResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
 import com.zhsoft.fretting.model.user.OccupationResp;
 import com.zhsoft.fretting.model.user.PersonInfoResp;
 import com.zhsoft.fretting.model.user.PhoneResp;
+import com.zhsoft.fretting.model.user.ResultDetailResp;
 import com.zhsoft.fretting.model.user.SelfChooseResp;
 import com.zhsoft.fretting.model.user.TransactionResp;
 import com.zhsoft.fretting.model.user.UserAccountResp;
@@ -71,6 +73,10 @@ import static com.zhsoft.fretting.net.HttpContent.trade_query;
 import static com.zhsoft.fretting.net.HttpContent.user_follow_data;
 import static com.zhsoft.fretting.net.HttpContent.user_login;
 import static com.zhsoft.fretting.net.HttpContent.user_register;
+import static com.zhsoft.fretting.net.HttpContent.withdraw_apply_detail;
+import static com.zhsoft.fretting.net.HttpContent.withdraw_apply_list;
+import static com.zhsoft.fretting.net.HttpContent.withdraw_apply_operate;
+import static com.zhsoft.fretting.net.HttpContent.withdraw_apply_succDetail;
 
 /**
  * Created by ${Yis}
@@ -298,4 +304,24 @@ public interface HttpUtil {
     @Headers("appType:Android")
     @POST(buy_on_fund)
     Flowable<InvestPlanResp> buyOnFundData(@Body CommonReqData reqData);
+
+    //撤单列表页
+    @Headers("appType:Android")
+    @POST(withdraw_apply_list)
+    Flowable<CancleOrderResp> withdrawApplyList(@Body CommonReqData reqData);
+
+    //撤单交易详情页
+    @Headers("appType:Android")
+    @POST(withdraw_apply_detail)
+    Flowable<ResultDetailResp> withdrawApplyDetail(@Body CommonReqData reqData);
+
+    //撤单操作
+    @Headers("appType:Android")
+    @POST(withdraw_apply_operate)
+    Flowable<BaseResp> withdrawApplyOperate(@Body CommonReqData reqData);
+
+    //撤单成功
+    @Headers("appType:Android")
+    @POST(withdraw_apply_succDetail)
+    Flowable<ResultDetailResp> withdrawApplySuccDetail(@Body CommonReqData reqData);
 }

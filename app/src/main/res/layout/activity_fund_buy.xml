@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
-                android:hint="最低购买金额100元"
+                android:hint="最低购买金额1000元"
                 android:inputType="number"
                 android:textColor="@color/color_333333"
                 android:textColorHint="@color/color_696969"

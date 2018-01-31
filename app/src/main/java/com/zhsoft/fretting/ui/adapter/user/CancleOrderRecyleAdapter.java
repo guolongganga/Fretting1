@@ -9,8 +9,10 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.model.user.CancleOrderResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
 import com.zhsoft.fretting.model.user.TransactionResp;
+import com.zhsoft.fretting.utils.BigDecimalUtil;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
@@ -21,7 +23,7 @@ import cn.droidlover.xdroidmvp.kit.KnifeKit;
  * 描述：定投计划
  */
 
-public class CancleOrderRecyleAdapter extends SimpleRecAdapter<TransactionResp, CancleOrderRecyleAdapter.ViewHolder> {
+public class CancleOrderRecyleAdapter extends SimpleRecAdapter<CancleOrderResp, CancleOrderRecyleAdapter.ViewHolder> {
     public static final int ITEM_CLICK = 0;    //点击标识
 
     public CancleOrderRecyleAdapter(Context context) {
@@ -40,12 +42,17 @@ public class CancleOrderRecyleAdapter extends SimpleRecAdapter<TransactionResp, 
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        TransactionResp resp = data.get(position);
-        holder.tvFundName.setText(resp.getFundName());
-        holder.tvFundCode.setText(resp.getFundCode());
-        holder.tvTime.setText(resp.getTime());
-        holder.tvType.setText(resp.getType());
-        holder.tvmount.setText(resp.getAmount() + "份");
+        CancleOrderResp resp = data.get(position);
+        holder.tvFundName.setText(resp.getFund_name());
+        holder.tvFundCode.setText(resp.getFund_code());
+        holder.tvTime.setText(resp.getApply_date() + "  " + resp.getApply_time());
+        //（1、买入 0、卖出）
+        if ("1".equals(resp.getBuyType())) {
+            holder.tvType.setText("买入");
+        } else {
+            holder.tvType.setText("卖出");
+        }
+        holder.tvmount.setText(BigDecimalUtil.bigdecimalToString(resp.getApply_share()) + "份");
 
         holder.llContent.setOnClickListener(new View.OnClickListener() {
             @Override

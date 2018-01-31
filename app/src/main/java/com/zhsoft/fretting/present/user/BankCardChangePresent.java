@@ -53,12 +53,7 @@ public class BankCardChangePresent extends XPresent<BankCardChangeActivity> {
                     }
                 });
 
-        //模拟短信验证码请求
-        if (true) {
-            getV().requestMessageCodeSuccess();
-        } else {
-            getV().requestMessageCodeFail();
-        }
+
     }
 
 

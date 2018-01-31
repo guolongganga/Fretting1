@@ -108,6 +108,11 @@ public class BuyActivity extends XActivity<BuyPresent> {
 
     }
 
+    /**
+     * 刷新银行卡视图
+     *
+     * @param fundResp
+     */
     public void refreshBankView(BuyFundResp fundResp) {
         String strimage = fundResp.getLogo();
         if (!TextUtils.isEmpty(strimage)) {
@@ -144,24 +149,26 @@ public class BuyActivity extends XActivity<BuyPresent> {
                     return;
                 }
                 //TODO 如果amount小于最小购买金额，重新填写购买金额
-                if (amount < 100) {
-                    showToast("最小投资金额为100元");
+                if (amount < 1000) {
+                    showToast("最小投资金额为1000元");
                     return;
                 }
                 //TODO 弹出框
-                fundBuyDialog = new FundBuyDialog
-                        .Builder(context)
-                        .setFundName(fundName)
-                        .setFundAmount("￥" + getText(etAmount) + ".00")
-                        .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
-                            @Override
-                            public void onFinish(String str) {
-                                fundBuyDialog.dismiss();
-                                httpLoadingDialog.visible();
-                                getP().buyNow(token, userId, fundCode, strAmount, str);
+                if (fundBuyDialog == null) {
+                    fundBuyDialog = new FundBuyDialog
+                            .Builder(context)
+                            .setFundName(fundName)
+                            .setFundAmount("￥" + getText(etAmount) + ".00")
+                            .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
+                                @Override
+                                public void onFinish(String str) {
+                                    fundBuyDialog.dismiss();
+                                    httpLoadingDialog.visible();
+                                    getP().buyNow(token, userId, fundCode, strAmount, str);
 
-                            }
-                        }).create();
+                                }
+                            }).create();
+                }
                 fundBuyDialog.show();
 
             }
@@ -247,5 +254,18 @@ public class BuyActivity extends XActivity<BuyPresent> {
                     }).create();
         }
         customDialog.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (customDialog != null) {
+            customDialog.dismiss();
+            customDialog = null;
+        }
+        if (fundBuyDialog != null) {
+            fundBuyDialog.dismiss();
+            fundBuyDialog = null;
+        }
+        super.onDestroy();
     }
 }

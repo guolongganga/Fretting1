@@ -7,9 +7,8 @@ import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.user.TransactionResp;
-import com.zhsoft.fretting.present.user.TransactionContentPresent;
 import com.zhsoft.fretting.present.user.TransactionSingleContentPresent;
-import com.zhsoft.fretting.ui.activity.user.TransactionDetailActivity;
+import com.zhsoft.fretting.ui.activity.user.ResultDetailOneActivity;
 import com.zhsoft.fretting.ui.adapter.user.TransactionContentRecycleAdapter;
 
 import java.util.List;
@@ -111,7 +110,7 @@ public class TransactionSingleContentFragment extends XFragment<TransactionSingl
                         bundle.putString(Constant.INVEST_PROTOCOL_ID, model.getAllot_no());
                         //TODO 得写动态的
                         bundle.putString(Constant.INVEST_RECORD_STATUS, "定投成功");
-                        startActivity(TransactionDetailActivity.class, bundle);
+                        startActivity(ResultDetailOneActivity.class, bundle);
                         break;
                 }
             }

@@ -97,6 +97,14 @@ public class HttpContent {
     public static final String buy_updata_data = "noPermission/fund/times/getMyTimesBuyUpdataData";
     /** 定投计划 */
     public static final String buy_on_fund = "noPermission/fund/times/myTimesBuyOnFundData";
+    /** 撤单列表页 */
+    public static final String withdraw_apply_list = "noPermission/withdrawapply/list";
+    /** 撤单交易详情页 */
+    public static final String withdraw_apply_detail = "noPermission/withdrawapply/detail";
+    /** 撤单操作 */
+    public static final String withdraw_apply_operate = "noPermission/withdrawapply/operate";
+    /** 撤单成功 */
+    public static final String withdraw_apply_succDetail = "noPermission/withdrawapply/succDetail";
 
 
     /************************************************ html页面 **************************************************/

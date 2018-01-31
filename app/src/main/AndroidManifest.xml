@@ -93,8 +93,10 @@
         <activity android:name=".ui.activity.user.InvestPlanActivity"></activity>
         <!--定投详情-->
         <activity android:name=".ui.activity.user.InvestDeatilActivity"></activity>
-        <!--交易详情-->
-        <activity android:name=".ui.activity.user.TransactionDetailActivity"></activity>
+        <!--交易详情1-->
+        <activity android:name=".ui.activity.user.ResultDetailOneActivity"></activity>
+        <!--交易详情2-->
+        <activity android:name=".ui.activity.user.ResultDetailTwoActivity"></activity>
         <!--分红方式变更-->
         <activity android:name=".ui.activity.user.BonusChangeActivity"></activity>
         <!--自选基金-->

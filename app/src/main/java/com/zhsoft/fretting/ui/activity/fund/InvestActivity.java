@@ -343,29 +343,31 @@ public class InvestActivity extends XActivity<InvestPersent> {
                     showToast("请选择定投日");
                     return;
                 }
-                fundBuyDialog = new FundBuyDialog
-                        .Builder(context)
-                        .setFundName(fundName)
-                        .setFundAmount("￥" + strAmount + ".00")
-                        .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
-                            @Override
-                            public void onFinish(String str) {
-                                fundBuyDialog.dismiss();
-                                //请求接口 跳转到定投成功
-                                //如果是定投页面
-                                if (Constant.INVEST_ACTIVITY.equals(type)) {
-                                    //确定购买
-                                    httpLoadingDialog.visible();
-                                    getP().sureInvest(token, userId, fundCode, fundName, strAmount,
-                                            first_trade_month, cycleSelectorCode, daySelectorCode, str, null);
-                                } else if (Constant.INVEST_ACTIVITY_UPDATE.equals(type)) {
-                                    //确定修改 增加protocol_id
-                                    httpLoadingDialog.visible();
-                                    getP().sureInvest(token, userId, fundCode, fundName, strAmount,
-                                            first_trade_month, cycleSelectorCode, daySelectorCode, str, protocol_id);
+                if (fundBuyDialog == null) {
+                    fundBuyDialog = new FundBuyDialog
+                            .Builder(context)
+                            .setFundName(fundName)
+                            .setFundAmount("￥" + strAmount + ".00")
+                            .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
+                                @Override
+                                public void onFinish(String str) {
+                                    fundBuyDialog.dismiss();
+                                    //请求接口 跳转到定投成功
+                                    //如果是定投页面
+                                    if (Constant.INVEST_ACTIVITY.equals(type)) {
+                                        //确定购买
+                                        httpLoadingDialog.visible();
+                                        getP().sureInvest(token, userId, fundCode, fundName, strAmount,
+                                                first_trade_month, cycleSelectorCode, daySelectorCode, str, null);
+                                    } else if (Constant.INVEST_ACTIVITY_UPDATE.equals(type)) {
+                                        //确定修改 增加protocol_id
+                                        httpLoadingDialog.visible();
+                                        getP().sureInvest(token, userId, fundCode, fundName, strAmount,
+                                                first_trade_month, cycleSelectorCode, daySelectorCode, str, protocol_id);
+                                    }
                                 }
-                            }
-                        }).create();
+                            }).create();
+                }
                 fundBuyDialog.show();
             }
         });
@@ -496,5 +498,18 @@ public class InvestActivity extends XActivity<InvestPersent> {
                     }
                 }).create();
         customDialog.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (customDialog != null) {
+            customDialog.dismiss();
+            customDialog = null;
+        }
+        if (fundBuyDialog != null) {
+            fundBuyDialog.dismiss();
+            fundBuyDialog = null;
+        }
+        super.onDestroy();
     }
 }

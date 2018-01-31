@@ -19,8 +19,6 @@ import com.zhsoft.fretting.ui.adapter.user.MyFundRecyleAdapter;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.ui.widget.FundBuyDialog;
 
-import java.util.ArrayList;
-
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
@@ -55,6 +53,7 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
     @BindView(R.id.btn_end) Button btnEnd;
     @BindView(R.id.btn_stop) Button btnStop;
     @BindView(R.id.btn_update) Button btnUpdate;
+    @BindView(R.id.btn_recovery) Button btnRecovery;
 
     /** 登录标识 */
     private String token;
@@ -74,6 +73,12 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
     private CustomDialog stopDialog;
     /** 输入密码弹框 */
     private FundBuyDialog stopPasswordDialog;
+    /** 恢复弹框 */
+    private CustomDialog recoveryDialog;
+    /** 输入密码弹框 */
+    private FundBuyDialog recoveryPasswordDialog;
+    /** 密码错误弹框 */
+    private CustomDialog customDialog;
     /** 基金代码 */
     private String fundCode;
     /** 基金名称 */
@@ -108,18 +113,27 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
         getP().investDetailData(token, userId, protocol_id);
 
         if (Constant.INVEST_PLAN_STOP.equals(investStatus)) {
-            //如果是暂停状态，显示 暂停，下次扣款时间：--，请保持账户资金充足 暂停按钮消失
+            //如果是暂停状态，显示 暂停
             tvInvestStatus.setVisibility(View.VISIBLE);
+            //下次扣款时间：--，
             tvDayWeek.setVisibility(View.GONE);
             tvNextTime.setVisibility(View.VISIBLE);
+            //请保持账户资金充足
             tvNextTimeHint.setText("请保持账户资金充足");
+            //暂停按钮消失
             btnStop.setVisibility(View.GONE);
+            //修改按钮消失
+            btnUpdate.setVisibility(View.GONE);
+            //恢复按钮显示
+            btnRecovery.setVisibility(View.VISIBLE);
         } else {
             tvInvestStatus.setVisibility(View.GONE);
             tvDayWeek.setVisibility(View.VISIBLE);
             tvNextTime.setVisibility(View.GONE);
             tvNextTimeHint.setText("将进行新一期定投扣款，请保持账户资金充足");
             btnStop.setVisibility(View.VISIBLE);
+            btnUpdate.setVisibility(View.VISIBLE);
+            btnRecovery.setVisibility(View.GONE);
         }
 
     }
@@ -150,7 +164,7 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     endDialog.dismiss();
-                                    //TODO 弹出框
+                                    //弹出框
                                     if (endPasswordDialog == null) {
                                         endPasswordDialog = new FundBuyDialog
                                                 .Builder(context)
@@ -158,16 +172,9 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
                                                     @Override
                                                     public void onFinish(String str) {
                                                         endPasswordDialog.dismiss();
-                                                        //TODO 请求终止接口
+                                                        //请求终止接口
                                                         httpLoadingDialog.visible();
                                                         getP().changeState(token, userId, protocol_id, Constant.INVEST_STATE_END, str);
-//                                                        if (str.equals("123456")) {
-//                                                            showToast("密码正确");
-//                                                            setResult(Constant.INVEST_DETAIL_BACK);
-//                                                            finish();
-//                                                        } else {
-//                                                            showToast("密码错误");
-//                                                        }
 
                                                     }
                                                 }).create();
@@ -196,7 +203,7 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
                                 @Override
                                 public void onClick(DialogInterface dialogInterface, int i) {
                                     stopDialog.dismiss();
-                                    //TODO 弹出框
+                                    //弹出框
                                     if (stopPasswordDialog == null) {
                                         stopPasswordDialog = new FundBuyDialog
                                                 .Builder(context)
@@ -204,16 +211,9 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
                                                     @Override
                                                     public void onFinish(String str) {
                                                         stopPasswordDialog.dismiss();
-                                                        //TODO 请求暂停接口
+                                                        //请求暂停接口
                                                         httpLoadingDialog.visible();
                                                         getP().changeState(token, userId, protocol_id, Constant.INVEST_STATE_STOP, str);
-//                                                        if (str.equals("123456")) {
-//                                                            showToast("密码正确");
-//                                                            setResult(Constant.INVEST_DETAIL_BACK);
-//                                                            finish();
-//                                                        } else {
-//                                                            showToast("密码错误");
-//                                                        }
 
                                                     }
                                                 }).create();
@@ -224,6 +224,45 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
                             }).create();
                 }
                 stopDialog.show();
+            }
+        });
+        //恢复
+        btnRecovery.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (recoveryDialog == null) {
+                    recoveryDialog = new CustomDialog.Builder(context)
+                            .setMessage("恢复后将执行定期扣款，请确保支付银行卡资金充足")
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    recoveryDialog.dismiss();
+                                }
+                            }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    recoveryDialog.dismiss();
+                                    // 弹出框
+                                    if (recoveryPasswordDialog == null) {
+                                        recoveryPasswordDialog = new FundBuyDialog
+                                                .Builder(context)
+                                                .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
+                                                    @Override
+                                                    public void onFinish(String str) {
+                                                        recoveryPasswordDialog.dismiss();
+                                                        // 请求恢复接口
+                                                        httpLoadingDialog.visible();
+                                                        getP().changeState(token, userId, protocol_id, Constant.INVEST_STATE_ING, str);
+
+                                                    }
+                                                }).create();
+                                    }
+                                    recoveryPasswordDialog.show();
+
+                                }
+                            }).create();
+                }
+                recoveryDialog.show();
             }
         });
         //修改定投
@@ -254,8 +293,10 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
                     case MyFundRecyleAdapter.ITEM_CLICK:
 //                        showToast(model.getDay());
                         Bundle bundle = new Bundle();
+                        //交易流水号
+                        bundle.putString(Constant.INVEST_PROTOCOL_ID, model.getAllot_no());
                         bundle.putString(Constant.INVEST_RECORD_STATUS, model.getStatus());
-                        startActivity(TransactionDetailActivity.class, bundle);
+                        startActivity(ResultDetailOneActivity.class, bundle);
                         break;
                 }
             }
@@ -318,6 +359,54 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
 
     }
 
+    /**
+     * 修改状态成功
+     */
+    public void requestChangeStateSuccess() {
+        httpLoadingDialog.dismiss();
+        setResult(Constant.INVEST_DETAIL_BACK);
+        finish();
+
+    }
+
+    /**
+     * 修改状态失败
+     */
+    public void requestChangeStateFail() {
+        httpLoadingDialog.dismiss();
+    }
+
+    /**
+     * 立即购买 密码错误
+     */
+    public void passwordError(final String investState) {
+        httpLoadingDialog.dismiss();
+        if (customDialog == null) {
+            customDialog = new CustomDialog.Builder(context)
+                    .setMessage("交易密码错误，请重试")
+                    .setNegativeButton("忘记密码", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            customDialog.dismiss();
+                            startActivity(FindPwdTradeFirstActivity.class);
+                        }
+                    }).setPositiveButton("再试一次", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            customDialog.dismiss();
+                            if (Constant.INVEST_STATE_END.equals(investState)) {
+                                endPasswordDialog.show();
+                            } else if (Constant.INVEST_STATE_STOP.equals(investState)) {
+                                stopPasswordDialog.show();
+                            } else if (Constant.INVEST_STATE_ING.equals(investState)) {
+                                recoveryPasswordDialog.show();
+                            }
+                        }
+                    }).create();
+        }
+        customDialog.show();
+    }
+
     @Override
     protected void onDestroy() {
         if (endDialog != null) {
@@ -336,23 +425,20 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
             stopPasswordDialog.dismiss();
             stopPasswordDialog = null;
         }
+        if (recoveryDialog != null) {
+            recoveryDialog.dismiss();
+            recoveryDialog = null;
+        }
+        if (recoveryPasswordDialog != null) {
+            recoveryPasswordDialog.dismiss();
+            recoveryPasswordDialog = null;
+        }
+
+        if (customDialog != null) {
+            customDialog.dismiss();
+            customDialog = null;
+        }
         super.onDestroy();
     }
 
-    /**
-     * 修改状态成功
-     */
-    public void requestChangeStateSuccess() {
-        httpLoadingDialog.dismiss();
-        setResult(Constant.INVEST_DETAIL_BACK);
-        finish();
-
-    }
-
-    /**
-     * 修改状态失败
-     */
-    public void requestChangeStateFail() {
-        httpLoadingDialog.dismiss();
-    }
 }

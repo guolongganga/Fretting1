@@ -134,6 +134,9 @@ public class Constant {
     //页面需要传递的对象
     public static final String ACTIVITY_OBJECT = BASE_CONSTANT + "activity_object";
 
+    //页面标题
+    public static final String ACTIVITY_TITLE = BASE_CONSTANT + "activity_title";
+
 
     /********************************************* 固定值 ********************************************/
 

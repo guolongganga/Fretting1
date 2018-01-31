@@ -127,7 +127,7 @@ public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
      * @param investState
      * @param password
      */
-    public void changeState(String token, String userId, String protocol_id, String investState, String password) {
+    public void changeState(String token, String userId, String protocol_id, final String investState, String password) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -152,6 +152,9 @@ public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
                     public void onNext(BaseResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestChangeStateSuccess();
+                            //TODO 密码错误的状态码
+                        } else if (resp != null && resp.getStatus() == 526) {
+                            getV().passwordError(investState);
                         } else {
                             getV().requestChangeStateFail();
                             getV().showToast(resp.getMessage());
