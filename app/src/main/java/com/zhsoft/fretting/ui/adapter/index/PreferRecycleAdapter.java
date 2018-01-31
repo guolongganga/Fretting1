@@ -47,6 +47,12 @@ public class PreferRecycleAdapter extends SimpleRecAdapter<ProductModel, PreferR
         holder.preferredRate.setText(BigDecimalUtil.bigdecimalToString(data.get(position).getFund_rose()) + "%");
         holder.tvRateDesc.setText(data.get(position).getRiseTermDesc());
 
+        if (data.size() - 1 == position) {
+            holder.viewLine.setVisibility(View.GONE);
+        } else {
+            holder.viewLine.setVisibility(View.VISIBLE);
+        }
+
         holder.btnInvest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

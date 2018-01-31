@@ -58,7 +58,11 @@ public class ProductModel implements Parcelable {
     }
 
     public String getRiseTermDesc() {
-        return riseTermDesc;
+        //TODO 未显示
+        StringBuffer stringBuffer = new StringBuffer(riseTermDesc);
+        stringBuffer.append("收益率");
+        return stringBuffer.toString();
+//        return riseTermDesc + "收益率";
     }
 
     public void setRiseTermDesc(String riseTermDesc) {

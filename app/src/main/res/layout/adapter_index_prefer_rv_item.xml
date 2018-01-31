@@ -49,8 +49,9 @@
         android:id="@+id/view_line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_1"
+        android:layout_marginLeft="@dimen/dimen_15"
+        android:layout_marginBottom="@dimen/dimen_20"
         android:layout_below="@id/tv_location_one"
-        android:layout_marginTop="@dimen/dimen_20"
         android:background="@color/color_e7e7e7"/>
 
 </LinearLayout>

@@ -423,10 +423,8 @@ public class IndexFragment extends XFragment<IndexPresent> {
                 //图片地址
                 List<String> bannerUrlList = new ArrayList<>();
                 for (BannerModel bannerModel : bannerList) {
-                    XLog.e("qqq", bannerModel.getImgurl());
                     bannerUrlList.add(bannerModel.getImgurl());
                 }
-                XLog.e("qqq", bannerUrlList.size() + "");
                 banner.setImagesUrl(bannerUrlList);
 
                 banner.setOnItemClickListener(new FlyBanner.OnItemClickListener() {
@@ -450,7 +448,7 @@ public class IndexFragment extends XFragment<IndexPresent> {
             }
 
             //微银专题
-            if (data.getThemeList() != null && data.getThemeList().size() > 0) {
+            if (data.getThemeList() != null && data.getThemeList().size() > 2) {
                 themeList = data.getThemeList();
                 ILFactory.getLoader().loadNet(ivThemeOne, themeList.get(0).getImgurl(), null);
                 ILFactory.getLoader().loadNet(ivThemeTwo, themeList.get(1).getImgurl(), null);
