@@ -94,6 +94,8 @@ public class Constant {
 
     //跳转到主页面，我的tab
     public static final String MAIN_MY = "main_my";
+    //跳转到主页面，我的tab
+    public static final String MAIN_INDEX = "main_index";
 
     //可以购买跳转购买页面携带参数
     public static final String BUY_FUND_OBJECT = "buy_fund_object";

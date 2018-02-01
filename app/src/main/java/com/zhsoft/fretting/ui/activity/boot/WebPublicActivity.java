@@ -25,11 +25,15 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.ChangeTabEvent;
+import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.ui.activity.user.LoginActivity;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.ui.widget.TitleView;
 import com.zhsoft.fretting.webjs.JSInterfaceClick;
 import com.zhsoft.fretting.webjs.JSInterfaceUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.log.XLog;
@@ -38,6 +42,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
 /**
  * 通用WebView
  * Created by sunny on 2017/4/25
+ * 不需要token userid
  */
 
 public class WebPublicActivity extends XActivity {
@@ -192,19 +197,6 @@ public class WebPublicActivity extends XActivity {
     }
 
     /**
-     * 事件
-     */
-    @Override
-    public void initEvents() {
-        headBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onBackPressed();
-            }
-        });
-    }
-
-    /**
      * JS
      *
      * @param jsInterfaceUtils
@@ -215,37 +207,33 @@ public class WebPublicActivity extends XActivity {
         // 设置js未登录触发事件
         jsInterfaceUtils.setJSInterfaceClick(new JSInterfaceClick() {
 
-            @Override
-            public void toLogin() {
-                baseToLogin();
+            public void toAppIndex() {
+                baseToAppIndex();
             }
         });
     }
 
-    private void baseToLogin() {
-        showToast("调用了Android代码");
-        if (loginDialog == null) {
-            loginDialog = new CustomDialog
-                    .Builder(context)
-                    .setMessage(R.string.user_common_no_login)
-                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            loginDialog.dismiss();
-                            //跳转回登录界面
-                            Bundle bundle = new Bundle();
-                            bundle.putString(Constant.SKIP_SIGN, Constant.WEB_ACTIVITY);
-                            startActivity(LoginActivity.class, bundle);
-                        }
-                    })
-                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            loginDialog.dismiss();
-                        }
-                    }).create();
-        }
-        loginDialog.show();
+    /**
+     * 返回首页
+     */
+    private void baseToAppIndex() {
+        //TODO 返回首页
+        EventBus.getDefault().post(new ChangeTabEvent(Constant.MAIN_INDEX));
+        startActivity(MainActivity.class);
+        finish();
+    }
+
+    /**
+     * 事件
+     */
+    @Override
+    public void initEvents() {
+        headBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onBackPressed();
+            }
+        });
     }
 
     /**

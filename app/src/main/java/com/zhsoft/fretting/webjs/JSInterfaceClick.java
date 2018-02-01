@@ -48,4 +48,10 @@ public class JSInterfaceClick implements JSInterfaceInter {
 
     }
 
+    //返回首页
+    @Override
+    public void toAppIndex() {
+
+    }
+
 }

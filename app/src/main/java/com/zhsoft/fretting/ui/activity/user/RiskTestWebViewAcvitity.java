@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.ui.activity.user;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.net.Uri;
 import android.net.http.SslError;
@@ -9,6 +10,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.DownloadListener;
+import android.webkit.JavascriptInterface;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
@@ -24,12 +26,17 @@ import com.google.gson.JsonObject;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.ChangeTabEvent;
 import com.zhsoft.fretting.params.CommonReqData;
+import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.ui.widget.TitleView;
+import com.zhsoft.fretting.webjs.JSInterfaceClick;
+import com.zhsoft.fretting.webjs.JSInterfaceUtils;
 
 import org.apache.http.entity.StringEntity;
 import org.apache.http.util.EncodingUtils;
 import org.apache.http.util.EntityUtils;
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +48,7 @@ import cn.droidlover.xdroidmvp.utils.EncryptDecrypt;
 
 /**
  * 作者：sunnyzeng on 2018/1/2 16:46
- * 描述：
+ * 描述：风险测评 需要传token 和 userid
  */
 
 public class RiskTestWebViewAcvitity extends XActivity {
@@ -127,6 +134,15 @@ public class RiskTestWebViewAcvitity extends XActivity {
 
         mWeb.getSettings().setLoadsImagesAutomatically(true);  //支持自动加载图片
         mWeb.getSettings().setLoadWithOverviewMode(true); // 缩放至屏幕的大小
+
+        // 通过addJavascriptInterface()将Java对象映射到JS对象
+        //参数1：Javascript对象名
+        //参数2：Java对象名
+        // webview设置JS
+        JSInterfaceUtils jsInterfaceUtils = new JSInterfaceUtils(this, mWeb);
+        //jsInterfaceUtils类对象映射到js的connObj对象
+        mWeb.addJavascriptInterface(jsInterfaceUtils, JSInterfaceUtils.JS_ID);
+        setJSClick(jsInterfaceUtils);
 
         mWeb.setDownloadListener(new DownloadListener() {
             @Override
@@ -228,6 +244,34 @@ public class RiskTestWebViewAcvitity extends XActivity {
 
     }
 
+
+    /**
+     * JS
+     *
+     * @param jsInterfaceUtils
+     */
+    @SuppressLint("SetJavaScriptEnabled")
+    @JavascriptInterface
+    protected void setJSClick(JSInterfaceUtils jsInterfaceUtils) {
+        // 设置js未登录触发事件
+        jsInterfaceUtils.setJSInterfaceClick(new JSInterfaceClick() {
+
+            public void toAppIndex() {
+                baseToAppIndex();
+            }
+        });
+    }
+
+    /**
+     * 返回首页
+     */
+    private void baseToAppIndex() {
+        //TODO 返回首页
+        EventBus.getDefault().post(new ChangeTabEvent(Constant.MAIN_INDEX));
+        startActivity(MainActivity.class);
+        finish();
+    }
+
     /**
      * 点击事件
      */
@@ -247,11 +291,11 @@ public class RiskTestWebViewAcvitity extends XActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-//        if (null != mWeb && mWeb.canGoBack()) {
-//            mWeb.goBack();// 返回前一个页面
-//        } else {
-//            super.onBackPressed();
-//        }
+        if (null != mWeb && mWeb.canGoBack()) {
+            mWeb.goBack();// 返回前一个页面
+        } else {
+            super.onBackPressed();
+        }
     }
 
     /**

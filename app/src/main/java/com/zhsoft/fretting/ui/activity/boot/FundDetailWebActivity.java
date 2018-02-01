@@ -28,6 +28,7 @@ import android.widget.Toast;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.ChangeTabEvent;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
@@ -35,6 +36,7 @@ import com.zhsoft.fretting.model.user.InvestPlanResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.present.fund.FundDetailPresent;
+import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.ui.activity.fund.BuyActivity;
 import com.zhsoft.fretting.ui.activity.fund.InvestActivity;
 import com.zhsoft.fretting.ui.activity.fund.SellActivity;
@@ -50,6 +52,8 @@ import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.utils.RuntimeHelper;
 import com.zhsoft.fretting.webjs.JSInterfaceClick;
 import com.zhsoft.fretting.webjs.JSInterfaceUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
@@ -251,11 +255,11 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
 
         link = link + "?fund_code=" + fundCode + "&token=" + token + "&userId=" + userId;
         XLog.e(link);
-        mWeb.loadUrl(link);
+//        mWeb.loadUrl(link);
 
         // 加载JS代码
         // 格式规定为:file:///android_asset/文件名.html
-//        mWeb.loadUrl("file:///android_asset/javascript.html");
+        mWeb.loadUrl("file:///android_asset/javascript.html");
 //        mWeb.loadUrl("https://20.1.149.118:8443/htmlNoPermission/fundDetail?fund_code=050001");
 //        mWeb.loadUrl("http://pdf.dfcfw.com/pdf/H2_AN201801091075420691_1.pdf");
 
@@ -324,6 +328,10 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             @Override
             public void toSellOut() {
                 baseToSellOut();
+            }
+
+            public void toAppIndex() {
+                baseToAppIndex();
             }
         });
     }
@@ -396,12 +404,6 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
     private void baseToInvestPlan() {
 //        httpLoadingDialog.visible();
         getP().buyOnFundData(token, userId, fundCode);
-
-//        Bundle bundle = new Bundle();
-//        bundle.putString(Constant.ACTIVITY_NAME, Constant.INVEST_PLAN);
-//        bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
-//        bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
-//        startActivity(InvestPlanActivity.class, bundle);
     }
 
     /**
@@ -431,6 +433,16 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
         bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
         startActivity(SellActivity.class, bundle);
+    }
+
+    /**
+     * 返回首页
+     */
+    private void baseToAppIndex() {
+        //TODO 返回首页
+        EventBus.getDefault().post(new ChangeTabEvent(Constant.MAIN_INDEX));
+        startActivity(MainActivity.class);
+        finish();
     }
 
 

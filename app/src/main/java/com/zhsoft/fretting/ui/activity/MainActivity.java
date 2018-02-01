@@ -70,7 +70,10 @@ public class MainActivity extends XActivity {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            if (msg.what == 2) {
+            if (msg.what == 0) {
+                allowStateLoss = true;
+                show(tvUser, 0);
+            } else if (msg.what == 2) {
                 allowStateLoss = true;
                 show(tvUser, 2);
             }
@@ -228,7 +231,11 @@ public class MainActivity extends XActivity {
     @Subscribe(threadMode = ThreadMode.POSTING)
     public void onChangeTabEvent(ChangeTabEvent event) {
         String msg = event.getMsg();
-        if (Constant.MAIN_MY.equals(msg)) {
+
+        if (Constant.MAIN_INDEX.equals(msg)) {
+            handler.sendEmptyMessage(0);
+            return;
+        } else if (Constant.MAIN_MY.equals(msg)) {
             handler.sendEmptyMessage(2);
             return;
         }

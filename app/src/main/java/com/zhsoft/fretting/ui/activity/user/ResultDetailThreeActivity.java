@@ -73,6 +73,8 @@ public class ResultDetailThreeActivity extends XActivity<ResultDetailOnePresent>
     @BindView(R.id.tv_sure_date) TextView tvSureDate;
     /** 确认信息 */
     @BindView(R.id.ll_sure_info) LinearLayout llSureInfo;
+    /** 申请编号 */
+    @BindView(R.id.tv_allot_no) TextView tvAllotNo;
     /** 交易记录的状态 */
     private String recordStatus;
     /** 终止弹框 */
@@ -195,6 +197,7 @@ public class ResultDetailThreeActivity extends XActivity<ResultDetailOnePresent>
         tvFundName.setText(resp.getRecord().getFund_name());
         tvFundAmount.setText(BigDecimalUtil.bigdecimalToString(resp.getRecord().getFund_amount()) + "元");
         tvBankName.setText(resp.getRecord().getBankName() + " (" + resp.getRecord().getBankAcco() + ") " + "支付成功");
+        tvAllotNo.setText(resp.getRecord().getAllot_no());
 
         //进度
         ArrayList<StepResp> stepList = resp.getStepList();

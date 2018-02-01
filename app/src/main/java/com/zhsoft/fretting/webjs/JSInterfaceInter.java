@@ -27,4 +27,7 @@ public interface JSInterfaceInter {
     //卖出
     void toSellOut();
 
+    //返回首页
+    void toAppIndex();
+
 }

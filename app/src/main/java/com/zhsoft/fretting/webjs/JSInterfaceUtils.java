@@ -78,6 +78,14 @@ public class JSInterfaceUtils {
         }
     }
 
+    @JavascriptInterface
+    public void toAppIndex() {
+
+        if (jSInterfaceClick != null) {
+            jSInterfaceClick.toAppIndex();
+        }
+    }
+
     private JSInterfaceClick jSInterfaceClick;
 
     public void setJSInterfaceClick(JSInterfaceClick jSInterfaceClick) {
