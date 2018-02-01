@@ -78,9 +78,9 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
     /** 进度条 */
     @BindView(R.id.pb) ProgressBar pb;
     /** 用户登录标识 */
-    private String token;
+    private String token = "";
     /** 用户编号 */
-    private String userId;
+    private String userId = "";
     /** 基金代码 */
     private String fundCode;
     /** 基金名称 */
@@ -139,6 +139,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
         //基金名称
         fundName = bundle.getString(Constant.FUND_DETAIL_NAME);
+
         if (RuntimeHelper.getInstance().isLogin()) {
             //用户登录标识
             token = App.getSharedPref().getString(Constant.TOKEN, "");
@@ -255,12 +256,12 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
 
         link = link + "?fund_code=" + fundCode + "&token=" + token + "&userId=" + userId;
         XLog.e(link);
-//        mWeb.loadUrl(link);
+        mWeb.loadUrl(link);
 
         // 加载JS代码
         // 格式规定为:file:///android_asset/文件名.html
-        mWeb.loadUrl("file:///android_asset/javascript.html");
-//        mWeb.loadUrl("https://20.1.149.118:8443/htmlNoPermission/fundDetail?fund_code=050001");
+//        mWeb.loadUrl("file:///android_asset/javascript.html");
+//        mWeb.loadUrl("https://20.1.149.117:8443/htmlNoPermission/fundDeta");
 //        mWeb.loadUrl("http://pdf.dfcfw.com/pdf/H2_AN201801091075420691_1.pdf");
 
     }
