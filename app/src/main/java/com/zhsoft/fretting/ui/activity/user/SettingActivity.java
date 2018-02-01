@@ -6,22 +6,18 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.event.OpenAccountEvent;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
-import com.zhsoft.fretting.net.HttpUtil;
 import com.zhsoft.fretting.present.user.SettingPresent;
 import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
+import com.zhsoft.fretting.ui.activity.boot.WebRiskActivity;
 import com.zhsoft.fretting.utils.RuntimeHelper;
-
-import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
@@ -111,12 +107,9 @@ public class SettingActivity extends XActivity<SettingPresent> {
         riskTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                showToast("风险等级测评");
-//                getP().goRiskTest(token, userId);
                 Bundle bundle = new Bundle();
-                bundle.putInt(Constant.WEB_TITLE, R.string.user_risk_test);
                 bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.risk_question);
-                startActivity(RiskTestWebViewAcvitity.class, bundle);
+                startActivity(WebRiskActivity.class, bundle);
 
             }
         });
@@ -140,7 +133,6 @@ public class SettingActivity extends XActivity<SettingPresent> {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-//                bundle.putInt(Constant.WEB_TITLE, R.string.user_about_us);
                 bundle.putString(Constant.WEB_LINK, "https://www.baidu.com/?tn=96928074_hao_pg");
                 startActivity(WebPublicActivity.class, bundle);
             }
@@ -180,8 +172,7 @@ public class SettingActivity extends XActivity<SettingPresent> {
 
     public void requestRiskTestSuccess(String data) {
         Bundle bundle = new Bundle();
-        bundle.putInt(Constant.WEB_TITLE, R.string.user_risk_test);
         bundle.putString(Constant.WEB_LINK, data);
-        startActivity(RiskTestWebViewAcvitity.class, bundle);
+        startActivity(WebRiskActivity.class, bundle);
     }
 }

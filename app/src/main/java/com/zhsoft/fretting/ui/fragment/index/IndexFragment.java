@@ -16,7 +16,6 @@ import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.index.BannerModel;
 import com.zhsoft.fretting.model.index.IndexResp;
-import com.zhsoft.fretting.model.index.PopularityResp;
 import com.zhsoft.fretting.model.index.ProductModel;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
@@ -28,7 +27,6 @@ import com.zhsoft.fretting.ui.activity.index.PopularityActivity;
 import com.zhsoft.fretting.ui.activity.index.TimingActivity;
 import com.zhsoft.fretting.ui.adapter.index.PopularityRecycleAdapter;
 import com.zhsoft.fretting.ui.adapter.index.PreferRecycleAdapter;
-import com.zhsoft.fretting.ui.adapter.user.SwitchAccountRecycleAdapter;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
 
 import java.util.ArrayList;
@@ -39,7 +37,6 @@ import cn.droidlover.xdroidmvp.banner.FlyBanner;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.imageloader.ILFactory;
-import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
 import cn.droidlover.xrecyclerview.RecyclerItemCallback;
 import cn.droidlover.xrecyclerview.XRecyclerView;
@@ -292,7 +289,6 @@ public class IndexFragment extends XFragment<IndexPresent> {
             public void onClick(View view) {
                 if (themeList != null) {
                     Bundle bundle = new Bundle();
-//                    bundle.putInt(Constant.WEB_TITLE, R.string.index_banner);
                     bundle.putString(Constant.WEB_LINK, themeList.get(0).getAppurl());
                     startActivity(WebPublicActivity.class, bundle);
                 }
@@ -304,7 +300,6 @@ public class IndexFragment extends XFragment<IndexPresent> {
             public void onClick(View view) {
                 if (themeList != null) {
                     Bundle bundle = new Bundle();
-//                    bundle.putInt(Constant.WEB_TITLE, R.string.index_banner);
                     bundle.putString(Constant.WEB_LINK, themeList.get(1).getAppurl());
                     startActivity(WebPublicActivity.class, bundle);
                 }
@@ -316,7 +311,6 @@ public class IndexFragment extends XFragment<IndexPresent> {
             public void onClick(View view) {
                 if (themeList != null) {
                     Bundle bundle = new Bundle();
-//                    bundle.putInt(Constant.WEB_TITLE, R.string.index_banner);
                     bundle.putString(Constant.WEB_LINK, themeList.get(1).getAppurl());
                     startActivity(WebPublicActivity.class, bundle);
                 }
@@ -432,7 +426,6 @@ public class IndexFragment extends XFragment<IndexPresent> {
                     public void onItemClick(int position) {
                         showToast("点击了第" + position + "张图片");
                         Bundle bundle = new Bundle();
-//                        bundle.putInt(Constant.WEB_TITLE, R.string.index_banner);
                         bundle.putString(Constant.WEB_LINK, bannerList.get(position).getAppurl());
                         startActivity(WebPublicActivity.class, bundle);
                     }

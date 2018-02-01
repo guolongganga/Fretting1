@@ -1,6 +1,5 @@
 package com.zhsoft.fretting.present.fund;
 
-import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;

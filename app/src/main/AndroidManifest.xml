@@ -117,7 +117,7 @@
         <!--通用WebView-->
         <activity android:name=".ui.activity.boot.WebPublicActivity"></activity>
         <!--风险测评webview-->
-        <activity android:name=".ui.activity.user.RiskTestWebViewAcvitity"></activity>
+        <activity android:name=".ui.activity.boot.WebRiskActivity"></activity>
 
     </application>
 

@@ -6,13 +6,13 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.ChangeTabEvent;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.ui.activity.MainActivity;
-import com.zhsoft.fretting.R;
-import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
+import com.zhsoft.fretting.ui.activity.boot.WebRiskActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -86,7 +86,7 @@ public class RegisterSuccessActivity extends XActivity {
                 Bundle bundle = new Bundle();
                 bundle.putInt(Constant.WEB_TITLE, R.string.user_risk_test);
                 bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.risk_question);
-                startActivity(RiskTestWebViewAcvitity.class, bundle);
+                startActivity(WebRiskActivity.class, bundle);
             }
         });
     }
