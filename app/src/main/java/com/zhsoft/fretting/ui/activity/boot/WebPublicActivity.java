@@ -1,5 +1,7 @@
 package com.zhsoft.fretting.ui.activity.boot;
 
+import android.os.Bundle;
+
 import com.zhsoft.fretting.ui.activity.base.BaseWebActivity;
 
 /**
@@ -9,7 +11,7 @@ import com.zhsoft.fretting.ui.activity.base.BaseWebActivity;
 
 public class WebPublicActivity extends BaseWebActivity {
     @Override
-    protected void myLoadUrl() {
+    protected void myLoadUrl(Bundle bundle) {
         mWeb.loadUrl(link);
     }
 

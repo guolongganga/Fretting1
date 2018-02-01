@@ -138,8 +138,6 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             //用户编号
             userId = App.getSharedPref().getString(Constant.USERID, "");
         }
-        //设置标题
-//        headTitle.setText(title);
         pb.setMax(100);
 
         WebSettings webSettings = mWeb.getSettings();
@@ -163,6 +161,9 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                String title = view.getTitle();
+                XLog.d("WebView", "TITLE=" + title);
+                headTitle.setText(title);
                 httpLoadingDialog.dismiss();
                 /**
                  *  如果紧跟着
@@ -226,6 +227,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         mWeb.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
+                pb.setVisibility(View.VISIBLE);
                 pb.setProgress(newProgress);
                 if (newProgress == 100) {
                     pb.setVisibility(View.GONE);
@@ -238,7 +240,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                XLog.d("WebPublicActivity", "TITLE=" + title);
+                XLog.d("WebView", "TITLE=" + title);
                 headTitle.setText(title);
             }
         });

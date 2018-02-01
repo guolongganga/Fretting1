@@ -1,5 +1,7 @@
 package com.zhsoft.fretting.ui.activity.boot;
 
+import android.os.Bundle;
+
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.ui.activity.base.BaseWebActivity;
@@ -16,7 +18,7 @@ public class WebRiskActivity extends BaseWebActivity {
     private String userId = "";
 
     @Override
-    protected void myLoadUrl() {
+    protected void myLoadUrl(Bundle bundle) {
         token = App.getSharedPref().getString(Constant.TOKEN, "");
         userId = App.getSharedPref().getString(Constant.USERID, "");
         //添加header

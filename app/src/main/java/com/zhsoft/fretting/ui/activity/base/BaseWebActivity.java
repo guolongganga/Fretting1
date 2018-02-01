@@ -38,7 +38,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  * 描述：基础webview设置
  */
 
-public abstract class BaseWebActivity extends XActivity {
+public abstract class BaseWebActivity<P> extends XActivity {
     /** 返回按钮 */
     @BindView(R.id.head_back)
     public ImageButton headBack;
@@ -61,19 +61,20 @@ public abstract class BaseWebActivity extends XActivity {
         return R.layout.activity_web_public;
     }
 
-    protected abstract void myLoadUrl();
+    protected abstract void myLoadUrl(Bundle bundle);
 
     @Override
     public void initData(Bundle bundle) {
 
         link = bundle.getString(Constant.WEB_LINK);
         httpLoadingDialog = new HttpLoadingDialog(context);
+        httpLoadingDialog.visible();
         webSetting();
         //添加header
         String ua = mWeb.getSettings().getUserAgentString();
         mWeb.getSettings().setUserAgentString(ua.replace("appType", "Android"));
 
-        myLoadUrl();
+        myLoadUrl(bundle);
         XLog.e("link=" + link);
 
         // 加载JS代码
@@ -107,6 +108,9 @@ public abstract class BaseWebActivity extends XActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
+                String title = view.getTitle();
+                XLog.d("WebView", "TITLE=" + title);
+                headTitle.setText(title);
                 httpLoadingDialog.dismiss();
                 /**
                  *  如果紧跟着
@@ -170,6 +174,7 @@ public abstract class BaseWebActivity extends XActivity {
         mWeb.setWebChromeClient(new WebChromeClient() {
             @Override
             public void onProgressChanged(WebView view, int newProgress) {
+                pb.setVisibility(View.VISIBLE);
                 pb.setProgress(newProgress);
                 if (newProgress == 100) {
                     pb.setVisibility(View.GONE);
@@ -181,7 +186,7 @@ public abstract class BaseWebActivity extends XActivity {
             @Override
             public void onReceivedTitle(WebView view, String title) {
                 super.onReceivedTitle(view, title);
-                XLog.d("WebPublicActivity", "TITLE=" + title);
+                XLog.d("WebView", "TITLE=" + title);
                 headTitle.setText(title);
             }
         });
