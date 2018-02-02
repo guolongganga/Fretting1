@@ -2,15 +2,16 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:fitsSystemWindows="true"
+    android:background="@color/colorPrimary"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_66"
+        android:layout_height="@dimen/dimen_44"
         android:background="@color/colorPrimary"
-        android:orientation="horizontal"
-        android:paddingTop="@dimen/dimen_22">
+        android:orientation="horizontal">
 
         <LinearLayout
             android:layout_width="0dp"
@@ -34,9 +35,9 @@
                 android:id="@+id/et_search_key"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
                 android:layout_marginLeft="@dimen/dimen_5"
                 android:layout_marginRight="@dimen/dimen_10"
+                android:layout_weight="1"
                 android:background="@null"
                 android:hint="@string/user_common_query_hint"
                 android:text=""
@@ -72,44 +73,56 @@
         android:layout_width="match_parent"
         android:layout_height="1dp"/>
 
-    <cn.droidlover.xrecyclerview.XRecyclerView
-        android:id="@+id/xrv_search_list"
+    <!--<cn.droidlover.xrecyclerview.XRecyclerView-->
+    <!--android:id="@+id/xrv_search_list"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:visibility="gone"/>-->
+    <cn.droidlover.xrecyclerview.XRecyclerContentLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:visibility="gone"/>
+        android:background="@color/white"
+        app:recyclerBackgroundColor="@color/white"
+        app:recyclerScrollbarNone="true"
+        app:recyclerScrollbarStyle="outsideOverlay"
+        app:x_emptyLayoutId="@layout/view_empty_search"/>
 
-    <TextView
-        android:id="@+id/tv_empty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="50dp"
-        android:text="没有找到相关内容，试试别的吧!"
-        android:visibility="gone"/>
+    <!--<TextView-->
+        <!--android:id="@+id/tv_empty"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center_horizontal"-->
+        <!--android:layout_marginTop="50dp"-->
+        <!--android:text="没有找到相关内容，试试别的吧!"-->
+        <!--android:visibility="gone"/>-->
 
     <LinearLayout
         android:id="@+id/ll_hot"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        android:background="@color/white"
         android:orientation="vertical"
         android:visibility="gone">
-        <!--近期热搜-->
-        <TextView
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/dimen_10"
-            android:layout_marginLeft="@dimen/dimen_15"
-            android:layout_marginTop="@dimen/dimen_15"
-            android:text="近期热搜"
-            android:textSize="@dimen/dimen_16"
-            android:textStyle="bold"/>
+        <!--&lt;!&ndash;近期热搜&ndash;&gt;-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="@dimen/dimen_10"-->
+            <!--android:layout_marginLeft="@dimen/dimen_15"-->
+            <!--android:layout_marginTop="@dimen/dimen_15"-->
+            <!--android:text="近期热搜"-->
+            <!--android:textSize="@dimen/dimen_16"-->
+            <!--android:textStyle="bold"-->
+            <!--android:visibility="gone"/>-->
 
-        <cn.droidlover.xrecyclerview.XRecyclerView
-            android:id="@+id/xrv_hot_list"
-            android:overScrollMode="never"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+        <!--<cn.droidlover.xrecyclerview.XRecyclerView-->
+            <!--android:id="@+id/xrv_hot_list"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:overScrollMode="never"/>-->
     </LinearLayout>
 
 </LinearLayout>

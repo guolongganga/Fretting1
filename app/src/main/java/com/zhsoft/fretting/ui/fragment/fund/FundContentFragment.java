@@ -51,7 +51,7 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
     private final int pageSize = 10;
     /** 基金类型 */
     private String tabType;
-    StateView errorView;
+    private StateView errorView;
 
     @Override
     public int getLayoutId() {

@@ -6,8 +6,26 @@ package com.zhsoft.fretting.params;
  */
 
 public class SearchParams extends CommonReqData<SearchParams> {
+    private int pageNum;
+    private int pageSize;
     private String fund_name;
     private String fund_code;
+
+    public int getPageNum() {
+        return pageNum;
+    }
+
+    public void setPageNum(int pageNum) {
+        this.pageNum = pageNum;
+    }
+
+    public int getPageSize() {
+        return pageSize;
+    }
+
+    public void setPageSize(int pageSize) {
+        this.pageSize = pageSize;
+    }
 
     public String getFund_name() {
         return fund_name;

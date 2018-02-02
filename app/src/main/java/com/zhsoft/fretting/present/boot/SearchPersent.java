@@ -38,7 +38,7 @@ public class SearchPersent extends XPresent<SearchActivity> {
 
     }
 
-    public void searchData(String keyword) {
+    public void searchData(final int pageno, int pageSize, String keyword) {
 
 //        ArrayList<NewestFundResp> list = new ArrayList<>();
 //        ArrayList<NewestFundResp> result = new ArrayList<>();
@@ -66,6 +66,8 @@ public class SearchPersent extends XPresent<SearchActivity> {
 
         CommonReqData reqData = new CommonReqData();
         SearchParams params = new SearchParams();
+        params.setPageNum(pageno);
+        params.setPageSize(pageSize);
         params.setFund_code(keyword);
         params.setFund_name(keyword);
         reqData.setData(params);
@@ -78,16 +80,15 @@ public class SearchPersent extends XPresent<SearchActivity> {
                 .subscribe(new ApiSubscriber<NewestFundResp>() {
                     @Override
                     protected void onFail(NetError error) {
-                        getV().requestSearchDataFail();
+                        getV().requestSearchDataFail(error);
                         getV().showToast("请求失败");
                     }
 
                     @Override
                     public void onNext(NewestFundResp newestFundResp) {
                         if (newestFundResp != null && newestFundResp.getStatus() == 200) {
-                            getV().requestSearchDataSuccess(newestFundResp.getData());
+                            getV().requestSearchDataSuccess(pageno, newestFundResp.getData());
                         } else {
-                            getV().requestSearchDataFail();
                             getV().showToast(newestFundResp.getMessage());
                             XLog.e("返回数据为空");
                         }

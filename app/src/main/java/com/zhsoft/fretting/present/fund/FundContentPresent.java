@@ -30,53 +30,6 @@ public class FundContentPresent extends XPresent<FundContentFragment> {
      * @param type
      */
     public void loadFundData(final int pageno, int pagesize, String type, String orderBy) {
-//        List<FundResp> list = new ArrayList<>();
-//        switch (type) {
-//            case "股票型":
-//                list.clear();
-//                for (int i = 0; i < 12; i++) {
-//                    FundResp fundResp = new FundResp();
-//                    fundResp.setName("基金招商安泰股票");
-//                    fundResp.setCode("2017001");
-//                    fundResp.setValue("0.3948");
-//                    fundResp.setRange("+6.36%");
-//                    list.add(fundResp);
-//                }
-//                break;
-//            case "混合型":
-//                list.clear();
-//                for (int i = 0; i < 12; i++) {
-//                    FundResp fundResp = new FundResp();
-//                    fundResp.setName("基金金鹰多元策略混合");
-//                    fundResp.setCode("2017001");
-//                    fundResp.setValue("0.3948");
-//                    fundResp.setRange("+6.36%");
-//                    list.add(fundResp);
-//                }
-//                break;
-//            case "债券型":
-//                list.clear();
-//                for (int i = 0; i < 12; i++) {
-//                    FundResp fundResp = new FundResp();
-//                    fundResp.setName("基金交银丰益收益债券");
-//                    fundResp.setCode("2017001");
-//                    fundResp.setValue("0.3948");
-//                    fundResp.setRange("+6.36%");
-//                    list.add(fundResp);
-//                }
-//                break;
-//            case "指数型":
-//                list.clear();
-//                for (int i = 0; i < 12; i++) {
-//                    FundResp fundResp = new FundResp();
-//                    fundResp.setName("基金国泰国证新能源汽车指数");
-//                    fundResp.setCode("2017001");
-//                    fundResp.setValue("0.3948");
-//                    fundResp.setRange("+6.36%");
-//                    list.add(fundResp);
-//                }
-//                break;
-//        }
         CommonReqData reqData = new CommonReqData();
         NewestFundParams params = new NewestFundParams();
         params.setPageSize(pagesize);
@@ -108,63 +61,4 @@ public class FundContentPresent extends XPresent<FundContentFragment> {
 
     }
 
-    /**
-     * 人气产品
-     *
-     * @param pageno
-     * @param pagesize
-     * @param type
-     */
-    public void loadPopularityData(int pageno, int pagesize, String type) {
-
-        List<FundResp> list = new ArrayList<>();
-        switch (type) {
-            case "股票型":
-                list.clear();
-                for (int i = 0; i < 12; i++) {
-                    FundResp fundResp = new FundResp();
-                    fundResp.setName("人气招商安泰股票");
-                    fundResp.setCode("2017001");
-                    fundResp.setValue("0.3948");
-                    fundResp.setRange("+6.36%");
-                    list.add(fundResp);
-                }
-                break;
-            case "混合型":
-                list.clear();
-                for (int i = 0; i < 12; i++) {
-                    FundResp fundResp = new FundResp();
-                    fundResp.setName("人气金鹰多元策略混合");
-                    fundResp.setCode("2017001");
-                    fundResp.setValue("0.3948");
-                    fundResp.setRange("+6.36%");
-                    list.add(fundResp);
-                }
-                break;
-            case "债券型":
-                list.clear();
-                for (int i = 0; i < 12; i++) {
-                    FundResp fundResp = new FundResp();
-                    fundResp.setName("人气交银丰益收益债券");
-                    fundResp.setCode("2017001");
-                    fundResp.setValue("0.3948");
-                    fundResp.setRange("+6.36%");
-                    list.add(fundResp);
-                }
-                break;
-            case "指数型":
-                list.clear();
-                for (int i = 0; i < 12; i++) {
-                    FundResp fundResp = new FundResp();
-                    fundResp.setName("人气国泰国证新能源汽车指数");
-                    fundResp.setCode("2017001");
-                    fundResp.setValue("0.3948");
-                    fundResp.setRange("+6.36%");
-                    list.add(fundResp);
-                }
-                break;
-        }
-
-//        getV().showData(1, list);
-    }
 }

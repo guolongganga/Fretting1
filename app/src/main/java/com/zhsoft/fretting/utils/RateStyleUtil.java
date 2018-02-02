@@ -37,6 +37,8 @@ public class RateStyleUtil {
                 textView.setTextColor(context.getResources().getColor(R.color.color_f7182d));
             }
             textView.setText(stringBuffer.toString());
+        }else{
+            textView.setText("");
         }
     }
 
@@ -61,6 +63,8 @@ public class RateStyleUtil {
                 textView.setTextColor(context.getResources().getColor(R.color.color_f7182d));
             }
             textView.setText(stringBuffer.toString());
+        }else{
+            textView.setText("");
         }
     }
 
