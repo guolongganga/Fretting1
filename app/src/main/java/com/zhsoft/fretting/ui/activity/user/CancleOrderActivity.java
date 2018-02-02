@@ -8,9 +8,15 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.CancleDataEvent;
+import com.zhsoft.fretting.event.OpenAccountEvent;
 import com.zhsoft.fretting.model.user.CancleOrderResp;
 import com.zhsoft.fretting.present.user.CancleOrderPresent;
 import com.zhsoft.fretting.ui.adapter.user.CancleOrderRecyleAdapter;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -53,10 +59,14 @@ public class CancleOrderActivity extends XActivity<CancleOrderPresent> {
         headTitle.setText("撤单");
         //获取用户缓存的userid 和 token
         httpLoadingDialog = new HttpLoadingDialog(context);
+        //注册EventBus
+        EventBus.getDefault().register(this);
+        //获取本地缓存
         userId = App.getSharedPref().getString(Constant.USERID, "");
         token = App.getSharedPref().getString(Constant.TOKEN, "");
         xrvMyInvest.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
 
+        //请求撤单列表接口
         httpLoadingDialog.visible();
         getP().cancleOrderData(token, userId);
     }
@@ -125,5 +135,26 @@ public class CancleOrderActivity extends XActivity<CancleOrderPresent> {
      */
     public void requestOrderFail() {
         httpLoadingDialog.dismiss();
+    }
+
+    /**
+     * 销毁
+     */
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroy();
+    }
+
+    /**
+     * 刷新撤单列表
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.POSTING)
+    public void refreshCancleData(CancleDataEvent event) {
+        //请求撤单列表接口
+        httpLoadingDialog.visible();
+        getP().cancleOrderData(token, userId);
     }
 }

@@ -8,10 +8,13 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.CancleDataEvent;
 import com.zhsoft.fretting.model.user.ResultDetailResp;
 import com.zhsoft.fretting.model.user.StepResp;
 import com.zhsoft.fretting.present.user.ResultDetailTwoPresent;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 
@@ -41,8 +44,8 @@ public class ResultDetailTwoActivity extends XActivity<ResultDetailTwoPresent> {
     @BindView(R.id.tv_transaction_cause) TextView tvTransactionCause;
     /** 申请编号 */
     @BindView(R.id.tv_allot_no) TextView tvAllotNo;
-//    /** 交易记录的状态 */
-//    private String recordStatus;
+    /** 交易记录的状态 */
+    private String recordStatus;
     /** 标题 */
     private String title;
     /** 交易流水号 */
@@ -89,7 +92,7 @@ public class ResultDetailTwoActivity extends XActivity<ResultDetailTwoPresent> {
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                onBackPressed();
             }
         });
     }
@@ -100,6 +103,7 @@ public class ResultDetailTwoActivity extends XActivity<ResultDetailTwoPresent> {
     public void requestDetailSuccess(ResultDetailResp resp) {
         httpLoadingDialog.dismiss();
 
+        recordStatus = resp.getRecord().getTrade_status();
         tvFundName.setText(resp.getRecord().getFund_name());
         tvFundAmount.setText(BigDecimalUtil.bigdecimalToString(resp.getRecord().getFund_amount()) + "元");
         tvBankName.setText(resp.getRecord().getJywater());
@@ -123,4 +127,11 @@ public class ResultDetailTwoActivity extends XActivity<ResultDetailTwoPresent> {
         httpLoadingDialog.dismiss();
     }
 
+    @Override
+    public void onBackPressed() {
+        //todo 如果交易状态是 买入撤单成功 或 卖出撤单成功
+//        if("".equals(recordStatus))
+        EventBus.getDefault().post(new CancleDataEvent());
+        super.onBackPressed();
+    }
 }
