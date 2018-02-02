@@ -105,6 +105,8 @@ public class HttpContent {
     public static final String withdraw_apply_operate = "noPermission/withdrawapply/operate";
     /** 撤单成功 */
     public static final String withdraw_apply_succDetail = "noPermission/withdrawapply/succDetail";
+    /** 设置页面 显示风险等级 */
+    public static final String setup_index = "permissionCheck/setup/index";
 
 
     /************************************************ html页面 **************************************************/
@@ -113,6 +115,8 @@ public class HttpContent {
     public static final String fund_detail = "htmlNoPermission/fundDetail";
     /** 风险测评 */
     public static final String risk_question = "htmlNoPermission/risk/getQuestions";
+    /** 风险等级 */
+    public static final String risk_dengji = "htmlNoPermission/risk/dengji";
     /** 持有基金详情页 */
     public static final String hold_fund_detail = "htmlNoPermission/myFound/holdFundDetail";
     /** 权益须知 */

@@ -48,7 +48,7 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
     private String fundTabName;
     private int activityName;
     private int pageno = 1;
-    private final int pageSize = 10;
+    private final int pageSize = 15;
     /** 基金类型 */
     private String tabType;
     private StateView errorView;

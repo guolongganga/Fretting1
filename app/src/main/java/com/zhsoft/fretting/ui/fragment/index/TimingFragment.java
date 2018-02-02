@@ -42,7 +42,7 @@ public class TimingFragment extends XFragment<TimingPresent> {
     private TimingRecycleAdapter adapter;
     private List<ApplyBaseInfo> list;
     private int pageno = 1;
-    private final int pageSize = 10;
+    private final int pageSize = 15;
     /** 基金类型 */
     private String tabType;
 

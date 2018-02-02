@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.model.user.RiskInfoResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.present.user.SettingPresent;
@@ -36,6 +37,8 @@ public class SettingActivity extends XActivity<SettingPresent> {
     @BindView(R.id.personinfo) TextView personinfo;
     /** 手机号码 */
     @BindView(R.id.phone) TextView phone;
+    /** 是否做过风险测评 风险等级 */
+    @BindView(R.id.tv_risk_grade) TextView tvRiskGrade;
     /** 密码管理 */
     @BindView(R.id.password_manager) TextView passwordManager;
     /** 银行卡号 */
@@ -58,6 +61,8 @@ public class SettingActivity extends XActivity<SettingPresent> {
     /** 用户编号 */
     private String userId;
 
+    private String riskEvaluteStatus;
+
     @Override
 
     public int getLayoutId() {
@@ -74,6 +79,7 @@ public class SettingActivity extends XActivity<SettingPresent> {
         headTitle.setText("设置");
         token = App.getSharedPref().getString(Constant.TOKEN, "");
         userId = App.getSharedPref().getString(Constant.USERID, "");
+        getP().riskGrade(token, userId);
     }
 
 
@@ -107,9 +113,18 @@ public class SettingActivity extends XActivity<SettingPresent> {
         riskTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bundle bundle = new Bundle();
-                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.risk_question);
-                startActivity(WebRiskActivity.class, bundle);
+                if(riskEvaluteStatus!=null){
+                    if ("0".equals(riskEvaluteStatus)) {
+                        //未测
+                        Bundle bundle = new Bundle();
+                        bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.risk_question);
+                        startActivity(WebRiskActivity.class, bundle);
+                    } else {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.risk_dengji);
+                        startActivity(WebRiskActivity.class, bundle);
+                    }
+                }
 
             }
         });
@@ -170,9 +185,12 @@ public class SettingActivity extends XActivity<SettingPresent> {
 
     }
 
-    public void requestRiskTestSuccess(String data) {
-        Bundle bundle = new Bundle();
-        bundle.putString(Constant.WEB_LINK, data);
-        startActivity(WebRiskActivity.class, bundle);
+    public void requestRiskTestSuccess(RiskInfoResp data) {
+        riskEvaluteStatus = data.getRiskEvaluteStatus();
+        if ("0".equals(riskEvaluteStatus)) {
+            tvRiskGrade.setText("未测");
+        } else {
+            tvRiskGrade.setText(data.getRiskEvaluteVal());
+        }
     }
 }

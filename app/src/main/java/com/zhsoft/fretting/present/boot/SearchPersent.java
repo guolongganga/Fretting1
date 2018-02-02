@@ -40,30 +40,6 @@ public class SearchPersent extends XPresent<SearchActivity> {
 
     public void searchData(final int pageno, int pageSize, String keyword) {
 
-//        ArrayList<NewestFundResp> list = new ArrayList<>();
-//        ArrayList<NewestFundResp> result = new ArrayList<>();
-//        NewestFundResp newestFundResp1 = new NewestFundResp();
-//        newestFundResp1.setFund_name("招商安泰股票" + 2);
-//        newestFundResp1.setFund_code("21700" + 2);
-//        list.add(newestFundResp1);
-//        for (int i = 0; i < 5; i++) {
-//            NewestFundResp newestFundResp = new NewestFundResp();
-//            newestFundResp.setFund_name("招商安泰股票" + i);
-//            newestFundResp.setFund_code("21700" + i);
-//            list.add(newestFundResp);
-//        }
-//
-//        for (int i = 0; i < list.size(); i++) {
-//            if (list.get(i).getFund_name().contains(keyword)) {
-//                result.add(list.get(i));
-//            }
-//        }
-//        if (true) {
-//            getV().requestSearchDataSuccess(result);
-//        } else {
-//            getV().requestSearchDataFail();
-//        }
-
         CommonReqData reqData = new CommonReqData();
         SearchParams params = new SearchParams();
         params.setPageNum(pageno);

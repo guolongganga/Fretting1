@@ -73,6 +73,7 @@
 
                 <!--测评状态-->
                 <TextView
+                    android:id="@+id/tv_risk_grade"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="5dp"

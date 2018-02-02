@@ -33,4 +33,9 @@ public class WebRiskActivity extends BaseWebActivity {
     public Object newP() {
         return null;
     }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+    }
 }

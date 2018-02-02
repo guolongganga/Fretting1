@@ -19,6 +19,7 @@ import com.zhsoft.fretting.model.user.OccupationResp;
 import com.zhsoft.fretting.model.user.PersonInfoResp;
 import com.zhsoft.fretting.model.user.PhoneResp;
 import com.zhsoft.fretting.model.user.ResultDetailResp;
+import com.zhsoft.fretting.model.user.RiskInfoResp;
 import com.zhsoft.fretting.model.user.SelfChooseResp;
 import com.zhsoft.fretting.model.user.TransactionResp;
 import com.zhsoft.fretting.model.user.UserAccountResp;
@@ -65,6 +66,7 @@ import static com.zhsoft.fretting.net.HttpContent.password_reset;
 import static com.zhsoft.fretting.net.HttpContent.phone_code;
 import static com.zhsoft.fretting.net.HttpContent.risk_question;
 import static com.zhsoft.fretting.net.HttpContent.send_phone_code;
+import static com.zhsoft.fretting.net.HttpContent.setup_index;
 import static com.zhsoft.fretting.net.HttpContent.single_trade_query;
 import static com.zhsoft.fretting.net.HttpContent.trade_password_check;
 import static com.zhsoft.fretting.net.HttpContent.trade_password_phonecode;
@@ -324,4 +326,9 @@ public interface HttpUtil {
     @Headers("appType:Android")
     @POST(withdraw_apply_succDetail)
     Flowable<ResultDetailResp> withdrawApplySuccDetail(@Body CommonReqData reqData);
+
+    //撤单成功
+    @Headers("appType:Android")
+    @POST(setup_index)
+    Flowable<RiskInfoResp> setupIndex(@Body CommonReqData reqData);
 }
