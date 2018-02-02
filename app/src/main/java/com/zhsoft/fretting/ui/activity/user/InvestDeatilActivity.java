@@ -291,12 +291,25 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
                 switch (tag) {
                     //点击
                     case MyFundRecyleAdapter.ITEM_CLICK:
-//                        showToast(model.getDay());
+
                         Bundle bundle = new Bundle();
+                        bundle.putString(Constant.ACTIVITY_TITLE, getString(R.string.result_title_buy));
                         //交易流水号
                         bundle.putString(Constant.INVEST_PROTOCOL_ID, model.getAllot_no());
-                        bundle.putString(Constant.INVEST_RECORD_STATUS, model.getStatus());
-                        startActivity(ResultDetailOneActivity.class, bundle);
+
+                        if ("11".equals(model.getStatus())) {
+                            //TODO 交易成功，待确认份额
+                            startActivity(ResultDetailOneActivity.class, bundle);
+
+                        } else if ("22".equals(model.getStatus())) {
+                            //TODO 买入确认成功
+                            startActivity(ResultDetailThreeActivity.class, bundle);
+
+                        } else {
+                            //TODO 撤单成功 支付失败 确认失败
+                            startActivity(ResultDetailTwoActivity.class, bundle);
+                        }
+
                         break;
                 }
             }

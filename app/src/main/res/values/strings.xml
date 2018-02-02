@@ -108,4 +108,8 @@
     <!--基金详情页-->
     <string name="fund_detail">基金详情页</string>
 
+    <!--结果页-->
+    <string name="result_title_buy">交易详情</string>
+    <string name="result_title_sell">卖出详情</string>
+
 </resources>

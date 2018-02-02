@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
+import com.zhsoft.fretting.utils.RateStyleUtil;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
@@ -38,14 +39,16 @@ public class FundContentRecycleAdapter extends SimpleRecAdapter<NewestFundResp, 
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.tvName.setText(data.get(position).getFund_name());
-        holder.tvCode.setText(data.get(position).getFund_code());
-        holder.tvValue.setText(BigDecimalUtil.bigdecimalToString(data.get(position).getNet_value()));
-        holder.tvRange.setText("+" + BigDecimalUtil.bigdecimalToString(data.get(position).getFund_rose()) + "%");
+        final NewestFundResp fundResp = data.get(position);
+        holder.tvName.setText(fundResp.getFund_name());
+        holder.tvCode.setText(fundResp.getFund_code());
+        holder.tvValue.setText(fundResp.getNet_value());
+        RateStyleUtil.rateStyle(context,holder.tvRange,fundResp.getFund_rose());
+//        holder.tvRange.setText("+" + BigDecimalUtil.bigdecimalToString(data.get(position).getFund_rose()) + "%");
         holder.rlContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getRecItemClick().onItemClick(position, data.get(position), ITEM_CLICK, holder);
+                getRecItemClick().onItemClick(position, fundResp, ITEM_CLICK, holder);
             }
         });
     }

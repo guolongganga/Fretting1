@@ -15,7 +15,7 @@ public class RecordResp {
     private String bankAcco;  //银行卡号
     private String bankName;  //银行名称
     private String withdrawaData; //撤单返回钱的时间
-
+    private String jywater; //扣款信息或回款信息
     private Integer id;
     private String user_id;
     private String fund_code;//'基金代码',
@@ -35,7 +35,7 @@ public class RecordResp {
     private String trade_status;// '交易处理状态',
     private String scheduled_protocol_id;//'定投协议号(定投交易)',
     private String create_time;// '创建时间',
-    private BigDecimal net_value;//确认净值
+    private String net_value;//确认净值
     private BigDecimal fare_sx;//手续费
 
     public Integer getId() {
@@ -52,6 +52,14 @@ public class RecordResp {
 
     public void setUser_id(String user_id) {
         this.user_id = user_id;
+    }
+
+    public String getJywater() {
+        return jywater;
+    }
+
+    public void setJywater(String jywater) {
+        this.jywater = jywater;
     }
 
     public String getFund_code() {
@@ -190,11 +198,11 @@ public class RecordResp {
         this.create_time = create_time;
     }
 
-    public BigDecimal getNet_value() {
+    public String getNet_value() {
         return net_value;
     }
 
-    public void setNet_value(BigDecimal net_value) {
+    public void setNet_value(String net_value) {
         this.net_value = net_value;
     }
 

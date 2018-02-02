@@ -1,12 +1,8 @@
 package com.zhsoft.fretting.ui.activity.user;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.App;
@@ -14,10 +10,7 @@ import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.user.ResultDetailResp;
 import com.zhsoft.fretting.model.user.StepResp;
-import com.zhsoft.fretting.present.user.ResultDetailOnePresent;
 import com.zhsoft.fretting.present.user.ResultDetailTwoPresent;
-import com.zhsoft.fretting.ui.widget.CustomDialog;
-import com.zhsoft.fretting.ui.widget.FundBuyDialog;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
 
 import java.util.ArrayList;
@@ -48,8 +41,8 @@ public class ResultDetailTwoActivity extends XActivity<ResultDetailTwoPresent> {
     @BindView(R.id.tv_transaction_cause) TextView tvTransactionCause;
     /** 申请编号 */
     @BindView(R.id.tv_allot_no) TextView tvAllotNo;
-    /** 交易记录的状态 */
-    private String recordStatus;
+//    /** 交易记录的状态 */
+//    private String recordStatus;
     /** 标题 */
     private String title;
     /** 交易流水号 */
@@ -109,7 +102,7 @@ public class ResultDetailTwoActivity extends XActivity<ResultDetailTwoPresent> {
 
         tvFundName.setText(resp.getRecord().getFund_name());
         tvFundAmount.setText(BigDecimalUtil.bigdecimalToString(resp.getRecord().getFund_amount()) + "元");
-        tvBankName.setText(resp.getRecord().getBankName() + " (" + resp.getRecord().getBankAcco() + ") " + "支付成功");
+        tvBankName.setText(resp.getRecord().getJywater());
         tvAllotNo.setText(resp.getRecord().getAllot_no());
 
         //进度

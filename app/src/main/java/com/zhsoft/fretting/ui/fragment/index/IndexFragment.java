@@ -28,6 +28,7 @@ import com.zhsoft.fretting.ui.activity.index.TimingActivity;
 import com.zhsoft.fretting.ui.adapter.index.PopularityRecycleAdapter;
 import com.zhsoft.fretting.ui.adapter.index.PreferRecycleAdapter;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
+import com.zhsoft.fretting.utils.RateStyleUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -338,8 +339,6 @@ public class IndexFragment extends XFragment<IndexPresent> {
 //                showToast("点击了第" + position + "张图片");
 //            }
 //        });
-//
-//
 //    }
 
     /**
@@ -435,7 +434,8 @@ public class IndexFragment extends XFragment<IndexPresent> {
             //明星基金
             if (data.getStarFund() != null) {
                 startModel = data.getStarFund();
-                tvSevenEarnings.setText(BigDecimalUtil.bigdecimalToString(startModel.getFund_rose()) + "%");
+                RateStyleUtil.rateStyle(context, tvSevenEarnings, startModel.getFund_rose());
+//                tvSevenEarnings.setText(BigDecimalUtil.bigdecimalToString() + "%");
                 tvStarRateDesc.setText(startModel.getRiseTermDesc());
                 tvWanarnings.setText(startModel.getFund_name());
             }
@@ -459,7 +459,8 @@ public class IndexFragment extends XFragment<IndexPresent> {
                 if (data.getIndexFunds().get(0) != null) {
                     fingerOne = data.getIndexFunds().get(0);
                     tvNvshen.setText(fingerOne.getFund_name());
-                    tvNvshenShouyi.setText("+" + BigDecimalUtil.bigdecimalToString(fingerOne.getFund_rose()) + "%");
+                    RateStyleUtil.rateStyle(context, tvNvshenShouyi, fingerOne.getFund_rose());
+//                    tvNvshenShouyi.setText("+" + BigDecimalUtil.bigdecimalToString(fingerOne.getFund_rose()) + "%");
                     tvFingerOneDesc.setText(fingerOne.getRiseTermDesc());
 
                 }
@@ -467,7 +468,8 @@ public class IndexFragment extends XFragment<IndexPresent> {
                 if (data.getIndexFunds().get(1) != null) {
                     fingertwo = data.getIndexFunds().get(1);
                     tvChihuo.setText(fingertwo.getFund_name());
-                    tvChihuoShouyi.setText("+" + BigDecimalUtil.bigdecimalToString(fingertwo.getFund_rose()) + "%");
+                    RateStyleUtil.rateStyle(context, tvChihuoShouyi, fingertwo.getFund_rose());
+//                    tvChihuoShouyi.setText("+" + BigDecimalUtil.bigdecimalToString(fingertwo.getFund_rose()) + "%");
                     tvFingerTwoDesc.setText(fingertwo.getRiseTermDesc());
                 }
             }

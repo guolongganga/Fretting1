@@ -10,6 +10,7 @@ import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.model.user.SelfChooseResp;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
+import com.zhsoft.fretting.utils.RateStyleUtil;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
@@ -39,12 +40,15 @@ public class SelfChooseRecycleAdapter extends SimpleRecAdapter<SelfChooseResp, S
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.tvName.setText(data.get(position).getFund_name());
-        holder.tvCode.setText(data.get(position).getFund_code());
-        holder.tvValue.setText(data.get(position).getNet_value());
-        holder.tvRange.setText("+" + data.get(position).getDay_rose() + "%");
+        final SelfChooseResp chooseResp = data.get(position);
+        holder.tvName.setText(chooseResp.getFund_name());
+        holder.tvCode.setText(chooseResp.getFund_code());
+        holder.tvValue.setText(chooseResp.getNet_value());
+//        holder.tvRange.setText("+" + chooseResp.getDay_rose() + "%");
+        RateStyleUtil.rateStyle(context,holder.tvRange,chooseResp.getDay_rose());
+
         //1代表持有,0代表未持有
-        if ("1".equals(data.get(position).getHasBuy())) {
+        if ("1".equals(chooseResp.getHasBuy())) {
             holder.tvOwn.setVisibility(View.VISIBLE);
         } else {
             holder.tvOwn.setVisibility(View.GONE);
@@ -52,7 +56,7 @@ public class SelfChooseRecycleAdapter extends SimpleRecAdapter<SelfChooseResp, S
         holder.rlContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getRecItemClick().onItemClick(position, data.get(position), ITEM_CLICK, holder);
+                getRecItemClick().onItemClick(position, chooseResp, ITEM_CLICK, holder);
             }
         });
     }

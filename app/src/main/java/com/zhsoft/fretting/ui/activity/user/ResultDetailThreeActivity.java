@@ -1,9 +1,7 @@
 package com.zhsoft.fretting.ui.activity.user;
 
-import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -14,9 +12,7 @@ import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.user.ResultDetailResp;
 import com.zhsoft.fretting.model.user.StepResp;
-import com.zhsoft.fretting.present.user.ResultDetailOnePresent;
-import com.zhsoft.fretting.ui.widget.CustomDialog;
-import com.zhsoft.fretting.ui.widget.FundBuyDialog;
+import com.zhsoft.fretting.present.user.ResultDetailThreePresent;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
 
 import java.util.ArrayList;
@@ -27,16 +23,15 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
  * 作者：sunnyzeng on 2018/1/23 11:21
- * 描述：结果页 交易详情
+ * 描述：结果页 买入确认成功 卖出确认成功
+ * 标题：交易详情/卖出详情
  */
 
-public class ResultDetailThreeActivity extends XActivity<ResultDetailOnePresent> {
+public class ResultDetailThreeActivity extends XActivity<ResultDetailThreePresent> {
     /** 返回 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
-    /** 右侧按钮 */
-    @BindView(R.id.head_right) Button headRight;
     /** 基金名称 */
     @BindView(R.id.tv_fund_name) TextView tvFundName;
     /** 购买金额 */
@@ -71,54 +66,52 @@ public class ResultDetailThreeActivity extends XActivity<ResultDetailOnePresent>
     @BindView(R.id.tv_sure_rate) TextView tvSureRate;
     /** 确认日期 */
     @BindView(R.id.tv_sure_date) TextView tvSureDate;
+    /** 手续费 */
+    @BindView(R.id.tv_fee_sx) TextView tvFeeSx;
     /** 确认信息 */
     @BindView(R.id.ll_sure_info) LinearLayout llSureInfo;
     /** 申请编号 */
     @BindView(R.id.tv_allot_no) TextView tvAllotNo;
-    /** 交易记录的状态 */
-    private String recordStatus;
-    /** 终止弹框 */
-    private CustomDialog customDialog;
+//    /** 交易记录的状态 */
+//    private String recordStatus;
     /** 交易流水号 */
     private String allot_no;
     /** 登录标识 */
     private String token;
     /** 用户编号 */
     private String userId;
-    /** 输入密码弹框 */
-    private FundBuyDialog fundBuyDialog;
-    /** 密码错误弹框 */
-    private CustomDialog errorDialog;
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
+    private String title;
 
 
     @Override
     public int getLayoutId() {
-        return R.layout.activity_user_result_one;
+        return R.layout.activity_user_result_three;
     }
 
     @Override
-    public ResultDetailOnePresent newP() {
-        return new ResultDetailOnePresent();
+    public ResultDetailThreePresent newP() {
+        return new ResultDetailThreePresent();
     }
 
     @Override
     public void initData(Bundle bundle) {
-        headTitle.setText("交易详情");
         httpLoadingDialog = new HttpLoadingDialog(context);
+        if (bundle != null) {
+//            recordStatus = bundle.getString(Constant.INVEST_RECORD_STATUS);
+            allot_no = bundle.getString(Constant.INVEST_PROTOCOL_ID);
+            title = bundle.getString(Constant.ACTIVITY_TITLE);
+        }
+        headTitle.setText(title);
         //获取用户缓存的userid 和 token
         userId = App.getSharedPref().getString(Constant.USERID, "");
         token = App.getSharedPref().getString(Constant.TOKEN, "");
-        if (bundle != null) {
-            recordStatus = bundle.getString(Constant.INVEST_RECORD_STATUS);
-            allot_no = bundle.getString(Constant.INVEST_PROTOCOL_ID);
-        }
 
+        httpLoadingDialog.visible();
         getP().withdrawApplyDetail(allot_no, token, userId);
 
     }
-
 
     @Override
     public void initEvents() {
@@ -128,65 +121,8 @@ public class ResultDetailThreeActivity extends XActivity<ResultDetailOnePresent>
                 finish();
             }
         });
-        headRight.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (customDialog == null) {
-                    customDialog = new CustomDialog.Builder(context)
-                            .setMessage("撤单不可以恢复，确认要撤单吗？")
-                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    customDialog.dismiss();
-                                }
-                            }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
-                                    customDialog.dismiss();
-                                    if (fundBuyDialog == null) {
-                                        fundBuyDialog = new FundBuyDialog
-                                                .Builder(context)
-                                                .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
-                                                    @Override
-                                                    public void onFinish(String str) {
-                                                        fundBuyDialog.dismiss();
-                                                        httpLoadingDialog.visible();
-                                                        getP().withdrawApplyOperate(allot_no, str, token, userId);
 
-                                                    }
-                                                }).create();
-                                    }
-
-                                    fundBuyDialog.show();
-
-
-                                }
-                            }).create();
-                }
-                customDialog.show();
-            }
-        });
     }
-
-    /**
-     * 撤单成功
-     */
-//    private void revokeSuccess() {
-//        //右侧撤单按钮
-//        headRight.setVisibility(View.GONE);
-//        //购买进度
-//        llProgressInfo.setVisibility(View.GONE);
-//        //确认信息
-//        llSureInfo.setVisibility(View.GONE);
-//        //失败信息
-//        rlFail.setVisibility(View.VISIBLE);
-//        //交易状态
-//        tvTransactionStatus.setText("撤单成功");
-//        //原因字体颜色
-//        tvTransactionCause.setTextColor(getResources().getColor(R.color.color_696969));
-//        //资金返回时间
-//        tvTransactionCause.setText("资金将于X月x日x点前返回到银行卡");
-//    }
 
     /**
      * 请求结果详情成功
@@ -196,7 +132,7 @@ public class ResultDetailThreeActivity extends XActivity<ResultDetailOnePresent>
         //TODO 头部交易信息
         tvFundName.setText(resp.getRecord().getFund_name());
         tvFundAmount.setText(BigDecimalUtil.bigdecimalToString(resp.getRecord().getFund_amount()) + "元");
-        tvBankName.setText(resp.getRecord().getBankName() + " (" + resp.getRecord().getBankAcco() + ") " + "支付成功");
+        tvBankName.setText(resp.getRecord().getJywater());
         tvAllotNo.setText(resp.getRecord().getAllot_no());
 
         //进度
@@ -226,40 +162,16 @@ public class ResultDetailThreeActivity extends XActivity<ResultDetailOnePresent>
         fontQueryIncome.setText(stepList.get(2).getName());
         tvQueryIncome.setText(stepList.get(2).getTime());
 
-
-//        resp.getStatus()
-        if ("定投成功".equals(recordStatus)) {          //交易成功，待确认份额
-            //右侧撤单按钮
-            headRight.setVisibility(View.VISIBLE);
-            headRight.setText("撤单");
-            //购买进度
-            llProgressInfo.setVisibility(View.VISIBLE);
-            //确认信息
-            llSureInfo.setVisibility(View.GONE);
-        } else if ("确认成功".equals(recordStatus)) {   //买入确认成功
-            //右侧撤单按钮
-            headRight.setVisibility(View.GONE);
-            //购买进度
-            llProgressInfo.setVisibility(View.VISIBLE);
-            //确认信息
-            llSureInfo.setVisibility(View.VISIBLE);
-        } else if ("撤单成功".equals(recordStatus)) {   //撤单成功
-//            revokeSuccess();
-        } else if ("支付失败".equals(recordStatus)) {   //支付失败
-            //右侧撤单按钮
-            headRight.setVisibility(View.GONE);
-            //购买进度
-            llProgressInfo.setVisibility(View.GONE);
-            //确认信息
-            llSureInfo.setVisibility(View.GONE);
-        } else if ("确认失败".equals(recordStatus)) {   //确认失败
-            //右侧撤单按钮
-            headRight.setVisibility(View.GONE);
-            //购买进度
-            llProgressInfo.setVisibility(View.GONE);
-            //确认信息
-            llSureInfo.setVisibility(View.GONE);
-        }
+        //确认金额
+        tvSureAmount.setText(BigDecimalUtil.bigdecimalToString(resp.getRecord().getTrade_confirm_balance()));
+        //确认份额
+        tvSureNumber.setText(BigDecimalUtil.bigdecimalToString(resp.getRecord().getTrade_confirm_shares()));
+        //确认净值
+        tvSureRate.setText(resp.getRecord().getNet_value());
+        //确认日期
+        tvSureDate.setText(resp.getRecord().getAffirm_date());
+        //手续费
+        tvFeeSx.setText(BigDecimalUtil.bigdecimalToString(resp.getRecord().getFare_sx()));
 
     }
 
@@ -270,68 +182,4 @@ public class ResultDetailThreeActivity extends XActivity<ResultDetailOnePresent>
         httpLoadingDialog.dismiss();
     }
 
-    /**
-     * 撤单成功
-     */
-    public void requestCancleSuccess() {
-        httpLoadingDialog.dismiss();
-        //撤单成功
-        Bundle bundle = new Bundle();
-        //标题
-        bundle.putString(Constant.ACTIVITY_TITLE, "交易详情");
-//        bundle.putString(Constant.INVEST_RECORD_STATUS, "撤单成功");
-        //交易流水号
-        bundle.putString(Constant.INVEST_PROTOCOL_ID, allot_no);
-        startActivity(ResultDetailTwoActivity.class, bundle);
-        finish();
-    }
-
-    /**
-     * 撤单失败
-     */
-    public void requestCancleFail() {
-        httpLoadingDialog.dismiss();
-    }
-
-    /**
-     * 撤单 密码错误
-     */
-    public void passwordError() {
-        httpLoadingDialog.dismiss();
-        if (errorDialog == null) {
-            errorDialog = new CustomDialog.Builder(context)
-                    .setMessage("交易密码错误，请重试")
-                    .setNegativeButton("忘记密码", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            errorDialog.dismiss();
-                            startActivity(FindPwdTradeFirstActivity.class);
-                        }
-                    }).setPositiveButton("再试一次", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialogInterface, int i) {
-                            errorDialog.dismiss();
-                            fundBuyDialog.show();
-                        }
-                    }).create();
-        }
-        errorDialog.show();
-    }
-
-    @Override
-    protected void onDestroy() {
-        if (customDialog != null) {
-            customDialog.dismiss();
-            customDialog = null;
-        }
-        if (fundBuyDialog != null) {
-            fundBuyDialog.dismiss();
-            fundBuyDialog = null;
-        }
-        if (errorDialog != null) {
-            errorDialog.dismiss();
-            errorDialog = null;
-        }
-        super.onDestroy();
-    }
 }

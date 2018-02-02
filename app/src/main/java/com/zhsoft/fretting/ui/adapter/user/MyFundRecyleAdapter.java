@@ -10,6 +10,7 @@ import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.user.FoundResp;
 import com.zhsoft.fretting.model.user.MyFundResp;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
+import com.zhsoft.fretting.utils.RateStyleUtil;
 
 import java.math.BigDecimal;
 
@@ -41,10 +42,14 @@ public class MyFundRecyleAdapter extends SimpleRecAdapter<FoundResp, MyFundRecyl
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.tvName.setText(data.get(position).getFundName());
-        holder.tvMoney.setText(BigDecimalUtil.bigdecimalToString(data.get(position).getTotalEarn()));
-        holder.tvYesterday.setText("+" + BigDecimalUtil.bigdecimalToString(data.get(position).getEarningsLastDay()));
-        holder.tvHold.setText("-" + BigDecimalUtil.bigdecimalToString(data.get(position).getHoldAmount()));
+        final FoundResp resp = data.get(position);
+        holder.tvName.setText(resp.getFundName());
+        holder.tvMoney.setText(BigDecimalUtil.bigdecimalToString(resp.getTotalEarn()));
+
+        RateStyleUtil.amountStyle(context, holder.tvYesterday, resp.getEarningsLastDay());
+        RateStyleUtil.amountStyle(context, holder.tvHold, resp.getHoldAmount());
+//        holder.tvYesterday.setText("+" + BigDecimalUtil.bigdecimalToString(resp.getEarningsLastDay()));
+//        holder.tvHold.setText("-" + BigDecimalUtil.bigdecimalToString(resp.getHoldAmount()));
         if (data.size() - 1 == position) {
             holder.viewLine.setVisibility(View.GONE);
         } else {
@@ -53,7 +58,7 @@ public class MyFundRecyleAdapter extends SimpleRecAdapter<FoundResp, MyFundRecyl
         holder.llContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getRecItemClick().onItemClick(position, data.get(position), ITEM_CLICK, holder);
+                getRecItemClick().onItemClick(position, resp, ITEM_CLICK, holder);
             }
         });
     }

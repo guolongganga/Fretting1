@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.index.ProductModel;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
+import com.zhsoft.fretting.utils.RateStyleUtil;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
@@ -42,10 +43,11 @@ public class PreferRecycleAdapter extends SimpleRecAdapter<ProductModel, PreferR
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-
-        holder.preferredName.setText(data.get(position).getFund_name());
-        holder.preferredRate.setText(BigDecimalUtil.bigdecimalToString(data.get(position).getFund_rose()) + "%");
-        holder.tvRateDesc.setText(data.get(position).getRiseTermDesc());
+        final ProductModel model = data.get(position);
+        holder.preferredName.setText(model.getFund_name());
+        RateStyleUtil.rateStyle(context, holder.preferredRate, model.getFund_rose());
+//        holder.preferredRate.setText(BigDecimalUtil.bigdecimalToString(model.getFund_rose()) + "%");
+        holder.tvRateDesc.setText(model.getRiseTermDesc());
 
         if (data.size() - 1 == position) {
             holder.viewLine.setVisibility(View.GONE);
@@ -56,13 +58,13 @@ public class PreferRecycleAdapter extends SimpleRecAdapter<ProductModel, PreferR
         holder.btnInvest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getRecItemClick().onItemClick(position, data.get(position), ITEM_CLICK, holder);
+                getRecItemClick().onItemClick(position, model, ITEM_CLICK, holder);
             }
         });
         holder.llContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getRecItemClick().onItemClick(position, data.get(position), ITEM_CLICK, holder);
+                getRecItemClick().onItemClick(position, model, ITEM_CLICK, holder);
             }
         });
     }

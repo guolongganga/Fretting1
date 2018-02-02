@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
+import com.zhsoft.fretting.utils.RateStyleUtil;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
@@ -40,16 +41,17 @@ public class SearchRecycleAdapter extends SimpleRecAdapter<NewestFundResp, Searc
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-
-        holder.tvFundName.setText(data.get(position).getFund_name());
-        holder.tvFundRate.setText(BigDecimalUtil.bigdecimalToString(data.get(position).getFund_rose()) + "%");
-        holder.tvFundCode.setText(data.get(position).getFund_code());
+        final NewestFundResp fundResp = data.get(position);
+        holder.tvFundName.setText(fundResp.getFund_name());
+        RateStyleUtil.rateStyle(context, holder.tvFundRate, fundResp.getFund_rose());
+//        holder.tvFundRate.setText(BigDecimalUtil.bigdecimalToString(fundResp.getFund_rose()) + "%");
+        holder.tvFundCode.setText(fundResp.getFund_code());
         holder.tvFundPerTime.setText("近一年");
 
         holder.rlContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getRecItemClick().onItemClick(position, data.get(position), ITEM_CLICK, holder);
+                getRecItemClick().onItemClick(position, fundResp, ITEM_CLICK, holder);
             }
         });
 

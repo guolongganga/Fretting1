@@ -64,8 +64,8 @@ public class ResultDetailOneActivity extends XActivity<ResultDetailOnePresent> {
     @BindView(R.id.font_query_income) TextView fontQueryIncome;
     /** 申请编号 */
     @BindView(R.id.tv_allot_no) TextView tvAllotNo;
-    /** 交易记录的状态 */
-    private String recordStatus;
+//    /** 交易记录的状态 */
+//    private String recordStatus;
     /** 终止弹框 */
     private CustomDialog customDialog;
     /** 交易流水号 */
@@ -80,6 +80,8 @@ public class ResultDetailOneActivity extends XActivity<ResultDetailOnePresent> {
     private CustomDialog errorDialog;
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
+    /** 标题 */
+    private String title;
 
 
     @Override
@@ -94,16 +96,17 @@ public class ResultDetailOneActivity extends XActivity<ResultDetailOnePresent> {
 
     @Override
     public void initData(Bundle bundle) {
-        headTitle.setText("交易详情");
         httpLoadingDialog = new HttpLoadingDialog(context);
+        if (bundle != null) {
+            allot_no = bundle.getString(Constant.INVEST_PROTOCOL_ID);
+            title = bundle.getString(Constant.ACTIVITY_TITLE);
+        }
+        headTitle.setText(title);
         //获取用户缓存的userid 和 token
         userId = App.getSharedPref().getString(Constant.USERID, "");
         token = App.getSharedPref().getString(Constant.TOKEN, "");
-        if (bundle != null) {
-            recordStatus = bundle.getString(Constant.INVEST_RECORD_STATUS);
-            allot_no = bundle.getString(Constant.INVEST_PROTOCOL_ID);
-        }
 
+        httpLoadingDialog.visible();
         getP().withdrawApplyDetail(allot_no, token, userId);
 
     }
@@ -158,26 +161,6 @@ public class ResultDetailOneActivity extends XActivity<ResultDetailOnePresent> {
     }
 
     /**
-     * 撤单成功
-     */
-//    private void revokeSuccess() {
-//        //右侧撤单按钮
-//        headRight.setVisibility(View.GONE);
-//        //购买进度
-//        llProgressInfo.setVisibility(View.GONE);
-//        //确认信息
-//        llSureInfo.setVisibility(View.GONE);
-//        //失败信息
-//        rlFail.setVisibility(View.VISIBLE);
-//        //交易状态
-//        tvTransactionStatus.setText("撤单成功");
-//        //原因字体颜色
-//        tvTransactionCause.setTextColor(getResources().getColor(R.color.color_696969));
-//        //资金返回时间
-//        tvTransactionCause.setText("资金将于X月x日x点前返回到银行卡");
-//    }
-
-    /**
      * 请求结果详情成功
      */
     public void requestDetailSuccess(ResultDetailResp resp) {
@@ -185,7 +168,7 @@ public class ResultDetailOneActivity extends XActivity<ResultDetailOnePresent> {
         //TODO 头部交易信息
         tvFundName.setText(resp.getRecord().getFund_name());
         tvFundAmount.setText(BigDecimalUtil.bigdecimalToString(resp.getRecord().getFund_amount()) + "元");
-        tvBankName.setText(resp.getRecord().getBankName() + " (" + resp.getRecord().getBankAcco() + ") " + "支付成功");
+        tvBankName.setText(resp.getRecord().getJywater());
         tvAllotNo.setText(resp.getRecord().getAllot_no());
 
         //进度
@@ -216,9 +199,8 @@ public class ResultDetailOneActivity extends XActivity<ResultDetailOnePresent> {
         tvQueryIncome.setText(stepList.get(2).getTime());
 
 
-//        resp.getStatus()
-        //交易成功的状态才有撤单
-        if ("定投成功".equals(recordStatus)) {          //交易成功，待确认份额
+        //买入交易成功和卖出交易成功才有撤单
+        if ("9".equals(resp.getRecord().getTrade_status()) || "卖出成功".equals(resp.getRecord().getTrade_status())) {          //交易成功，待确认份额
             //右侧撤单按钮
             headRight.setVisibility(View.VISIBLE);
             headRight.setText("撤单");
@@ -244,8 +226,7 @@ public class ResultDetailOneActivity extends XActivity<ResultDetailOnePresent> {
         //撤单成功
         Bundle bundle = new Bundle();
         //标题
-        bundle.putString(Constant.ACTIVITY_TITLE, "交易详情");
-//        bundle.putString(Constant.INVEST_RECORD_STATUS, "撤单成功");
+        bundle.putString(Constant.ACTIVITY_TITLE, title);
         //交易流水号
         bundle.putString(Constant.INVEST_PROTOCOL_ID, allot_no);
         startActivity(ResultDetailTwoActivity.class, bundle);

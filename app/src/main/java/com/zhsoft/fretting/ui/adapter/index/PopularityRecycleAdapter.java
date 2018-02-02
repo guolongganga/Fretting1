@@ -12,6 +12,7 @@ import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.index.PopularityResp;
 import com.zhsoft.fretting.model.index.ProductModel;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
+import com.zhsoft.fretting.utils.RateStyleUtil;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
@@ -43,12 +44,13 @@ public class PopularityRecycleAdapter extends SimpleRecAdapter<ProductModel, Pop
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-
-        holder.tvValue.setText(BigDecimalUtil.bigdecimalToString(data.get(position).getFund_rose()) + "%");
-        holder.tvDescribe.setText(data.get(position).getRiseTermDesc());
-        holder.tvTitle.setText(data.get(position).getFund_name());
-        holder.tvLocationOne.setText(data.get(position).getFeatureone());
-        holder.tvLocationTwo.setText(data.get(position).getFeaturetwo());
+        final ProductModel model = data.get(position);
+//        holder.tvValue.setText(BigDecimalUtil.bigdecimalToString(model.getFund_rose()) + "%");
+        RateStyleUtil.rateStyle(context, holder.tvValue, model.getFund_rose());
+        holder.tvDescribe.setText(model.getRiseTermDesc());
+        holder.tvTitle.setText(model.getFund_name());
+        holder.tvLocationOne.setText(model.getFeatureone());
+        holder.tvLocationTwo.setText(model.getFeaturetwo());
 
         if (data.size() - 1 == position) {
             holder.viewLine.setVisibility(View.GONE);
@@ -59,7 +61,7 @@ public class PopularityRecycleAdapter extends SimpleRecAdapter<ProductModel, Pop
         holder.rlContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getRecItemClick().onItemClick(position, data.get(position), ITEM_CLICK, holder);
+                getRecItemClick().onItemClick(position, model, ITEM_CLICK, holder);
             }
         });
     }

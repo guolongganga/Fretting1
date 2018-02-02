@@ -86,10 +86,17 @@ public class CancleOrderActivity extends XActivity<CancleOrderPresent> {
                 switch (tag) {
                     //点击
                     case CancleOrderRecyleAdapter.ITEM_CLICK:
+                        String title;
+                        //（1、买入 0、卖出）
+                        if ("1".equals(model.getBuyType())) {
+                            title = getString(R.string.result_title_buy);
+                        } else {
+                            title = getString(R.string.result_title_sell);
+                        }
                         Bundle bundle = new Bundle();
-                        bundle.putString(Constant.INVEST_RECORD_STATUS, "定投成功");
                         //交易流水号
                         bundle.putString(Constant.INVEST_PROTOCOL_ID, model.getAllot_no());
+                        bundle.putString(Constant.ACTIVITY_TITLE, title);
                         startActivity(ResultDetailOneActivity.class, bundle);
                         break;
                 }

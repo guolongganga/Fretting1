@@ -2,6 +2,7 @@ package com.zhsoft.fretting.model.user;
 
 import com.zhsoft.fretting.model.BaseResp;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 /**
@@ -27,7 +28,7 @@ public class SelfChooseResp extends BaseResp<List<SelfChooseResp>> {
     /**
      * 涨跌幅
      */
-    private String day_rose;
+    private BigDecimal day_rose;
     /**
      * 基金代码
      */
@@ -73,11 +74,11 @@ public class SelfChooseResp extends BaseResp<List<SelfChooseResp>> {
      */
     private String user_id;
 
-    public String getDay_rose() {
+    public BigDecimal getDay_rose() {
         return day_rose;
     }
 
-    public void setDay_rose(String day_rose) {
+    public void setDay_rose(BigDecimal day_rose) {
         this.day_rose = day_rose;
     }
 

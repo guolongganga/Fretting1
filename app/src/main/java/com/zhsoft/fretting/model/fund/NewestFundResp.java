@@ -30,7 +30,7 @@ public class NewestFundResp extends BaseResp<ArrayList<NewestFundResp>> implemen
     /**
      * 基金净值
      */
-    private BigDecimal net_value;
+    private String net_value;
     /**
      * 基金涨跌幅（用来展示具体涨幅：日涨幅、周涨幅、月涨幅等）
      */
@@ -52,11 +52,11 @@ public class NewestFundResp extends BaseResp<ArrayList<NewestFundResp>> implemen
         this.fund_name = fund_name;
     }
 
-    public BigDecimal getNet_value() {
+    public String getNet_value() {
         return net_value;
     }
 
-    public void setNet_value(BigDecimal net_value) {
+    public void setNet_value(String net_value) {
         this.net_value = net_value;
     }
 
@@ -87,7 +87,7 @@ public class NewestFundResp extends BaseResp<ArrayList<NewestFundResp>> implemen
     protected NewestFundResp(Parcel in) {
         this.fund_code = in.readString();
         this.fund_name = in.readString();
-        this.net_value = (BigDecimal) in.readSerializable();
+        this.net_value = (String) in.readSerializable();
         this.fund_rose = (BigDecimal) in.readSerializable();
     }
 
