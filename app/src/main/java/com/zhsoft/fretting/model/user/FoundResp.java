@@ -28,6 +28,18 @@ public class FoundResp {
      * 累计收益
      */
     private BigDecimal totalEarn;
+    /**
+     * X笔交易确认中
+     */
+    private String sureNumber;
+
+    public String getSureNumber() {
+        return sureNumber;
+    }
+
+    public void setSureNumber(String sureNumber) {
+        this.sureNumber = sureNumber;
+    }
 
     public String getFundName() {
         return fundName;

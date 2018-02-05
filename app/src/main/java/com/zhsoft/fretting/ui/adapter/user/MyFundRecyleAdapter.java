@@ -50,6 +50,12 @@ public class MyFundRecyleAdapter extends SimpleRecAdapter<FoundResp, MyFundRecyl
         RateStyleUtil.amountStyle(context, holder.tvHold, resp.getHoldAmount());
 //        holder.tvYesterday.setText("+" + BigDecimalUtil.bigdecimalToString(resp.getEarningsLastDay()));
 //        holder.tvHold.setText("-" + BigDecimalUtil.bigdecimalToString(resp.getHoldAmount()));
+        if (resp.getSureNumber() == null || "0".equals(resp.getSureNumber())) {
+            holder.llNumberIng.setVisibility(View.GONE);
+        } else {
+            holder.llNumberIng.setVisibility(View.VISIBLE);
+            holder.tvNumberIng.setText(resp.getSureNumber());
+        }
         if (data.size() - 1 == position) {
             holder.viewLine.setVisibility(View.GONE);
         } else {
@@ -61,6 +67,7 @@ public class MyFundRecyleAdapter extends SimpleRecAdapter<FoundResp, MyFundRecyl
                 getRecItemClick().onItemClick(position, resp, ITEM_CLICK, holder);
             }
         });
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
@@ -76,6 +83,10 @@ public class MyFundRecyleAdapter extends SimpleRecAdapter<FoundResp, MyFundRecyl
         @BindView(R.id.tv_hold) TextView tvHold;
         /** 分割线 */
         @BindView(R.id.view_line) View viewLine;
+        /** X笔交易确认中 */
+        @BindView(R.id.ll_number_ing) LinearLayout llNumberIng;
+        /** X笔交易确认中 */
+        @BindView(R.id.tv_number_ing) TextView tvNumberIng;
 
         public ViewHolder(View itemView) {
             super(itemView);
