@@ -83,6 +83,9 @@ public class Constant {
     //web页面 跳转登录页面 skip_sign
     public static final String WEB_ACTIVITY = "303";
 
+    //注册一 跳转注册2 skip_sign
+    public static final String REGISTER_TO_MAIN = "304";
+
     //投资页的类型，是定投，还是定投修改
     public static final String INVEST_ACTIVITY_TYPE = "invest_activity_type";
 
@@ -249,5 +252,9 @@ public class Constant {
     //分红方式修改成功后返回 resultcode
     public static final int BONUS_BACK_ACTIVITY = 204;
 
+    //去风险测评后返回 requestcode
+    public static final int WEB_RISK_ACTIVITY = 105;
 
+    //分红方式修改成功后返回 resultcode
+    public static final int RISK_BACK_ACTIVITY = 205;
 }

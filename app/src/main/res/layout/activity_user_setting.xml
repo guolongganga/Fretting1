@@ -133,11 +133,11 @@
             <include layout="@layout/layout_divider_horizontal"/>
 
             <!--切换账户-->
-            <TextView
-                android:id="@+id/change_user"
-                style="@style/user_setting_line"
-                android:text="切换账户"
-                />
+            <!--<TextView-->
+                <!--android:id="@+id/change_user"-->
+                <!--style="@style/user_setting_line"-->
+                <!--android:text="切换账户"-->
+                <!--/>-->
 
             <include layout="@layout/layout_divider_horizontal"/>
 

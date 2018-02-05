@@ -71,6 +71,8 @@ public class HttpContent {
     public static final String buy_now = "permissionCheck/buyNow";
     /** 基金搜索 */
     public static final String find_fund_like = "noPermission/findFundLike";
+    /** 定投搜索 */
+    public static final String find_fixed_fund_like = "noPermission/findFixedFundLike";
     /** 基金定投 */
     public static final String fund_invest_time = "noPermission/fund/times/getData";
     /** 定投 根据选择时间 显示下次扣款日 */

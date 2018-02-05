@@ -216,7 +216,13 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
                 httpLoadingDialog.visible("开户中...");
                 httpLoadingDialog.setCanceledOnKeyBack();
                 getP().openAccount(userId, token, strUsername, strIdentity, getText(email), bankResp, strBanknumber, strPhone, strpwd);
-//                startActivity(RegisterSuccessActivity.class);
+
+//                Bundle bundle = new Bundle();
+//                //姓名
+//                bundle.putString(Constant.NAME, getText(userName));
+//                //身份证号
+//                bundle.putString(Constant.CERT_NO, getText(identity));
+//                startActivity(RegisterSuccessActivity.class, bundle);
 //                finish();
             }
         });
@@ -289,8 +295,6 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
     }
 
     private void backDeal() {
-        EventBus.getDefault().post(new ChangeTabEvent(Constant.MAIN_MY));
-        startActivity(MainActivity.class);
         finish();
     }
 

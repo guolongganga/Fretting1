@@ -13,7 +13,7 @@ public class BigDecimalUtil {
         if (bigDecimal != null) {
             return bigDecimal.setScale(2, BigDecimal.ROUND_HALF_UP).toString();
         } else {
-            return "";
+            return "--.--";
         }
     }
 

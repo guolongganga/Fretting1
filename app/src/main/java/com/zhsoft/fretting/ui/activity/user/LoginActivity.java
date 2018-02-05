@@ -88,6 +88,7 @@ public class LoginActivity extends XActivity<LoginPresent> {
             @Override
             public void onClick(View view) {
                 startActivity(RegisterFirstActivity.class);
+                finish();
             }
         });
         findPassword.setOnClickListener(new View.OnClickListener() {

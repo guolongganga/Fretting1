@@ -5,6 +5,7 @@ import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.params.SearchParams;
 import com.zhsoft.fretting.ui.activity.boot.SearchActivity;
+import com.zhsoft.fretting.ui.activity.boot.SearchTimingActivity;
 
 import java.util.ArrayList;
 
@@ -19,7 +20,7 @@ import cn.droidlover.xdroidmvp.net.XApi;
  * 描述：搜索页面控制器
  */
 
-public class SearchPersent extends XPresent<SearchActivity> {
+public class SearchTimingPersent extends XPresent<SearchTimingActivity> {
 
     public void hotListData() {
 
@@ -38,7 +39,7 @@ public class SearchPersent extends XPresent<SearchActivity> {
 
     }
 
-    public void searchData(final int pageno, int pageSize, String keyword) {
+    public void searchTimingData(final int pageno, int pageSize, String keyword) {
 
         CommonReqData reqData = new CommonReqData();
         SearchParams params = new SearchParams();
@@ -48,7 +49,7 @@ public class SearchPersent extends XPresent<SearchActivity> {
         reqData.setData(params);
 
         Api.getApi()
-                .findFundLike(reqData)
+                .findFixedFundLike(reqData)
                 .compose(XApi.<NewestFundResp>getApiTransformer())
                 .compose(XApi.<NewestFundResp>getScheduler())
                 .compose(getV().<NewestFundResp>bindToLifecycle())

@@ -6,6 +6,7 @@ import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.ui.activity.user.SettingActivity;
 
+import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XPresent;
 import cn.droidlover.xdroidmvp.net.ApiSubscriber;
 import cn.droidlover.xdroidmvp.net.NetError;
@@ -37,12 +38,18 @@ public class SettingPresent extends XPresent<SettingActivity> {
                 .subscribe(new ApiSubscriber<RiskInfoResp>() {
                     @Override
                     protected void onFail(NetError error) {
-
+                        getV().requestRiskFail();
                     }
 
                     @Override
                     public void onNext(RiskInfoResp resp) {
-                        getV().requestRiskTestSuccess(resp.getData());
+                        if (resp != null && resp.getStatus() == 200) {
+                            getV().requestRiskSuccess(resp.getData());
+                        }else{
+                            getV().requestRiskFail();
+                            getV().showToast(resp.getMessage());
+                            XLog.e("返回数据为空");
+                        }
                     }
                 });
 

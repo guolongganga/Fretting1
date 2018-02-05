@@ -291,7 +291,9 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
                 httpLoadingDialog.setCanceledOnKeyBack();
                 getP().register(phone, pwd, code);
 
-//                startActivity(RegisterSecondActivity.class);//有接口就去掉
+                //全局变量设置为登录状态
+//                RuntimeHelper.getInstance().setLogin(true);
+//                startActivity(RegisterSecondActivity.class);
 //                finish();
 
             }
@@ -444,10 +446,7 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
 
         //全局变量设置为登录状态
         RuntimeHelper.getInstance().setLogin(true);
-
-        Bundle bundle = new Bundle();
-        bundle.putString(Constant.PHONE, getText(phoneNumber));
-        startActivity(RegisterSecondActivity.class, bundle);
+        startActivity(RegisterSecondActivity.class);
 
         finish();
     }

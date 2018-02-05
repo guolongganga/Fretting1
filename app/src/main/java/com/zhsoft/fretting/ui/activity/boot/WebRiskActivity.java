@@ -36,6 +36,7 @@ public class WebRiskActivity extends BaseWebActivity {
 
     @Override
     public void onBackPressed() {
+        setResult(Constant.RISK_BACK_ACTIVITY);
         finish();
     }
 }

@@ -29,6 +29,7 @@ import com.zhsoft.fretting.ui.activity.user.SelfChooseActivity;
 import com.zhsoft.fretting.ui.activity.user.SettingActivity;
 import com.zhsoft.fretting.ui.activity.user.TransactionQueryActivity;
 import com.zhsoft.fretting.ui.adapter.user.MyFundRecyleAdapter;
+import com.zhsoft.fretting.utils.BigDecimalUtil;
 import com.zhsoft.fretting.utils.RuntimeHelper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -155,11 +156,15 @@ public class UserFragment extends XFragment<UserPresent> {
         headRightImgbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (RuntimeHelper.getInstance().isLogin()) {
-                    startActivity(SettingActivity.class);
-                } else {
+                if (!RuntimeHelper.getInstance().isLogin()) {
                     showToast("您尚未登录，请先登录");
+                    return;
                 }
+                if (!Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
+                    showToast("您还未开户，请先去开户");
+                    return;
+                }
+                startActivity(SettingActivity.class);
 
             }
         });
@@ -181,6 +186,10 @@ public class UserFragment extends XFragment<UserPresent> {
         selfChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
+                    showToast("您还未开户，请先去开户");
+                    return;
+                }
                 startActivity(SelfChooseActivity.class);
             }
         });
@@ -188,6 +197,10 @@ public class UserFragment extends XFragment<UserPresent> {
         timing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
+                    showToast("您还未开户，请先去开户");
+                    return;
+                }
                 Bundle bundle = new Bundle();
                 bundle.putString(Constant.ACTIVITY_NAME, Constant.MY_INVEST);
                 startActivity(MyInvestActivity.class, bundle);
@@ -197,6 +210,10 @@ public class UserFragment extends XFragment<UserPresent> {
         transaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
+                    showToast("您还未开户，请先去开户");
+                    return;
+                }
                 startActivity(TransactionQueryActivity.class);
             }
         });
@@ -204,6 +221,10 @@ public class UserFragment extends XFragment<UserPresent> {
         profit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
+                    showToast("您还未开户，请先去开户");
+                    return;
+                }
                 startActivity(BonusActivity.class);
             }
         });
@@ -211,6 +232,10 @@ public class UserFragment extends XFragment<UserPresent> {
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
+                    showToast("您还未开户，请先去开户");
+                    return;
+                }
                 startActivity(CancleOrderActivity.class);
             }
         });
@@ -224,7 +249,6 @@ public class UserFragment extends XFragment<UserPresent> {
                 startActivity(RegisterSecondActivity.class, bundle);
             }
         });
-
 
     }
 
@@ -276,13 +300,13 @@ public class UserFragment extends XFragment<UserPresent> {
         httpLoadingDialog.dismiss();
         if (resps != null) {
             //总资产
-            tvTotalAssets.setText(resps.getTotalAssets().setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+            tvTotalAssets.setText(BigDecimalUtil.bigdecimalToString(resps.getTotalAssets()));
             //昨日收益
-            tvYesterdayIncome.setText(resps.getEarningsLastDay().setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+            tvYesterdayIncome.setText(BigDecimalUtil.bigdecimalToString(resps.getEarningsLastDay()));
             //累计收益时间
             tvTimeAccumlate.setText("(" + resps.getYesterday() + ")累计收益(元)");
             //累计收益
-            tvAccumulateEarn.setText(resps.getCumulativeIncome().setScale(2, BigDecimal.ROUND_HALF_UP).toString());
+            tvAccumulateEarn.setText(BigDecimalUtil.bigdecimalToString(resps.getCumulativeIncome()));
 
             //持仓基金
             if (resps.getFundList() != null && resps.getFundList().size() > 0) {

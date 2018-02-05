@@ -21,6 +21,7 @@ import com.zhsoft.fretting.ui.activity.boot.WebRiskActivity;
 import com.zhsoft.fretting.utils.RuntimeHelper;
 
 import butterknife.BindView;
+import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
@@ -49,8 +50,8 @@ public class SettingActivity extends XActivity<SettingPresent> {
     @BindView(R.id.call_agent) TextView callAgent;
     /** 关于我们 */
     @BindView(R.id.about_us) TextView aboutUs;
-    /** 切换账户 */
-    @BindView(R.id.change_user) TextView changeUser;
+//    /** 切换账户 */
+//    @BindView(R.id.change_user) TextView changeUser;
     /** 安全退出 */
     @BindView(R.id.exit) Button exit;
 
@@ -60,8 +61,10 @@ public class SettingActivity extends XActivity<SettingPresent> {
     private String token;
     /** 用户编号 */
     private String userId;
-
+    /** 是否风险测评 */
     private String riskEvaluteStatus;
+    /** 加载圈 */
+    private HttpLoadingDialog httpLoadingDialog;
 
     @Override
 
@@ -76,9 +79,15 @@ public class SettingActivity extends XActivity<SettingPresent> {
 
     @Override
     public void initData(Bundle bundle) {
+        //设置标题
         headTitle.setText("设置");
+        //初始化加载圈
+        httpLoadingDialog = new HttpLoadingDialog(context);
+        //获取本地缓存
         token = App.getSharedPref().getString(Constant.TOKEN, "");
         userId = App.getSharedPref().getString(Constant.USERID, "");
+        //请求是否风险等级或是否做过风险等级
+        httpLoadingDialog.visible();
         getP().riskGrade(token, userId);
     }
 
@@ -113,7 +122,7 @@ public class SettingActivity extends XActivity<SettingPresent> {
         riskTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(riskEvaluteStatus!=null){
+                if (riskEvaluteStatus != null) {
                     if ("0".equals(riskEvaluteStatus)) {
                         //未测
                         Bundle bundle = new Bundle();
@@ -122,7 +131,7 @@ public class SettingActivity extends XActivity<SettingPresent> {
                     } else {
                         Bundle bundle = new Bundle();
                         bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.risk_dengji);
-                        startActivity(WebRiskActivity.class, bundle);
+                        startActivity(WebRiskActivity.class, bundle, Constant.WEB_RISK_ACTIVITY);
                     }
                 }
 
@@ -152,12 +161,12 @@ public class SettingActivity extends XActivity<SettingPresent> {
                 startActivity(WebPublicActivity.class, bundle);
             }
         });
-        changeUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(SwitchAccountActivity.class);
-            }
-        });
+//        changeUser.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(SwitchAccountActivity.class);
+//            }
+//        });
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -185,12 +194,34 @@ public class SettingActivity extends XActivity<SettingPresent> {
 
     }
 
-    public void requestRiskTestSuccess(RiskInfoResp data) {
+    /**
+     * 风险等级或是否做了风险测评 成功
+     *
+     * @param data
+     */
+    public void requestRiskSuccess(RiskInfoResp data) {
+        httpLoadingDialog.dismiss();
         riskEvaluteStatus = data.getRiskEvaluteStatus();
         if ("0".equals(riskEvaluteStatus)) {
             tvRiskGrade.setText("未测");
         } else {
             tvRiskGrade.setText(data.getRiskEvaluteVal());
+        }
+    }
+
+    /**
+     * 风险等级或是否做了风险测评 失败
+     */
+    public void requestRiskFail() {
+        httpLoadingDialog.dismiss();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        //从风险测评回来后刷新数据
+        if (requestCode == Constant.WEB_RISK_ACTIVITY && resultCode == Constant.RISK_BACK_ACTIVITY) {
+            getP().riskGrade(token, userId);
         }
     }
 }

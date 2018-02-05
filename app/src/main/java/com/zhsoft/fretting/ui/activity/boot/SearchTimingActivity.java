@@ -15,16 +15,15 @@ import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.present.boot.SearchPersent;
+import com.zhsoft.fretting.present.boot.SearchTimingPersent;
 import com.zhsoft.fretting.ui.adapter.boot.SearchHotListAdapter;
 import com.zhsoft.fretting.ui.adapter.boot.SearchRecycleAdapter;
-import com.zhsoft.fretting.ui.adapter.fund.FundContentRecycleAdapter;
 import com.zhsoft.fretting.ui.widget.StateView;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
-import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 import cn.droidlover.xdroidmvp.net.NetError;
 import cn.droidlover.xrecyclerview.RecyclerItemCallback;
@@ -36,10 +35,10 @@ import static android.view.View.VISIBLE;
 
 /**
  * 作者：sunnyzeng on 2018/1/10 17:15
- * 描述：全部基金搜索页面
+ * 描述：定投基金搜索页面
  */
 
-public class SearchActivity extends XActivity<SearchPersent> {
+public class SearchTimingActivity extends XActivity<SearchTimingPersent> {
     /** 搜索关键字 */
     @BindView(R.id.et_search_key) EditText etSearchKey;
     /** 取消 */
@@ -72,8 +71,8 @@ public class SearchActivity extends XActivity<SearchPersent> {
     }
 
     @Override
-    public SearchPersent newP() {
-        return new SearchPersent();
+    public SearchTimingPersent newP() {
+        return new SearchTimingPersent();
     }
 
     @Override
@@ -108,7 +107,7 @@ public class SearchActivity extends XActivity<SearchPersent> {
 
                     @Override
                     public void onLoadMore(int page) {
-                        getP().searchData(page, pageSize, getText(etSearchKey));
+                        getP().searchTimingData(page, pageSize, getText(etSearchKey));
                     }
                 });
 
@@ -145,7 +144,7 @@ public class SearchActivity extends XActivity<SearchPersent> {
                     contentLayout.setVisibility(VISIBLE);
 //                    xrvSearchList.setVisibility(VISIBLE);
                     llHot.setVisibility(GONE);
-                    getP().searchData(1, pageSize, getText(etSearchKey));
+                    getP().searchTimingData(1, pageSize, getText(etSearchKey));
                 } else {
                     //如果输入的内容为空，则显示热搜视图
                     ivDelete.setVisibility(GONE);
@@ -323,7 +322,7 @@ public class SearchActivity extends XActivity<SearchPersent> {
                     errorView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            getP().searchData(1, pageSize, getText(etSearchKey));
+                            getP().searchTimingData(1, pageSize, getText(etSearchKey));
                         }
                     });
                     break;

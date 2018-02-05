@@ -41,6 +41,7 @@ import static com.zhsoft.fretting.net.HttpContent.change_phone_index;
 import static com.zhsoft.fretting.net.HttpContent.change_phone_save;
 import static com.zhsoft.fretting.net.HttpContent.change_phone_sendcode;
 import static com.zhsoft.fretting.net.HttpContent.common_bank_list;
+import static com.zhsoft.fretting.net.HttpContent.find_fixed_fund_like;
 import static com.zhsoft.fretting.net.HttpContent.find_fund_like;
 import static com.zhsoft.fretting.net.HttpContent.fund_home;
 import static com.zhsoft.fretting.net.HttpContent.fund_invest_time;
@@ -241,6 +242,11 @@ public interface HttpUtil {
     @Headers("appType:Android")
     @POST(find_fund_like)
     Flowable<NewestFundResp> findFundLike(@Body CommonReqData reqData);
+
+    //搜索定投
+    @Headers("appType:Android")
+    @POST(find_fixed_fund_like)
+    Flowable<NewestFundResp> findFixedFundLike(@Body CommonReqData reqData);
 
     //基金定投
     @Headers("appType:Android")
