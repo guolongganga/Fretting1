@@ -165,7 +165,7 @@ public class ResultDetailOneActivity extends XActivity<ResultDetailOnePresent> {
      */
     public void requestDetailSuccess(ResultDetailResp resp) {
         httpLoadingDialog.dismiss();
-        //TODO 头部交易信息
+        //头部交易信息
         tvFundName.setText(resp.getRecord().getFund_name());
         tvFundAmount.setText(BigDecimalUtil.bigdecimalToString(resp.getRecord().getFund_amount()) + "元");
         tvBankName.setText(resp.getRecord().getJywater());

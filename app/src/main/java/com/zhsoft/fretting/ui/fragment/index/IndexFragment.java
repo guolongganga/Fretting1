@@ -491,6 +491,7 @@ public class IndexFragment extends XFragment<IndexPresent> {
     public void requestIndexDataFail() {
         swipeRefreshLayout.setRefreshing(false);
         httpLoadingDialog.dismiss();
+        errorView.setVisibility(View.VISIBLE);
     }
 
     private void startDetaiActivity(ProductModel model) {

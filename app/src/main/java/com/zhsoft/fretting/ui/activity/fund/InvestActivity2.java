@@ -167,7 +167,7 @@
 //                        .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
 //                            @Override
 //                            public void onFinish(String str) {
-//                                //TODO 判断密码是否正确
+//                                // 判断密码是否正确
 //                                fundBuyDialog.dismiss();
 //
 //                                if ("123456".equals(str)) {

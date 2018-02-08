@@ -145,7 +145,7 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
 //            @Override
 //            public void onClick(View view) {
 //                if ("完成".equals(headRight.getText().toString())) {
-//                    //TODO 保存邮箱信息
+//                    //保存邮箱信息
 //                    showToast("保存该信息");
 //                    //然后设置为不可编辑状态
 //                    email.setFocusable(false);

@@ -5,6 +5,7 @@ import com.google.gson.JsonSyntaxException;
 
 import org.json.JSONException;
 
+import java.net.ConnectException;
 import java.net.UnknownHostException;
 
 import io.reactivex.subscribers.ResourceSubscriber;
@@ -21,7 +22,7 @@ public abstract class ApiSubscriber<T extends IModel> extends ResourceSubscriber
         NetError error = null;
         if (e != null) {
             if (!(e instanceof NetError)) {
-                if (e instanceof UnknownHostException) {
+                if (e instanceof UnknownHostException || e instanceof ConnectException) {
                     error = new NetError(e, NetError.NoConnectError);
                 } else if (e instanceof JSONException
                         || e instanceof JsonParseException

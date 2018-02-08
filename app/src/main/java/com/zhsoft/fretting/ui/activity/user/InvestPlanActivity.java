@@ -42,6 +42,8 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
     @BindView(R.id.xrv_my_invest) XRecyclerView xrvMyInvest;
     /** 新增定投 */
     @BindView(R.id.btn_add_invest) Button btnAddInvest;
+    /** 暂无数据 */
+    @BindView(R.id.tv_empty) TextView tvmpty;
 //    /** 线 */
 //    @BindView(R.id.view_line) View viewLine;
 
@@ -175,7 +177,12 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
         httpLoadingDialog.dismiss();
         //刷新页面数据
         if (planResp.getResResult() != null && planResp.getResResult().size() > 0) {
+            xrvMyInvest.setVisibility(View.VISIBLE);
+            tvmpty.setText(View.GONE);
             getAdapter().addData(planResp.getResResult());
+        }else{
+            xrvMyInvest.setVisibility(View.GONE);
+            tvmpty.setText(View.VISIBLE);
         }
     }
 

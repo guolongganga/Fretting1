@@ -34,6 +34,7 @@ public class BankListActivity extends XActivity<BankListPresent> {
     @BindView(R.id.head_title) TextView headTitle;
     /** 银行列表 */
     @BindView(R.id.xrv_bank_list) XRecyclerView xrvBankList;
+    @BindView(R.id.tv_empty) TextView tvEmpty;
 
     private HttpLoadingDialog httpLoadingDialog;
 
@@ -88,7 +89,6 @@ public class BankListActivity extends XActivity<BankListPresent> {
                         intent.putExtra(Constant.CHOOSE_BANCK, model);
                         setResult(Constant.BANKLIST_RESULT_CODE, intent);
                         finish();
-//                        showToast(model.getBankName());
                         break;
                 }
             }
@@ -112,7 +112,12 @@ public class BankListActivity extends XActivity<BankListPresent> {
     public void bankListData(ArrayList<BankResp> data) {
         httpLoadingDialog.dismiss();
         if (data != null && data.size() > 0) {
+            xrvBankList.setVisibility(View.VISIBLE);
+            tvEmpty.setVisibility(View.GONE);
             getBankListAdapter().addData(data);
+        } else {
+            xrvBankList.setVisibility(View.GONE);
+            tvEmpty.setVisibility(View.VISIBLE);
         }
 
     }

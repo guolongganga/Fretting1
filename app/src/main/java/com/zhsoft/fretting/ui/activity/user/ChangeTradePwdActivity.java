@@ -115,7 +115,7 @@ public class ChangeTradePwdActivity extends XActivity<ChangeTradePwdPresent> {
                     showToast("两次密码不一致");
                     return;
                 }
-                //TODO 请求修改交易密码接口
+                //请求修改交易密码接口
                 httpLoadingDialog.visible();
                 getP().changePassword(token, userId, oldpwd, pwd, againpwd);
             }

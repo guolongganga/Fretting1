@@ -101,7 +101,7 @@ public class ChangeLoginPwdActivity extends XActivity<ChangeLoginPwdPresent> {
                     showToast("两次密码不一致");
                     return;
                 }
-                //TODO 请求修改登录密码接口
+                //请求修改登录密码接口
                 httpLoadingDialog.visible();
                 getP().changePassword(token, userId, pwdnumbe, pwdAgainnumbe);
             }

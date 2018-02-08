@@ -20,21 +20,31 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/ll_head_content"
         android:layout_marginBottom="@dimen/dimen_45"
-        android:overScrollMode="never"/>
+        android:overScrollMode="never"
+        android:visibility="visible"/>
 
     <!--<cn.droidlover.xrecyclerview.XRecyclerContentLayout-->
-        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-        <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
-        <!--android:id="@+id/content_layout"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent"-->
-        <!--android:layout_below="@id/ll_head_content"-->
-        <!--android:layout_marginBottom="@dimen/dimen_45"-->
-        <!--android:background="@color/white"-->
-        <!--app:recyclerBackgroundColor="@color/white"-->
-        <!--app:recyclerScrollbarNone="true"-->
-        <!--app:recyclerScrollbarStyle="outsideOverlay"-->
-        <!--app:x_emptyLayoutId="@layout/view_empty"/>-->
+    <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+    <!--xmlns:app="http://schemas.android.com/apk/res-auto"-->
+    <!--android:id="@+id/content_layout"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_below="@id/ll_head_content"-->
+    <!--android:layout_marginBottom="@dimen/dimen_45"-->
+    <!--android:background="@color/white"-->
+    <!--app:recyclerBackgroundColor="@color/white"-->
+    <!--app:recyclerScrollbarNone="true"-->
+    <!--app:recyclerScrollbarStyle="outsideOverlay"-->
+    <!--app:x_emptyLayoutId="@layout/view_empty"/>-->
+    <TextView
+        android:id="@+id/tv_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/ll_head_content"
+        android:gravity="center"
+        android:text="暂无数据"
+        android:visibility="gone"
+        />
 
     <Button
         android:id="@+id/btn_add_invest"

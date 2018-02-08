@@ -185,7 +185,7 @@ public class MyInvestActivity extends XActivity<MyInvestPresent> {
                         tvFund.setText(fundList.get(fundSelector).getContent());
                         //如果选项改变
                         if (!lastChooseFund.equals(getText(tvFund))) {
-                            //TODO 需要传 fundList.get(fundSelector).getCode()，statusList.get(position).getCode()
+                            //需要传 fundList.get(fundSelector).getCode()，statusList.get(position).getCode()
                             httpLoadingDialog.visible();
                             codeInfo(fundSelector, statusSelector);
                             getP().myInvestData(1, pageSize, token, userId, fundSelectorCode, statusSelectorCode, null);
@@ -210,7 +210,7 @@ public class MyInvestActivity extends XActivity<MyInvestPresent> {
                         tvRange.setText(statusList.get(statusSelector).getContent());
                         //如果选项改变
                         if (!lastChooseStatus.equals(getText(tvRange))) {
-                            //TODO 需要传 fundList.get(fundSelector).getCode()，statusList.get(position).getCode()
+                            // 需要传 fundList.get(fundSelector).getCode()，statusList.get(position).getCode()
                             httpLoadingDialog.visible();
                             codeInfo(fundSelector, statusSelector);
                             getP().myInvestData(1, pageSize, token, userId, fundSelectorCode, statusSelectorCode, null);

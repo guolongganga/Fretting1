@@ -182,7 +182,6 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             @Override
             public void onReceivedSslError(WebView view,
                                            SslErrorHandler handler, SslError error) {
-                // TODO Auto-generated method stub
                 // handler.cancel();// Android默认的处理方式
                 handler.proceed();// 接受所有网站的证书
                 // handleMessage(Message msg);// 进行其他处理
@@ -383,7 +382,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             token = App.getSharedPref().getString(Constant.TOKEN, "");
             //用户编号
             userId = App.getSharedPref().getString(Constant.USERID, "");
-            //TODO 判断是否能够定投
+            //判断是否能够定投
             getP().investTime(token, userId, fundCode, fundName);
         } else {
             //跳转回登录界面
@@ -413,7 +412,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      * 交易记录
      */
     private void baseToRecord() {
-        //TODO 需要传fundCode userId token
+        //需要传fundCode
         Bundle bundle = new Bundle();
         bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
         startActivity(TransactionQuerySingleActivity.class, bundle);
@@ -434,7 +433,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      * 返回首页
      */
     private void baseToAppIndex() {
-        //TODO 返回首页
+        //返回首页
         EventBus.getDefault().post(new ChangeTabEvent(Constant.MAIN_INDEX));
         startActivity(MainActivity.class);
         finish();

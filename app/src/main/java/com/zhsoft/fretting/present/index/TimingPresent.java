@@ -52,8 +52,7 @@ public class TimingPresent extends XPresent<TimingFragment> {
                 .subscribe(new ApiSubscriber<NewestFundResp>() {
                     @Override
                     protected void onFail(NetError error) {
-                        getV().showError();
-                        getV().showToast("请求失败");
+                        getV().showError(error);
                     }
 
                     @Override

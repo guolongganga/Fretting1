@@ -16,6 +16,7 @@ import com.zhsoft.fretting.ui.activity.user.BonusActivity;
 import com.zhsoft.fretting.ui.activity.user.BonusChangeActivity;
 import com.zhsoft.fretting.ui.adapter.fund.FundContentRecycleAdapter;
 import com.zhsoft.fretting.ui.adapter.user.UpdateBonusRecycleAdapter;
+import com.zhsoft.fretting.ui.widget.StateView;
 
 import java.util.List;
 
@@ -36,6 +37,7 @@ public class BonusModeFragment extends XFragment<BonusModePresent> {
     @BindView(R.id.content_layout) XRecyclerContentLayout contentLayout;
     private UpdateBonusRecycleAdapter adapter;
     private final int pageSize = 10;
+    private StateView errorView;
 
     @Override
     public int getLayoutId() {
@@ -75,6 +77,10 @@ public class BonusModeFragment extends XFragment<BonusModePresent> {
                         getP().loadBonusTypeData(page, pageSize);
                     }
                 });
+        if (errorView == null) {
+            errorView = new StateView(context);
+        }
+        contentLayout.errorView(errorView);
 
         contentLayout.loadingView(View.inflate(getContext(), R.layout.view_loading, null));
         contentLayout.getRecyclerView().useDefLoadMoreView();
@@ -92,15 +98,19 @@ public class BonusModeFragment extends XFragment<BonusModePresent> {
                     case UpdateBonusRecycleAdapter.ITEM_CLICK:
                         //跳转 分红方式变更 TODO 需要传递参数
                         Bundle bundle = new Bundle();
-                        bundle.putParcelable(Constant.ACTIVITY_OBJECT,model);
-                        startActivity(BonusChangeActivity.class,bundle);
+                        bundle.putParcelable(Constant.ACTIVITY_OBJECT, model);
+                        startActivity(BonusChangeActivity.class, bundle);
                         break;
                 }
             }
         });
+        errorView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getP().loadBonusTypeData(1, pageSize);
+            }
+        });
     }
-
-
 
 
     /**

@@ -10,6 +10,7 @@ import com.zhsoft.fretting.model.user.TransactionResp;
 import com.zhsoft.fretting.present.user.TransactionSingleContentPresent;
 import com.zhsoft.fretting.ui.activity.user.ResultDetailOneActivity;
 import com.zhsoft.fretting.ui.adapter.user.TransactionContentRecycleAdapter;
+import com.zhsoft.fretting.ui.widget.StateView;
 
 import java.util.List;
 
@@ -42,6 +43,7 @@ public class TransactionSingleContentFragment extends XFragment<TransactionSingl
     private HttpLoadingDialog httpLoadingDialog;
     /** 基金编号 */
     private String fundCode;
+    private StateView errorView;
 
     @Override
     public int getLayoutId() {
@@ -89,6 +91,11 @@ public class TransactionSingleContentFragment extends XFragment<TransactionSingl
                     }
                 });
 
+        if (errorView == null) {
+            errorView = new StateView(context);
+        }
+        contentLayout.errorView(errorView);
+
         contentLayout.loadingView(View.inflate(getContext(), R.layout.view_loading, null));
 //        contentLayout.showLoading();
         contentLayout.getRecyclerView().useDefLoadMoreView();
@@ -113,6 +120,12 @@ public class TransactionSingleContentFragment extends XFragment<TransactionSingl
                         startActivity(ResultDetailOneActivity.class, bundle);
                         break;
                 }
+            }
+        });
+        errorView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getP().loadTransactionSingleData(token, userId, 1, pageSize, tabType, fundCode);
             }
         });
     }

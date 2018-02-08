@@ -10,6 +10,7 @@ import com.zhsoft.fretting.model.user.TransactionResp;
 import com.zhsoft.fretting.present.user.TransactionContentPresent;
 import com.zhsoft.fretting.ui.activity.user.ResultDetailOneActivity;
 import com.zhsoft.fretting.ui.adapter.user.TransactionContentRecycleAdapter;
+import com.zhsoft.fretting.ui.widget.StateView;
 
 import java.util.List;
 
@@ -40,6 +41,7 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
     private String userId;
     /** 加载圈 */
     private HttpLoadingDialog httpLoadingDialog;
+    private StateView errorView;
 
     @Override
     public int getLayoutId() {
@@ -70,21 +72,24 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
         contentLayout.getRecyclerView().setAdapter(getAdapter());
         contentLayout.getRecyclerView().horizontalDivider(R.color.color_e7e7e7, R.dimen.dimen_1);  //设置divider
         //0表示tab的类型
-        getP().loadTransactionData(token,userId,1, pageSize, tabType);
+        getP().loadTransactionData(token, userId, 1, pageSize, tabType);
 
         contentLayout.getRecyclerView()
                 .setOnRefreshAndLoadMoreListener(new XRecyclerView.OnRefreshAndLoadMoreListener() {
                     @Override
                     public void onRefresh() {
-                        getP().loadTransactionData(token,userId,1, pageSize, tabType);
+                        getP().loadTransactionData(token, userId, 1, pageSize, tabType);
                     }
 
                     @Override
                     public void onLoadMore(int page) {
-                        getP().loadTransactionData(token,userId,page, pageSize, tabType);
+                        getP().loadTransactionData(token, userId, page, pageSize, tabType);
                     }
                 });
-
+        if (errorView == null) {
+            errorView = new StateView(context);
+        }
+        contentLayout.errorView(errorView);
         contentLayout.loadingView(View.inflate(getContext(), R.layout.view_loading, null));
 //        contentLayout.showLoading();
         contentLayout.getRecyclerView().useDefLoadMoreView();
@@ -103,12 +108,18 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
                         //跳转 结果页
                         Bundle bundle = new Bundle();
                         //交易流水号
-                        bundle.putString(Constant.INVEST_PROTOCOL_ID,model.getAllot_no());
+                        bundle.putString(Constant.INVEST_PROTOCOL_ID, model.getAllot_no());
                         //TODO 得写动态的
                         bundle.putString(Constant.INVEST_RECORD_STATUS, "定投成功");
                         startActivity(ResultDetailOneActivity.class, bundle);
                         break;
                 }
+            }
+        });
+        errorView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getP().loadTransactionData(token, userId, 1, pageSize, tabType);
             }
         });
     }

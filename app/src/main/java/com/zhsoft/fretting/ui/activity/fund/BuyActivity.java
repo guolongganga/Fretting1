@@ -153,7 +153,7 @@ public class BuyActivity extends XActivity<BuyPresent> {
                     showToast("最小投资金额为1000元");
                     return;
                 }
-                //TODO 弹出框
+                //T弹出框
                 if (fundBuyDialog == null) {
                     fundBuyDialog = new FundBuyDialog
                             .Builder(context)
@@ -188,7 +188,7 @@ public class BuyActivity extends XActivity<BuyPresent> {
             String isChange = data.getStringExtra(Constant.CHANGE_BANK);
             //如果修改了银行卡就刷新本页面数据
             if (Constant.CHANGE_BANK_SUCCESS.equals(isChange)) {
-                //TODO 获取银行卡数据
+                //获取银行卡数据
                 httpLoadingDialog.visible();
                 getP().buyFund(token, userId, fundCode);
             }

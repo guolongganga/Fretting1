@@ -144,7 +144,7 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
 //                    showToast("请输入正确的手机号码");
 //                    return;
 //                }
-//                //TODO 短信验证码
+//                //短信验证码
 //                getVerifyCode.start();
 //
 //            }

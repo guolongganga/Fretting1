@@ -15,12 +15,14 @@ import com.zhsoft.fretting.present.index.TimingPresent;
 import com.zhsoft.fretting.ui.activity.boot.FundDetailWebActivity;
 import com.zhsoft.fretting.ui.adapter.index.TimingRecycleAdapter;
 import com.zhsoft.fretting.ui.widget.PopShow;
+import com.zhsoft.fretting.ui.widget.StateView;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
+import cn.droidlover.xdroidmvp.net.NetError;
 import cn.droidlover.xrecyclerview.RecyclerAdapter;
 import cn.droidlover.xrecyclerview.RecyclerItemCallback;
 import cn.droidlover.xrecyclerview.XRecyclerContentLayout;
@@ -45,6 +47,7 @@ public class TimingFragment extends XFragment<TimingPresent> {
     private final int pageSize = 15;
     /** 基金类型 */
     private String tabType;
+    private StateView errorView;
 
     @Override
     public int getLayoutId() {
@@ -91,6 +94,11 @@ public class TimingFragment extends XFragment<TimingPresent> {
                         getP().loadData(page, pageSize, tabType, list.get(isSelector).getCode());
                     }
                 });
+        if (errorView == null) {
+            errorView = new StateView(context);
+        }
+        contentLayout.errorView(errorView);
+
 
         contentLayout.loadingView(View.inflate(getContext(), R.layout.view_loading, null));
 //        contentLayout.showLoading();
@@ -208,7 +216,41 @@ public class TimingFragment extends XFragment<TimingPresent> {
     /**
      * 数据请求失败
      */
-    public void showError() {
+    public void showError(NetError error) {
+        if (error != null) {
+            switch (error.getType()) {
+                case NetError.ParseError:
+                    errorView.setMsg("数据解析异常");
+                    break;
+
+                case NetError.AuthError:
+                    errorView.setMsg("身份验证异常");
+                    break;
+
+                case NetError.BusinessError:
+                    errorView.setMsg("业务异常");
+                    break;
+
+                case NetError.NoConnectError:
+                    errorView.setMsg("网络无连接，点击重试");
+                    errorView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            getP().loadData(1, pageSize, tabType, list.get(isSelector).getCode());
+                        }
+                    });
+                    break;
+
+                case NetError.NoDataError:
+                    errorView.setMsg("数据为空");
+                    break;
+
+                case NetError.OtherError:
+                    errorView.setMsg("其他异常");
+                    break;
+            }
+            contentLayout.showError();
+        }
         contentLayout.showError();
     }
 }

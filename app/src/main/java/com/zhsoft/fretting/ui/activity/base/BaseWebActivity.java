@@ -129,7 +129,6 @@ public abstract class BaseWebActivity<P> extends XActivity {
             @Override
             public void onReceivedSslError(WebView view,
                                            SslErrorHandler handler, SslError error) {
-                // TODO Auto-generated method stub
                 // handler.cancel();// Android默认的处理方式
                 handler.proceed();// 接受所有网站的证书
                 // handleMessage(Message msg);// 进行其他处理
@@ -214,7 +213,7 @@ public abstract class BaseWebActivity<P> extends XActivity {
      * 返回首页
      */
     private void baseToAppIndex() {
-        //TODO 返回首页
+        //返回首页
         EventBus.getDefault().post(new ChangeTabEvent(Constant.MAIN_INDEX));
         startActivity(MainActivity.class);
         finish();

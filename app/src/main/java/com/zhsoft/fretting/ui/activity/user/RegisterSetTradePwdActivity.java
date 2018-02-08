@@ -105,7 +105,7 @@ public class RegisterSetTradePwdActivity extends XActivity {
                     showToast("两次密码不一致");
                     return;
                 }
-                //TODO 提交设置交易密码接口，成功则跳转开户成功页面
+                //提交设置交易密码接口，成功则跳转开户成功页面
                 startActivity(RegisterSuccessActivity.class);
 
             }

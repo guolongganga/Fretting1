@@ -177,10 +177,9 @@ public class SettingActivity extends XActivity<SettingPresent> {
                 App.getSharedPref().putString(Constant.USER_CERTNO, "");
                 App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, "");
 //                EventBus.getDefault().post(new OpenAccountEvent());
-
+                //更新登录状态
                 RuntimeHelper.getInstance().setLogin(false);
 
-                //TODO 更新登录状态
                 showToast("安全退出");
                 finish();
             }
