@@ -20,9 +20,11 @@
 
             <TextView
                 android:id="@+id/tv_fund_name"
-                android:layout_width="wrap_content"
+                android:layout_width="120dp"
                 android:layout_height="wrap_content"
                 android:text="xxxxxxxxx基金"
+                android:ellipsize="end"
+                android:singleLine="true"
                 android:textColor="@color/color_333333"
                 android:textSize="@dimen/dimen_18"
                 android:textStyle="bold"/>

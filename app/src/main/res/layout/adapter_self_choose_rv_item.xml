@@ -5,6 +5,7 @@
                 android:layout_height="70dp"
                 android:layout_marginLeft="@dimen/dimen_15"
                 android:layout_marginRight="@dimen/dimen_15">
+    <!--自选基金-->
 
     <RelativeLayout
         android:layout_width="wrap_content"
@@ -17,8 +18,8 @@
             android:layout_width="120dp"
             android:layout_height="30dp"
             android:ellipsize="end"
-            android:singleLine="true"
             android:gravity="left"
+            android:singleLine="true"
             android:text=""
             android:textColor="@color/color_333333"/>
 

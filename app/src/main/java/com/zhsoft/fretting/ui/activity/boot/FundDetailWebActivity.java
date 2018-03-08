@@ -29,7 +29,7 @@ import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
-import com.zhsoft.fretting.present.fund.FundDetailPresent;
+import com.zhsoft.fretting.present.boot.FundDetailPresent;
 import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.ui.activity.fund.BuyActivity;
 import com.zhsoft.fretting.ui.activity.fund.InvestActivity;

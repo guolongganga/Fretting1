@@ -153,7 +153,7 @@ public class BuyActivity extends XActivity<BuyPresent> {
                     showToast("最小投资金额为1000元");
                     return;
                 }
-                //T弹出框
+                //弹出框
                 if (fundBuyDialog == null) {
                     fundBuyDialog = new FundBuyDialog
                             .Builder(context)

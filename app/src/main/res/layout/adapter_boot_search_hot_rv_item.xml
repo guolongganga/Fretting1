@@ -21,6 +21,8 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/dimen_10"
             android:layout_marginRight="@dimen/dimen_10"
+            android:ellipsize="end"
+            android:singleLine="true"
             android:text="招商安泰股票"
             android:textColor="@color/color_696969"
             android:textSize="@dimen/text_size_14"/>

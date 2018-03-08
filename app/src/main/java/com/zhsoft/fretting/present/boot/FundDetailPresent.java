@@ -1,4 +1,4 @@
-package com.zhsoft.fretting.present.fund;
+package com.zhsoft.fretting.present.boot;
 
 import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.InvestResp;
@@ -22,6 +22,12 @@ import cn.droidlover.xdroidmvp.net.XApi;
 
 public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
 
+    /**
+     * 购买基金验证
+     * @param token
+     * @param userId
+     * @param fund_code
+     */
     public void buyFund(String token, String userId, String fund_code) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
@@ -55,6 +61,13 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
 
     }
 
+    /**
+     * 基金定投
+     * @param token
+     * @param userId
+     * @param fund_code
+     * @param fund_name
+     */
     public void investTime(String token, String userId, String fund_code,String fund_name) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
