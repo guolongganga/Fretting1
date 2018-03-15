@@ -14,7 +14,6 @@ import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
-import com.zhsoft.fretting.present.boot.SearchPersent;
 import com.zhsoft.fretting.present.boot.SearchTimingPersent;
 import com.zhsoft.fretting.ui.adapter.boot.SearchHotListAdapter;
 import com.zhsoft.fretting.ui.adapter.boot.SearchRecycleAdapter;
@@ -96,7 +95,7 @@ public class SearchTimingActivity extends XActivity<SearchTimingPersent> {
 
         contentLayout.getRecyclerView().verticalLayoutManager(context);
         contentLayout.getRecyclerView().setAdapter(getSearchListAdapter());
-        contentLayout.getRecyclerView().horizontalDivider(R.color.color_e7e7e7, R.dimen.dimen_1);  //设置divider
+        contentLayout.getRecyclerView().horizontalDivider(R.color.color_F9F9F9, R.dimen.dimen_1);  //设置divider
 
         contentLayout.getRecyclerView()
                 .setOnRefreshAndLoadMoreListener(new XRecyclerView.OnRefreshAndLoadMoreListener() {

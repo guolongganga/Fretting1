@@ -123,7 +123,7 @@ public class MyInvestActivity extends XActivity<MyInvestPresent> {
 
         contentLayout.getRecyclerView().verticalLayoutManager(context);
         contentLayout.getRecyclerView().setAdapter(getAdapter());
-        contentLayout.getRecyclerView().horizontalDivider(R.color.color_e7e7e7, R.dimen.dimen_1);  //设置divider
+        contentLayout.getRecyclerView().horizontalDivider(R.color.color_F9F9F9, R.dimen.dimen_1);  //设置divider
 
         httpLoadingDialog.visible();
         getP().myInvestData(1, pageSize, token, userId, null, null, isFirst);

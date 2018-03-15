@@ -7,7 +7,6 @@ import android.widget.TextView;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.ApplyBaseInfo;
-import com.zhsoft.fretting.model.fund.FundResp;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
@@ -78,7 +77,7 @@ public class TimingFragment extends XFragment<TimingPresent> {
         contentLayout.getRecyclerView().verticalLayoutManager(context);
         contentLayout.getRecyclerView()
                 .setAdapter(getAdapter());
-        contentLayout.getRecyclerView().horizontalDivider(R.color.color_e7e7e7, R.dimen.dimen_1);  //设置divider
+        contentLayout.getRecyclerView().horizontalDivider(R.color.color_F9F9F9, R.dimen.dimen_1);  //设置divider
 
         getP().loadData(pageno, pageSize, tabType, list.get(isSelector).getCode());
 

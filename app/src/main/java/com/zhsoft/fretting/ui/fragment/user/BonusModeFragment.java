@@ -5,16 +5,9 @@ import android.view.View;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.model.user.TransactionResp;
 import com.zhsoft.fretting.model.user.UpdateBonusResp;
-import com.zhsoft.fretting.net.Api;
-import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.present.user.BonusModePresent;
-import com.zhsoft.fretting.present.user.TransactionContentPresent;
-import com.zhsoft.fretting.ui.activity.boot.FundDetailWebActivity;
-import com.zhsoft.fretting.ui.activity.user.BonusActivity;
 import com.zhsoft.fretting.ui.activity.user.BonusChangeActivity;
-import com.zhsoft.fretting.ui.adapter.fund.FundContentRecycleAdapter;
 import com.zhsoft.fretting.ui.adapter.user.UpdateBonusRecycleAdapter;
 import com.zhsoft.fretting.ui.widget.StateView;
 
@@ -61,7 +54,7 @@ public class BonusModeFragment extends XFragment<BonusModePresent> {
 
         contentLayout.getRecyclerView().verticalLayoutManager(context);
         contentLayout.getRecyclerView().setAdapter(getAdapter());
-        contentLayout.getRecyclerView().horizontalDivider(R.color.color_e7e7e7, R.dimen.dimen_1);  //设置divider
+        contentLayout.getRecyclerView().horizontalDivider(R.color.color_F9F9F9, R.dimen.dimen_1);  //设置divider
         //0表示tab的类型
         getP().loadBonusTypeData(1, pageSize);
 

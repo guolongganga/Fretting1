@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#2877d3</color>
-    <color name="colorPrimaryDark">#2877d3</color>
+    <color name="colorPrimary">#A81C00</color>
+    <color name="colorPrimaryDark">#A81C00</color>
     <color name="colorAccent">#FF4081</color>
 
     <color name="white">#ffffff</color>
     <color name="black">#ff000000</color>
 
-    <!--默认浅戏线颜色-->
-    <color name="color_e7e7e7">#e7e7e7</color>
     <color name="color_f7f7f7">#f7f7f7</color>
     <color name="color_divider">#eeeeee</color>
     <color name="color_eaeaea">#eaeaea</color>
 
     <!--导航栏字体颜色 主色调-->
-    <color name="color_main">#2877D3</color>
+    <color name="color_main">#A81C00</color>
     <color name="color_main_tint">#6CA7ED</color>
     <color name="color_1862b7">#1862B7</color>
 
@@ -24,14 +22,12 @@
     <color name="color_f7182d">#f7182d</color>
     <color name="color_ff6633">#ff6633</color>
     <color name="color_666666">#666666</color>
-    <color name="color_333333">#333333</color>
     <color name="color_3e3e3e">#3e3e3e</color>
     <color name="color_696969">#696969</color>
     <!--半透明灰色-->
     <color name="color_80696969">#80696969</color>
     <color name="color_text_333">#333333</color>
     <color name="color999999">#999999</color>
-    <color name="color_444444">#444444</color>
     <!--未登录页面背景色-->
     <color name="color_f7f8f8">#f7f8f8</color>
 
@@ -40,5 +36,21 @@
     <color name="color_line_dividing">#ecedf1</color>
     <!--弹框背景色-->
     <color name="color_67">#a0abbb</color>
+
+    <!--颜色-->
+    <color name="color_80FFFFFF">#80FFFFFF</color>
+    <color name="color_FFFFFF">#FFFFFF</color>
+    <color name="color_38000000">#38000000</color>
+    <color name="color_4D7BFE">#4D7BFE</color>
+    <color name="color_DCDCDC">#DCDCDC</color>
+
+    <!--默认浅细线颜色-->
+    <color name="color_F9F9F9">#F9F9F9</color>
+    <color name="color_F8F8F8">#F8F8F8</color>
+
+    <!--字体颜色-->
+    <color name="color_444444">#444444</color>
+    <color name="color_333333">#333333</color>
+    <color name="color_A4A4A4">#A4A4A4</color>
 
 </resources>

@@ -34,7 +34,33 @@ public class RateStyleUtil {
                 //rate大于或等于0
                 stringBuffer.insert(0, "+");
                 stringBuffer.append("%");
-                textView.setTextColor(context.getResources().getColor(R.color.color_f7182d));
+                textView.setTextColor(context.getResources().getColor(R.color.color_main));
+            }
+            textView.setText(stringBuffer.toString());
+        }else{
+            textView.setText("");
+        }
+    }
+
+    /**
+     * 利率的样式 不需要加%
+     *
+     * @param context
+     * @param textView
+     * @param rate
+     */
+    public static void rateStyleNoPer(Context context, TextView textView, BigDecimal rate) {
+        if (rate != null) {
+            int i = rate.compareTo(BigDecimal.ZERO);
+            String strRate = BigDecimalUtil.bigdecimalToString(rate);
+            StringBuffer stringBuffer = new StringBuffer(strRate);
+            if (i == -1) {
+                //rate小于0 绿色
+                textView.setTextColor(context.getResources().getColor(R.color.x_green));
+            } else {
+                //rate大于或等于0
+                stringBuffer.insert(0, "+");
+                textView.setTextColor(context.getResources().getColor(R.color.color_main));
             }
             textView.setText(stringBuffer.toString());
         }else{
@@ -60,7 +86,7 @@ public class RateStyleUtil {
             } else {
                 //rate大于或等于0
                 stringBuffer.insert(0, "+");
-                textView.setTextColor(context.getResources().getColor(R.color.color_f7182d));
+                textView.setTextColor(context.getResources().getColor(R.color.color_main));
             }
             textView.setText(stringBuffer.toString());
         }else{

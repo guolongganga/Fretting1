@@ -62,7 +62,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_01"
-        android:background="@color/color_e7e7e7" />
+        android:background="@color/color_F9F9F9" />
 
     <cn.droidlover.xrecyclerview.XRecyclerView
         android:id="@+id/xrv_account"

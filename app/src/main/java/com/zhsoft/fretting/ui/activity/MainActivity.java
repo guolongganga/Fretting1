@@ -13,7 +13,6 @@ import android.widget.TextView;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.ChangeTabEvent;
-import com.zhsoft.fretting.event.OpenAccountEvent;
 import com.zhsoft.fretting.ui.fragment.fund.FundFragment;
 import com.zhsoft.fretting.ui.fragment.user.UserFragment;
 import com.zhsoft.fretting.ui.fragment.index.IndexFragment;
@@ -156,7 +155,7 @@ public class MainActivity extends XActivity {
                     drawable = getResources().getDrawable(R.drawable.tab_index);
 
                 } else if (idx == 1) {
-                    drawable = getResources().getDrawable(R.drawable.tab_ticket);
+                    drawable = getResources().getDrawable(R.drawable.tab_fund);
                 } else if (idx == 2) {
                     drawable = getResources().getDrawable(R.drawable.tab_user);
                 }

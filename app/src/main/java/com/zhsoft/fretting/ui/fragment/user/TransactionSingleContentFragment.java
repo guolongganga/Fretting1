@@ -74,7 +74,7 @@ public class TransactionSingleContentFragment extends XFragment<TransactionSingl
 
         contentLayout.getRecyclerView().verticalLayoutManager(context);
         contentLayout.getRecyclerView().setAdapter(getAdapter());
-        contentLayout.getRecyclerView().horizontalDivider(R.color.color_e7e7e7, R.dimen.dimen_1);  //设置divider
+        contentLayout.getRecyclerView().horizontalDivider(R.color.color_F9F9F9, R.dimen.dimen_1);  //设置divider
         //0表示tab的类型
         getP().loadTransactionSingleData(token, userId, 1, pageSize, tabType, fundCode);
 

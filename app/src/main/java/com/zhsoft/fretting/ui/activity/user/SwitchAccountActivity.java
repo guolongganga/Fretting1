@@ -56,7 +56,7 @@ public class SwitchAccountActivity extends XActivity<SwitchAccountPresent> {
     @Override
     public void initData(Bundle bundle) {
 
-        xRecyclerView.horizontalDivider(R.color.color_e7e7e7, R.dimen.dimen_01);//设置divider
+        xRecyclerView.horizontalDivider(R.color.color_F9F9F9, R.dimen.dimen_01);//设置divider
         xRecyclerView.verticalLayoutManager(context);
 
         getAdapter();

@@ -17,14 +17,12 @@ import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.present.boot.SearchPersent;
 import com.zhsoft.fretting.ui.adapter.boot.SearchHotListAdapter;
 import com.zhsoft.fretting.ui.adapter.boot.SearchRecycleAdapter;
-import com.zhsoft.fretting.ui.adapter.fund.FundContentRecycleAdapter;
 import com.zhsoft.fretting.ui.widget.StateView;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
-import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 import cn.droidlover.xdroidmvp.net.NetError;
 import cn.droidlover.xrecyclerview.RecyclerItemCallback;
@@ -97,7 +95,7 @@ public class SearchActivity extends XActivity<SearchPersent> {
 
         contentLayout.getRecyclerView().verticalLayoutManager(context);
         contentLayout.getRecyclerView().setAdapter(getSearchListAdapter());
-        contentLayout.getRecyclerView().horizontalDivider(R.color.color_e7e7e7, R.dimen.dimen_1);  //设置divider
+        contentLayout.getRecyclerView().horizontalDivider(R.color.color_F9F9F9, R.dimen.dimen_1);  //设置divider
 
         contentLayout.getRecyclerView()
                 .setOnRefreshAndLoadMoreListener(new XRecyclerView.OnRefreshAndLoadMoreListener() {

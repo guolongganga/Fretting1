@@ -36,7 +36,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:drawableTop="@drawable/tab_ticket"
+            android:drawableTop="@drawable/tab_fund"
             android:gravity="center"
             android:text="基金"
             android:textColor="@color/tab_text_color"

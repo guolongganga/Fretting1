@@ -45,5 +45,5 @@
         android:id="@+id/view_line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_1"
-        android:background="@color/color_e7e7e7"/>
+        android:background="@color/color_F9F9F9"/>
 </LinearLayout>

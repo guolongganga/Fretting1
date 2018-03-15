@@ -2,7 +2,7 @@ package com.zhsoft.fretting.event;
 
 /**
  * 作者：sunnyzeng on 2018/1/9 14:29
- * 描述：
+ * 描述：切换主页tab
  */
 
 public class ChangeTabEvent {

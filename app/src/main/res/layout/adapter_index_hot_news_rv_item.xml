@@ -51,6 +51,6 @@
         android:layout_height="@dimen/dimen_1"
         android:layout_below="@id/iv_news"
         android:layout_marginTop="@dimen/dimen_15"
-        android:background="@color/color_e7e7e7"/>
+        android:background="@color/color_F9F9F9"/>
 
 </RelativeLayout>

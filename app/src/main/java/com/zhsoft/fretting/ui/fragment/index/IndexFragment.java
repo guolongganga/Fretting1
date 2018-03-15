@@ -60,7 +60,7 @@ public class IndexFragment extends XFragment<IndexPresent> {
     TextView popularityMore;
     /** 明星基金 */
     @BindView(R.id.ll_star)
-    LinearLayout llStar;
+    RelativeLayout llStar;
     /** 明星基金 收益率 */
     @BindView(R.id.tv_seven_earnings)
     TextView tvSevenEarnings;
@@ -434,7 +434,7 @@ public class IndexFragment extends XFragment<IndexPresent> {
             //明星基金
             if (data.getStarFund() != null) {
                 startModel = data.getStarFund();
-                RateStyleUtil.rateStyle(context, tvSevenEarnings, startModel.getFund_rose());
+                RateStyleUtil.rateStyleNoPer(context, tvSevenEarnings, startModel.getFund_rose());
 //                tvSevenEarnings.setText(BigDecimalUtil.bigdecimalToString() + "%");
                 tvStarRateDesc.setText(startModel.getRiseTermDesc());
                 tvWanarnings.setText(startModel.getFund_name());

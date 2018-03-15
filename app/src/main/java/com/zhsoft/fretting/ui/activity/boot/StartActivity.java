@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.ui.activity.boot;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -48,6 +49,12 @@ public class StartActivity extends XActivity {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+        //解决Android 8.0 上每次回到桌面都会启动 启动界面
+        if ((getIntent().getFlags() & Intent.FLAG_ACTIVITY_BROUGHT_TO_FRONT) > 0) {
+            /**为了防止重复启动多个闪屏页面**/
+            finish();
+            return;
+        }
         setTranslucentStatus(false);
         boolean firstUse = App.getSharedPref().getBoolean(Constant.FIRST_USE, true);
         if (firstUse) {

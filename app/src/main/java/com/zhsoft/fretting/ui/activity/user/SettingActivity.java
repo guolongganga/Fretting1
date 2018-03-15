@@ -65,6 +65,8 @@ public class SettingActivity extends XActivity<SettingPresent> {
     private String riskEvaluteStatus;
     /** 加载圈 */
     private HttpLoadingDialog httpLoadingDialog;
+    /** 是否开户 */
+    private String isOpenAccount;
 
     @Override
 
@@ -86,6 +88,8 @@ public class SettingActivity extends XActivity<SettingPresent> {
         //获取本地缓存
         token = App.getSharedPref().getString(Constant.TOKEN, "");
         userId = App.getSharedPref().getString(Constant.USERID, "");
+        //获得本地缓存的开户标识
+        isOpenAccount = App.getSharedPref().getString(Constant.IS_OPEN_ACCOUNT, "");
         //请求是否风险等级或是否做过风险等级
         httpLoadingDialog.visible();
         getP().riskGrade(token, userId);
@@ -98,30 +102,50 @@ public class SettingActivity extends XActivity<SettingPresent> {
         personinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
+                    showToast("您还未开户，请先去开户");
+                    return;
+                }
                 startActivity(PersonInfoActivity.class);
             }
         });
         phone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
+                    showToast("您还未开户，请先去开户");
+                    return;
+                }
                 startActivity(PhoneActivity.class);
             }
         });
         passwordManager.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
+                    showToast("您还未开户，请先去开户");
+                    return;
+                }
                 startActivity(ChangePwdActivity.class);
             }
         });
         bankcard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
+                    showToast("您还未开户，请先去开户");
+                    return;
+                }
                 startActivity(BankCardActivity.class);
             }
         });
         riskTest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (!Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
+                    showToast("您还未开户，请先去开户");
+                    return;
+                }
                 if (riskEvaluteStatus != null) {
                     if ("0".equals(riskEvaluteStatus)) {
                         //未测

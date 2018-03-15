@@ -142,6 +142,6 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_1"
         android:layout_marginTop="@dimen/dimen_20"
-        android:background="@color/color_e7e7e7"/>
+        android:background="@color/color_F9F9F9"/>
 
 </LinearLayout>

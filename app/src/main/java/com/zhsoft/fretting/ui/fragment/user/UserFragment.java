@@ -51,7 +51,6 @@ import cn.droidlover.xrecyclerview.XRecyclerView;
  */
 
 public class UserFragment extends XFragment<UserPresent> {
-    private static final String PHONE = "phone";
     /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
@@ -108,13 +107,13 @@ public class UserFragment extends XFragment<UserPresent> {
 
         //加载框
         httpLoadingDialog = new HttpLoadingDialog(context);
-
+        //是否开户
         isOpenAccountView();
         //注册事件
         EventBus.getDefault().register(this);
 
         xrvMyFund.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
-
+        //如果已登录，请求我的持仓基金数据
         if (RuntimeHelper.getInstance().isLogin()) {
             requestFund();
         }
@@ -152,7 +151,7 @@ public class UserFragment extends XFragment<UserPresent> {
 
     @Override
     public void initEvents() {
-
+        //设置按钮
         headRightImgbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -160,29 +159,25 @@ public class UserFragment extends XFragment<UserPresent> {
                     showToast("您尚未登录，请先登录");
                     return;
                 }
-                if (!Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
-                    showToast("您还未开户，请先去开户");
-                    return;
-                }
                 startActivity(SettingActivity.class);
 
             }
         });
-
+        //登录
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(LoginActivity.class);
             }
         });
-
+        //注册
         register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(RegisterFirstActivity.class);
             }
         });
-
+        //自选
         selfChoose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -193,7 +188,7 @@ public class UserFragment extends XFragment<UserPresent> {
                 startActivity(SelfChooseActivity.class);
             }
         });
-
+        //定投
         timing.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -206,7 +201,7 @@ public class UserFragment extends XFragment<UserPresent> {
                 startActivity(MyInvestActivity.class, bundle);
             }
         });
-
+        //交易查询
         transaction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -217,7 +212,7 @@ public class UserFragment extends XFragment<UserPresent> {
                 startActivity(TransactionQueryActivity.class);
             }
         });
-
+        //分红
         profit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -228,7 +223,7 @@ public class UserFragment extends XFragment<UserPresent> {
                 startActivity(BonusActivity.class);
             }
         });
-
+        //撤单
         remove.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -239,14 +234,11 @@ public class UserFragment extends XFragment<UserPresent> {
                 startActivity(CancleOrderActivity.class);
             }
         });
-
+        //去开户
         toFinishRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String strPhone = App.getSharedPref().getString(Constant.USER_PHONE, "");
-                Bundle bundle = new Bundle();
-                bundle.putString(PHONE, strPhone);
-                startActivity(RegisterSecondActivity.class, bundle);
+                startActivity(RegisterSecondActivity.class);
             }
         });
 

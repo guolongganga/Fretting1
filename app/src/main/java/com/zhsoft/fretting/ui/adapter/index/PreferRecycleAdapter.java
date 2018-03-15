@@ -45,15 +45,9 @@ public class PreferRecycleAdapter extends SimpleRecAdapter<ProductModel, PreferR
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final ProductModel model = data.get(position);
         holder.preferredName.setText(model.getFund_name());
-        RateStyleUtil.rateStyle(context, holder.preferredRate, model.getFund_rose());
+        RateStyleUtil.rateStyleNoPer(context, holder.preferredRate, model.getFund_rose());
 //        holder.preferredRate.setText(BigDecimalUtil.bigdecimalToString(model.getFund_rose()) + "%");
         holder.tvRateDesc.setText(model.getRiseTermDesc());
-
-        if (data.size() - 1 == position) {
-            holder.viewLine.setVisibility(View.GONE);
-        } else {
-            holder.viewLine.setVisibility(View.VISIBLE);
-        }
 
         holder.btnInvest.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,8 +75,6 @@ public class PreferRecycleAdapter extends SimpleRecAdapter<ProductModel, PreferR
         TextView tvRateDesc;
         @BindView(R.id.btn_invest)
         Button btnInvest;
-        @BindView(R.id.view_line)
-        View viewLine;
 
         public ViewHolder(View itemView) {
             super(itemView);

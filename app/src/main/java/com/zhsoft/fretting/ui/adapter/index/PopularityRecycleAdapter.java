@@ -52,11 +52,11 @@ public class PopularityRecycleAdapter extends SimpleRecAdapter<ProductModel, Pop
         holder.tvLocationOne.setText(model.getFeatureone());
         holder.tvLocationTwo.setText(model.getFeaturetwo());
 
-        if (data.size() - 1 == position) {
-            holder.viewLine.setVisibility(View.GONE);
-        } else {
-            holder.viewLine.setVisibility(View.VISIBLE);
-        }
+//        if (data.size() - 1 == position) {
+//            holder.viewLine.setVisibility(View.GONE);
+//        } else {
+//            holder.viewLine.setVisibility(View.VISIBLE);
+//        }
 
         holder.rlContent.setOnClickListener(new View.OnClickListener() {
             @Override
