@@ -48,6 +48,11 @@
     <color name="color_F9F9F9">#F9F9F9</color>
     <color name="color_F8F8F8">#F8F8F8</color>
     <color name="color_E7E7E7">#E7E7E7</color>
+    <color name="color_EEEEEE">#EEEEEE</color>
+    <color name="color_999999">#999999</color>
+    <color name="color_9F9F9F">#9F9F9F</color>
+    <color name="color_A9A9A9">#A9A9A9</color>
+    <color name="color_FDFDFD">#FDFDFD</color>
 
     <!--字体颜色-->
     <color name="color_444444">#444444</color>
@@ -57,5 +62,6 @@
     <color name="color_3E3E3E">#3E3E3E</color>
     <color name="color_97A1B7">#97A1B7</color>
     <color name="color_383F50">#383F50</color>
+    <color name="color_141414">#141414</color>
 
 </resources>

@@ -70,8 +70,6 @@ public class SearchRecycleAdapter extends SimpleRecAdapter<NewestFundResp, Searc
         TextView tvFundCode;
         @BindView(R.id.tv_fund_per_time)
         TextView tvFundPerTime;
-        @BindView(R.id.view_line)
-        View viewLine;
 
         public ViewHolder(View itemView) {
             super(itemView);

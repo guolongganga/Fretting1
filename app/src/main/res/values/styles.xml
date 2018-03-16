@@ -113,6 +113,14 @@
         <item name="android:background">@color/color_4D7BFE</item>
     </style>
 
+    <style name="blue_short_rect_2dp">
+        <item name="android:layout_width">@dimen/dimen_2</item>
+        <item name="android:layout_height">@dimen/dimen_12</item>
+        <item name="android:layout_marginLeft">@dimen/dimen_15</item>
+        <item name="android:layout_marginRight">@dimen/dimen_8</item>
+        <item name="android:background">@color/color_4D7BFE</item>
+    </style>
+
     <style name="divider_10dp_f9">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dimen_10</item>
