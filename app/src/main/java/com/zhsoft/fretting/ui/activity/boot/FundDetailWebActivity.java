@@ -120,7 +120,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
     public void initData(Bundle bundle) {
         //右侧搜索按钮
         headRightImgbtn.setVisibility(View.VISIBLE);
-        headRightImgbtn.setImageResource(R.mipmap.icon_query);
+        headRightImgbtn.setImageResource(R.drawable.icon_common_search_white);
         httpLoadingDialog = new HttpLoadingDialog(context);
         httpLoadingDialog.visible();
         //标题

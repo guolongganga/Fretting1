@@ -56,9 +56,7 @@
     <!--横线-->
     <View
         android:id="@+id/view_line"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_01"
-        android:background="@color/color_E7E7E7"/>
+        style="@style/divider_half_e7"/>
 
     <!--基金列表-->
     <cn.droidlover.xrecyclerview.XRecyclerContentLayout

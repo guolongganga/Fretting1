@@ -18,8 +18,8 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_30"
-            android:layout_marginLeft="@dimen/dimen_30"
-            android:layout_marginRight="@dimen/dimen_30"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_marginRight="@dimen/dimen_15"
             android:background="@drawable/shape_index_name_search">
             <!-- 图标 和 搜索基金名称/代码-->
             <TextView

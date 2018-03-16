@@ -52,7 +52,7 @@ public class PopularityActivity extends XActivity {
     public void initData(Bundle savedInstanceState) {
         headTitle.setText("业绩排行");
         headRightImgbtn.setVisibility(View.VISIBLE);
-        headRightImgbtn.setImageResource(R.mipmap.icon_query);
+        headRightImgbtn.setImageResource(R.drawable.icon_common_search_white);
         showChannel();
     }
 

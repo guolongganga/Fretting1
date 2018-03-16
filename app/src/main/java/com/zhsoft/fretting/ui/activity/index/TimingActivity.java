@@ -54,7 +54,7 @@ public class TimingActivity extends XActivity {
     public void initData(Bundle bundle) {
         headTitle.setText("定投排行");
         headRightImgbtn.setVisibility(View.VISIBLE);
-        headRightImgbtn.setImageResource(R.mipmap.icon_query);
+        headRightImgbtn.setImageResource(R.drawable.icon_common_search_white);
 
         showChannel();
 

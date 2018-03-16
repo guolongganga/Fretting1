@@ -96,7 +96,7 @@
 
     <style name="MyTabLayoutTextAppearanceInverse" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
         <item name="android:textSize">@dimen/text_size_15</item>
-        <item name="android:textColor">@android:color/holo_red_light</item>
+        <item name="android:textColor">@color/color_2A2A2A</item>
     </style>
 
     <!--弹出地址和职务选择器动画-->

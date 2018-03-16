@@ -17,8 +17,8 @@
         <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_30"
-            android:layout_marginLeft="@dimen/dimen_30"
-            android:layout_marginRight="@dimen/dimen_30"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_marginRight="@dimen/dimen_15"
             android:background="@drawable/shape_index_name_search">
             <!-- 图标 和 搜索基金名称/代码-->
             <TextView
@@ -250,15 +250,16 @@
                     <TextView
                         android:id="@+id/popularity_more"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:text="更多"
+                        android:paddingRight="@dimen/dimen_7"
                         android:textColor="@color/color_main"/>
 
                     <!--箭头-->
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_7"
                         android:layout_marginRight="@dimen/dimen_15"
                         android:src="@drawable/icon_common_arrow"/>
 
@@ -418,15 +419,16 @@
                     <TextView
                         android:id="@+id/timing_more"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
                         android:text="更多"
+                        android:paddingRight="@dimen/dimen_7"
                         android:textColor="@color/color_main"/>
 
                     <!--箭头-->
                     <ImageView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_7"
                         android:layout_marginRight="@dimen/dimen_15"
                         android:src="@drawable/icon_common_arrow"/>
 

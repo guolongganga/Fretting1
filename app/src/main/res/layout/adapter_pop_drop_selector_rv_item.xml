@@ -26,9 +26,7 @@
 
     <View
         android:id="@+id/view_line"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:layout_alignParentBottom="true"
-        android:background="@color/color_divider"/>
+        style="@style/divider_half_e7"
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
