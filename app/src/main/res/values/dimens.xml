@@ -19,8 +19,9 @@
     <dimen name="text_size_15">15sp</dimen>
     <dimen name="text_size_14">14sp</dimen>
     <dimen name="text_size_12">12sp</dimen>
-    <dimen name="text_size_small">10sp</dimen>
-    <dimen name="text_size_ss">8sp</dimen>
+    <dimen name="text_size_11">11sp</dimen>
+    <dimen name="text_size_10">10sp</dimen>
+    <dimen name="text_size_8">8sp</dimen>
 
     <!-- 距离 -->
     <dimen name="dimen_0">0dp</dimen>

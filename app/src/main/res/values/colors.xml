@@ -22,7 +22,6 @@
     <color name="color_f7182d">#f7182d</color>
     <color name="color_ff6633">#ff6633</color>
     <color name="color_666666">#666666</color>
-    <color name="color_3e3e3e">#3e3e3e</color>
     <color name="color_696969">#696969</color>
     <!--半透明灰色-->
     <color name="color_80696969">#80696969</color>
@@ -40,6 +39,7 @@
     <!--颜色-->
     <color name="color_80FFFFFF">#80FFFFFF</color>
     <color name="color_FFFFFF">#FFFFFF</color>
+    <color name="color_B3FFFFFF">#B3FFFFFF</color>
     <color name="color_38000000">#38000000</color>
     <color name="color_4D7BFE">#4D7BFE</color>
     <color name="color_DCDCDC">#DCDCDC</color>
@@ -47,10 +47,15 @@
     <!--默认浅细线颜色-->
     <color name="color_F9F9F9">#F9F9F9</color>
     <color name="color_F8F8F8">#F8F8F8</color>
+    <color name="color_E7E7E7">#E7E7E7</color>
 
     <!--字体颜色-->
     <color name="color_444444">#444444</color>
     <color name="color_333333">#333333</color>
     <color name="color_A4A4A4">#A4A4A4</color>
+    <color name="color_2A2A2A">#2A2A2A</color>
+    <color name="color_3E3E3E">#3E3E3E</color>
+    <color name="color_97A1B7">#97A1B7</color>
+    <color name="color_383F50">#383F50</color>
 
 </resources>

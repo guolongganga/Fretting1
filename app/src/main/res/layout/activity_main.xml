@@ -10,11 +10,11 @@
         android:layout_height="0dp"
         android:layout_weight="1"/>
     <!--分割线-->
-    <include layout="@layout/layout_divider_tint"/>
+    <View style="@style/divider_1dp_f8"/>
     <!--底部Tab-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/dimen_50"
         android:background="@android:color/white"
         android:orientation="horizontal"
         android:paddingBottom="@dimen/dimen_5"
@@ -29,7 +29,7 @@
             android:gravity="center"
             android:text="首页"
             android:textColor="@color/tab_text_color"
-            android:textSize="@dimen/text_size_12"/>
+            android:textSize="@dimen/text_size_10"/>
         <!--基金Tab-->
         <TextView
             android:id="@+id/tv_fund"
@@ -40,7 +40,7 @@
             android:gravity="center"
             android:text="基金"
             android:textColor="@color/tab_text_color"
-            android:textSize="@dimen/text_size_12"/>
+            android:textSize="@dimen/text_size_10"/>
         <!--Tab我的-->
         <TextView
             android:id="@+id/tv_user"
@@ -51,7 +51,7 @@
             android:gravity="center"
             android:text="我的"
             android:textColor="@color/tab_text_color"
-            android:textSize="@dimen/text_size_12"/>
+            android:textSize="@dimen/text_size_10"/>
 
     </LinearLayout>
 </LinearLayout>

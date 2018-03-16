@@ -95,7 +95,7 @@
     </style>
 
     <style name="MyTabLayoutTextAppearanceInverse" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
-        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:textSize">@dimen/text_size_15</item>
         <item name="android:textColor">@android:color/holo_red_light</item>
     </style>
 
@@ -123,6 +123,12 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dimen_1</item>
         <item name="android:background">@color/color_F8F8F8</item>
+    </style>
+
+    <style name="divider_half_e7">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_01</item>
+        <item name="android:background">@color/color_E7E7E7</item>
     </style>
 
 </resources>

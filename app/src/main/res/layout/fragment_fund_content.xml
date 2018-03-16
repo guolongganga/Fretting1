@@ -6,8 +6,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_40">
-
+        android:layout_height="@dimen/dimen_35">
+        <!--基金名称-->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -15,49 +15,64 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dimen_15"
             android:text="基金名称"
-            android:textColor="@color/color_333333"/>
-
+            android:textColor="@color/color_97A1B7"
+            android:textSize="@dimen/text_size_11"/>
+        <!--净值-->
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="100dp"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:gravity="right"
             android:text="净值"
-            android:textColor="@color/color_333333"/>
+            android:textColor="@color/color_97A1B7"
+            android:textSize="@dimen/text_size_11"/>
 
-        <TextView
-            android:id="@+id/tv_range"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginRight="@dimen/dimen_15"
-            android:background="@drawable/shape_blue_line_rect"
-            android:padding="@dimen/dimen_4"
-            android:text=""
-            android:textColor="@color/color_333333"/>
-
-
+            android:layout_centerInParent="true"
+            android:paddingRight="@dimen/dimen_15">
+            <!--日涨幅 条件-->
+            <TextView
+                android:id="@+id/tv_range"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:paddingRight="5dp"
+                android:text="日涨幅"
+                android:textColor="@color/color_97A1B7"
+                android:textSize="@dimen/text_size_11"/>
+            <!--小三角图标-->
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@id/tv_range"
+                android:layout_marginBottom="@dimen/dimen_5"
+                android:layout_toRightOf="@id/tv_range"
+                android:src="@drawable/icon_fund_day_raise"/>
+        </RelativeLayout>
     </RelativeLayout>
-
+    <!--横线-->
     <View
         android:id="@+id/view_line"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dimen_01"
-        android:background="@color/color_666666"/>
+        android:background="@color/color_E7E7E7"/>
 
+    <!--基金列表-->
     <cn.droidlover.xrecyclerview.XRecyclerContentLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/content_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="@dimen/dimen_15"
-        android:layout_marginRight="@dimen/dimen_15"
         android:background="@color/white"
+        android:paddingLeft="@dimen/dimen_15"
+        android:paddingRight="@dimen/dimen_15"
         app:recyclerBackgroundColor="@color/white"
         app:recyclerScrollbarNone="true"
         app:recyclerScrollbarStyle="outsideOverlay"
         app:x_emptyLayoutId="@layout/view_empty"/>
-
 
 </LinearLayout>

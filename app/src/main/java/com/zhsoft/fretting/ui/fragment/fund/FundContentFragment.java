@@ -83,7 +83,8 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
 
         contentLayout.getRecyclerView().verticalLayoutManager(context);
         contentLayout.getRecyclerView().setAdapter(getAdapter());
-        contentLayout.getRecyclerView().horizontalDivider(R.color.color_F9F9F9, R.dimen.dimen_1);  //设置divider
+        contentLayout.getRecyclerView().horizontalDivider(R.color.color_E7E7E7, R.dimen.dimen_01);  //设置divider
+
 
         refreshFundData(activityName);
 
