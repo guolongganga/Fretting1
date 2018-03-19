@@ -2,6 +2,7 @@ package com.zhsoft.fretting.ui.fragment.index;
 
 
 import android.os.Bundle;
+import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -129,7 +130,7 @@ public class IndexFragment extends XFragment<IndexPresent> {
 //    Button btnInvest;
     /** ScrollView */
     @BindView(R.id.scroll_view)
-    ScrollView scrollView;
+    NestedScrollView scrollView;
     /** 下拉刷新 */
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout swipeRefreshLayout;

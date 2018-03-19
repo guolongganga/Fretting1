@@ -2,12 +2,14 @@ package com.zhsoft.fretting;
 
 import android.app.Application;
 import android.content.Context;
+import android.os.StrictMode;
 
 import com.nostra13.universalimageloader.cache.memory.impl.LruMemoryCache;
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.squareup.leakcanary.LeakCanary;
 
 import java.io.File;
 
@@ -19,6 +21,9 @@ import cn.droidlover.xdroidmvp.net.XApi;
 import okhttp3.CookieJar;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+
+import static android.os.Build.VERSION.SDK_INT;
+import static android.os.Build.VERSION_CODES.GINGERBREAD;
 
 /**
  * 作者：sunnyzeng on 2017/12/5
@@ -33,6 +38,15 @@ public class App extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //集成内存泄漏检测
+        if (LeakCanary.isInAnalyzerProcess(this)) {
+            // This process is dedicated to LeakCanary for heap analysis.
+            // You should not init your app in this process.
+            return;
+        }
+        enabledStrictMode();
+        LeakCanary.install(this);
+
         context = this;
 
         initImageLoader(context);
@@ -127,5 +141,18 @@ public class App extends Application {
 
     public static Context getContext() {
         return context;
+    }
+
+    /**
+     * 集成内存泄漏检测
+     */
+    private void enabledStrictMode() {
+        if (SDK_INT >= GINGERBREAD) {
+            StrictMode.setThreadPolicy(new StrictMode.ThreadPolicy.Builder() //
+                    .detectAll() //
+                    .penaltyLog() //
+                    .penaltyDeath() //
+                    .build());
+        }
     }
 }

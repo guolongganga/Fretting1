@@ -41,7 +41,7 @@
         android:layout_below="@id/rl_name_search"
         android:visibility="visible">
 
-        <ScrollView
+        <android.support.v4.widget.NestedScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -269,6 +269,7 @@
                     android:id="@+id/xrv_popularity"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:nestedScrollingEnabled="false"
                     android:overScrollMode="never"/>
 
                 <View style="@style/divider_10dp_f9"/>
@@ -436,13 +437,14 @@
 
                 <cn.droidlover.xrecyclerview.XRecyclerView
                     android:id="@+id/xrv_prefer"
+                    android:nestedScrollingEnabled="false"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:overScrollMode="never"/>
 
             </LinearLayout>
 
-        </ScrollView>
+        </android.support.v4.widget.NestedScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <TextView
