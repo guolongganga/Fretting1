@@ -2,6 +2,10 @@ package com.zhsoft.fretting.ui.fragment.user;
 
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -28,7 +32,10 @@ import com.zhsoft.fretting.ui.activity.user.RegisterSecondActivity;
 import com.zhsoft.fretting.ui.activity.user.SelfChooseActivity;
 import com.zhsoft.fretting.ui.activity.user.SettingActivity;
 import com.zhsoft.fretting.ui.activity.user.TransactionQueryActivity;
+import com.zhsoft.fretting.ui.adapter.fund.FundTabViewPagerAdapter;
 import com.zhsoft.fretting.ui.adapter.user.MyFundRecyleAdapter;
+import com.zhsoft.fretting.ui.fragment.fund.FundContentFragment;
+import com.zhsoft.fretting.ui.widget.CustomViewPager;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
 import com.zhsoft.fretting.utils.RuntimeHelper;
 
@@ -37,6 +44,8 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
@@ -81,12 +90,18 @@ public class UserFragment extends XFragment<UserPresent> {
     @BindView(R.id.remove) TextView remove;
     /** 未登录界面 */
     @BindView(R.id.ll_logout) LinearLayout llLogout;
-    /** 我的基金列表 */
-    @BindView(R.id.xrv_my_fund) XRecyclerView xrvMyFund;
-    /** 您还没有持仓 */
-    @BindView(R.id.tv_empty) TextView tvEmpty;
+    /** 已开户页卡界面 */
+    @BindView(R.id.ll_fund_content) LinearLayout llFundContent;
+//    /** 我的基金列表 */
+//    @BindView(R.id.xrv_my_fund) XRecyclerView xrvMyFund;
+//    /** 您还没有持仓 */
+//    @BindView(R.id.tv_empty) TextView tvEmpty;
     /** 去开户 */
     @BindView(R.id.to_finish_register) Button toFinishRegister;
+    /** 页卡标签 */
+    @BindView(R.id.tab_layout) TabLayout mTabLayout;
+    /** 页卡 */
+    @BindView(R.id.view_pager) CustomViewPager mViewPager;
 
     /** 是否开户 */
     private String isOpenAccount;
@@ -96,6 +111,11 @@ public class UserFragment extends XFragment<UserPresent> {
     private String token;
     /** 加载圈 */
     private HttpLoadingDialog httpLoadingDialog;
+    /**
+     * 我的持仓基金
+     */
+    private ArrayList<FoundResp> fundList;
+
 
     @Override
     public void initData(Bundle savedInstanceState) {
@@ -112,7 +132,7 @@ public class UserFragment extends XFragment<UserPresent> {
         //注册事件
         EventBus.getDefault().register(this);
 
-        xrvMyFund.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
+//        xrvMyFund.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
         //如果已登录，请求我的持仓基金数据
         if (RuntimeHelper.getInstance().isLogin()) {
             requestFund();
@@ -140,17 +160,36 @@ public class UserFragment extends XFragment<UserPresent> {
         isOpenAccount = App.getSharedPref().getString(Constant.IS_OPEN_ACCOUNT, "");
         //1位未开户  0 位开户
         if (Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
+            //已开户
             toFinishRegister.setVisibility(View.GONE);
-            xrvMyFund.setVisibility(View.VISIBLE);
+            llFundContent.setVisibility(View.VISIBLE);
         } else {
+            //未开户
             toFinishRegister.setVisibility(View.VISIBLE);
-            xrvMyFund.setVisibility(View.GONE);
+            llFundContent.setVisibility(View.GONE);
         }
     }
 
 
     @Override
     public void initEvents() {
+        //TabLayout监听滑动或点击
+        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                mViewPager.setCurrentItem(tab.getPosition(), false);
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
         //设置按钮
         headRightImgbtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -254,34 +293,34 @@ public class UserFragment extends XFragment<UserPresent> {
         return new UserPresent();
     }
 
-    /**
-     * 初始化我的基金adapter
-     *
-     * @return
-     */
-    public SimpleRecAdapter getMyFundAdapter() {
-        MyFundRecyleAdapter adapter = new MyFundRecyleAdapter(context);
-        xrvMyFund.setAdapter(adapter);
-        adapter.setRecItemClick(new RecyclerItemCallback<FoundResp, MyFundRecyleAdapter.ViewHolder>() {
-            @Override
-            public void onItemClick(int position, FoundResp model, int tag, MyFundRecyleAdapter.ViewHolder holder) {
-                super.onItemClick(position, model, tag, holder);
-                switch (tag) {
-                    //点击
-                    case MyFundRecyleAdapter.ITEM_CLICK:
-                        //跳转基金详情页
-                        Bundle bundle = new Bundle();
-                        bundle.putInt(Constant.WEB_TITLE, R.string.fund_detail);
-                        bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.hold_fund_detail);
-                        bundle.putString(Constant.FUND_DETAIL_CODE, model.getFundCode());
-                        bundle.putString(Constant.FUND_DETAIL_NAME, model.getFundName());
-                        startActivity(FundDetailWebActivity.class, bundle);
-                        break;
-                }
-            }
-        });
-        return adapter;
-    }
+//    /**
+//     * 初始化我的基金adapter
+//     *
+//     * @return
+//     */
+//    public SimpleRecAdapter getMyFundAdapter() {
+//        MyFundRecyleAdapter adapter = new MyFundRecyleAdapter(context);
+//        xrvMyFund.setAdapter(adapter);
+//        adapter.setRecItemClick(new RecyclerItemCallback<FoundResp, MyFundRecyleAdapter.ViewHolder>() {
+//            @Override
+//            public void onItemClick(int position, FoundResp model, int tag, MyFundRecyleAdapter.ViewHolder holder) {
+//                super.onItemClick(position, model, tag, holder);
+//                switch (tag) {
+//                    //点击
+//                    case MyFundRecyleAdapter.ITEM_CLICK:
+//                        //跳转基金详情页
+//                        Bundle bundle = new Bundle();
+//                        bundle.putInt(Constant.WEB_TITLE, R.string.fund_detail);
+//                        bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.hold_fund_detail);
+//                        bundle.putString(Constant.FUND_DETAIL_CODE, model.getFundCode());
+//                        bundle.putString(Constant.FUND_DETAIL_NAME, model.getFundName());
+//                        startActivity(FundDetailWebActivity.class, bundle);
+//                        break;
+//                }
+//            }
+//        });
+//        return adapter;
+//    }
 
     /**
      * 获得我的基金数据
@@ -296,19 +335,64 @@ public class UserFragment extends XFragment<UserPresent> {
             //昨日收益
             tvYesterdayIncome.setText(BigDecimalUtil.bigdecimalToString(resps.getEarningsLastDay()));
             //累计收益时间
-            tvTimeAccumlate.setText("(" + resps.getYesterday() + ")累计收益(元)");
+            tvTimeAccumlate.setText("累计收益(元)");
             //累计收益
             tvAccumulateEarn.setText(BigDecimalUtil.bigdecimalToString(resps.getCumulativeIncome()));
 
-            //持仓基金
-            if (resps.getFundList() != null && resps.getFundList().size() > 0) {
-                getMyFundAdapter().addData(resps.getFundList());
-            } else {
-                xrvMyFund.setVisibility(View.GONE);
-                tvEmpty.setVisibility(View.VISIBLE);
-            }
+            fundList = resps.getFundList();
+            showChannel();
+
+//            //持仓基金
+//            if (resps.getFundList() != null && resps.getFundList().size() > 0) {
+//                getMyFundAdapter().addData(resps.getFundList());
+//            } else {
+//                xrvMyFund.setVisibility(View.GONE);
+//                tvEmpty.setVisibility(View.VISIBLE);
+//            }
 
         }
+    }
+
+    /**
+     * 频道数据展示
+     */
+    public void showChannel() {
+
+        FragmentManager fragmentManager = getFragmentManager();
+        List<Fragment> fragmentList = new ArrayList<>();
+
+        List<String> tabName = new ArrayList<>();
+        tabName.add(Constant.MY_HOLD);
+        tabName.add(Constant.MY_WAIT);
+
+//        int fragmentSize = tabName.size();
+//
+//        for (int i = 0; i < fragmentSize; i++) {
+//            FundContentFragment fragment = new FundContentFragment();
+//            Bundle bundle = new Bundle();
+//            bundle.putString(Constant.FUND_TAB_NAME, tabName.get(i));
+//            bundle.putInt(Constant.ACTIVITY_NAME, Constant.FUND_INDEX);
+//            fragment.setArguments(bundle);
+//            fragmentList.add(fragment);
+//        }
+
+        UserHoldFragment fragment = new UserHoldFragment();
+        Bundle bundle = new Bundle();
+        bundle.putParcelableArrayList(Constant.ACTIVITY_OBJECT, fundList);
+        fragment.setArguments(bundle);
+        fragmentList.add(fragment);
+
+        WaitSureFragment waitSureFragment = new WaitSureFragment();
+        Bundle bundle2 = new Bundle();
+        bundle2.putParcelableArrayList(Constant.ACTIVITY_OBJECT, fundList);
+        waitSureFragment.setArguments(bundle2);
+        fragmentList.add(waitSureFragment);
+
+
+        FundTabViewPagerAdapter adapter = new FundTabViewPagerAdapter(fragmentManager, fragmentList, tabName);
+        mViewPager.setAdapter(adapter);
+
+        mTabLayout.setupWithViewPager(mViewPager);
     }
 
     @Override

@@ -212,6 +212,12 @@ public class Constant {
     //定投计划状态 终止
     public static final String INVEST_PLAN_END = "终止";
 
+    //我的持仓
+    public static final String MY_HOLD = "我的持仓";
+
+    //待确认基金
+    public static final String MY_WAIT = "待确认基金";
+
 
     /********************************************* int ********************************************/
 

@@ -30,7 +30,7 @@ dependencies {
     compile 'com.android.support:design:26.0.0-alpha1'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'org.apache.httpcomponents:httpcore:4.4.4'
-    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+//    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
+//    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+//    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
 }

@@ -91,6 +91,7 @@
 
     <!--我的-->
     <string name="user_total_assets">总资产(元)</string>
+    <string name="user_passage">在途资产(元)</string>
     <string name="user_yesterday_earn">昨日收益(元)</string>
     <string name="user_self_choose">自选</string>
     <string name="user_timing">定投</string>

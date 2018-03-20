@@ -53,12 +53,12 @@ public class TransactionContentRecycleAdapter extends SimpleRecAdapter<Transacti
             holder.tvStatus.setTextColor(getColor(R.color.color_696969));
         }
 
-        if ("我的分红".equals(tabType)) {
-            //我的分红
-            holder.ivArrow.setVisibility(View.VISIBLE);
-        } else {
-            holder.ivArrow.setVisibility(View.GONE);
-        }
+//        if ("我的分红".equals(tabType)) {
+//            //我的分红
+//            holder.ivArrow.setVisibility(View.VISIBLE);
+//        } else {
+//            holder.ivArrow.setVisibility(View.GONE);
+//        }
 
         if ("申购".equals(resp.getType())) {
             //申购
@@ -139,11 +139,11 @@ public class TransactionContentRecycleAdapter extends SimpleRecAdapter<Transacti
         @BindView(R.id.tv_status)
         TextView tvStatus;
 
-        /**
-         * 箭头
-         */
-        @BindView(R.id.iv_arrow)
-        ImageView ivArrow;
+//        /**
+//         * 箭头
+//         */
+//        @BindView(R.id.iv_arrow)
+//        ImageView ivArrow;
 
 
         public ViewHolder(View itemView) {

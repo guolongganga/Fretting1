@@ -1,5 +1,8 @@
 package com.zhsoft.fretting.model.user;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.math.BigDecimal;
 
 /**
@@ -7,7 +10,7 @@ import java.math.BigDecimal;
  * 描述：我的持仓基金
  */
 
-public class FoundResp {
+public class FoundResp implements Parcelable {
     /**
      * 基金名称
      */
@@ -80,4 +83,43 @@ public class FoundResp {
     public void setTotalEarn(BigDecimal totalEarn) {
         this.totalEarn = totalEarn;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.fundName);
+        dest.writeString(this.fundCode);
+        dest.writeSerializable(this.holdAmount);
+        dest.writeSerializable(this.earningsLastDay);
+        dest.writeSerializable(this.totalEarn);
+        dest.writeString(this.sureNumber);
+    }
+
+    public FoundResp() {
+    }
+
+    protected FoundResp(Parcel in) {
+        this.fundName = in.readString();
+        this.fundCode = in.readString();
+        this.holdAmount = (BigDecimal) in.readSerializable();
+        this.earningsLastDay = (BigDecimal) in.readSerializable();
+        this.totalEarn = (BigDecimal) in.readSerializable();
+        this.sureNumber = in.readString();
+    }
+
+    public static final Parcelable.Creator<FoundResp> CREATOR = new Parcelable.Creator<FoundResp>() {
+        @Override
+        public FoundResp createFromParcel(Parcel source) {
+            return new FoundResp(source);
+        }
+
+        @Override
+        public FoundResp[] newArray(int size) {
+            return new FoundResp[size];
+        }
+    };
 }

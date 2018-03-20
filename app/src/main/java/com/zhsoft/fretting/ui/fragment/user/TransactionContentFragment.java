@@ -105,13 +105,13 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
                 switch (tag) {
                     //点击
                     case TransactionContentRecycleAdapter.ITEM_CLICK:
-                        //跳转 结果页
-                        Bundle bundle = new Bundle();
-                        //交易流水号
-                        bundle.putString(Constant.INVEST_PROTOCOL_ID, model.getAllot_no());
-                        //TODO 得写动态的
-                        bundle.putString(Constant.INVEST_RECORD_STATUS, "定投成功");
-                        startActivity(ResultDetailOneActivity.class, bundle);
+//                        //跳转 结果页
+//                        Bundle bundle = new Bundle();
+//                        //交易流水号
+//                        bundle.putString(Constant.INVEST_PROTOCOL_ID, model.getAllot_no());
+//                        //TODO 得写动态的
+//                        bundle.putString(Constant.INVEST_RECORD_STATUS, "定投成功");
+//                        startActivity(ResultDetailOneActivity.class, bundle);
                         break;
                 }
             }
