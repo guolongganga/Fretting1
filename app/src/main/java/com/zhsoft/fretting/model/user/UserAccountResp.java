@@ -4,6 +4,7 @@ import com.zhsoft.fretting.model.BaseResp;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 作者：sunnyzeng on 2017/12/26 17:00
@@ -11,23 +12,31 @@ import java.util.ArrayList;
  */
 
 public class UserAccountResp extends BaseResp<UserAccountResp> {
-    /*
-    * 总资产
+    /**
+     * 总资产
      */
     private BigDecimal totalAssets;
     /**
-     * 昨日收益
+     * 在途资产
      */
-    private BigDecimal earningsLastDay;
+    private BigDecimal ontheRoadAssets;
+    /**
+     *昨日收益
+     */
+    private BigDecimal yesterdayIncome;
     /**
      * 累计收益
      */
-    private BigDecimal cumulativeIncome;
+    private  BigDecimal totalIncome;
 
     /**
      * 我的持仓基金
      */
-    private ArrayList<FoundResp> fundList;
+    private ArrayList<MyHoldFundResp> fundList;
+    /**
+     * 待确认基金 待确认
+     */
+    private ArrayList<HoldFundResp> holdList;
     /**
      * 昨天
      */
@@ -41,28 +50,44 @@ public class UserAccountResp extends BaseResp<UserAccountResp> {
         this.totalAssets = totalAssets;
     }
 
-    public BigDecimal getEarningsLastDay() {
-        return earningsLastDay;
+    public BigDecimal getOntheRoadAssets() {
+        return ontheRoadAssets;
     }
 
-    public void setEarningsLastDay(BigDecimal earningsLastDay) {
-        this.earningsLastDay = earningsLastDay;
+    public void setOntheRoadAssets(BigDecimal ontheRoadAssets) {
+        this.ontheRoadAssets = ontheRoadAssets;
     }
 
-    public BigDecimal getCumulativeIncome() {
-        return cumulativeIncome;
+    public BigDecimal getYesterdayIncome() {
+        return yesterdayIncome;
     }
 
-    public void setCumulativeIncome(BigDecimal cumulativeIncome) {
-        this.cumulativeIncome = cumulativeIncome;
+    public void setYesterdayIncome(BigDecimal yesterdayIncome) {
+        this.yesterdayIncome = yesterdayIncome;
     }
 
-    public ArrayList<FoundResp> getFundList() {
+    public BigDecimal getTotalIncome() {
+        return totalIncome;
+    }
+
+    public void setTotalIncome(BigDecimal totalIncome) {
+        this.totalIncome = totalIncome;
+    }
+
+    public ArrayList<MyHoldFundResp> getFundList() {
         return fundList;
     }
 
-    public void setFundList(ArrayList<FoundResp> fundList) {
+    public void setFundList(ArrayList<MyHoldFundResp> fundList) {
         this.fundList = fundList;
+    }
+
+    public ArrayList<HoldFundResp> getHoldList() {
+        return holdList;
+    }
+
+    public void setHoldList(ArrayList<HoldFundResp> holdList) {
+        this.holdList = holdList;
     }
 
     public String getYesterday() {

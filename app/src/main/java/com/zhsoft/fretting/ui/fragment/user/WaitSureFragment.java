@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.model.user.FoundResp;
+import com.zhsoft.fretting.model.user.HoldFundResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.ui.activity.boot.FundDetailWebActivity;
@@ -31,7 +31,7 @@ public class WaitSureFragment extends XFragment {
     /**
      * 我的持仓基金
      */
-    private ArrayList<FoundResp> fundList;
+    private ArrayList<HoldFundResp> fundList;
 
     @Override
     public int getLayoutId() {
@@ -68,9 +68,9 @@ public class WaitSureFragment extends XFragment {
     public SimpleRecAdapter getWaitSureAdapter() {
         WaitSureRecyleAdapter adapter = new WaitSureRecyleAdapter(context);
         xrvUserHold.setAdapter(adapter);
-        adapter.setRecItemClick(new RecyclerItemCallback<FoundResp, WaitSureRecyleAdapter.ViewHolder>() {
+        adapter.setRecItemClick(new RecyclerItemCallback<HoldFundResp, WaitSureRecyleAdapter.ViewHolder>() {
             @Override
-            public void onItemClick(int position, FoundResp model, int tag, WaitSureRecyleAdapter.ViewHolder holder) {
+            public void onItemClick(int position, HoldFundResp model, int tag, WaitSureRecyleAdapter.ViewHolder holder) {
                 super.onItemClick(position, model, tag, holder);
                 switch (tag) {
                     //点击
@@ -79,7 +79,7 @@ public class WaitSureFragment extends XFragment {
                         Bundle bundle = new Bundle();
                         bundle.putInt(Constant.WEB_TITLE, R.string.fund_detail);
                         bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.hold_fund_detail);
-                        bundle.putString(Constant.FUND_DETAIL_CODE, model.getFundCode());
+//                        bundle.putString(Constant.FUND_DETAIL_CODE, model.getFundCode());
                         bundle.putString(Constant.FUND_DETAIL_NAME, model.getFundName());
                         startActivity(FundDetailWebActivity.class, bundle);
                         break;

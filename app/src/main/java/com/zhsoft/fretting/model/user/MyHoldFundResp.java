@@ -10,15 +10,11 @@ import java.math.BigDecimal;
  * 描述：我的持仓基金
  */
 
-public class FoundResp implements Parcelable {
+public class MyHoldFundResp implements Parcelable {
     /**
      * 基金名称
      */
     private String fundName;
-    /**
-     * 基金代码
-     */
-    private String fundCode;
     /**
      * 持仓金额
      */
@@ -32,17 +28,15 @@ public class FoundResp implements Parcelable {
      */
     private BigDecimal totalEarn;
     /**
-     * X笔交易确认中
+     * 确认中份额数量：0没有
      */
     private String sureNumber;
 
-    public String getSureNumber() {
-        return sureNumber;
-    }
-
-    public void setSureNumber(String sureNumber) {
-        this.sureNumber = sureNumber;
-    }
+    /**
+     *
+     * @return
+     */
+    private String fundCode;
 
     public String getFundName() {
         return fundName;
@@ -50,14 +44,6 @@ public class FoundResp implements Parcelable {
 
     public void setFundName(String fundName) {
         this.fundName = fundName;
-    }
-
-    public String getFundCode() {
-        return fundCode;
-    }
-
-    public void setFundCode(String fundCode) {
-        this.fundCode = fundCode;
     }
 
     public BigDecimal getHoldAmount() {
@@ -84,6 +70,22 @@ public class FoundResp implements Parcelable {
         this.totalEarn = totalEarn;
     }
 
+    public String getSureNumber() {
+        return sureNumber;
+    }
+
+    public void setSureNumber(String sureNumber) {
+        this.sureNumber = sureNumber;
+    }
+
+    public String getFundCode() {
+        return fundCode;
+    }
+
+    public void setFundCode(String fundCode) {
+        this.fundCode = fundCode;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -92,34 +94,34 @@ public class FoundResp implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.fundName);
-        dest.writeString(this.fundCode);
         dest.writeSerializable(this.holdAmount);
         dest.writeSerializable(this.earningsLastDay);
         dest.writeSerializable(this.totalEarn);
         dest.writeString(this.sureNumber);
+        dest.writeString(this.fundCode);
     }
 
-    public FoundResp() {
+    public MyHoldFundResp() {
     }
 
-    protected FoundResp(Parcel in) {
+    protected MyHoldFundResp(Parcel in) {
         this.fundName = in.readString();
-        this.fundCode = in.readString();
         this.holdAmount = (BigDecimal) in.readSerializable();
         this.earningsLastDay = (BigDecimal) in.readSerializable();
         this.totalEarn = (BigDecimal) in.readSerializable();
         this.sureNumber = in.readString();
+        this.fundCode = in.readString();
     }
 
-    public static final Parcelable.Creator<FoundResp> CREATOR = new Parcelable.Creator<FoundResp>() {
+    public static final Parcelable.Creator<MyHoldFundResp> CREATOR = new Parcelable.Creator<MyHoldFundResp>() {
         @Override
-        public FoundResp createFromParcel(Parcel source) {
-            return new FoundResp(source);
+        public MyHoldFundResp createFromParcel(Parcel source) {
+            return new MyHoldFundResp(source);
         }
 
         @Override
-        public FoundResp[] newArray(int size) {
-            return new FoundResp[size];
+        public MyHoldFundResp[] newArray(int size) {
+            return new MyHoldFundResp[size];
         }
     };
 }

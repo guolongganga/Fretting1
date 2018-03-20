@@ -6,7 +6,8 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.model.user.FoundResp;
+import com.zhsoft.fretting.model.user.HoldFundResp;
+import com.zhsoft.fretting.model.user.MyHoldFundResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.ui.activity.boot.FundDetailWebActivity;
@@ -31,7 +32,7 @@ public class UserHoldFragment extends XFragment {
     /**
      * 我的持仓基金
      */
-    private ArrayList<FoundResp> fundList;
+    private ArrayList<MyHoldFundResp> fundList;
 
     @Override
     public int getLayoutId() {
@@ -68,9 +69,9 @@ public class UserHoldFragment extends XFragment {
     public SimpleRecAdapter getMyFundAdapter() {
         MyFundRecyleAdapter adapter = new MyFundRecyleAdapter(context);
         xrvUserHold.setAdapter(adapter);
-        adapter.setRecItemClick(new RecyclerItemCallback<FoundResp, MyFundRecyleAdapter.ViewHolder>() {
+        adapter.setRecItemClick(new RecyclerItemCallback<MyHoldFundResp, MyFundRecyleAdapter.ViewHolder>() {
             @Override
-            public void onItemClick(int position, FoundResp model, int tag, MyFundRecyleAdapter.ViewHolder holder) {
+            public void onItemClick(int position, MyHoldFundResp model, int tag, MyFundRecyleAdapter.ViewHolder holder) {
                 super.onItemClick(position, model, tag, holder);
                 switch (tag) {
                     //点击

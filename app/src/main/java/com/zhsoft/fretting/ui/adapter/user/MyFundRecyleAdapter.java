@@ -7,12 +7,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
-import com.zhsoft.fretting.model.user.FoundResp;
-import com.zhsoft.fretting.model.user.MyFundResp;
+import com.zhsoft.fretting.model.user.HoldFundResp;
+import com.zhsoft.fretting.model.user.MyHoldFundResp;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
 import com.zhsoft.fretting.utils.RateStyleUtil;
-
-import java.math.BigDecimal;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
@@ -20,10 +18,10 @@ import cn.droidlover.xdroidmvp.kit.KnifeKit;
 
 /**
  * 作者：sunnyzeng on 2017/12/18 14:07
- * 描述：
+ * 描述：我的持仓基金
  */
 
-public class MyFundRecyleAdapter extends SimpleRecAdapter<FoundResp, MyFundRecyleAdapter.ViewHolder> {
+public class MyFundRecyleAdapter extends SimpleRecAdapter<MyHoldFundResp, MyFundRecyleAdapter.ViewHolder> {
     public static final int ITEM_CLICK = 0;    //点击标识
 
     public MyFundRecyleAdapter(Context context) {
@@ -42,7 +40,7 @@ public class MyFundRecyleAdapter extends SimpleRecAdapter<FoundResp, MyFundRecyl
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final FoundResp resp = data.get(position);
+        final MyHoldFundResp resp = data.get(position);
         holder.tvName.setText(resp.getFundName());
         holder.tvMoney.setText(BigDecimalUtil.bigdecimalToString(resp.getTotalEarn()));
 

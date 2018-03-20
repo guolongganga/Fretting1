@@ -2,7 +2,6 @@ package com.zhsoft.fretting.ui.activity.user;
 
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -10,14 +9,11 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.model.fund.NewestFundResp;
-import com.zhsoft.fretting.model.user.FoundResp;
 import com.zhsoft.fretting.model.user.SelfChooseResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.present.user.SelfChoosePresent;
 import com.zhsoft.fretting.ui.activity.boot.FundDetailWebActivity;
-import com.zhsoft.fretting.ui.adapter.user.MyFundRecyleAdapter;
 import com.zhsoft.fretting.ui.adapter.user.SelfChooseRecycleAdapter;
 
 import java.util.List;
@@ -28,7 +24,6 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
 import cn.droidlover.xdroidmvp.net.NetError;
 import cn.droidlover.xrecyclerview.RecyclerAdapter;
 import cn.droidlover.xrecyclerview.RecyclerItemCallback;
-import cn.droidlover.xrecyclerview.XRecyclerContentLayout;
 import cn.droidlover.xrecyclerview.XRecyclerView;
 
 /**

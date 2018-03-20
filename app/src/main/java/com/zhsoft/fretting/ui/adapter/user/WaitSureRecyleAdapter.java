@@ -7,8 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
-import com.zhsoft.fretting.model.user.FoundResp;
-import com.zhsoft.fretting.utils.BigDecimalUtil;
+import com.zhsoft.fretting.model.user.HoldFundResp;
 import com.zhsoft.fretting.utils.RateStyleUtil;
 
 import butterknife.BindView;
@@ -20,7 +19,7 @@ import cn.droidlover.xdroidmvp.kit.KnifeKit;
  * 描述：
  */
 
-public class WaitSureRecyleAdapter extends SimpleRecAdapter<FoundResp, WaitSureRecyleAdapter.ViewHolder> {
+public class WaitSureRecyleAdapter extends SimpleRecAdapter<HoldFundResp, WaitSureRecyleAdapter.ViewHolder> {
     public static final int ITEM_CLICK = 0;    //点击标识
 
     public WaitSureRecyleAdapter(Context context) {
@@ -39,10 +38,12 @@ public class WaitSureRecyleAdapter extends SimpleRecAdapter<FoundResp, WaitSureR
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        final FoundResp resp = data.get(position);
+        final HoldFundResp resp = data.get(position);
 
         holder.tvFundName.setText(resp.getFundName());
-        RateStyleUtil.amountStyle(context, holder.tvAmount, resp.getHoldAmount());
+        holder.tvAmount.setText(resp.getBalance());
+        holder.tvType.setText(resp.getBusinBoardType());
+        holder.tvTime.setText(resp.getApplyDate());
 
         holder.llContent.setOnClickListener(new View.OnClickListener() {
             @Override

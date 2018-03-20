@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,15 +15,12 @@ import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.OpenAccountEvent;
-import com.zhsoft.fretting.model.user.FoundResp;
+import com.zhsoft.fretting.model.user.HoldFundResp;
+import com.zhsoft.fretting.model.user.MyHoldFundResp;
 import com.zhsoft.fretting.model.user.UserAccountResp;
-import com.zhsoft.fretting.net.Api;
-import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.present.user.UserPresent;
-import com.zhsoft.fretting.ui.activity.boot.FundDetailWebActivity;
 import com.zhsoft.fretting.ui.activity.user.BonusActivity;
 import com.zhsoft.fretting.ui.activity.user.CancleOrderActivity;
-import com.zhsoft.fretting.ui.activity.user.InvestPlanActivity;
 import com.zhsoft.fretting.ui.activity.user.LoginActivity;
 import com.zhsoft.fretting.ui.activity.user.MyInvestActivity;
 import com.zhsoft.fretting.ui.activity.user.RegisterFirstActivity;
@@ -33,8 +29,6 @@ import com.zhsoft.fretting.ui.activity.user.SelfChooseActivity;
 import com.zhsoft.fretting.ui.activity.user.SettingActivity;
 import com.zhsoft.fretting.ui.activity.user.TransactionQueryActivity;
 import com.zhsoft.fretting.ui.adapter.fund.FundTabViewPagerAdapter;
-import com.zhsoft.fretting.ui.adapter.user.MyFundRecyleAdapter;
-import com.zhsoft.fretting.ui.fragment.fund.FundContentFragment;
 import com.zhsoft.fretting.ui.widget.CustomViewPager;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
 import com.zhsoft.fretting.utils.RuntimeHelper;
@@ -43,16 +37,12 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
-import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
-import cn.droidlover.xrecyclerview.RecyclerItemCallback;
-import cn.droidlover.xrecyclerview.XRecyclerView;
 
 /**
  * 作者：sunnyzeng on 2017/12/5
@@ -74,6 +64,10 @@ public class UserFragment extends XFragment<UserPresent> {
     @BindView(R.id.tv_time_accumlate) TextView tvTimeAccumlate;
     /** 累计收益 */
     @BindView(R.id.tv_accumulate_earn) TextView tvAccumulateEarn;
+    /** 在途资产 */
+    @BindView(R.id.tv_passage) TextView tvPassage;
+    /** 收益时间 */
+    @BindView(R.id.tv_time) TextView tvTime;
     /** 登录 */
     @BindView(R.id.login) Button login;
     /** 注册 */
@@ -114,7 +108,12 @@ public class UserFragment extends XFragment<UserPresent> {
     /**
      * 我的持仓基金
      */
-    private ArrayList<FoundResp> fundList;
+    private ArrayList<MyHoldFundResp> fundList;
+
+    /**
+     * 在途基金
+     */
+    private ArrayList<HoldFundResp> passageList;
 
 
     @Override
@@ -301,9 +300,9 @@ public class UserFragment extends XFragment<UserPresent> {
 //    public SimpleRecAdapter getMyFundAdapter() {
 //        MyFundRecyleAdapter adapter = new MyFundRecyleAdapter(context);
 //        xrvMyFund.setAdapter(adapter);
-//        adapter.setRecItemClick(new RecyclerItemCallback<FoundResp, MyFundRecyleAdapter.ViewHolder>() {
+//        adapter.setRecItemClick(new RecyclerItemCallback<HoldFundResp, MyFundRecyleAdapter.ViewHolder>() {
 //            @Override
-//            public void onItemClick(int position, FoundResp model, int tag, MyFundRecyleAdapter.ViewHolder holder) {
+//            public void onItemClick(int position, HoldFundResp model, int tag, MyFundRecyleAdapter.ViewHolder holder) {
 //                super.onItemClick(position, model, tag, holder);
 //                switch (tag) {
 //                    //点击
@@ -333,13 +332,20 @@ public class UserFragment extends XFragment<UserPresent> {
             //总资产
             tvTotalAssets.setText(BigDecimalUtil.bigdecimalToString(resps.getTotalAssets()));
             //昨日收益
-            tvYesterdayIncome.setText(BigDecimalUtil.bigdecimalToString(resps.getEarningsLastDay()));
+            tvYesterdayIncome.setText(BigDecimalUtil.bigdecimalToString(resps.getYesterdayIncome()));
             //累计收益时间
             tvTimeAccumlate.setText("累计收益(元)");
             //累计收益
-            tvAccumulateEarn.setText(BigDecimalUtil.bigdecimalToString(resps.getCumulativeIncome()));
+            tvAccumulateEarn.setText(BigDecimalUtil.bigdecimalToString(resps.getTotalIncome()));
+            //在途资产
+            tvPassage.setText(BigDecimalUtil.bigdecimalToString(resps.getOntheRoadAssets()));
+            //收益时间
+            tvTime.setText("(" + resps.getYesterday() + ")");
 
+            //持仓基金
             fundList = resps.getFundList();
+            //待确认基金
+            passageList = resps.getHoldList();
             showChannel();
 
 //            //持仓基金
@@ -365,17 +371,6 @@ public class UserFragment extends XFragment<UserPresent> {
         tabName.add(Constant.MY_HOLD);
         tabName.add(Constant.MY_WAIT);
 
-//        int fragmentSize = tabName.size();
-//
-//        for (int i = 0; i < fragmentSize; i++) {
-//            FundContentFragment fragment = new FundContentFragment();
-//            Bundle bundle = new Bundle();
-//            bundle.putString(Constant.FUND_TAB_NAME, tabName.get(i));
-//            bundle.putInt(Constant.ACTIVITY_NAME, Constant.FUND_INDEX);
-//            fragment.setArguments(bundle);
-//            fragmentList.add(fragment);
-//        }
-
         UserHoldFragment fragment = new UserHoldFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(Constant.ACTIVITY_OBJECT, fundList);
@@ -384,7 +379,7 @@ public class UserFragment extends XFragment<UserPresent> {
 
         WaitSureFragment waitSureFragment = new WaitSureFragment();
         Bundle bundle2 = new Bundle();
-        bundle2.putParcelableArrayList(Constant.ACTIVITY_OBJECT, fundList);
+        bundle2.putParcelableArrayList(Constant.ACTIVITY_OBJECT, passageList);
         waitSureFragment.setArguments(bundle2);
         fragmentList.add(waitSureFragment);
 
