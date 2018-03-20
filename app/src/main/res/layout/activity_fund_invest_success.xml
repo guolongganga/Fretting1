@@ -187,7 +187,7 @@
             <!--完成按钮-->
             <Button
                 android:id="@+id/sure"
-                style="@style/common_blue_button_circle"
+                style="@style/common_red_button_circle"
                 android:text="@string/user_common_finish"
                 android:textSize="@dimen/text_size_14"/>
         </LinearLayout>

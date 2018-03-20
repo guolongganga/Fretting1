@@ -71,16 +71,16 @@
         android:id="@+id/tv_amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text=""
+        android:text="10.00元"
         android:textColor="@color/color_333333"
         android:textSize="@dimen/text_size_14"
         android:textStyle="bold"/>
-    <!--向右箭头-->
-    <ImageView
-        android:id="@+id/iv_arrow"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="@dimen/dimen_10"
-        android:layout_marginRight="@dimen/dimen_30"
-        android:src="@mipmap/icon_common_arrow"/>
+    <!--撤单按钮-->
+    <Button
+        android:id="@+id/btn_cancle"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:text="撤单"
+        android:textSize="14dp"
+        style="@style/common_red_button_circle"/>
 </LinearLayout>

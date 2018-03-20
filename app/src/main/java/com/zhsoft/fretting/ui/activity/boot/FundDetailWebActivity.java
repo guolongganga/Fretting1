@@ -24,6 +24,7 @@ import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.ChangeTabEvent;
+import com.zhsoft.fretting.event.RefreshBonusEvent;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
@@ -46,6 +47,8 @@ import com.zhsoft.fretting.webjs.JSInterfaceClick;
 import com.zhsoft.fretting.webjs.JSInterfaceUtils;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
@@ -121,6 +124,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         //右侧搜索按钮
         headRightImgbtn.setVisibility(View.VISIBLE);
         headRightImgbtn.setImageResource(R.drawable.icon_common_search_white);
+        EventBus.getDefault().register(this);
         httpLoadingDialog = new HttpLoadingDialog(context);
         httpLoadingDialog.visible();
         //标题
@@ -459,6 +463,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      */
     @Override
     protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
         try {
             if (mWeb != null) {
                 mWeb.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
@@ -696,19 +701,36 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Constant.WEB_BONUS_ACTIVITY && resultCode == Constant.BONUS_BACK_ACTIVITY) {
-            final String chooseStyle = data.getStringExtra(Constant.BONUS_TYPE);
-            //调用js中的函数：bonusJS(value) 修改分红方式
-            mWeb.post(new Runnable() {
-                @Override
-                public void run() {
-                    mWeb.loadUrl("javascript:bonusJS('" + chooseStyle + "')");
-                }
-            });
-        }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == Constant.WEB_BONUS_ACTIVITY && resultCode == Constant.BONUS_BACK_ACTIVITY) {
+//            final String chooseStyle = data.getStringExtra(Constant.BONUS_TYPE);
+//            //调用js中的函数：bonusJS(value) 修改分红方式
+//            mWeb.post(new Runnable() {
+//                @Override
+//                public void run() {
+//                    mWeb.loadUrl("javascript:bonusJS('" + chooseStyle + "')");
+//                }
+//            });
+//        }
+//    }
+
+    /**
+     * 修改分红方式
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.POSTING)
+    public void onRefreshBonusEvent(RefreshBonusEvent event) {
+        final String chooseStyle = event.getBonusType();
+        //调用js中的函数：bonusJS(value) 修改分红方式
+        mWeb.post(new Runnable() {
+            @Override
+            public void run() {
+                mWeb.loadUrl("javascript:bonusJS('" + chooseStyle + "')");
+            }
+        });
     }
 
 }

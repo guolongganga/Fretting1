@@ -40,7 +40,7 @@
     </style>
 
     <!--蓝色圆角按钮-->
-    <style name="common_blue_button_circle">
+    <style name="common_red_button_circle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">45dp</item>
         <item name="android:layout_marginLeft">@dimen/small_margin_size</item>
@@ -54,7 +54,7 @@
     </style>
 
     <!--蓝色圆角按钮 居于底部-->
-    <style name="common_blue_button_rect">
+    <style name="common_red_button_rect">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">45dp</item>
         <item name="android:background">@color/colorPrimary</item>

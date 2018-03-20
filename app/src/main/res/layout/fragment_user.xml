@@ -232,7 +232,7 @@
             <!--未开户显示去开户-->
             <Button
                 android:id="@+id/to_finish_register"
-                style="@style/common_blue_button_circle"
+                style="@style/common_red_button_circle"
                 android:layout_width="150dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="@dimen/dimen_70"
@@ -283,13 +283,13 @@
 
         <Button
             android:id="@+id/login"
-            style="@style/common_blue_button_circle"
+            style="@style/common_red_button_circle"
             android:layout_width="150dp"
             android:text="立即登录"/>
 
         <Button
             android:id="@+id/register"
-            style="@style/common_blue_button_circle"
+            style="@style/common_red_button_circle"
             android:layout_width="150dp"
             android:layout_marginTop="20dp"
             android:text="10秒开户"/>

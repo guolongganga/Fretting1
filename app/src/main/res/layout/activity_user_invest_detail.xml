@@ -325,7 +325,7 @@
         <!--终止-->
         <Button
             android:id="@+id/btn_end"
-            style="@style/common_blue_button_circle"
+            style="@style/common_red_button_circle"
             android:layout_width="0dp"
             android:layout_margin="@dimen/dimen_5"
             android:layout_weight="1"
@@ -333,7 +333,7 @@
         <!--暂停-->
         <Button
             android:id="@+id/btn_stop"
-            style="@style/common_blue_button_circle"
+            style="@style/common_red_button_circle"
             android:layout_width="0dp"
             android:layout_margin="@dimen/dimen_5"
             android:layout_weight="1"
@@ -342,7 +342,7 @@
         <!--修改-->
         <Button
             android:id="@+id/btn_update"
-            style="@style/common_blue_button_circle"
+            style="@style/common_red_button_circle"
             android:layout_width="0dp"
             android:layout_margin="@dimen/dimen_5"
             android:layout_weight="1"
@@ -350,7 +350,7 @@
         <!--恢复-->
         <Button
             android:id="@+id/btn_recovery"
-            style="@style/common_blue_button_circle"
+            style="@style/common_red_button_circle"
             android:layout_width="0dp"
             android:layout_margin="@dimen/dimen_5"
             android:layout_weight="1"

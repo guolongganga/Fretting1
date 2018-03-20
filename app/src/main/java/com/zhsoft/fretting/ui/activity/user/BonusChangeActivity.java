@@ -12,7 +12,10 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.RefreshBonusEvent;
 import com.zhsoft.fretting.ui.widget.ChenJingET;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
@@ -79,13 +82,12 @@ public class BonusChangeActivity extends XActivity {
                     chooseStyle = "现金分红";
                 }
                 showToast("保存，分红方式为：" + chooseStyle);
-                Intent intent = new Intent();
-                intent.putExtra(Constant.BONUS_TYPE, chooseStyle);
-                setResult(Constant.BONUS_BACK_ACTIVITY,intent);
+                //跳转到修改成功界面，通知分红方式改变
+                EventBus.getDefault().post(new RefreshBonusEvent(chooseStyle));
+                startActivity(BonusChangeSuccessActivity.class);
                 finish();
             }
         });
     }
-
 
 }

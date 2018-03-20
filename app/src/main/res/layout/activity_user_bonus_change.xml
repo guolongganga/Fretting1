@@ -132,7 +132,7 @@
 
             <Button
                 android:id="@+id/btn_save"
-                style="@style/common_blue_button_circle"
+                style="@style/common_red_button_circle"
                 android:text="保存"/>
 
         </LinearLayout>

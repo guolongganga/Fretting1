@@ -76,7 +76,7 @@
 
     <Button
         android:id="@+id/btn_add_invest"
-        style="@style/common_blue_button_rect"
+        style="@style/common_red_button_rect"
         android:text="+新增定投"
         />
 </RelativeLayout>

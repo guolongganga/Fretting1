@@ -3,6 +3,7 @@ package com.zhsoft.fretting.ui.adapter.user;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -46,7 +47,7 @@ public class CancleOrderRecyleAdapter extends SimpleRecAdapter<CancleOrderResp, 
         holder.tvFundName.setText(resp.getFund_name());
         holder.tvFundCode.setText(resp.getFund_code());
         holder.tvTime.setText(resp.getApply_date() + "  " + resp.getApply_time());
-        //（1、买入 0、卖出）
+        //（1、买入 0、卖出 修改分红方式）
         if ("1".equals(resp.getBuyType())) {
             holder.tvType.setText("买入");
         } else {
@@ -54,7 +55,7 @@ public class CancleOrderRecyleAdapter extends SimpleRecAdapter<CancleOrderResp, 
         }
         holder.tvmount.setText(BigDecimalUtil.bigdecimalToString(resp.getApply_share()) + "份");
 
-        holder.llContent.setOnClickListener(new View.OnClickListener() {
+        holder.btnCancle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getRecItemClick().onItemClick(position, data.get(position), ITEM_CLICK, holder);
@@ -75,6 +76,8 @@ public class CancleOrderRecyleAdapter extends SimpleRecAdapter<CancleOrderResp, 
         @BindView(R.id.tv_time) TextView tvTime;
         /** 份额 */
         @BindView(R.id.tv_amount) TextView tvmount;
+        /** 份额 */
+        @BindView(R.id.btn_cancle) Button btnCancle;
 
         public ViewHolder(View itemView) {
             super(itemView);

@@ -37,13 +37,22 @@ public class FundBuyDialog extends Dialog {
         void onFinish(String str);
     }
 
+    public interface OnPositiveButtonListener {
+        void onButtonClick(DialogInterface dialog,String str);
+    }
+
     private static PayPwdEditText ppePwd;
 
     public static class Builder {
         private Context context;
         private String fundName;
         private String fundAmount;
+        private String hintText;
+        private String positiveButtonText;
+        private String negativeButtonText;
         private FundBuyDialog.OnTextFinishListener onTextFinishListener;
+        private OnPositiveButtonListener positiveButtonClickListener;
+        private OnClickListener negativeButtonClickListener;
 
         public Builder(Context context) {
             this.context = context;
@@ -82,6 +91,59 @@ public class FundBuyDialog extends Dialog {
             return this;
         }
 
+        /**
+         * 设置提示
+         *
+         * @param hintText
+         * @return
+         */
+        public Builder setHintText(String hintText) {
+            this.hintText = hintText;
+            return this;
+        }
+
+        /**
+         * Set the positive button resource and it's listener
+         *
+         * @param positiveButtonText
+         * @return
+         */
+        public Builder setPositiveButton(int positiveButtonText,
+                                         OnPositiveButtonListener listener) {
+            this.positiveButtonText = (String) context
+                    .getText(positiveButtonText);
+            this.positiveButtonClickListener = listener;
+            return this;
+        }
+
+        public Builder setPositiveButton(String positiveButtonText,
+                                         OnPositiveButtonListener listener) {
+            this.positiveButtonText = positiveButtonText;
+            this.positiveButtonClickListener = listener;
+            return this;
+        }
+
+        /**
+         * Set the negative button resource and it's listener
+         *
+         * @param negativeButtonText
+         * @return
+         */
+        public Builder setNegativeButton(int negativeButtonText,
+                                         OnClickListener listener) {
+            this.negativeButtonText = (String) context
+                    .getText(negativeButtonText);
+            this.negativeButtonClickListener = listener;
+            return this;
+        }
+
+        public Builder setNegativeButton(String negativeButtonText,
+                                         OnClickListener listener) {
+            this.negativeButtonText = negativeButtonText;
+            this.negativeButtonClickListener = listener;
+            return this;
+        }
+
         public FundBuyDialog create() {
             LayoutInflater inflater = (LayoutInflater) context
                     .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -107,6 +169,14 @@ public class FundBuyDialog extends Dialog {
                 ((TextView) layout.findViewById(R.id.tv_fund_amount)).setText(fundAmount);
             }
 
+            //提示
+            if (TextUtils.isEmpty(hintText)) {
+                layout.findViewById(R.id.tv_hint).setVisibility(View.GONE);
+            } else {
+                layout.findViewById(R.id.tv_hint).setVisibility(View.VISIBLE);
+                ((TextView) layout.findViewById(R.id.tv_hint)).setText(hintText);
+            }
+
             layout.findViewById(R.id.iv_close).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -122,6 +192,48 @@ public class FundBuyDialog extends Dialog {
                     onTextFinishListener.onFinish(str);
                 }
             });
+
+            if (positiveButtonText != null) {
+                ((Button) layout.findViewById(R.id.positive_button))
+                        .setText(positiveButtonText);
+
+                if (positiveButtonClickListener != null) {
+                    ((Button) layout.findViewById(R.id.positive_button))
+                            .setOnClickListener(new View.OnClickListener() {
+                                public void onClick(View v) {
+                                    positiveButtonClickListener.onButtonClick(dialog,ppePwd.getPwdText().toString());
+                                }
+                            });
+                }
+            } else {
+                // if no confirm button just set the visibility to GONE
+                layout.findViewById(R.id.positive_button).setVisibility(
+                        View.GONE);
+            }
+            // set the cancel button
+            if (negativeButtonText != null) {
+                ((Button) layout.findViewById(R.id.negative_button))
+                        .setText(negativeButtonText);
+                if (negativeButtonClickListener != null) {
+                    ((Button) layout.findViewById(R.id.negative_button))
+                            .setOnClickListener(new View.OnClickListener() {
+                                public void onClick(View v) {
+                                    negativeButtonClickListener.onClick(dialog,
+                                            DialogInterface.BUTTON_NEGATIVE);
+                                }
+                            });
+                }
+            } else {
+                // if no confirm button just set the visibility to GONE
+                layout.findViewById(R.id.negative_button).setVisibility(
+                        View.GONE);
+                layout.findViewById(R.id.iv_line).setVisibility(View.GONE);
+            }
+            if (positiveButtonText == null && negativeButtonText == null) {
+                layout.findViewById(R.id.view_btn_line).setVisibility(View.GONE);
+            } else {
+                layout.findViewById(R.id.view_btn_line).setVisibility(View.VISIBLE);
+            }
             dialog.setContentView(layout);
             WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
             lp.dimAmount = 0.7f;

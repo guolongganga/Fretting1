@@ -78,7 +78,7 @@
 
     <Button
         android:id="@+id/btn_finish"
-        style="@style/common_blue_button_circle"
+        style="@style/common_red_button_circle"
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="50dp"

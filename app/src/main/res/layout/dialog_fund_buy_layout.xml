@@ -73,6 +73,57 @@
                 android:layout_marginRight="@dimen/dimen_5"
                 android:layout_marginTop="@dimen/dimen_10"
                 android:layout_marginBottom="@dimen/dimen_10"/>
+            <TextView
+                android:id="@+id/tv_hint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/text_size_14"
+                android:layout_marginBottom="@dimen/dimen_10"
+                android:text="注意：撤单不可以恢复"
+                android:textColor="@color/color_main"/>
+
+            <View
+                android:id="@+id/view_btn_line"
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/color_line_dividing"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="44dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/negative_button"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:text="取消"
+                    android:textColor="@color/color_3E3E3E"
+                    android:textSize="@dimen/text_size_15"/>
+
+                <View
+                    android:id="@+id/iv_line"
+                    android:layout_width="0.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/color_line_dividing"/>
+
+
+                <Button
+                    android:id="@+id/positive_button"
+                    android:layout_width="0dip"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:gravity="center"
+                    android:text="确定"
+                    android:textColor="@color/color_3E3E3E"
+                    android:textSize="@dimen/text_size_15"/>
+            </LinearLayout>
+
         </LinearLayout>
 
 

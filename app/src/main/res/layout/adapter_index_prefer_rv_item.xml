@@ -58,7 +58,7 @@
     <!--立即定投 按钮-->
     <Button
         android:id="@+id/btn_invest"
-        style="@style/common_blue_button_circle"
+        style="@style/common_red_button_circle"
         android:layout_width="@dimen/dimen_160"
         android:layout_height="@dimen/dimen_36"
         android:layout_marginBottom="@dimen/dimen_30"

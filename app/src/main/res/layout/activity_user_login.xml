@@ -137,7 +137,7 @@
             <!--登录按钮-->
             <Button
                 android:id="@+id/btn_next"
-                style="@style/common_blue_button_circle"
+                style="@style/common_red_button_circle"
                 android:text="@string/user_common_login"/>
 
             <ImageView

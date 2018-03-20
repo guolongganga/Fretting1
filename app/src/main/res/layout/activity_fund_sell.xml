@@ -134,7 +134,7 @@
         <!--确认购买-->
         <Button
             android:id="@+id/sure"
-            style="@style/common_blue_button_circle"
+            style="@style/common_red_button_circle"
             android:text="立即卖出"
             android:textSize="@dimen/text_size_14"/>
 

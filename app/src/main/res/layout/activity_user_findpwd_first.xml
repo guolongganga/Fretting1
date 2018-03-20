@@ -139,7 +139,7 @@
             <!--下一步按钮-->
             <Button
                 android:id="@+id/btn_next"
-                style="@style/common_blue_button_circle"
+                style="@style/common_red_button_circle"
                 android:text="下一步"/>
 
         </LinearLayout>

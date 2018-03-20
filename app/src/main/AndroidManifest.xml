@@ -101,6 +101,8 @@
         <activity android:name=".ui.activity.user.ResultDetailTwoActivity"></activity>
         <!--分红方式变更-->
         <activity android:name=".ui.activity.user.BonusChangeActivity"></activity>
+        <!--分红方式变更成功-->
+        <activity android:name=".ui.activity.user.BonusChangeSuccessActivity"></activity>
         <!--自选基金-->
         <activity android:name=".ui.activity.user.SelfChooseActivity"></activity>
         <!--交易查询-->

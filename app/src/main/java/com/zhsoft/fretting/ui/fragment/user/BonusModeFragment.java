@@ -5,11 +5,17 @@ import android.view.View;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.OpenAccountEvent;
+import com.zhsoft.fretting.event.RefreshBonusEvent;
 import com.zhsoft.fretting.model.user.UpdateBonusResp;
 import com.zhsoft.fretting.present.user.BonusModePresent;
 import com.zhsoft.fretting.ui.activity.user.BonusChangeActivity;
 import com.zhsoft.fretting.ui.adapter.user.UpdateBonusRecycleAdapter;
 import com.zhsoft.fretting.ui.widget.StateView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -44,6 +50,8 @@ public class BonusModeFragment extends XFragment<BonusModePresent> {
 
     @Override
     public void initData(Bundle bundle) {
+        //注册事件
+        EventBus.getDefault().register(this);
 
         contentLayout.getSwipeRefreshLayout().setColorSchemeResources(
                 R.color.color_main,
@@ -55,7 +63,7 @@ public class BonusModeFragment extends XFragment<BonusModePresent> {
         contentLayout.getRecyclerView().verticalLayoutManager(context);
         contentLayout.getRecyclerView().setAdapter(getAdapter());
         contentLayout.getRecyclerView().horizontalDivider(R.color.color_F9F9F9, R.dimen.dimen_1);  //设置divider
-        //0表示tab的类型
+        //请求分红方式列表
         getP().loadBonusTypeData(1, pageSize);
 
         contentLayout.getRecyclerView()
@@ -146,5 +154,22 @@ public class BonusModeFragment extends XFragment<BonusModePresent> {
 
     public void showError(NetError error) {
         contentLayout.showError();
+    }
+
+    /**
+     * 刷新分红方式数据
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.POSTING)
+    public void onRefreshBonusEvent(RefreshBonusEvent event) {
+        //刷新分红方式数据
+        getP().loadBonusTypeData(1, pageSize);
+    }
+
+    @Override
+    public void onDestroyView() {
+        EventBus.getDefault().unregister(this);
+        super.onDestroyView();
     }
 }
