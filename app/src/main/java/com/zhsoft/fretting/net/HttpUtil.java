@@ -68,6 +68,7 @@ import static com.zhsoft.fretting.net.HttpContent.phone_code;
 import static com.zhsoft.fretting.net.HttpContent.risk_question;
 import static com.zhsoft.fretting.net.HttpContent.send_phone_code;
 import static com.zhsoft.fretting.net.HttpContent.setup_index;
+import static com.zhsoft.fretting.net.HttpContent.share_out_bonus_trade;
 import static com.zhsoft.fretting.net.HttpContent.single_trade_query;
 import static com.zhsoft.fretting.net.HttpContent.trade_password_check;
 import static com.zhsoft.fretting.net.HttpContent.trade_password_phonecode;
@@ -297,6 +298,11 @@ public interface HttpUtil {
     @Headers("appType:Android")
     @POST(trade_query)
     Flowable<TransactionResp> tradeQueryData(@Body CommonReqData reqData);
+
+    //分红方式
+    @Headers("appType:Android")
+    @POST(share_out_bonus_trade)
+    Flowable<TransactionResp> shareOutBonusTradeQuery(@Body CommonReqData reqData);
 
     //单只基金 交易查询
     @Headers("appType:Android")

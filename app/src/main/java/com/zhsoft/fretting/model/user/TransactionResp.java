@@ -20,15 +20,7 @@ public class TransactionResp extends BaseResp<List<TransactionResp>> implements 
     private String time;
     private String amount;
     private String tans_status;
-
-    public TransactionResp(String type, String fundName, String fundCode, String time, String amount, String tans_status) {
-        this.type = type;
-        this.fundName = fundName;
-        this.fundCode = fundCode;
-        this.time = time;
-        this.amount = amount;
-        this.tans_status = tans_status;
-    }
+    private String incomeType;
 
     public String getType() {
         return type;
@@ -86,6 +78,14 @@ public class TransactionResp extends BaseResp<List<TransactionResp>> implements 
         this.tans_status = tans_status;
     }
 
+    public String getIncomeType() {
+        return incomeType;
+    }
+
+    public void setIncomeType(String incomeType) {
+        this.incomeType = incomeType;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -100,6 +100,7 @@ public class TransactionResp extends BaseResp<List<TransactionResp>> implements 
         dest.writeString(this.time);
         dest.writeString(this.amount);
         dest.writeString(this.tans_status);
+        dest.writeString(this.incomeType);
     }
 
     public TransactionResp() {
@@ -113,6 +114,7 @@ public class TransactionResp extends BaseResp<List<TransactionResp>> implements 
         this.time = in.readString();
         this.amount = in.readString();
         this.tans_status = in.readString();
+        this.incomeType = in.readString();
     }
 
     public static final Creator<TransactionResp> CREATOR = new Creator<TransactionResp>() {

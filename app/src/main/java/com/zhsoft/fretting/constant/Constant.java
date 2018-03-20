@@ -186,10 +186,10 @@ public class Constant {
     public static final String TRANSACTION_TAB_PURCHASE = "买入";
 
     //混合型 名称
-    public static final String TRANSACTION_TAB_SELLOUT = "卖出";
+    public static final String TRANSACTION_TAB_SELLOUT = "赎回";
 
     //债券型 名称
-    public static final String TRANSACTION_TAB_ONPASSAGE = "在途交易";
+    public static final String TRANSACTION_TAB_ONPASSAGE = "定投";
 
     //指数型 名称
     public static final String TRANSACTION_TAB_BONUS = "分红";

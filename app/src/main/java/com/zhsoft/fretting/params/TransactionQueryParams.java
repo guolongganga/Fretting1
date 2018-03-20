@@ -8,7 +8,7 @@ package com.zhsoft.fretting.params;
 public class TransactionQueryParams extends CommonReqData<TransactionQueryParams> {
     private int pageNum;
     private int pageSize;
-    private String type;
+    private String transactionCategory;
     private String fundCode;
 
     public String getFundCode() {
@@ -35,11 +35,11 @@ public class TransactionQueryParams extends CommonReqData<TransactionQueryParams
         this.pageSize = pageSize;
     }
 
-    public String getType() {
-        return type;
+    public String getTransactionCategory() {
+        return transactionCategory;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setTransactionCategory(String transactionCategory) {
+        this.transactionCategory = transactionCategory;
     }
 }

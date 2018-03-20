@@ -27,7 +27,7 @@ public class TransactionContentPresent extends XPresent<TransactionContentFragme
         TransactionQueryParams params = new TransactionQueryParams();
         params.setPageNum(pageno);
         params.setPageSize(pageSize);
-        params.setType(tabType);
+        params.setTransactionCategory(tabType);
         reqData.setData(params);
 
         Api.getApi()
@@ -54,78 +54,42 @@ public class TransactionContentPresent extends XPresent<TransactionContentFragme
                     }
                 });
 
+    }
 
+    public void shareOutBonusTradeQuery(String token, String userId, final int pageno, int pageSize, String tabType) {
+        CommonReqData reqData = new CommonReqData();
+        reqData.setToken(token);
+        reqData.setUserId(userId);
 
+        TransactionQueryParams params = new TransactionQueryParams();
+        params.setPageNum(pageno);
+        params.setPageSize(pageSize);
+        params.setTransactionCategory(tabType);
+        reqData.setData(params);
 
-//        ArrayList<TransactionResp> list = new ArrayList();
-//
-//        if ("101".equals(tabType)) {
-//
-//            TransactionResp resp1 = new TransactionResp("申购", "博时精选基金1",
-//                    "050001", "2017-12-11 17:59", "125.00", "确认成功");
-//            TransactionResp resp2 = new TransactionResp("申购", "博时精选基金2",
-//                    "050001", "2017-12-12 17:59", "125.00", "确认成功");
-//            TransactionResp resp3 = new TransactionResp("定投", "博时精选基金3",
-//                    "050001", "2017-12-13 17:59", "125.00", "确认成功");
-//            TransactionResp resp4 = new TransactionResp("定投", "博时精选基金4",
-//                    "050001", "2017-12-14 17:59", "125.00", "确认成功");
-//            list.add(resp1);
-//            list.add(resp2);
-//            list.add(resp3);
-//            list.add(resp4);
-//
-//        } else if ("102".equals(tabType)) {
-//            TransactionResp resp1 = new TransactionResp("卖出", "博时精选基金1",
-//                    "050001", "2017-12-15 17:59", "1.00", "确认成功");
-//            TransactionResp resp2 = new TransactionResp("卖出", "博时精选基金2",
-//                    "050001", "2017-12-16 17:59", "1.00", "确认成功");
-//            TransactionResp resp3 = new TransactionResp("卖出", "博时精选基金3",
-//                    "050001", "2017-12-17 17:59", "1.00", "确认成功");
-//            TransactionResp resp4 = new TransactionResp("卖出", "博时精选基金4",
-//                    "050001", "2017-12-18 17:59", "1.00", "确认成功");
-//            list.add(resp1);
-//            list.add(resp2);
-//            list.add(resp3);
-//            list.add(resp4);
-//
-//        } else if ("103".equals(tabType)) {
-//            TransactionResp resp1 = new TransactionResp("申购", "博时精选基金1",
-//                    "050001", "2017-12-15 17:59", "134.00", "份额信息确认中");
-//            TransactionResp resp2 = new TransactionResp("申购", "博时精选基金2",
-//                    "050001", "2017-12-16 17:59", "134.00", "份额信息确认中");
-//            TransactionResp resp3 = new TransactionResp("卖出", "博时精选基金3",
-//                    "050001", "2017-12-17 17:59", "12.00", "申请提交，待基金公司确认");
-//            TransactionResp resp4 = new TransactionResp("卖出", "博时精选基金4",
-//                    "050001", "2017-12-18 17:59", "12.00", "申请提交，待基金公司确认");
-//            TransactionResp resp5 = new TransactionResp("定投", "博时精选基金3",
-//                    "050001", "2017-12-13 17:59", "125.00", "份额信息确认中");
-//            TransactionResp resp6 = new TransactionResp("定投", "博时精选基金4",
-//                    "050001", "2017-12-14 17:59", "125.00", "份额信息确认中");
-//            list.add(resp1);
-//            list.add(resp2);
-//            list.add(resp3);
-//            list.add(resp4);
-//            list.add(resp5);
-//            list.add(resp6);
-//
-//        } else if ("104".equals(tabType)) {
-//            TransactionResp resp1 = new TransactionResp("分红再投资", "博时精选基金1",
-//                    "050001", "2017-12-15 17:59", "13 .00", null);
-//            TransactionResp resp2 = new TransactionResp("现金分红", "博时精选基金2",
-//                    "050001", "2017-12-16 17:59", "125.00", null);
-//            list.add(resp1);
-//            list.add(resp2);
-//
-//        } else if ("105".equals(tabType)) {
-//            TransactionResp resp1 = new TransactionResp("分红再投资", "博时精选基金1",
-//                    "050001", "2017-12-15 17:59", "13 .00", null);
-//            TransactionResp resp2 = new TransactionResp("现金分红", "博时精选基金2",
-//                    "050001", "2017-12-16 17:59", "125.00", null);
-//            list.add(resp1);
-//            list.add(resp2);
-//        }
+        Api.getApi()
+                .shareOutBonusTradeQuery(reqData)
+                .compose(XApi.<TransactionResp>getApiTransformer())
+                .compose(XApi.<TransactionResp>getScheduler())
+                .compose(getV().<TransactionResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<TransactionResp>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        error.printStackTrace();
+                        getV().showError();
+                    }
 
-//        getV().showData(pageno, list);
+                    @Override
+                    public void onNext(TransactionResp model) {
+                        if (model != null && model.getStatus() == 200) {
+                            getV().showData(pageno, model.getData());
+                        } else {
+                            getV().showToast(model.getMessage());
+                            getV().showError();
+                            XLog.e("返回数据为空");
+                        }
+                    }
+                });
 
     }
 

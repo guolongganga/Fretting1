@@ -75,13 +75,6 @@ public class WaitSureFragment extends XFragment {
                 switch (tag) {
                     //点击
                     case WaitSureRecyleAdapter.ITEM_CLICK:
-                        //跳转基金详情页
-                        Bundle bundle = new Bundle();
-                        bundle.putInt(Constant.WEB_TITLE, R.string.fund_detail);
-                        bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.hold_fund_detail);
-//                        bundle.putString(Constant.FUND_DETAIL_CODE, model.getFundCode());
-                        bundle.putString(Constant.FUND_DETAIL_NAME, model.getFundName());
-                        startActivity(FundDetailWebActivity.class, bundle);
                         break;
                 }
             }

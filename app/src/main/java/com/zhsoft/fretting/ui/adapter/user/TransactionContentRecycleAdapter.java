@@ -59,38 +59,49 @@ public class TransactionContentRecycleAdapter extends SimpleRecAdapter<Transacti
 //        } else {
 //            holder.ivArrow.setVisibility(View.GONE);
 //        }
+        holder.tvAmount.setText(resp.getAmount());
 
-        if ("申购".equals(resp.getType())) {
-            //申购
-            holder.tvAmount.setText(resp.getAmount() + "元");
-            holder.tvStatus.setVisibility(View.VISIBLE);
-            holder.tvStatus.setText(resp.getTans_status());
-
-        } else if ("定投".equals(resp.getType())) {
-            //定投
-            holder.tvAmount.setText(resp.getAmount() + "元");
-            holder.tvStatus.setVisibility(View.VISIBLE);
-            holder.tvStatus.setText(resp.getTans_status());
-
-        } else if ("卖出".equals(resp.getType())) {
-            //卖出
-            holder.tvAmount.setText(resp.getAmount() + "份");
-            holder.tvStatus.setVisibility(View.VISIBLE);
-            holder.tvStatus.setText(resp.getTans_status());
-
-        } else if ("分红再投资".equals(resp.getType())) {
-            //分红再投资
-            holder.tvAmount.setText(resp.getAmount() + "份额");
+        if (Constant.TRANSACTION_TAB_BONUS.equals(tabType)) {
             holder.tvStatus.setVisibility(View.GONE);
-
-        } else if ("现金分红".equals(resp.getType())) {
-            //现金分红
-            holder.tvAmount.setText(resp.getAmount() + "元");
-            holder.tvStatus.setVisibility(View.GONE);
+        } else {
+            holder.tvStatus.setVisibility(View.VISIBLE);
+            holder.tvStatus.setText(resp.getTans_status());
         }
 
+//        if (Constant.TRANSACTION_TAB_BONUS.equals(tabType)) {
+//            //申购
+//            holder.tvAmount.setText(resp.getAmount() + "元");
+//            holder.tvStatus.setVisibility(View.VISIBLE);
+//            holder.tvStatus.setText(resp.getTans_status());
+//
+//        } else if ("定投".equals(resp.getIncomeType())) {
+//            //定投
+//            holder.tvAmount.setText(resp.getAmount() + "元");
+//            holder.tvStatus.setVisibility(View.VISIBLE);
+//            holder.tvStatus.setText(resp.getTans_status());
+//
+//        } else if ("赎回".equals(resp.getIncomeType())) {
+//            //卖出
+//            holder.tvAmount.setText(resp.getAmount() + "份");
+//            holder.tvStatus.setVisibility(View.VISIBLE);
+//            holder.tvStatus.setText(resp.getTans_status());
+//
+//        } else if ("分红再投资".equals(resp.getIncomeType())) {
+//            //分红再投资
+//            holder.tvAmount.setText(resp.getAmount() + "份额");
+//            holder.tvStatus.setVisibility(View.GONE);
+//
+//        } else if ("现金分红".equals(resp.getIncomeType())) {
+//            //现金分红
+//            holder.tvAmount.setText(resp.getAmount() + "元");
+//            holder.tvStatus.setVisibility(View.GONE);
+//        } else {
+//            holder.tvStatus.setVisibility(View.VISIBLE);
+//            holder.tvStatus.setText(resp.getTans_status());
+//        }
 
-        holder.tvType.setText(resp.getType());
+
+        holder.tvType.setText(resp.getIncomeType());
         holder.tvFundName.setText(resp.getFundName());
         holder.tvFundCode.setText(resp.getFundCode());
         holder.tvTime.setText(resp.getTime());
