@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -123,6 +124,16 @@ public class UserFragment extends XFragment<UserPresent> {
         headTitle.setText("我的");
         headRightImgbtn.setVisibility(View.VISIBLE);
         headRightImgbtn.setImageResource(R.mipmap.icon_user_set);
+
+        //获取本地缓存
+        userId = App.getSharedPref().getString(Constant.USERID, "");
+        token = App.getSharedPref().getString(Constant.TOKEN, "");
+        //判断是否有本地的缓存
+        if (isNotEmpty(userId) && isNotEmpty(token)) {
+            //如果有缓存表示已经登录了
+            //全局变量设置为登录状态
+            RuntimeHelper.getInstance().setLogin(true);
+        }
 
         //加载框
         httpLoadingDialog = new HttpLoadingDialog(context);
