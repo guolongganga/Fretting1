@@ -97,6 +97,8 @@ public class HttpContent {
     public static final String share_out_bonus_trade = "permissionCheck/myFound/shareOutBonusTradeQuery";
     /** 我的分红 */
     public static final String bonus_his_page = "permissionCheck/bonus/his/page";
+    /**修改分式列表*/
+    public static final String bonus_xg_page = "permissionCheck/bonus/xg/page";
     /** 单只基金交易查询 */
     public static final String single_trade_query = "permissionCheck/myFound/singleFundTradeQuery";
     /** 修改定投 */

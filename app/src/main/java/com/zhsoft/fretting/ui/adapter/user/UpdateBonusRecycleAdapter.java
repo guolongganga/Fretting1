@@ -41,9 +41,9 @@ public class UpdateBonusRecycleAdapter extends SimpleRecAdapter<UpdateBonusResp,
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         UpdateBonusResp resp = data.get(position);
-        holder.tvFundName.setText(resp.getFundName());
-        holder.tvFundCode.setText(resp.getFundCode());
-        holder.tvBonusType.setText(resp.getBonusType());
+        holder.tvFundName.setText(resp.getFundname());
+        holder.tvFundCode.setText(resp.getFundcode());
+        holder.tvBonusType.setText(resp.getAutoBuyVal());
         holder.llContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
