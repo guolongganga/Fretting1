@@ -27,12 +27,16 @@ import com.zhsoft.fretting.model.user.UpdateBonusResp;
 import com.zhsoft.fretting.model.user.UserAccountResp;
 import com.zhsoft.fretting.params.CommonReqData;
 
+import java.util.List;
+
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 
 import static com.zhsoft.fretting.net.HttpContent.bonus_his_page;
+import static com.zhsoft.fretting.net.HttpContent.bonus_xg_details;
+import static com.zhsoft.fretting.net.HttpContent.bonus_xg_modifybonus;
 import static com.zhsoft.fretting.net.HttpContent.bonus_xg_page;
 import static com.zhsoft.fretting.net.HttpContent.buy_fund;
 import static com.zhsoft.fretting.net.HttpContent.buy_now;
@@ -313,10 +317,20 @@ public interface HttpUtil {
     @POST(bonus_his_page)
     Flowable<MyBonusResp> bonusHisPage(@Body CommonReqData reqData);
 
-    //分红方式
+    //修改分红方式列表
     @Headers("appType:Android")
     @POST(bonus_xg_page)
     Flowable<UpdateBonusResp> bonusXgPage(@Body CommonReqData reqData);
+
+    //修改分红方式详情
+    @Headers("appType:Android")
+    @POST(bonus_xg_details)
+    Flowable<UpdateBonusResp> bonusXgDeatil(@Body CommonReqData reqData);
+
+    //修改分红方式详情
+    @Headers("appType:Android")
+    @POST(bonus_xg_modifybonus)
+    Flowable<BaseResp> bonusXgModifyBonus(@Body CommonReqData reqData);
 
     //单只基金 交易查询
     @Headers("appType:Android")

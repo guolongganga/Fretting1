@@ -1,16 +1,12 @@
 package com.zhsoft.fretting.present.user;
 
 import com.zhsoft.fretting.model.BaseResp;
-import com.zhsoft.fretting.model.user.MyBonusResp;
-import com.zhsoft.fretting.model.user.TransactionResp;
 import com.zhsoft.fretting.model.user.UpdateBonusResp;
 import com.zhsoft.fretting.net.Api;
+import com.zhsoft.fretting.params.BonusChangeParams;
 import com.zhsoft.fretting.params.CommonReqData;
-import com.zhsoft.fretting.params.TransactionQueryParams;
-import com.zhsoft.fretting.ui.fragment.user.BonusModeFragment;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.zhsoft.fretting.params.InvestParams;
+import com.zhsoft.fretting.ui.activity.user.BonusChangeActivity;
 
 import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XPresent;
@@ -19,25 +15,30 @@ import cn.droidlover.xdroidmvp.net.NetError;
 import cn.droidlover.xdroidmvp.net.XApi;
 
 /**
- * 作者：sunnyzeng on 2018/1/25 10:54
+ * 作者：sunnyzeng on 2018/3/21 16:04
  * 描述：
  */
 
-public class BonusModePresent extends XPresent<BonusModeFragment> {
-
-    public void loadBonusTypeData(String token, String userId) {
+public class BonusChangePresent extends XPresent<BonusChangeActivity> {
+    public void loadBonusXgDeatilData(String fundCode, String autoBuy, String sharetype, String tradeacco, String password, String token, String userId) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
 
-        reqData.setData("");
+        BonusChangeParams params = new BonusChangeParams();
+        params.setFundCode(fundCode);
+        params.setAutoBuy(autoBuy);
+        params.setSharetype(sharetype);
+        params.setTradeacco(tradeacco);
+        params.setPassword(password);
+        reqData.setData(params);
 
         Api.getApi()
-                .bonusXgPage(reqData)
-                .compose(XApi.<UpdateBonusResp>getApiTransformer())
-                .compose(XApi.<UpdateBonusResp>getScheduler())
-                .compose(getV().<UpdateBonusResp>bindToLifecycle())
-                .subscribe(new ApiSubscriber<UpdateBonusResp>() {
+                .bonusXgModifyBonus(reqData)
+                .compose(XApi.<BaseResp>getApiTransformer())
+                .compose(XApi.<BaseResp>getScheduler())
+                .compose(getV().<BaseResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<BaseResp>() {
                     @Override
                     protected void onFail(NetError error) {
                         error.printStackTrace();
@@ -45,9 +46,9 @@ public class BonusModePresent extends XPresent<BonusModeFragment> {
                     }
 
                     @Override
-                    public void onNext(UpdateBonusResp model) {
+                    public void onNext(BaseResp model) {
                         if (model != null && model.getStatus() == 200) {
-                            getV().showData(model.getData());
+                            getV().showData();
                         } else {
                             getV().showToast(model.getMessage());
                             getV().showError();
