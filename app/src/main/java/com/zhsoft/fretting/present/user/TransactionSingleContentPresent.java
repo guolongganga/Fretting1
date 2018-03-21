@@ -19,7 +19,7 @@ import cn.droidlover.xdroidmvp.net.XApi;
 
 public class TransactionSingleContentPresent extends XPresent<TransactionSingleContentFragment> {
 
-    public void loadTransactionSingleData(String token, String userId, final int pageno, int pageSize, String tabType, String fundCode) {
+    public void loadTransactionData(String token, String userId, final int pageno, int pageSize, String tabType, String fundCode) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -32,7 +32,45 @@ public class TransactionSingleContentPresent extends XPresent<TransactionSingleC
         reqData.setData(params);
 
         Api.getApi()
-                .singleTradeQueryData(reqData)
+                .tradeQueryData(reqData)
+                .compose(XApi.<TransactionResp>getApiTransformer())
+                .compose(XApi.<TransactionResp>getScheduler())
+                .compose(getV().<TransactionResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<TransactionResp>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        error.printStackTrace();
+                        getV().showError();
+                    }
+
+                    @Override
+                    public void onNext(TransactionResp model) {
+                        if (model != null && model.getStatus() == 200) {
+                            getV().showData(pageno, model.getData());
+                        } else {
+                            getV().showToast(model.getMessage());
+                            getV().showError();
+                            XLog.e("返回数据为空");
+                        }
+                    }
+                });
+
+    }
+
+    public void shareOutBonusTradeQuery(String token, String userId, final int pageno, int pageSize, String tabType, String fundCode) {
+        CommonReqData reqData = new CommonReqData();
+        reqData.setToken(token);
+        reqData.setUserId(userId);
+
+        TransactionQueryParams params = new TransactionQueryParams();
+        params.setPageNum(pageno);
+        params.setPageSize(pageSize);
+        params.setTransactionCategory(tabType);
+        params.setFundCode(fundCode);
+        reqData.setData(params);
+
+        Api.getApi()
+                .shareOutBonusTradeQuery(reqData)
                 .compose(XApi.<TransactionResp>getApiTransformer())
                 .compose(XApi.<TransactionResp>getScheduler())
                 .compose(getV().<TransactionResp>bindToLifecycle())

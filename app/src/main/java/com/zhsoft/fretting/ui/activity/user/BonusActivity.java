@@ -13,6 +13,7 @@ import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.ui.adapter.fund.FundTabViewPagerAdapter;
 import com.zhsoft.fretting.ui.fragment.user.BonusModeFragment;
+import com.zhsoft.fretting.ui.fragment.user.MyBonusFragment;
 import com.zhsoft.fretting.ui.fragment.user.TransactionContentFragment;
 
 import java.util.ArrayList;
@@ -94,11 +95,11 @@ public class BonusActivity extends XActivity {
         tabName.add("我的分红");
         tabName.add("修改分红方式");
 
-        TransactionContentFragment fragment = new TransactionContentFragment();
-        Bundle bundle = new Bundle();
-        //tabName.get(0) 才是 我的分红 方式
-        bundle.putString(Constant.FUND_TAB_NAME, tabName.get(0));
-        fragment.setArguments(bundle);
+        MyBonusFragment fragment = new MyBonusFragment();
+//        Bundle bundle = new Bundle();
+//        //tabName.get(0) 才是 我的分红 方式
+//        bundle.putString(Constant.FUND_TAB_NAME, tabName.get(0));
+//        fragment.setArguments(bundle);
         fragmentList.add(fragment);
 
         BonusModeFragment bonusModeFragment = new BonusModeFragment();

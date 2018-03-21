@@ -6,9 +6,10 @@ import android.view.View;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.model.user.MyBonusResp;
+import com.zhsoft.fretting.present.user.MyBonusPresent;
 import com.zhsoft.fretting.model.user.TransactionResp;
-import com.zhsoft.fretting.present.user.TransactionContentPresent;
-import com.zhsoft.fretting.ui.activity.user.ResultDetailOneActivity;
+import com.zhsoft.fretting.ui.adapter.user.MyBonusRecycleAdapter;
 import com.zhsoft.fretting.ui.adapter.user.TransactionContentRecycleAdapter;
 import com.zhsoft.fretting.ui.widget.StateView;
 
@@ -27,10 +28,10 @@ import cn.droidlover.xrecyclerview.XRecyclerView;
  * 描述：交易查询
  */
 
-public class TransactionContentFragment extends XFragment<TransactionContentPresent> {
+public class MyBonusFragment extends XFragment<MyBonusPresent> {
 
     @BindView(R.id.content_layout) XRecyclerContentLayout contentLayout;
-    private TransactionContentRecycleAdapter adapter;
+    private MyBonusRecycleAdapter adapter;
     private final int pageSize = 40;
     /** 基金类型 */
     private String tabType;
@@ -49,17 +50,14 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
     }
 
     @Override
-    public TransactionContentPresent newP() {
-        return new TransactionContentPresent();
+    public MyBonusPresent newP() {
+        return new MyBonusPresent();
     }
 
     @Override
     public void initData(Bundle bundle) {
         token = App.getSharedPref().getString(Constant.TOKEN, "");
         userId = App.getSharedPref().getString(Constant.USERID, "");
-        //tab类型 请求接口的时候需要
-        fundTabName = bundle.getString(Constant.FUND_TAB_NAME, "");
-        tabType = fundTabType(fundTabName);
 
         contentLayout.getSwipeRefreshLayout().setColorSchemeResources(
                 R.color.color_main,
@@ -72,18 +70,18 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
         contentLayout.getRecyclerView().setAdapter(getAdapter());
         contentLayout.getRecyclerView().horizontalDivider(R.color.color_F9F9F9, R.dimen.dimen_1);  //设置divider
         //0表示tab的类型
-        requestTranData(1);
+        getP().loadMyBonusData(token, userId, 1, pageSize);
 
         contentLayout.getRecyclerView()
                 .setOnRefreshAndLoadMoreListener(new XRecyclerView.OnRefreshAndLoadMoreListener() {
                     @Override
                     public void onRefresh() {
-                        requestTranData(1);
+                        getP().loadMyBonusData(token, userId, 1, pageSize);
                     }
 
                     @Override
                     public void onLoadMore(int page) {
-                        requestTranData(page);
+                        getP().loadMyBonusData(token, userId, page, pageSize);
                     }
                 });
         if (errorView == null) {
@@ -96,24 +94,17 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
 
     }
 
-    private void requestTranData(int pageNo) {
-        if (Constant.TRANSACTION_TAB_BONUS.equals(fundTabName)) {
-            getP().shareOutBonusTradeQuery(token, userId, pageNo, pageSize, tabType);
-        } else {
-            getP().loadTransactionData(token, userId, pageNo, pageSize, tabType);
-        }
-    }
 
 
     @Override
     public void initEvents() {
-        adapter.setRecItemClick(new RecyclerItemCallback<TransactionResp, TransactionContentRecycleAdapter.ViewHolder>() {
+        adapter.setRecItemClick(new RecyclerItemCallback<MyBonusResp, MyBonusRecycleAdapter.ViewHolder>() {
             @Override
-            public void onItemClick(int position, TransactionResp model, int tag, TransactionContentRecycleAdapter.ViewHolder holder) {
+            public void onItemClick(int position, MyBonusResp model, int tag, MyBonusRecycleAdapter.ViewHolder holder) {
                 super.onItemClick(position, model, tag, holder);
                 switch (tag) {
                     //点击
-                    case TransactionContentRecycleAdapter.ITEM_CLICK:
+                    case MyBonusRecycleAdapter.ITEM_CLICK:
 //                        //跳转 结果页
 //                        Bundle bundle = new Bundle();
 //                        //交易流水号
@@ -128,32 +119,9 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
         errorView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                requestTranData(1);
+                getP().loadMyBonusData(token, userId, 1, pageSize);
             }
         });
-    }
-
-    /**
-     * 根据tab类型请求相对应类型的基金
-     *
-     * @param fundTabName
-     * @return
-     */
-    private String fundTabType(String fundTabName) {
-        if (Constant.TRANSACTION_TAB_PURCHASE.equals(fundTabName)) {
-            //买入
-            return "022";
-        } else if (Constant.TRANSACTION_TAB_SELLOUT.equals(fundTabName)) {
-            //赎回
-            return "024";
-        } else if (Constant.TRANSACTION_TAB_ONPASSAGE.equals(fundTabName)) {
-            //定投
-            return "039";
-        } else if (Constant.TRANSACTION_TAB_BONUS.equals(fundTabName)) {
-            //分红
-            return "";
-        }
-        return "";
     }
 
 
@@ -164,7 +132,7 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
      */
     public RecyclerAdapter getAdapter() {
         if (adapter == null) {
-            adapter = new TransactionContentRecycleAdapter(context, fundTabName);
+            adapter = new MyBonusRecycleAdapter(context);
         }
         return adapter;
     }
@@ -175,7 +143,7 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
      * @param pageno
      * @param item
      */
-    public void showData(int pageno, List<TransactionResp> item) {
+    public void showData(int pageno, List<MyBonusResp> item) {
 
         if (item != null && item.size() > 0) {
             if (pageno > 1) {

@@ -31,7 +31,7 @@ public class TransactionSingleContentFragment extends XFragment<TransactionSingl
 
     @BindView(R.id.content_layout) XRecyclerContentLayout contentLayout;
     private TransactionContentRecycleAdapter adapter;
-    private final int pageSize = 10;
+    private final int pageSize = 40;
     /** 基金类型 */
     private String tabType;
     private String fundTabName;
@@ -62,7 +62,8 @@ public class TransactionSingleContentFragment extends XFragment<TransactionSingl
         userId = App.getSharedPref().getString(Constant.USERID, "");
         //tab类型 请求接口的时候需要
         fundTabName = bundle.getString(Constant.FUND_TAB_NAME, "");
-        fundCode = bundle.getString(Constant.FUND_DETAIL_CODE, "");
+        fundCode = "3Q0103";
+//        fundCode = bundle.getString(Constant.FUND_DETAIL_CODE, "");
         tabType = fundTabType(fundTabName);
 
         contentLayout.getSwipeRefreshLayout().setColorSchemeResources(
@@ -76,18 +77,18 @@ public class TransactionSingleContentFragment extends XFragment<TransactionSingl
         contentLayout.getRecyclerView().setAdapter(getAdapter());
         contentLayout.getRecyclerView().horizontalDivider(R.color.color_F9F9F9, R.dimen.dimen_1);  //设置divider
         //0表示tab的类型
-        getP().loadTransactionSingleData(token, userId, 1, pageSize, tabType, fundCode);
+        requestTranData(1);
 
         contentLayout.getRecyclerView()
                 .setOnRefreshAndLoadMoreListener(new XRecyclerView.OnRefreshAndLoadMoreListener() {
                     @Override
                     public void onRefresh() {
-                        getP().loadTransactionSingleData(token, userId, 1, pageSize, tabType, fundCode);
+                        requestTranData(1);
                     }
 
                     @Override
                     public void onLoadMore(int page) {
-                        getP().loadTransactionSingleData(token, userId, page, pageSize, tabType, fundCode);
+                        requestTranData(page);
                     }
                 });
 
@@ -102,6 +103,14 @@ public class TransactionSingleContentFragment extends XFragment<TransactionSingl
 
     }
 
+    private void requestTranData(int pageNo) {
+        if (Constant.TRANSACTION_TAB_BONUS.equals(fundTabName)) {
+            getP().shareOutBonusTradeQuery(token, userId, pageNo, pageSize, tabType, fundCode);
+        } else {
+            getP().loadTransactionData(token, userId, pageNo, pageSize, tabType, fundCode);
+        }
+    }
+
     @Override
     public void initEvents() {
         adapter.setRecItemClick(new RecyclerItemCallback<TransactionResp, TransactionContentRecycleAdapter.ViewHolder>() {
@@ -111,13 +120,13 @@ public class TransactionSingleContentFragment extends XFragment<TransactionSingl
                 switch (tag) {
                     //点击
                     case TransactionContentRecycleAdapter.ITEM_CLICK:
-                        //跳转 结果页
-                        Bundle bundle = new Bundle();
-                        //交易流水号
-                        bundle.putString(Constant.INVEST_PROTOCOL_ID, model.getAllot_no());
-                        //TODO 得写动态的
-                        bundle.putString(Constant.INVEST_RECORD_STATUS, "定投成功");
-                        startActivity(ResultDetailOneActivity.class, bundle);
+//                        //跳转 结果页
+//                        Bundle bundle = new Bundle();
+//                        //交易流水号
+//                        bundle.putString(Constant.INVEST_PROTOCOL_ID, model.getAllot_no());
+//                        //TODO 得写动态的
+//                        bundle.putString(Constant.INVEST_RECORD_STATUS, "定投成功");
+//                        startActivity(ResultDetailOneActivity.class, bundle);
                         break;
                 }
             }
@@ -125,7 +134,7 @@ public class TransactionSingleContentFragment extends XFragment<TransactionSingl
         errorView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getP().loadTransactionSingleData(token, userId, 1, pageSize, tabType, fundCode);
+                requestTranData(1);
             }
         });
     }
@@ -139,16 +148,16 @@ public class TransactionSingleContentFragment extends XFragment<TransactionSingl
     private String fundTabType(String fundTabName) {
         if (Constant.TRANSACTION_TAB_PURCHASE.equals(fundTabName)) {
             //买入
-            return "1";
+            return "022";
         } else if (Constant.TRANSACTION_TAB_SELLOUT.equals(fundTabName)) {
-            //卖出
-            return "0";
+            //赎回
+            return "024";
         } else if (Constant.TRANSACTION_TAB_ONPASSAGE.equals(fundTabName)) {
-            //在途交易
-            return "9";
+            //定投
+            return "039";
         } else if (Constant.TRANSACTION_TAB_BONUS.equals(fundTabName)) {
             //分红
-            return "8";
+            return "";
         }
         return "";
     }

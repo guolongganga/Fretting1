@@ -93,8 +93,10 @@ public class HttpContent {
     public static final String my_times_buy_state_change = "noPermission/fund/times/myTimesBuyStateChange";
     /** 交易查询 */
     public static final String trade_query = "permissionCheck/myFound/tradeQuery";
-    /** 交易查询 */
+    /** 分红 */
     public static final String share_out_bonus_trade = "permissionCheck/myFound/shareOutBonusTradeQuery";
+    /** 我的分红 */
+    public static final String bonus_his_page = "permissionCheck/bonus/his/page";
     /** 单只基金交易查询 */
     public static final String single_trade_query = "permissionCheck/myFound/singleFundTradeQuery";
     /** 修改定投 */
