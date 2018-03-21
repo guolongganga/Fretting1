@@ -46,7 +46,7 @@ public class CancleOrderRecyleAdapter extends SimpleRecAdapter<CancleOrderResp, 
         CancleOrderResp resp = data.get(position);
         holder.tvFundName.setText(resp.getFund_name());
         holder.tvFundCode.setText(resp.getFund_code());
-        holder.tvTime.setText(resp.getApply_date() + "  " + resp.getApply_time());
+        holder.tvTime.setText(resp.getApply_time());
         //（1、买入 0、卖出 修改分红方式）
         if ("1".equals(resp.getBuyType())) {
             holder.tvType.setText("买入");

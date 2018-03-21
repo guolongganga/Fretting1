@@ -1,11 +1,9 @@
 package com.zhsoft.fretting.present.user;
 
 import com.zhsoft.fretting.model.BaseResp;
-import com.zhsoft.fretting.model.user.UpdateBonusResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.BonusChangeParams;
 import com.zhsoft.fretting.params.CommonReqData;
-import com.zhsoft.fretting.params.InvestParams;
 import com.zhsoft.fretting.ui.activity.user.BonusChangeActivity;
 
 import cn.droidlover.xdroidmvp.log.XLog;

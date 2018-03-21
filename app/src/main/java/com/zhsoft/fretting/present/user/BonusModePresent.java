@@ -5,6 +5,7 @@ import com.zhsoft.fretting.model.user.MyBonusResp;
 import com.zhsoft.fretting.model.user.TransactionResp;
 import com.zhsoft.fretting.model.user.UpdateBonusResp;
 import com.zhsoft.fretting.net.Api;
+import com.zhsoft.fretting.params.BuyNowParams;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.params.TransactionQueryParams;
 import com.zhsoft.fretting.ui.fragment.user.BonusModeFragment;
@@ -31,6 +32,14 @@ public class BonusModePresent extends XPresent<BonusModeFragment> {
         reqData.setUserId(userId);
 
         reqData.setData("");
+
+//        reqData.setToken("ad970168f83e484c8aba19ec2f033d71");
+//        reqData.setUserId("37f3f3b6e87843d8a50ff119adfd0f15");
+//
+//        BuyNowParams params = new BuyNowParams();
+//        params.setFund_code("3Q0103");
+//
+//        reqData.setData(params);
 
         Api.getApi()
                 .bonusXgPage(reqData)

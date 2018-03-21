@@ -36,7 +36,7 @@ import cn.droidlover.xrecyclerview.XRecyclerView;
 
 /**
  * 作者：sunnyzeng on 2018/1/24 19:00
- * 描述：不用分页
+ * 描述：不用分页 修改分红方式
  */
 
 public class BonusModeFragment extends XFragment<BonusModePresent> {
@@ -69,7 +69,7 @@ public class BonusModeFragment extends XFragment<BonusModePresent> {
         //请求银行卡列表
         httpLoadingDialog.visible("加载中...");
         //请求分红方式列表
-        getP().loadBonusTypeData(token,userId);
+        getP().loadBonusTypeData(token, userId);
 
 
     }
@@ -136,7 +136,7 @@ public class BonusModeFragment extends XFragment<BonusModePresent> {
     @Subscribe(threadMode = ThreadMode.POSTING)
     public void onRefreshBonusEvent(RefreshBonusEvent event) {
         //刷新分红方式数据
-        getP().loadBonusTypeData(token,userId);
+        getP().loadBonusTypeData(token, userId);
     }
 
     @Override

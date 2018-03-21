@@ -75,7 +75,7 @@ public class CancleOrderActivity extends XActivity<CancleOrderPresent> {
 
         //请求撤单列表接口
         httpLoadingDialog.visible();
-        getP().cancleOrderData(token, userId);
+        getP().cancleOrderListData(token, userId);
     }
 
     @Override
@@ -98,7 +98,7 @@ public class CancleOrderActivity extends XActivity<CancleOrderPresent> {
         xrvMyInvest.setAdapter(adapter);
         adapter.setRecItemClick(new RecyclerItemCallback<CancleOrderResp, CancleOrderRecyleAdapter.ViewHolder>() {
             @Override
-            public void onItemClick(int position, CancleOrderResp model, int tag, CancleOrderRecyleAdapter.ViewHolder holder) {
+            public void onItemClick(int position, final CancleOrderResp model, int tag, CancleOrderRecyleAdapter.ViewHolder holder) {
                 super.onItemClick(position, model, tag, holder);
                 switch (tag) {
                     //点击
@@ -126,12 +126,9 @@ public class CancleOrderActivity extends XActivity<CancleOrderPresent> {
                                     @Override
                                     public void onButtonClick(DialogInterface dialog, String str) {
                                         dialog.dismiss();
-                                        if (str.equals("123456")) {
-                                            showToast("密码正确");
-                                            getP().cancleOrderData(token, userId);
-                                        } else {
-                                            showToast("密码错误");
-                                        }
+                                        httpLoadingDialog.visible();
+                                        getP().withdrawApplyOperate(model.getAllot_no(), str, model.getFund_code(), token, userId);
+
                                     }
                                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
                                     @Override
@@ -226,5 +223,22 @@ public class CancleOrderActivity extends XActivity<CancleOrderPresent> {
                     }).create();
         }
         errorDialog.show();
+    }
+
+    /**
+     * 撤单失败
+     */
+    public void requestCancleFail() {
+        httpLoadingDialog.dismiss();
+    }
+
+    /**
+     * 撤单成功
+     */
+    public void requestCancleSuccess() {
+        httpLoadingDialog.dismiss();
+        showToast("撤单成功");
+        httpLoadingDialog.visible();
+        getP().cancleOrderListData(token, userId);
     }
 }
