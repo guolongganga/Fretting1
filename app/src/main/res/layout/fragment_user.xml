@@ -9,23 +9,24 @@
     <!--头部标题-->
     <include layout="@layout/layout_head"/>
 
-    <ScrollView
-        android:id="@+id/scroll_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="66dp"
-        android:scrollbars="vertical">
+    <!--<ScrollView-->
+        <!--android:id="@+id/scroll_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_marginTop="66dp"-->
+        <!--android:scrollbars="vertical">-->
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
             android:orientation="vertical"
+            android:layout_marginTop="@dimen/dimen_62.5"
             android:visibility="visible">
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="130dp"
                 android:gravity="center_horizontal"
                 android:orientation="vertical">
 
@@ -222,7 +223,7 @@
                 <!--分割线-->
                 <View style="@style/divider_half_e7"/>
                 <!--页卡-->
-                <com.zhsoft.fretting.ui.widget.CustomViewPager
+                <android.support.v4.view.ViewPager
                     android:id="@+id/view_pager"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -260,7 +261,7 @@
             <!--/>-->
 
         </LinearLayout>
-    </ScrollView>
+    <!--</ScrollView>-->
 
     <!--<inclactivity_bank_listyouactivity_bank_listyout/dialog_logout"/>-->
     <!--设置clickable="true" 可以避免点击上层触发底层-->

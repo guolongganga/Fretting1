@@ -31,6 +31,7 @@ import com.zhsoft.fretting.ui.adapter.index.PreferRecycleAdapter;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
 import com.zhsoft.fretting.utils.RateStyleUtil;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -68,6 +69,9 @@ public class IndexFragment extends XFragment<IndexPresent> {
     /** 明星基金 收益率描述 */
     @BindView(R.id.tv_star_rate_desc)
     TextView tvStarRateDesc;
+    /** 明星基金 百分号 */
+    @BindView(R.id.tv_percent)
+    TextView tvPercent;
     /** 明星基金 名称 */
     @BindView(R.id.tv_wan_earnings)
     TextView tvWanarnings;
@@ -436,6 +440,11 @@ public class IndexFragment extends XFragment<IndexPresent> {
             if (data.getStarFund() != null) {
                 startModel = data.getStarFund();
                 RateStyleUtil.rateStyleNoPer(context, tvSevenEarnings, startModel.getFund_rose());
+                if (startModel.getFund_rose() != null && startModel.getFund_rose().compareTo(BigDecimal.ZERO) > 0) {
+                    tvPercent.setTextColor(context.getResources().getColor(R.color.color_main));
+                } else {
+                    tvPercent.setTextColor(context.getResources().getColor(R.color.x_green));
+                }
 //                tvSevenEarnings.setText(BigDecimalUtil.bigdecimalToString() + "%");
                 tvStarRateDesc.setText(startModel.getRiseTermDesc());
                 tvWanarnings.setText(startModel.getFund_name());

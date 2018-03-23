@@ -3,13 +3,13 @@
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:orientation="vertical">
-
+    <!--待确认基金-->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:layout_marginTop="@dimen/dimen_10"
         android:layout_marginLeft="@dimen/dimen_15"
         android:layout_marginRight="@dimen/dimen_15"
+        android:layout_marginTop="@dimen/dimen_10"
         android:background="@color/color_E7E7E7"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -29,10 +29,10 @@
             android:text="金额/份额"/>
 
         <TextView
-            android:gravity="center"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
+            android:gravity="center"
             android:text="申请时间"/>
     </LinearLayout>
 
@@ -43,14 +43,14 @@
         android:layout_height="wrap_content"
         android:nestedScrollingEnabled="false"
         android:overScrollMode="never"/>
-
+    <!--暂无待确认基金-->
     <TextView
         android:id="@+id/tv_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="@dimen/dimen_70"
-        android:layout_marginTop="@dimen/dimen_70"
+        android:layout_marginTop="@dimen/dimen_20"
         android:text="暂无待确认基金"
         android:visibility="gone"
         />

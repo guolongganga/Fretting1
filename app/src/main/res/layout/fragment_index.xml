@@ -118,6 +118,7 @@
 
                     <!--利率 百分号-->
                     <TextView
+                        android:id="@+id/tv_percent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignBaseline="@id/tv_seven_earnings"

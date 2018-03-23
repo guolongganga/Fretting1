@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -96,7 +97,7 @@ public class UserFragment extends XFragment<UserPresent> {
     /** 页卡标签 */
     @BindView(R.id.tab_layout) TabLayout mTabLayout;
     /** 页卡 */
-    @BindView(R.id.view_pager) CustomViewPager mViewPager;
+    @BindView(R.id.view_pager) ViewPager mViewPager;
 
     /** 是否开户 */
     private String isOpenAccount;

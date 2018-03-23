@@ -13,6 +13,8 @@ import com.zhsoft.fretting.model.index.ProductModel;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
 import com.zhsoft.fretting.utils.RateStyleUtil;
 
+import java.math.BigDecimal;
+
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
 import cn.droidlover.xdroidmvp.kit.KnifeKit;
@@ -46,6 +48,11 @@ public class PreferRecycleAdapter extends SimpleRecAdapter<ProductModel, PreferR
         final ProductModel model = data.get(position);
         holder.preferredName.setText(model.getFund_name());
         RateStyleUtil.rateStyleNoPer(context, holder.preferredRate, model.getFund_rose());
+        if (model.getFund_rose() != null && model.getFund_rose().compareTo(BigDecimal.ZERO) > 0) {
+            holder.tvPercent.setTextColor(context.getResources().getColor(R.color.color_main));
+        } else {
+            holder.tvPercent.setTextColor(context.getResources().getColor(R.color.x_green));
+        }
 //        holder.preferredRate.setText(BigDecimalUtil.bigdecimalToString(model.getFund_rose()) + "%");
         holder.tvRateDesc.setText(model.getRiseTermDesc());
 
@@ -73,6 +80,8 @@ public class PreferRecycleAdapter extends SimpleRecAdapter<ProductModel, PreferR
         TextView preferredRate;
         @BindView(R.id.tv_rate_desc)
         TextView tvRateDesc;
+        @BindView(R.id.tv_percent)
+        TextView tvPercent;
         @BindView(R.id.btn_invest)
         Button btnInvest;
 
