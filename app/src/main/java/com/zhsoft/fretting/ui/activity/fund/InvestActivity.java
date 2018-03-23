@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.RefreshUserDataEvent;
 import com.zhsoft.fretting.model.ApplyBaseInfo;
 import com.zhsoft.fretting.model.fund.GetNextTimeResp;
 import com.zhsoft.fretting.model.fund.InvestResp;
@@ -38,6 +39,8 @@ import com.zhsoft.fretting.ui.widget.OnTvClick;
 import com.zhsoft.fretting.ui.widget.SelectPopupWindow;
 import com.zhsoft.fretting.utils.Base64ImageUtil;
 import com.zhsoft.fretting.utils.KeyBoardUtils;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -442,11 +445,12 @@ public class InvestActivity extends XActivity<InvestPersent> {
     }
 
     /**
-     * 确认购买成功
+     * 确认定投成功
      */
     public void requestSureInvestSuccess(InvestSureResp sureResp) {
         httpLoadingDialog.dismiss();
-        //传值定成功
+        EventBus.getDefault().post(new RefreshUserDataEvent());
+        //传值定投成功
         Bundle bundle = new Bundle();
         bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
         bundle.putParcelable(Constant.INVEST_SUCCESS_OBJECT, sureResp);

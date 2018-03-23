@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.RefreshUserDataEvent;
 import com.zhsoft.fretting.model.ApplyBaseInfo;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.BuyNowResp;
@@ -31,6 +32,8 @@ import com.zhsoft.fretting.ui.widget.FundBuyDialog;
 import com.zhsoft.fretting.ui.widget.PopShow;
 import com.zhsoft.fretting.utils.Base64ImageUtil;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -294,6 +297,7 @@ public class BuyActivity extends XActivity<BuyPresent> {
      */
     public void requestBuyNowSuccess(FundStatusResp data) {
         httpLoadingDialog.dismiss();
+        EventBus.getDefault().post(new RefreshUserDataEvent());
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constant.BUY_SUCCESS_OBJECT, data);
         startActivity(BuySuccessActivity.class, bundle);

@@ -1,27 +1,19 @@
 package com.zhsoft.fretting.ui.activity.user;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
-import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.event.RefreshBonusEvent;
-import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.user.UpdateBonusResp;
 import com.zhsoft.fretting.present.user.BonusChangePresent;
 import com.zhsoft.fretting.ui.widget.ChenJingET;
-
-import org.greenrobot.eventbus.EventBus;
-
-import java.util.List;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
@@ -126,6 +118,7 @@ public class BonusChangeActivity extends XActivity<BonusChangePresent> {
     public void showData() {
         //跳转到修改成功界面，通知分红方式改变
         //EventBus.getDefault().post(new RefreshBonusEvent(chooseStyle));
+//        EventBus.getDefault().post(new RefreshUserDataEvent());
         httpLoadingDialog.dismiss();
         startActivity(BonusChangeSuccessActivity.class);
         finish();

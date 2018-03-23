@@ -140,7 +140,7 @@ public class FindPwdTradeSecondActivity extends XActivity<FindPwdTradeSecondPres
         App.getSharedPref().putString(Constant.USER_PHONE, "");
         App.getSharedPref().putString(Constant.USER_CERTNO, "");
         App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, "");
-//                EventBus.getDefault().post(new OpenAccountEvent());
+//                EventBus.getDefault().post(new RefreshUserDataEvent());
         //改变登录状态
         RuntimeHelper.getInstance().setLogin(false);
         //跳转登录页面

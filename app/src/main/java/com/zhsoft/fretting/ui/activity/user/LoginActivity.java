@@ -5,13 +5,12 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.event.OpenAccountEvent;
+import com.zhsoft.fretting.event.RefreshUserDataEvent;
 import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.present.user.LoginPresent;
 import com.zhsoft.fretting.ui.activity.MainActivity;
@@ -147,7 +146,7 @@ public class LoginActivity extends XActivity<LoginPresent> {
         }
         App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, model.getIsOpenAccount());
 
-        EventBus.getDefault().post(new OpenAccountEvent());
+        EventBus.getDefault().post(new RefreshUserDataEvent());
 
         //全局变量设置为登录状态
         RuntimeHelper.getInstance().setLogin(true);

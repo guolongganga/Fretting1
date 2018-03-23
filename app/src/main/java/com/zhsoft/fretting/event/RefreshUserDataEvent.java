@@ -5,7 +5,7 @@ package com.zhsoft.fretting.event;
  * 描述：
  */
 
-public class OpenAccountEvent {
-    public OpenAccountEvent() {
+public class RefreshUserDataEvent {
+    public RefreshUserDataEvent() {
     }
 }

@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.event.OpenAccountEvent;
+import com.zhsoft.fretting.event.RefreshUserDataEvent;
 import com.zhsoft.fretting.model.user.BankResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
@@ -281,7 +281,7 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
 //        showToast(data);
         //更新开户状态 改成已开户
         App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, Constant.ALREADY_OPEN_ACCOUNT);
-        EventBus.getDefault().post(new OpenAccountEvent());
+        EventBus.getDefault().post(new RefreshUserDataEvent());
 
         Bundle bundle = new Bundle();
         //姓名

@@ -15,6 +15,7 @@ import com.zhsoft.fretting.ui.activity.boot.SearchActivity;
 import com.zhsoft.fretting.ui.activity.boot.SearchTimingActivity;
 import com.zhsoft.fretting.ui.adapter.fund.FundTabViewPagerAdapter;
 import com.zhsoft.fretting.ui.fragment.fund.FundContentFragment;
+import com.zhsoft.fretting.ui.fragment.fund.FundCurrencyFragment;
 import com.zhsoft.fretting.ui.fragment.index.TimingFragment;
 
 import java.util.ArrayList;
@@ -102,14 +103,21 @@ public class TimingActivity extends XActivity {
         List<Fragment> fragmentList = new ArrayList<>();
 
         List<String> tabName = new ArrayList<>();
+        tabName.add(Constant.FUND_TAB_CURRENCY);
         tabName.add(Constant.FUND_TAB_SHARES);
         tabName.add(Constant.FUND_TAB_BLEND);
         tabName.add(Constant.FUND_TAB_BOND);
         tabName.add(Constant.FUND_TAB_FINGER);
 
         int fragmentSize = tabName.size();
+        //货币型
+        FundCurrencyFragment currencyFragment = new FundCurrencyFragment();
+        Bundle mbundle = new Bundle();
+        mbundle.putInt(Constant.ACTIVITY_NAME, Constant.FUND_INDEX);
+        currencyFragment.setArguments(mbundle);
+        fragmentList.add(currencyFragment);
 
-        for (int i = 0; i < fragmentSize; i++) {
+        for (int i = 1; i < fragmentSize; i++) {
             TimingFragment fragment = new TimingFragment();
             Bundle bundle = new Bundle();
             bundle.putString(Constant.FUND_TAB_NAME, tabName.get(i));

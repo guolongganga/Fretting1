@@ -7,16 +7,11 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.event.OpenAccountEvent;
 import com.zhsoft.fretting.event.RefreshBonusEvent;
-import com.zhsoft.fretting.model.user.HoldFundResp;
-import com.zhsoft.fretting.model.user.MyBonusResp;
 import com.zhsoft.fretting.model.user.UpdateBonusResp;
 import com.zhsoft.fretting.present.user.BonusModePresent;
 import com.zhsoft.fretting.ui.activity.user.BonusChangeActivity;
 import com.zhsoft.fretting.ui.adapter.user.UpdateBonusRecycleAdapter;
-import com.zhsoft.fretting.ui.adapter.user.WaitSureRecyleAdapter;
-import com.zhsoft.fretting.ui.widget.StateView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -28,10 +23,7 @@ import butterknife.BindView;
 import cn.droidlover.xdroidmvp.base.SimpleRecAdapter;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
-import cn.droidlover.xdroidmvp.net.NetError;
-import cn.droidlover.xrecyclerview.RecyclerAdapter;
 import cn.droidlover.xrecyclerview.RecyclerItemCallback;
-import cn.droidlover.xrecyclerview.XRecyclerContentLayout;
 import cn.droidlover.xrecyclerview.XRecyclerView;
 
 /**
@@ -95,10 +87,13 @@ public class BonusModeFragment extends XFragment<BonusModePresent> {
                 switch (tag) {
                     //点击
                     case UpdateBonusRecycleAdapter.ITEM_CLICK:
-                        //跳转 分红方式变更 TODO 需要传递参数
-                        Bundle bundle = new Bundle();
-                        bundle.putParcelable(Constant.ACTIVITY_OBJECT, model);
-                        startActivity(BonusChangeActivity.class, bundle);
+                        //"0":可以修改   "1":不可以修改
+                        if ("0".equals(model.getForbidModiAutobuyFlag())) {
+                            //跳转 分红方式变更 TODO 需要传递参数
+                            Bundle bundle = new Bundle();
+                            bundle.putParcelable(Constant.ACTIVITY_OBJECT, model);
+                            startActivity(BonusChangeActivity.class, bundle);
+                        }
                         break;
                 }
             }

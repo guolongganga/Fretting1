@@ -9,8 +9,7 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.event.CancleDataEvent;
-import com.zhsoft.fretting.event.OpenAccountEvent;
+import com.zhsoft.fretting.event.RefreshUserDataEvent;
 import com.zhsoft.fretting.model.user.CancleOrderResp;
 import com.zhsoft.fretting.present.user.CancleOrderPresent;
 import com.zhsoft.fretting.ui.adapter.user.CancleOrderRecyleAdapter;
@@ -18,8 +17,6 @@ import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.ui.widget.FundBuyDialog;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -66,8 +63,6 @@ public class CancleOrderActivity extends XActivity<CancleOrderPresent> {
         headTitle.setText("撤单");
         //获取用户缓存的userid 和 token
         httpLoadingDialog = new HttpLoadingDialog(context);
-        //注册EventBus
-//        EventBus.getDefault().register(this);
         //获取本地缓存
         userId = App.getSharedPref().getString(Constant.USERID, "");
         token = App.getSharedPref().getString(Constant.TOKEN, "");
@@ -176,7 +171,6 @@ public class CancleOrderActivity extends XActivity<CancleOrderPresent> {
      */
     @Override
     protected void onDestroy() {
-//        EventBus.getDefault().unregister(this);
         if (fundBuyDialog != null) {
             fundBuyDialog.dismiss();
             fundBuyDialog = null;
@@ -238,6 +232,7 @@ public class CancleOrderActivity extends XActivity<CancleOrderPresent> {
     public void requestCancleSuccess() {
         httpLoadingDialog.dismiss();
         showToast("撤单成功");
+        EventBus.getDefault().post(new RefreshUserDataEvent());
         httpLoadingDialog.visible();
         getP().cancleOrderListData(token, userId);
     }

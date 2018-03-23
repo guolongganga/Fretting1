@@ -6,8 +6,6 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
-import android.support.v4.widget.SwipeRefreshLayout;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -17,7 +15,7 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.event.OpenAccountEvent;
+import com.zhsoft.fretting.event.RefreshUserDataEvent;
 import com.zhsoft.fretting.model.user.HoldFundResp;
 import com.zhsoft.fretting.model.user.MyHoldFundResp;
 import com.zhsoft.fretting.model.user.UserAccountResp;
@@ -32,7 +30,6 @@ import com.zhsoft.fretting.ui.activity.user.SelfChooseActivity;
 import com.zhsoft.fretting.ui.activity.user.SettingActivity;
 import com.zhsoft.fretting.ui.activity.user.TransactionQueryActivity;
 import com.zhsoft.fretting.ui.adapter.fund.FundTabViewPagerAdapter;
-import com.zhsoft.fretting.ui.widget.CustomViewPager;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
 import com.zhsoft.fretting.utils.RuntimeHelper;
 
@@ -371,6 +368,7 @@ public class UserFragment extends XFragment<UserPresent> {
         tabName.add(Constant.MY_HOLD);
         tabName.add(Constant.MY_WAIT);
 
+        //TODO 数据不刷新
         UserHoldFragment fragment = new UserHoldFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(Constant.FUND_OBJECT, fundList);
@@ -412,7 +410,7 @@ public class UserFragment extends XFragment<UserPresent> {
      * @param event
      */
     @Subscribe(threadMode = ThreadMode.POSTING)
-    public void onOpenAccountEvent(OpenAccountEvent event) {
+    public void onRefreshUserDataEvent(RefreshUserDataEvent event) {
         isOpenAccountView();
         requestFund();
     }

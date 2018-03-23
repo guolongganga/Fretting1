@@ -129,7 +129,7 @@ public class ChangeLoginPwdActivity extends XActivity<ChangeLoginPwdPresent> {
         App.getSharedPref().putString(Constant.USER_PHONE, "");
         App.getSharedPref().putString(Constant.USER_CERTNO, "");
         App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, "");
-//                EventBus.getDefault().post(new OpenAccountEvent());
+//                EventBus.getDefault().post(new RefreshUserDataEvent());
 
         RuntimeHelper.getInstance().setLogin(false);
         //跳转回登录界面

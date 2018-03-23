@@ -43,7 +43,7 @@ import cn.droidlover.xdroidmvp.widget.ToastUtils;
 
 /**
  * 作者：sunnyzeng on 2018/1/8 11:55
- * 描述：基金详情页-购买页面
+ * 描述：基金详情页-赎回页面
  */
 
 public class SellActivity extends XActivity<SellPresent> {
@@ -67,9 +67,13 @@ public class SellActivity extends XActivity<SellPresent> {
     @BindView(R.id.et_amount) EditText etAmount;
     /** 确认购买 */
     @BindView(R.id.sure) Button sure;
+    /** 巨额赎回处理类型 */
     @BindView(R.id.tv_deal_type) TextView tvDealType;
+    /** 最低赎回份额 */
     @BindView(R.id.tv_min_sell) TextView tvMinSell;
+    /** 巨额赎回处理 */
     @BindView(R.id.ll_big_deal) LinearLayout llBigDeal;
+    /** 横线 */
     @BindView(R.id.view_line) View viewLine;
     /** 输入密码弹框 */
     private FundBuyDialog fundBuyDialog;
@@ -87,37 +91,63 @@ public class SellActivity extends XActivity<SellPresent> {
     private String userId;
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
+    /** 巨额赎回处理类型 选中 */
     private int isSelector = 0;
+    /** 巨额赎回处理类型 集合 */
     private List<ApplyBaseInfo> list;
 
-
+    /**
+     * 绑定UI布局
+     *
+     * @return
+     */
     @Override
     public int getLayoutId() {
         return R.layout.activity_fund_sell;
     }
 
+    /**
+     * 绑定控制器
+     *
+     * @return
+     */
     @Override
     public SellPresent newP() {
         return new SellPresent();
     }
 
+    /**
+     * 初始化数据及资源
+     *
+     * @param bundle
+     */
     @Override
     public void initData(Bundle bundle) {
+        //标题
         headTitle.setText("赎回");
+        //加载框
         httpLoadingDialog = new HttpLoadingDialog(context);
         //获取缓存数据
         token = App.getSharedPref().getString(Constant.TOKEN, "");
         userId = App.getSharedPref().getString(Constant.USERID, "");
-        if (bundle != null) {
-            fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
-            fundName = bundle.getString(Constant.FUND_DETAIL_NAME);
 
+        if (bundle != null) {
+            //基金编号
+            fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
+            //基金名称
+            fundName = bundle.getString(Constant.FUND_DETAIL_NAME);
+            //请求赎回基金的展示页数据
             httpLoadingDialog.visible();
             getP().sellFundPre(token, userId, fundCode);
         }
 
     }
 
+    /**
+     * 刷新银行卡数据
+     *
+     * @param cardResp
+     */
     public void refreshBankView(BankCardResp cardResp) {
         String strimage = cardResp.getBankLogo();
         if (!TextUtils.isEmpty(strimage)) {
@@ -131,8 +161,12 @@ public class SellActivity extends XActivity<SellPresent> {
         bankLimit.setText("单笔上限" + cardResp.getLimit_per_payment() + "万，单日限额" + cardResp.getLimit_per_day() + "万");
     }
 
+    /**
+     * 监听事件
+     */
     @Override
     public void initEvents() {
+        //返回
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -140,21 +174,29 @@ public class SellActivity extends XActivity<SellPresent> {
             }
         });
 
+        //修改银行卡
         tvChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //跳转更换银行卡
                 startActivity(BankCardActivity.class, Constant.INVEST_BANK_ACTIVITY);
             }
         });
+
+        //全部份额
         btnAllShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                //输入框变成全部份额
                 etAmount.setText(BigDecimalUtil.bigdecimalToString(sellResp.getEnable_shares()) + "");
             }
         });
+
+        //巨额赎回处理
         llBigDeal.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //弹出选择器
                 PopShow popShow = new PopShow(context, viewLine);
                 popShow.showRangeSelector(list, isSelector);
                 popShow.setOnClickPop(new PopShow.OnClickPop() {
@@ -166,6 +208,8 @@ public class SellActivity extends XActivity<SellPresent> {
                 });
             }
         });
+
+        //确认赎回
         sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -277,7 +321,7 @@ public class SellActivity extends XActivity<SellPresent> {
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constant.ACTIVITY_OBJECT, resp);
 //        bundle.putString("12",resp.getFundCode());
-        startActivity(SellSuccessActivity.class,bundle);
+        startActivity(SellSuccessActivity.class, bundle);
         finish();
 
     }
