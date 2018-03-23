@@ -1,9 +1,11 @@
 package com.zhsoft.fretting.present.fund;
 
-import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.BuyNowResp;
+import com.zhsoft.fretting.model.fund.CalculationResp;
+import com.zhsoft.fretting.model.fund.FundStatusResp;
 import com.zhsoft.fretting.net.Api;
+import com.zhsoft.fretting.params.BuyCalculationParams;
 import com.zhsoft.fretting.params.BuyFundParams;
 import com.zhsoft.fretting.params.BuyNowParams;
 import com.zhsoft.fretting.params.CommonReqData;
@@ -68,7 +70,7 @@ public class BuyPresent extends XPresent<BuyActivity> {
      * @param balance
      * @param password
      */
-    public void buyNow(String token, String userId, String fund_code, String balance, String password) {
+    public void purchase(String token, String userId, String fund_code, String balance, String password, String auto_buy) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -77,14 +79,15 @@ public class BuyPresent extends XPresent<BuyActivity> {
         params.setFund_code(fund_code);
         params.setBalance(balance);
         params.setPassword(password);
+        params.setAuto_buy(auto_buy);
 
         reqData.setData(params);
 
-        Api.getApi().buyNow(reqData)
-                .compose(XApi.<BuyNowResp>getApiTransformer())
-                .compose(XApi.<BuyNowResp>getScheduler())
-                .compose(getV().<BuyNowResp>bindToLifecycle())
-                .subscribe(new ApiSubscriber<BuyNowResp>() {
+        Api.getApi().purchase(reqData)
+                .compose(XApi.<FundStatusResp>getApiTransformer())
+                .compose(XApi.<FundStatusResp>getScheduler())
+                .compose(getV().<FundStatusResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<FundStatusResp>() {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestBuyNowFail();
@@ -92,7 +95,7 @@ public class BuyPresent extends XPresent<BuyActivity> {
                     }
 
                     @Override
-                    public void onNext(BuyNowResp resp) {
+                    public void onNext(FundStatusResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestBuyNowSuccess(resp.getData());
                         } else if (resp != null && resp.getStatus() == 526) {
@@ -100,6 +103,46 @@ public class BuyPresent extends XPresent<BuyActivity> {
                             getV().passwordError();
                         } else {
                             getV().requestBuyNowFail();
+                            getV().showToast(resp.getMessage());
+                            XLog.e("返回数据为空");
+                        }
+                    }
+                });
+    }
+
+    /**
+     * @param token
+     * @param userId
+     * @param fund_code
+     */
+    public void buyFundCalculation(String token, String userId, String fund_code, String apply_sum) {
+        CommonReqData reqData = new CommonReqData();
+        reqData.setToken(token);
+        reqData.setUserId(userId);
+
+        BuyCalculationParams params = new BuyCalculationParams();
+        params.setFund_code(fund_code);
+        params.setApply_sum(apply_sum);
+
+        reqData.setData(params);
+
+        Api.getApi().buyFundCalculation(reqData)
+                .compose(XApi.<CalculationResp>getApiTransformer())
+                .compose(XApi.<CalculationResp>getScheduler())
+                .compose(getV().<CalculationResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<CalculationResp>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        getV().requestCalculationFail();
+                        getV().showToast("请求失败1111111");
+                    }
+
+                    @Override
+                    public void onNext(CalculationResp resp) {
+                        if (resp != null && resp.getStatus() == 200) {
+                            getV().requestCalculationSuccess(resp.getData());
+                        } else {
+                            getV().requestCalculationFail();
                             getV().showToast(resp.getMessage());
                             XLog.e("返回数据为空");
                         }

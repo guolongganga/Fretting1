@@ -20,6 +20,16 @@ public class BuyNowParams extends CommonReqData<BuyNowParams> {
     private String balance;
     /** 交易密码 */
     private String password;
+    /** 分红方式 */
+    private String auto_buy;
+
+    public String getAuto_buy() {
+        return auto_buy;
+    }
+
+    public void setAuto_buy(String auto_buy) {
+        this.auto_buy = auto_buy;
+    }
 
     public String getFund_code() {
         return fund_code;

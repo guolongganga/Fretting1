@@ -66,9 +66,11 @@ public class HttpContent {
     /** 找回交易密码 第二步 */
     public static final String trade_password_reset = "noPermission/tradepassword/reset";
     /** 基金立即购买验证 */
-    public static final String buy_fund = "permissionCheck/buyFund";
+//    public static final String buy_fund = "permissionCheck/sellFundPre";
+    public static final String buy_fund = "permissionCheck/buyFundNew";
     /** 基金立即购买 */
-    public static final String buy_now = "permissionCheck/buyNow";
+//    public static final String buy_now = "permissionCheck/purchase";
+    public static final String purchase = "permissionCheck/purchase";
     /** 基金搜索 */
     public static final String find_fund_like = "noPermission/findFundLike";
     /** 定投搜索 */
@@ -119,6 +121,13 @@ public class HttpContent {
     public static final String withdraw_apply_succDetail = "noPermission/withdrawapply/succDetail";
     /** 设置页面 显示风险等级 */
     public static final String setup_index = "permissionCheck/setup/index";
+    /** 赎回准备 */
+    public static final String redeem_init = "permissionCheck/redeem/init";
+    /** 确认赎回 */
+    public static final String open_remitbranch_bank = "permissionCheck/redeem/openremitbranchbank";
+    /** 计算这个手续费 */
+    public static final String buy_fund_calculation = "permissionCheck/buyFundNew/calculation";
+
 
 
     /************************************************ html页面 **************************************************/
@@ -135,6 +144,8 @@ public class HttpContent {
     public static final String openaccount_agreement = "htmlNoPermission/openAccount/agreement";
     /** 服务协议 */
     public static final String openaccount_instructions = "htmlNoPermission/openAccount/instructions";
+    /** 定投的协议 */
+    public static final String agreement_fdtimesbuy = "htmlNoPermission/agreement/fdTimesBuy";
 
 
 }

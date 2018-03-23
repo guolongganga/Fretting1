@@ -153,8 +153,37 @@
             android:textColor="@color/color_696969"
             android:text="注：下次扣款日：2017-12-18"/>
 
+    <!--协议-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_35"
+        android:layout_marginRight="@dimen/dimen_35"
+        android:layout_marginTop="@dimen/dimen_50"
+        android:orientation="horizontal">
+        <!--勾选框-->
+        <ImageView
+            android:id="@+id/register_service_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/register_iv_selector"/>
+        <!--我同意《xxx协议》-->
+        <TextView
+            android:id="@+id/tv_agreement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:lineSpacingMultiplier="1.1"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/dimen_10"
+            android:layout_weight="1"
+            android:text=""
+            android:textColor="@color/color_f7182d"/>
+    </LinearLayout>
+
         <Button
             android:id="@+id/sure"
+            android:layout_marginTop="@dimen/dimen_10"
             style="@style/common_red_button_circle"
             android:text=""
             android:textSize="@dimen/text_size_14"/>

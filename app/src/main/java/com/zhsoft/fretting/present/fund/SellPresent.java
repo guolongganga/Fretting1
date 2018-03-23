@@ -1,11 +1,15 @@
 package com.zhsoft.fretting.present.fund;
 
+import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.BuyNowResp;
+import com.zhsoft.fretting.model.fund.FundStatusResp;
+import com.zhsoft.fretting.model.fund.SellResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.BuyFundParams;
 import com.zhsoft.fretting.params.BuyNowParams;
 import com.zhsoft.fretting.params.CommonReqData;
+import com.zhsoft.fretting.params.SellSureParams;
 import com.zhsoft.fretting.ui.activity.fund.BuyActivity;
 import com.zhsoft.fretting.ui.activity.fund.SellActivity;
 
@@ -28,7 +32,7 @@ public class SellPresent extends XPresent<SellActivity> {
      * @param userId
      * @param fund_code
      */
-    public void buyFund(String token, String userId, String fund_code) {
+    public void sellFundPre(String token, String userId, String fund_code) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -36,23 +40,23 @@ public class SellPresent extends XPresent<SellActivity> {
         params.setFund_code(fund_code);
         reqData.setData(params);
 
-        Api.getApi().buyFund(reqData)
-                .compose(XApi.<BuyFundResp>getApiTransformer())
-                .compose(XApi.<BuyFundResp>getScheduler())
-                .compose(getV().<BuyFundResp>bindToLifecycle())
-                .subscribe(new ApiSubscriber<BuyFundResp>() {
+        Api.getApi().sellFundPre(reqData)
+                .compose(XApi.<SellResp>getApiTransformer())
+                .compose(XApi.<SellResp>getScheduler())
+                .compose(getV().<SellResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<SellResp>() {
                     @Override
                     protected void onFail(NetError error) {
-                        getV().requestBuyFundFail();
+                        getV().requestFundFail();
                         getV().showToast("请求失败");
                     }
 
                     @Override
-                    public void onNext(BuyFundResp resp) {
+                    public void onNext(SellResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
-                            getV().requestBuyFundSuccess(resp.getData());
+                            getV().requestFundSuccess(resp.getData());
                         } else {
-                            getV().requestBuyFundFail();
+                            getV().requestFundFail();
                             getV().showToast(resp.getMessage());
                             XLog.e("返回数据为空");
                         }
@@ -65,46 +69,52 @@ public class SellPresent extends XPresent<SellActivity> {
      * @param token
      * @param userId
      * @param fund_code
-     * @param balance
      * @param password
      */
-    public void sellFund(String token, String userId, String fund_code, String balance, String password) {
+    public void sellFund(String token, String userId, String fund_code, String trade_acco, String password
+            , String fund_name, String shares, String share_type,String fund_exceed_flag) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
 
-        BuyNowParams params = new BuyNowParams();
+        SellSureParams params = new SellSureParams();
         params.setFund_code(fund_code);
-        params.setBalance(balance);
+        params.setTrade_acco(trade_acco);
         params.setPassword(password);
+        params.setFund_name(fund_name);
+        params.setFund_exceed_flag(fund_exceed_flag);
+        params.setShares(shares);
+        params.setShare_type(share_type);
+
+
         reqData.setData(params);
 
-//        Api.getApi().buyNow(reqData)
-//                .compose(XApi.<BuyNowResp>getApiTransformer())
-//                .compose(XApi.<BuyNowResp>getScheduler())
-//                .compose(getV().<BuyNowResp>bindToLifecycle())
-//                .subscribe(new ApiSubscriber<BuyNowResp>() {
-//                    @Override
-//                    protected void onFail(NetError error) {
-//                        getV().requestSellFail();
-//                        getV().showToast("请求失败1111111");
-//                    }
-//
-//                    @Override
-//                    public void onNext(BuyNowResp resp) {
-//                        if (resp != null && resp.getStatus() == 200) {
-//                            getV().requestSellSuccess(resp.getData());
-//                        } else if (resp != null && resp.getStatus() == 526) {
-//                            //密码错误状态码
-//                            getV().passwordError();
-//                        } else {
-//                            getV().requestSellFail();
-//                            getV().showToast(resp.getMessage());
-//                            XLog.e("返回数据为空");
-//                        }
-//                    }
-//                });
-        getV().requestSellSuccess();
+        Api.getApi().sellFundSure(reqData)
+                .compose(XApi.<FundStatusResp>getApiTransformer())
+                .compose(XApi.<FundStatusResp>getScheduler())
+                .compose(getV().<FundStatusResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<FundStatusResp>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        getV().requestSellFail();
+                        getV().showToast("请求失败1111111");
+                    }
+
+                    @Override
+                    public void onNext(FundStatusResp resp) {
+                        if (resp != null && resp.getStatus() == 200) {
+                            getV().requestSellSuccess(resp.getData());
+                        } else if (resp != null && resp.getStatus() == 526) {
+                            //密码错误状态码
+                            getV().passwordError();
+                        } else {
+                            getV().requestSellFail();
+                            getV().showToast(resp.getMessage());
+                            XLog.e("返回数据为空");
+                        }
+                    }
+                });
+//        getV().requestSellSuccess();
 
     }
 

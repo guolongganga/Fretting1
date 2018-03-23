@@ -155,6 +155,9 @@ public class Constant {
     //指数型 参数
     public static final String FUND_TAB_FINGER_TYPE = "F";
 
+    //货币型 名称
+    public static final String FUND_TAB_CURRENCY = "货币型";
+
     //股票型 名称
     public static final String FUND_TAB_SHARES = "股票型";
 

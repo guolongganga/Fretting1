@@ -3,7 +3,12 @@ package com.zhsoft.fretting.model.fund;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.zhsoft.fretting.model.ApplyBaseInfo;
 import com.zhsoft.fretting.model.BaseResp;
+
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 作者：sunnyzeng on 2018/1/11 18:14
@@ -33,6 +38,16 @@ public class BuyFundResp extends BaseResp<BuyFundResp> implements Parcelable {
     private String info1;
     /** 提示2 */
     private String info2;
+    /** 分红方式 */
+    private List<ApplyBaseInfo> default_auto_buy;
+    /** 费率 */
+    private String curr_rate;
+    /** 最高购买限额 */
+    private BigDecimal high_value;
+    /** 最低购买限额 */
+    private BigDecimal low_value;
+    /** 申购费 */
+    private String source_rate;
 
     public String getName() {
         return name;
@@ -90,6 +105,45 @@ public class BuyFundResp extends BaseResp<BuyFundResp> implements Parcelable {
         this.info2 = info2;
     }
 
+    public List<ApplyBaseInfo> getDefault_auto_buy() {
+        return default_auto_buy;
+    }
+
+    public void setDefault_auto_buy(List<ApplyBaseInfo> default_auto_buy) {
+        this.default_auto_buy = default_auto_buy;
+    }
+
+    public String getCurr_rate() {
+        return curr_rate;
+    }
+
+    public void setCurr_rate(String curr_rate) {
+        this.curr_rate = curr_rate;
+    }
+
+    public BigDecimal getHigh_value() {
+        return high_value;
+    }
+
+    public void setHigh_value(BigDecimal high_value) {
+        this.high_value = high_value;
+    }
+
+    public BigDecimal getLow_value() {
+        return low_value;
+    }
+
+    public void setLow_value(BigDecimal low_value) {
+        this.low_value = low_value;
+    }
+
+    public String getSource_rate() {
+        return source_rate;
+    }
+
+    public void setSource_rate(String source_rate) {
+        this.source_rate = source_rate;
+    }
 
     @Override
     public int describeContents() {
@@ -105,6 +159,11 @@ public class BuyFundResp extends BaseResp<BuyFundResp> implements Parcelable {
         dest.writeString(this.info);
         dest.writeString(this.info1);
         dest.writeString(this.info2);
+        dest.writeList(this.default_auto_buy);
+        dest.writeString(this.curr_rate);
+        dest.writeSerializable(this.high_value);
+        dest.writeSerializable(this.low_value);
+        dest.writeString(this.source_rate);
     }
 
     public BuyFundResp() {
@@ -118,6 +177,12 @@ public class BuyFundResp extends BaseResp<BuyFundResp> implements Parcelable {
         this.info = in.readString();
         this.info1 = in.readString();
         this.info2 = in.readString();
+        this.default_auto_buy = new ArrayList<ApplyBaseInfo>();
+        in.readList(this.default_auto_buy, ApplyBaseInfo.class.getClassLoader());
+        this.curr_rate = in.readString();
+        this.high_value = (BigDecimal) in.readSerializable();
+        this.low_value = (BigDecimal) in.readSerializable();
+        this.source_rate = in.readString();
     }
 
     public static final Creator<BuyFundResp> CREATOR = new Creator<BuyFundResp>() {

@@ -3,8 +3,12 @@ package com.zhsoft.fretting.ui.activity.fund;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.SpannableString;
+import android.text.Spanned;
 import android.text.TextUtils;
+import android.text.method.LinkMovementMethod;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -21,11 +25,16 @@ import com.zhsoft.fretting.model.fund.GetNextTimeResp;
 import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.fund.InvestSureResp;
 import com.zhsoft.fretting.model.user.BankCardResp;
+import com.zhsoft.fretting.net.Api;
+import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.present.fund.InvestPersent;
+import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
 import com.zhsoft.fretting.ui.activity.user.BankCardActivity;
 import com.zhsoft.fretting.ui.activity.user.FindPwdTradeFirstActivity;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.ui.widget.FundBuyDialog;
+import com.zhsoft.fretting.ui.widget.MyClickText;
+import com.zhsoft.fretting.ui.widget.OnTvClick;
 import com.zhsoft.fretting.ui.widget.SelectPopupWindow;
 import com.zhsoft.fretting.utils.Base64ImageUtil;
 import com.zhsoft.fretting.utils.KeyBoardUtils;
@@ -66,6 +75,10 @@ public class InvestActivity extends XActivity<InvestPersent> {
     @BindView(R.id.tv_next_time) TextView tvNextTime;
     /** 确定按钮 */
     @BindView(R.id.sure) Button sure;
+    /** 勾选框 */
+    @BindView(R.id.register_service_select) ImageView registerServiceSelect;
+    /** 注册协议 */
+    @BindView(R.id.tv_agreement) TextView tvAgreement;
 
     /** 定投周期选择 */
     private int cycleSelector = 1;
@@ -117,6 +130,8 @@ public class InvestActivity extends XActivity<InvestPersent> {
         headTitle.setText("定投");
         //初始化加载框
         httpLoadingDialog = new HttpLoadingDialog(context);
+        registerServiceSelect.setSelected(true);
+        agreementText();
 
         //获取缓存数据
         token = App.getSharedPref().getString(Constant.TOKEN, "");
@@ -266,6 +281,16 @@ public class InvestActivity extends XActivity<InvestPersent> {
                 cyclePopupWindow.showAtLocation(etInvestWeek, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
             }
         });
+        registerServiceSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (registerServiceSelect.isSelected()) {
+                    registerServiceSelect.setSelected(false);
+                } else {
+                    registerServiceSelect.setSelected(true);
+                }
+            }
+        });
 
         etInvestDay.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -341,6 +366,10 @@ public class InvestActivity extends XActivity<InvestPersent> {
                 }
                 if (!isNotEmpty(getText(etInvestDay))) {
                     showToast("请选择定投日");
+                    return;
+                }
+                if (!registerServiceSelect.isSelected()) {
+                    showToast("请阅读并同意协议");
                     return;
                 }
                 if (fundBuyDialog == null) {
@@ -511,5 +540,35 @@ public class InvestActivity extends XActivity<InvestPersent> {
             fundBuyDialog = null;
         }
         super.onDestroy();
+    }
+
+    /**
+     * 协议设置下划线和点击事件
+     *
+     * @return
+     */
+    public void agreementText() {
+
+        SpannableString spannableString = new SpannableString("我已阅读并同意《定期定额申购协议》");
+
+        MyClickText click1 = new MyClickText(this);
+        click1.setOnTvClick(new OnTvClick() {
+            @Override
+            public void onClick(View widget) {
+                Bundle bundle = new Bundle();
+//                bundle.putInt(Constant.WEB_TITLE, R.string.user_register_service1);
+                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.agreement_fdtimesbuy);
+                startActivity(WebPublicActivity.class, bundle);
+            }
+        });
+
+        //设置下划线
+        spannableString.setSpan(click1, 7, 17, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+//        spannableString.setSpan(click2, 24, 35, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        //当然这里也可以通过setSpan来设置哪些位置的文本哪些颜色
+        tvAgreement.setText(spannableString);
+        tvAgreement.setMovementMethod(LinkMovementMethod.getInstance());
+        tvAgreement.setHighlightColor(Color.TRANSPARENT); //设置点击后的颜色为透明
+
     }
 }

@@ -14,6 +14,7 @@ import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.ui.activity.boot.SearchActivity;
 import com.zhsoft.fretting.ui.adapter.fund.FundTabViewPagerAdapter;
 import com.zhsoft.fretting.ui.fragment.fund.FundContentFragment;
+import com.zhsoft.fretting.ui.fragment.fund.FundCurrencyFragment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,6 +99,7 @@ public class PopularityActivity extends XActivity {
         List<Fragment> fragmentList = new ArrayList<>();
 
         List<String> tabName = new ArrayList<>();
+        tabName.add(Constant.FUND_TAB_CURRENCY);
         tabName.add(Constant.FUND_TAB_SHARES);
         tabName.add(Constant.FUND_TAB_BLEND);
         tabName.add(Constant.FUND_TAB_BOND);
@@ -105,11 +107,18 @@ public class PopularityActivity extends XActivity {
 
         int fragmentSize = tabName.size();
 
-        for (int i = 0; i < fragmentSize; i++) {
+        //货币型
+        FundCurrencyFragment currencyFragment = new FundCurrencyFragment();
+        Bundle mbundle = new Bundle();
+        mbundle.putInt(Constant.ACTIVITY_NAME, Constant.FUND_INDEX);
+        currencyFragment.setArguments(mbundle);
+        fragmentList.add(currencyFragment);
+
+        for (int i = 0; i < fragmentSize - 1; i++) {
             FundContentFragment fragment = new FundContentFragment();
             Bundle bundle = new Bundle();
             bundle.putString(Constant.FUND_TAB_NAME, tabName.get(i));
-            bundle.putInt(Constant.ACTIVITY_NAME,Constant.POPULARITY);
+            bundle.putInt(Constant.ACTIVITY_NAME, Constant.POPULARITY);
             fragment.setArguments(bundle);
             fragmentList.add(fragment);
         }

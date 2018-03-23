@@ -61,7 +61,7 @@
 
         <!--申购费XX%-->
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingBottom="@dimen/dimen_10"
@@ -77,16 +77,25 @@
 
             <TextView
                 android:id="@+id/available_share"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="24.55"
+                android:layout_weight="1"
+                android:text="24.55份"
                 android:textColor="@color/color_f7182d"
                 android:textSize="@dimen/text_size_14"/>
 
+            <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text=""-->
+            <!--android:textColor="@color/color_f7182d"-->
+            <!--android:textSize="@dimen/text_size_14"/>-->
             <TextView
+                android:id="@+id/tv_min_sell"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="份"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:text="（最低赎回10.00份）"
                 android:textColor="@color/color_f7182d"
                 android:textSize="@dimen/text_size_14"/>
         </LinearLayout>
@@ -131,10 +140,46 @@
                 android:textColor="@color/color_f7182d"/>
         </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/ll_big_deal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="@dimen/dimen_10"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingRight="@dimen/dimen_30">
+            <!--巨额赎回处理-->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimen_30"
+                android:layout_marginRight="@dimen/dimen_10"
+                android:text="巨额赎回处理"/>
+            <!--选项-->
+            <TextView
+                android:id="@+id/tv_deal_type"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@null"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/text_size_14"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/arrow_down_o"/>
+        </LinearLayout>
+
+        <View
+            android:id="@+id/view_line"
+            style="@style/divider_half_e7"/>
         <!--确认购买-->
         <Button
             android:id="@+id/sure"
             style="@style/common_red_button_circle"
+            android:layout_marginTop="80dp"
             android:text="立即卖出"
             android:textSize="@dimen/text_size_14"/>
 

@@ -88,6 +88,7 @@ public class FundFragment extends XLazyFragment {
         List<Fragment> fragmentList = new ArrayList<>();
 
         List<String> tabName = new ArrayList<>();
+        tabName.add(Constant.FUND_TAB_CURRENCY);
         tabName.add(Constant.FUND_TAB_SHARES);
         tabName.add(Constant.FUND_TAB_BLEND);
         tabName.add(Constant.FUND_TAB_BOND);
@@ -95,7 +96,14 @@ public class FundFragment extends XLazyFragment {
 
         int fragmentSize = tabName.size();
 
-        for (int i = 0; i < fragmentSize; i++) {
+        //货币型
+        FundCurrencyFragment currencyFragment = new FundCurrencyFragment();
+        Bundle mbundle = new Bundle();
+        mbundle.putInt(Constant.ACTIVITY_NAME, Constant.FUND_INDEX);
+        currencyFragment.setArguments(mbundle);
+        fragmentList.add(currencyFragment);
+
+        for (int i = 0; i < fragmentSize - 1; i++) {
             FundContentFragment fragment = new FundContentFragment();
             Bundle bundle = new Bundle();
             bundle.putString(Constant.FUND_TAB_NAME, tabName.get(i));

@@ -1,5 +1,8 @@
 package com.zhsoft.fretting.model.user;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 /**
  * 作者：sunnyzeng on 2018/1/31 16:25
  * 描述：结果页状态
@@ -8,7 +11,7 @@ package com.zhsoft.fretting.model.user;
  * "time": null
  */
 
-public class StepResp {
+public class StepResp implements Parcelable {
     /**
      * 0表示不选中 1表示选中
      */
@@ -45,4 +48,37 @@ public class StepResp {
     public void setTime(String time) {
         this.time = time;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.iscpl);
+        dest.writeString(this.name);
+        dest.writeString(this.time);
+    }
+
+    public StepResp() {
+    }
+
+    protected StepResp(Parcel in) {
+        this.iscpl = in.readString();
+        this.name = in.readString();
+        this.time = in.readString();
+    }
+
+    public static final Parcelable.Creator<StepResp> CREATOR = new Parcelable.Creator<StepResp>() {
+        @Override
+        public StepResp createFromParcel(Parcel source) {
+            return new StepResp(source);
+        }
+
+        @Override
+        public StepResp[] newArray(int size) {
+            return new StepResp[size];
+        }
+    };
 }

@@ -4,16 +4,18 @@ import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.BuyNowResp;
+import com.zhsoft.fretting.model.fund.CalculationResp;
+import com.zhsoft.fretting.model.fund.FundStatusResp;
 import com.zhsoft.fretting.model.fund.GetNextTimeResp;
 import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.fund.InvestSureResp;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
+import com.zhsoft.fretting.model.fund.SellResp;
 import com.zhsoft.fretting.model.index.IndexResp;
 import com.zhsoft.fretting.model.user.BankCardResp;
 import com.zhsoft.fretting.model.user.BankResp;
 import com.zhsoft.fretting.model.user.CancleOrderResp;
 import com.zhsoft.fretting.model.user.ImageResp;
-import com.zhsoft.fretting.model.user.InvestInfoResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
 import com.zhsoft.fretting.model.user.MyBonusResp;
 import com.zhsoft.fretting.model.user.OccupationResp;
@@ -27,8 +29,6 @@ import com.zhsoft.fretting.model.user.UpdateBonusResp;
 import com.zhsoft.fretting.model.user.UserAccountResp;
 import com.zhsoft.fretting.params.CommonReqData;
 
-import java.util.List;
-
 import io.reactivex.Flowable;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
@@ -39,7 +39,7 @@ import static com.zhsoft.fretting.net.HttpContent.bonus_xg_details;
 import static com.zhsoft.fretting.net.HttpContent.bonus_xg_modifybonus;
 import static com.zhsoft.fretting.net.HttpContent.bonus_xg_page;
 import static com.zhsoft.fretting.net.HttpContent.buy_fund;
-import static com.zhsoft.fretting.net.HttpContent.buy_now;
+import static com.zhsoft.fretting.net.HttpContent.buy_fund_calculation;
 import static com.zhsoft.fretting.net.HttpContent.buy_on_fund;
 import static com.zhsoft.fretting.net.HttpContent.buy_updata_data;
 import static com.zhsoft.fretting.net.HttpContent.change_bankcard;
@@ -67,12 +67,15 @@ import static com.zhsoft.fretting.net.HttpContent.my_times_buy_index;
 import static com.zhsoft.fretting.net.HttpContent.my_times_buy_state_change;
 import static com.zhsoft.fretting.net.HttpContent.newest_fund;
 import static com.zhsoft.fretting.net.HttpContent.open_account;
+import static com.zhsoft.fretting.net.HttpContent.open_remitbranch_bank;
 import static com.zhsoft.fretting.net.HttpContent.password_change_login;
 import static com.zhsoft.fretting.net.HttpContent.password_change_trade;
 import static com.zhsoft.fretting.net.HttpContent.password_check;
 import static com.zhsoft.fretting.net.HttpContent.password_phonecode;
 import static com.zhsoft.fretting.net.HttpContent.password_reset;
 import static com.zhsoft.fretting.net.HttpContent.phone_code;
+import static com.zhsoft.fretting.net.HttpContent.purchase;
+import static com.zhsoft.fretting.net.HttpContent.redeem_init;
 import static com.zhsoft.fretting.net.HttpContent.risk_question;
 import static com.zhsoft.fretting.net.HttpContent.send_phone_code;
 import static com.zhsoft.fretting.net.HttpContent.setup_index;
@@ -244,8 +247,8 @@ public interface HttpUtil {
 
     //购买基金验证
     @Headers("appType:Android")
-    @POST(buy_now)
-    Flowable<BuyNowResp> buyNow(@Body CommonReqData reqData);
+    @POST(purchase)
+    Flowable<FundStatusResp> purchase(@Body CommonReqData reqData);
 
     //搜索基金
     @Headers("appType:Android")
@@ -371,4 +374,19 @@ public interface HttpUtil {
     @Headers("appType:Android")
     @POST(setup_index)
     Flowable<RiskInfoResp> setupIndex(@Body CommonReqData reqData);
+
+    //赎回准备
+    @Headers("appType:Android")
+    @POST(redeem_init)
+    Flowable<SellResp> sellFundPre(@Body CommonReqData reqData);
+
+    //赎回准备
+    @Headers("appType:Android")
+    @POST(open_remitbranch_bank)
+    Flowable<FundStatusResp> sellFundSure(@Body CommonReqData reqData);
+
+    //计算这个手续费
+    @Headers("appType:Android")
+    @POST(buy_fund_calculation)
+    Flowable<CalculationResp> buyFundCalculation(@Body CommonReqData reqData);
 }

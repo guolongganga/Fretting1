@@ -4,25 +4,36 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.model.ApplyBaseInfo;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.BuyNowResp;
+import com.zhsoft.fretting.model.fund.CalculationResp;
+import com.zhsoft.fretting.model.fund.FundStatusResp;
 import com.zhsoft.fretting.present.fund.BuyPresent;
 import com.zhsoft.fretting.ui.activity.user.BankCardActivity;
 import com.zhsoft.fretting.ui.activity.user.FindPwdTradeFirstActivity;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.ui.widget.FundBuyDialog;
+import com.zhsoft.fretting.ui.widget.PopShow;
 import com.zhsoft.fretting.utils.Base64ImageUtil;
+import com.zhsoft.fretting.utils.BigDecimalUtil;
+
+import java.math.BigDecimal;
+import java.util.List;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
@@ -56,6 +67,14 @@ public class BuyActivity extends XActivity<BuyPresent> {
     @BindView(R.id.et_amount) EditText etAmount;
     /** 确认购买 */
     @BindView(R.id.sure) Button sure;
+    /** 分红方式 */
+    @BindView(R.id.ll_bonus) LinearLayout llBonus;
+    /** 分红方式 */
+    @BindView(R.id.tv_bonus_type) TextView tvBonusType;
+    /** 手续费 */
+    @BindView(R.id.tv_poundage) TextView tvPoundage;
+    /** 费率 */
+    @BindView(R.id.tv_rate) TextView tvRate;
     /** 输入密码弹框 */
     private FundBuyDialog fundBuyDialog;
     /** 密码错误弹框 */
@@ -72,6 +91,8 @@ public class BuyActivity extends XActivity<BuyPresent> {
     private String userId;
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
+    private int isSelector = 0;
+    private List<ApplyBaseInfo> list;
 
 
     @Override
@@ -99,12 +120,18 @@ public class BuyActivity extends XActivity<BuyPresent> {
             //获取 图片Base64 字符串
             if (buyFundResp != null) {
                 refreshBankView(buyFundResp);
+                list = buyFundResp.getDefault_auto_buy();
+                tvBonusType.setText(list.get(isSelector).getContent());
                 //确认时间
                 tvSureTime.setText(buyFundResp.getInfo1());
                 //查看收益时间
                 tvLookTime.setText(buyFundResp.getInfo2());
+                tvRate.setText("(费率" + buyFundResp.getCurr_rate() + "%)");
+                tvApplyFee.setText("申购费" + buyFundResp.getSource_rate() + "%");
+                etAmount.setHint("最低购买金额"+BigDecimalUtil.bigdecimalToString(buyFundResp.getLow_value())+"元");
             }
         }
+
 
     }
 
@@ -138,7 +165,7 @@ public class BuyActivity extends XActivity<BuyPresent> {
             @Override
             public void onClick(View view) {
                 final String strAmount = getText(etAmount);
-                int amount = Integer.parseInt(strAmount);
+                BigDecimal amount = BigDecimal.valueOf(Double.parseDouble(strAmount));
                 //表单验证通过才弹出Dialog
                 if (noNetWork()) {
                     showNetWorkError();
@@ -149,8 +176,13 @@ public class BuyActivity extends XActivity<BuyPresent> {
                     return;
                 }
                 //TODO 如果amount小于最小购买金额，重新填写购买金额
-                if (amount < 1000) {
-                    showToast("最小投资金额为1000元");
+                if (amount.compareTo(buyFundResp.getLow_value()) < 0) {
+                    showToast("最小投资金额为" + BigDecimalUtil.bigdecimalToString(buyFundResp.getLow_value()) + "元");
+                    return;
+                }
+                //TODO 如果amount大于最大购买金额，重新填写购买金额
+                if (amount.compareTo(buyFundResp.getHigh_value()) > 0) {
+                    showToast("最大投资金额为" + BigDecimalUtil.bigdecimalToString(buyFundResp.getHigh_value()) + "元");
                     return;
                 }
                 //弹出框
@@ -164,7 +196,7 @@ public class BuyActivity extends XActivity<BuyPresent> {
                                 public void onFinish(String str) {
                                     fundBuyDialog.dismiss();
                                     httpLoadingDialog.visible();
-                                    getP().buyNow(token, userId, fundCode, strAmount, str);
+                                    getP().purchase(token, userId, fundCode, strAmount, str, list.get(isSelector).getCode());
 
                                 }
                             }).create();
@@ -177,6 +209,44 @@ public class BuyActivity extends XActivity<BuyPresent> {
             @Override
             public void onClick(View view) {
                 startActivity(BankCardActivity.class, Constant.INVEST_BANK_ACTIVITY);
+            }
+        });
+        llBonus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PopShow popShow = new PopShow(context, llBonus);
+                popShow.showRangeSelector(list, isSelector);
+                popShow.setOnClickPop(new PopShow.OnClickPop() {
+                    @Override
+                    public void setRange(int position) {
+                        isSelector = position;
+                        tvBonusType.setText(list.get(position).getContent());
+                    }
+                });
+            }
+        });
+        etAmount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                if (!"".equals(charSequence.toString())) {
+
+                    //如果输入的内容不为空，则根据关键字查询数据
+                    getP().buyFundCalculation(token, userId, fundCode, getText(etAmount));
+
+                } else {
+                    //如果输入的内容为空，则显示热搜视图
+                    tvPoundage.setText("0.00元");
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
     }
@@ -222,7 +292,7 @@ public class BuyActivity extends XActivity<BuyPresent> {
      *
      * @param data
      */
-    public void requestBuyNowSuccess(BuyNowResp data) {
+    public void requestBuyNowSuccess(FundStatusResp data) {
         httpLoadingDialog.dismiss();
         Bundle bundle = new Bundle();
         bundle.putParcelable(Constant.BUY_SUCCESS_OBJECT, data);
@@ -267,5 +337,21 @@ public class BuyActivity extends XActivity<BuyPresent> {
             fundBuyDialog = null;
         }
         super.onDestroy();
+    }
+
+    /**
+     * 计算失败
+     */
+    public void requestCalculationFail() {
+    }
+
+    /**
+     * 计算成功
+     *
+     * @param calculationResp
+     */
+    public void requestCalculationSuccess(CalculationResp calculationResp) {
+        //如果输入的内容为空，则显示热搜视图
+        tvPoundage.setText(calculationResp.getFare_sx() + "元");
     }
 }

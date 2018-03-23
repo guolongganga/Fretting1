@@ -11,14 +11,17 @@ import android.widget.TextView;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.ChangeTabEvent;
-import com.zhsoft.fretting.model.fund.BuyNowResp;
+import com.zhsoft.fretting.model.fund.FundStatusResp;
+import com.zhsoft.fretting.model.user.StepResp;
 import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.ui.widget.ChenJingET;
-import com.zhsoft.fretting.utils.BigDecimalUtil;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
@@ -40,8 +43,11 @@ public class BuySuccessActivity extends XActivity {
     @BindView(R.id.iv_query_income) ImageView ivQueryIncome;
     @BindView(R.id.tv_query_income) TextView tvQueryIncome;
     @BindView(R.id.scroll_view) ScrollView scrollView;
+    @BindView(R.id.font_pay_success) TextView fontPaySuccess;
+    @BindView(R.id.font_sure_number) TextView fontSureNumber;
+    @BindView(R.id.font_query_income) TextView fontQueryIncome;
     /** 购买成功传递过来的数据 */
-    private BuyNowResp buyNowResp;
+    private FundStatusResp statusResp;
 
     @Override
     public int getLayoutId() {
@@ -62,14 +68,37 @@ public class BuySuccessActivity extends XActivity {
         headRight.setText("关闭");
         headRight.setVisibility(View.VISIBLE);
         if (bundle != null) {
-            buyNowResp = (BuyNowResp) bundle.getParcelable(Constant.BUY_SUCCESS_OBJECT);
-            if (buyNowResp != null) {
-                tvFundName.setText(buyNowResp.getFund_name());
-                tvFundAmount.setText(BigDecimalUtil.bigdecimalToString(buyNowResp.getFund_amount()) + "元");
-                tvBankName.setText(buyNowResp.getBank_info());
-                tvPaySuccess.setText(buyNowResp.getSucc_time());
-                tvSureNumber.setText(buyNowResp.getConfirm_time());
-                tvQueryIncome.setText(buyNowResp.getIncome_time());
+            statusResp = (FundStatusResp) bundle.getParcelable(Constant.BUY_SUCCESS_OBJECT);
+            if (statusResp != null) {
+                tvFundName.setText(statusResp.getFundName());
+                tvFundAmount.setText(statusResp.getShares());
+                tvBankName.setText(statusResp.getBankCardPageEntity().getBankName() + "   储蓄卡 （" + statusResp.getBankCardPageEntity().getBankNoTail() + "）支付成功");
+                //进度
+                ArrayList<StepResp> stepList = statusResp.getStepList();
+
+                //第一步
+                if ("1".equals(stepList.get(0).getIscpl())) {
+                    //选中
+                    ivPaySuccess.setSelected(true);
+                }
+                fontPaySuccess.setText(stepList.get(0).getName());
+                tvPaySuccess.setText(stepList.get(0).getTime());
+
+                //第二步
+                if ("1".equals(stepList.get(1).getIscpl())) {
+                    //选中
+                    ivSureNumber.setSelected(true);
+                }
+                fontSureNumber.setText(stepList.get(1).getName());
+                tvSureNumber.setText(stepList.get(1).getTime());
+
+                //第三步
+                if ("1".equals(stepList.get(2).getIscpl())) {
+                    //选中
+                    ivQueryIncome.setSelected(true);
+                }
+                fontQueryIncome.setText(stepList.get(2).getName());
+                tvQueryIncome.setText(stepList.get(2).getTime());
             }
         }
     }
@@ -97,4 +126,10 @@ public class BuySuccessActivity extends XActivity {
     }
 
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        // TODO: add setContentView(...) invocation
+        ButterKnife.bind(this);
+    }
 }
