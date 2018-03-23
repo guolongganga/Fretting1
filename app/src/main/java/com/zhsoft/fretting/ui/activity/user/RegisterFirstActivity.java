@@ -405,7 +405,7 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
     /**
      * 请求短信验证码成功
      */
-    public void requestPhoneCodeSuccess(String data) {
+    public void requestPhoneCodeSuccess() {
 //        messageCode = data.getMessageCode();
         //关闭pop，
         mPopWindow.dismiss();

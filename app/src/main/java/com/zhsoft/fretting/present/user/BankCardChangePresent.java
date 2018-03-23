@@ -32,10 +32,10 @@ public class BankCardChangePresent extends XPresent<BankCardChangeActivity> {
         reqData.setData(params);
 
         Api.getApi().sendPhoneCode(reqData)
-                .compose(XApi.<BaseResp<String>>getApiTransformer())
-                .compose(XApi.<BaseResp<String>>getScheduler())
-                .compose(getV().<BaseResp<String>>bindToLifecycle())
-                .subscribe(new ApiSubscriber<BaseResp<String>>() {
+                .compose(XApi.<BaseResp>getApiTransformer())
+                .compose(XApi.<BaseResp>getScheduler())
+                .compose(getV().<BaseResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<BaseResp>() {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestMessageCodeFail();
@@ -43,7 +43,7 @@ public class BankCardChangePresent extends XPresent<BankCardChangeActivity> {
                     }
 
                     @Override
-                    public void onNext(BaseResp<String> resp) {
+                    public void onNext(BaseResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestMessageCodeSuccess();
                         } else {
@@ -79,10 +79,10 @@ public class BankCardChangePresent extends XPresent<BankCardChangeActivity> {
         reqData.setData(params);
 
         Api.getApi().changeBankCard(reqData)
-                .compose(XApi.<BaseResp<String>>getApiTransformer())
-                .compose(XApi.<BaseResp<String>>getScheduler())
-                .compose(getV().<BaseResp<String>>bindToLifecycle())
-                .subscribe(new ApiSubscriber<BaseResp<String>>() {
+                .compose(XApi.<BaseResp>getApiTransformer())
+                .compose(XApi.<BaseResp>getScheduler())
+                .compose(getV().<BaseResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<BaseResp>() {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestChangeFail();
@@ -90,7 +90,7 @@ public class BankCardChangePresent extends XPresent<BankCardChangeActivity> {
                     }
 
                     @Override
-                    public void onNext(BaseResp<String> resp) {
+                    public void onNext(BaseResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestChangeSuccess();
                         } else {

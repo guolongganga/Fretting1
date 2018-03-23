@@ -47,10 +47,10 @@ public class PhoneChangePresent extends XPresent<PhoneChangeActivity> {
 
         Api.getApi()
                 .changePhoneSave(reqData)
-                .compose(XApi.<BaseResp<String>>getApiTransformer())
-                .compose(XApi.<BaseResp<String>>getScheduler())
-                .compose(getV().<BaseResp<String>>bindToLifecycle())
-                .subscribe(new ApiSubscriber<BaseResp<String>>() {
+                .compose(XApi.<BaseResp>getApiTransformer())
+                .compose(XApi.<BaseResp>getScheduler())
+                .compose(getV().<BaseResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<BaseResp>() {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestFail();
@@ -58,7 +58,7 @@ public class PhoneChangePresent extends XPresent<PhoneChangeActivity> {
                     }
 
                     @Override
-                    public void onNext(BaseResp<String> resp) {
+                    public void onNext(BaseResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().disposeChangeResult();
                         } else {
@@ -122,19 +122,19 @@ public class PhoneChangePresent extends XPresent<PhoneChangeActivity> {
         reqData.setData(params);
 
         Api.getApi().getPhoneCode(reqData)
-                .compose(XApi.<BaseResp<String>>getApiTransformer())
-                .compose(XApi.<BaseResp<String>>getScheduler())
-                .compose(getV().<BaseResp<String>>bindToLifecycle())
-                .subscribe(new ApiSubscriber<BaseResp<String>>() {
+                .compose(XApi.<BaseResp>getApiTransformer())
+                .compose(XApi.<BaseResp>getScheduler())
+                .compose(getV().<BaseResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<BaseResp>() {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestPhoneCodeFail();
                     }
 
                     @Override
-                    public void onNext(BaseResp<String> resp) {
+                    public void onNext(BaseResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
-                            getV().requestPhoneCodeSuccess(resp.getData());
+                            getV().requestPhoneCodeSuccess();
                         } else {
                             getV().requestPhoneCodeFail();
                             getV().showToast(resp.getMessage());
@@ -164,10 +164,10 @@ public class PhoneChangePresent extends XPresent<PhoneChangeActivity> {
 
         Api.getApi()
                 .changePhoneSendcode(reqData)
-                .compose(XApi.<BaseResp<String>>getApiTransformer())
-                .compose(XApi.<BaseResp<String>>getScheduler())
-                .compose(getV().<BaseResp<String>>bindToLifecycle())
-                .subscribe(new ApiSubscriber<BaseResp<String>>() {
+                .compose(XApi.<BaseResp>getApiTransformer())
+                .compose(XApi.<BaseResp>getScheduler())
+                .compose(getV().<BaseResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<BaseResp>() {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestPhoneCodeNoImageFail();
@@ -175,9 +175,9 @@ public class PhoneChangePresent extends XPresent<PhoneChangeActivity> {
                     }
 
                     @Override
-                    public void onNext(BaseResp<String> resp) {
+                    public void onNext(BaseResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
-                            getV().requestPhoneCodeNoImageSuccess(resp.getData());
+                            getV().requestPhoneCodeNoImageSuccess();
                         } else {
                             getV().requestPhoneCodeNoImageFail();
                             getV().showToast(resp.getMessage());

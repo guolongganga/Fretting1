@@ -123,12 +123,12 @@ public interface HttpUtil {
     //短信验证码
     @Headers("appType:Android")
     @POST(phone_code)
-    Flowable<BaseResp<String>> getPhoneCode(@Body CommonReqData reqData);
+    Flowable<BaseResp> getPhoneCode(@Body CommonReqData reqData);
 
     //开户绑卡
     @Headers("appType:Android")
     @POST(open_account)
-    Flowable<BaseResp<String>> openAccount(@Body CommonReqData reqData);
+    Flowable<BaseResp> openAccount(@Body CommonReqData reqData);
 
     //我的资产
     @Headers("appType:Android")
@@ -148,7 +148,7 @@ public interface HttpUtil {
     //风险测评
     @Headers("appType:Android")
     @POST(risk_question)
-    Flowable<BaseResp<String>> goRiskTest(@Body String reqData);
+    Flowable<BaseResp> goRiskTest(@Body String reqData);
 
     //我的银行卡
     @Headers("appType:Android")
@@ -163,12 +163,12 @@ public interface HttpUtil {
     //更换银行卡操作
     @Headers("appType:Android")
     @POST(change_bankcard)
-    Flowable<BaseResp<String>> changeBankCard(@Body CommonReqData reqData);
+    Flowable<BaseResp> changeBankCard(@Body CommonReqData reqData);
 
     //发送短信验证码 不需要图片验证码
     @Headers("appType:Android")
     @POST(send_phone_code)
-    Flowable<BaseResp<String>> sendPhoneCode(@Body CommonReqData reqData);
+    Flowable<BaseResp> sendPhoneCode(@Body CommonReqData reqData);
 
     //我的手机号码
     @Headers("appType:Android")
@@ -178,22 +178,22 @@ public interface HttpUtil {
     //发送短信验证码 不需要图片验证码 更换手机号码
     @Headers("appType:Android")
     @POST(change_phone_sendcode)
-    Flowable<BaseResp<String>> changePhoneSendcode(@Body CommonReqData reqData);
+    Flowable<BaseResp> changePhoneSendcode(@Body CommonReqData reqData);
 
     //更换手机号
     @Headers("appType:Android")
     @POST(change_phone_save)
-    Flowable<BaseResp<String>> changePhoneSave(@Body CommonReqData reqData);
+    Flowable<BaseResp> changePhoneSave(@Body CommonReqData reqData);
 
     //变更登录密码
     @Headers("appType:Android")
     @POST(password_change_login)
-    Flowable<BaseResp<String>> passwordChangeLogin(@Body CommonReqData reqData);
+    Flowable<BaseResp> passwordChangeLogin(@Body CommonReqData reqData);
 
     //变更交易密码
     @Headers("appType:Android")
     @POST(password_change_trade)
-    Flowable<BaseResp<String>> passwordChangeTrade(@Body CommonReqData reqData);
+    Flowable<BaseResp> passwordChangeTrade(@Body CommonReqData reqData);
 
     //请求职业列表
     @Headers("appType:Android")
@@ -208,12 +208,12 @@ public interface HttpUtil {
     //变更登录密码
     @Headers("appType:Android")
     @POST(change_my_information)
-    Flowable<BaseResp<String>> changeMyInformation(@Body CommonReqData reqData);
+    Flowable<BaseResp> changeMyInformation(@Body CommonReqData reqData);
 
     //找回登录密码 短信验证码
     @Headers("appType:Android")
     @POST(password_phonecode)
-    Flowable<BaseResp<String>> passwordPhoneCode(@Body CommonReqData reqData);
+    Flowable<BaseResp> passwordPhoneCode(@Body CommonReqData reqData);
 
     //找回登录密码 第一步 验证手机号
     @Headers("appType:Android")
@@ -228,7 +228,7 @@ public interface HttpUtil {
     //找回交易密码 短信验证码
     @Headers("appType:Android")
     @POST(trade_password_phonecode)
-    Flowable<BaseResp<String>> tradePasswordPhoneCode(@Body CommonReqData reqData);
+    Flowable<BaseResp> tradePasswordPhoneCode(@Body CommonReqData reqData);
 
     //找回交易密码 第一步 验证手机号
     @Headers("appType:Android")

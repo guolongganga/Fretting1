@@ -10,12 +10,14 @@ import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.TextView;
 
+import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.ChangeTabEvent;
 import com.zhsoft.fretting.ui.fragment.fund.FundFragment;
 import com.zhsoft.fretting.ui.fragment.user.UserFragment;
 import com.zhsoft.fretting.ui.fragment.index.IndexFragment;
+import com.zhsoft.fretting.utils.RuntimeHelper;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -34,7 +36,6 @@ import cn.droidlover.xdroidmvp.router.Router;
  */
 
 public class MainActivity extends XActivity {
-
     //菜单按钮
     /** 首页 */
     @BindView(R.id.tv_index)
@@ -56,6 +57,10 @@ public class MainActivity extends XActivity {
     private int currentTab;
     /** 底部tab */
     private List<TextView> textViews;
+    /** 用户编号 */
+    private String userId;
+    /** 登录标识 */
+    private String token;
 
     private long firstTime; //用于点击两次返回退出程序
 
@@ -82,6 +87,15 @@ public class MainActivity extends XActivity {
     @Override
     public void initData(Bundle savedInstanceState) {
         EventBus.getDefault().register(this);
+        //获取本地缓存
+        userId = App.getSharedPref().getString(Constant.USERID, "");
+        token = App.getSharedPref().getString(Constant.TOKEN, "");
+        //判断是否有本地的缓存
+        if (isNotEmpty(userId) && isNotEmpty(token)) {
+            //如果有缓存表示已经登录了
+            //全局变量设置为登录状态
+            RuntimeHelper.getInstance().setLogin(true);
+        }
         fragments = new ArrayList<>();
         fragments.add(new IndexFragment());
         fragments.add(new FundFragment());

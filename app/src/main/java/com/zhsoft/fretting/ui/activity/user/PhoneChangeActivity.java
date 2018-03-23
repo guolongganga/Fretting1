@@ -257,7 +257,7 @@ public class PhoneChangeActivity extends XActivity<PhoneChangePresent> {
     /**
      * 请求短信验证码成功
      */
-    public void requestPhoneCodeSuccess(String data) {
+    public void requestPhoneCodeSuccess() {
 //        messageCode = data.getMessageCode();
         //关闭pop，
         mPopWindow.dismiss();
@@ -299,7 +299,7 @@ public class PhoneChangeActivity extends XActivity<PhoneChangePresent> {
     /**
      * 请求短信验证码成功 无图片
      */
-    public void requestPhoneCodeNoImageSuccess(String data) {
+    public void requestPhoneCodeNoImageSuccess() {
         //开始倒计时
         getVerifyCode.start();
     }

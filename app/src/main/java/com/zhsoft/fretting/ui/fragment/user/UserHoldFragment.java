@@ -6,7 +6,6 @@ import android.widget.TextView;
 
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
-import com.zhsoft.fretting.model.user.HoldFundResp;
 import com.zhsoft.fretting.model.user.MyHoldFundResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
@@ -23,7 +22,7 @@ import cn.droidlover.xrecyclerview.XRecyclerView;
 
 /**
  * 作者：sunnyzeng on 2018/3/19 19:40
- * 描述：
+ * 描述：我的持仓
  */
 
 public class UserHoldFragment extends XFragment {
@@ -49,7 +48,7 @@ public class UserHoldFragment extends XFragment {
         xrvUserHold.setFocusable(false);
         xrvUserHold.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
         if (bundle != null) {
-            fundList = bundle.getParcelableArrayList(Constant.ACTIVITY_OBJECT);
+            fundList = bundle.getParcelableArrayList(Constant.FUND_OBJECT);
             if (fundList != null && fundList.size() > 0) {
                 getMyFundAdapter().addData(fundList);
             } else {

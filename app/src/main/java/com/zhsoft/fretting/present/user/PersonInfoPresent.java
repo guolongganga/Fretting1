@@ -120,10 +120,10 @@ public class PersonInfoPresent extends XPresent<PersonInfoActivity> {
 
         Api.getApi()
                 .changeMyInformation(reqData)
-                .compose(XApi.<BaseResp<String>>getApiTransformer())
-                .compose(XApi.<BaseResp<String>>getScheduler())
-                .compose(getV().<BaseResp<String>>bindToLifecycle())
-                .subscribe(new ApiSubscriber<BaseResp<String>>() {
+                .compose(XApi.<BaseResp>getApiTransformer())
+                .compose(XApi.<BaseResp>getScheduler())
+                .compose(getV().<BaseResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<BaseResp>() {
                     @Override
                     protected void onFail(NetError error) {
                         getV().changeMyInformationFail();
@@ -131,7 +131,7 @@ public class PersonInfoPresent extends XPresent<PersonInfoActivity> {
                     }
 
                     @Override
-                    public void onNext(BaseResp<String> resp) {
+                    public void onNext(BaseResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().changeMyInformationSuccess();
                         } else {

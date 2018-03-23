@@ -197,7 +197,6 @@ public class SettingActivity extends XActivity<SettingPresent> {
                 //清空缓存数据
                 App.getSharedPref().putString(Constant.USERID, "");
                 App.getSharedPref().putString(Constant.TOKEN, "");
-                App.getSharedPref().putString(Constant.USER_PHONE, "");
                 App.getSharedPref().putString(Constant.USER_CERTNO, "");
                 App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, "");
 //                EventBus.getDefault().post(new OpenAccountEvent());

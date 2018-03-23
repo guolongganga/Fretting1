@@ -41,10 +41,10 @@ public class ChangeTradePwdPresent extends XPresent<ChangeTradePwdActivity> {
 
         Api.getApi()
                 .passwordChangeTrade(reqData)
-                .compose(XApi.<BaseResp<String>>getApiTransformer())
-                .compose(XApi.<BaseResp<String>>getScheduler())
-                .compose(getV().<BaseResp<String>>bindToLifecycle())
-                .subscribe(new ApiSubscriber<BaseResp<String>>() {
+                .compose(XApi.<BaseResp>getApiTransformer())
+                .compose(XApi.<BaseResp>getScheduler())
+                .compose(getV().<BaseResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<BaseResp>() {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestFail();
@@ -52,7 +52,7 @@ public class ChangeTradePwdPresent extends XPresent<ChangeTradePwdActivity> {
                     }
 
                     @Override
-                    public void onNext(BaseResp<String> resp) {
+                    public void onNext(BaseResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestSuccess();
                         } else {

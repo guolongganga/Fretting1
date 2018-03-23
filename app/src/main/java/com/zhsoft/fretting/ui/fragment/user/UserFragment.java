@@ -6,6 +6,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -88,10 +89,6 @@ public class UserFragment extends XFragment<UserPresent> {
     @BindView(R.id.ll_logout) LinearLayout llLogout;
     /** 已开户页卡界面 */
     @BindView(R.id.ll_fund_content) LinearLayout llFundContent;
-//    /** 我的基金列表 */
-//    @BindView(R.id.xrv_my_fund) XRecyclerView xrvMyFund;
-//    /** 您还没有持仓 */
-//    @BindView(R.id.tv_empty) TextView tvEmpty;
     /** 去开户 */
     @BindView(R.id.to_finish_register) Button toFinishRegister;
     /** 页卡标签 */
@@ -119,22 +116,17 @@ public class UserFragment extends XFragment<UserPresent> {
 
 
     @Override
+    public int getLayoutId() {
+        return R.layout.fragment_user;
+    }
+
+    @Override
     public void initData(Bundle savedInstanceState) {
         //设置标题
         headBack.setVisibility(View.GONE);
         headTitle.setText("我的");
         headRightImgbtn.setVisibility(View.VISIBLE);
         headRightImgbtn.setImageResource(R.mipmap.icon_user_set);
-
-        //获取本地缓存
-        userId = App.getSharedPref().getString(Constant.USERID, "");
-        token = App.getSharedPref().getString(Constant.TOKEN, "");
-        //判断是否有本地的缓存
-        if (isNotEmpty(userId) && isNotEmpty(token)) {
-            //如果有缓存表示已经登录了
-            //全局变量设置为登录状态
-            RuntimeHelper.getInstance().setLogin(true);
-        }
 
         //加载框
         httpLoadingDialog = new HttpLoadingDialog(context);
@@ -294,10 +286,6 @@ public class UserFragment extends XFragment<UserPresent> {
 
     }
 
-    @Override
-    public int getLayoutId() {
-        return R.layout.fragment_user;
-    }
 
     @Override
     public UserPresent newP() {
@@ -376,7 +364,7 @@ public class UserFragment extends XFragment<UserPresent> {
      */
     public void showChannel() {
 
-        FragmentManager fragmentManager = getFragmentManager();
+        FragmentManager fragmentManager = getChildFragmentManager();
         List<Fragment> fragmentList = new ArrayList<>();
 
         List<String> tabName = new ArrayList<>();
@@ -385,7 +373,7 @@ public class UserFragment extends XFragment<UserPresent> {
 
         UserHoldFragment fragment = new UserHoldFragment();
         Bundle bundle = new Bundle();
-        bundle.putParcelableArrayList(Constant.ACTIVITY_OBJECT, fundList);
+        bundle.putParcelableArrayList(Constant.FUND_OBJECT, fundList);
         fragment.setArguments(bundle);
         fragmentList.add(fragment);
 
@@ -394,7 +382,6 @@ public class UserFragment extends XFragment<UserPresent> {
         bundle2.putParcelableArrayList(Constant.ACTIVITY_OBJECT, passageList);
         waitSureFragment.setArguments(bundle2);
         fragmentList.add(waitSureFragment);
-
 
         FundTabViewPagerAdapter adapter = new FundTabViewPagerAdapter(fragmentManager, fragmentList, tabName);
         mViewPager.setAdapter(adapter);

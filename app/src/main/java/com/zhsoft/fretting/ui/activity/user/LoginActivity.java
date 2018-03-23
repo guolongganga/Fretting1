@@ -44,12 +44,12 @@ public class LoginActivity extends XActivity<LoginPresent> {
     @BindView(R.id.find_password) TextView findPassword;
     /** 登录按钮 */
     @BindView(R.id.btn_next) Button btnNext;
-    @BindView(R.id.text_image) ImageView testImage;
 
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
     /** 从哪个页面跳转过来的请求码 */
     private String mRequestCode;
+    private String phone;
 
     @Override
     public int getLayoutId() {
@@ -65,9 +65,15 @@ public class LoginActivity extends XActivity<LoginPresent> {
     public void initData(Bundle bundle) {
         //解决键盘弹出遮挡不滚动问题
         ChenJingET.assistActivity(context);
-        httpLoadingDialog = new HttpLoadingDialog(context);
         //设置标题
         headTitle.setText("登录");
+        httpLoadingDialog = new HttpLoadingDialog(context);
+        phone = App.getSharedPref().getString(Constant.USER_PHONE, "");
+
+        if (isNotEmpty(phone)) {
+            username.setText(phone);
+        }
+
         if (bundle != null) {
             mRequestCode = bundle.getString(Constant.SKIP_SIGN);
         } else {

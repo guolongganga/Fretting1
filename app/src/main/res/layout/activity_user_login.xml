@@ -140,10 +140,6 @@
                 style="@style/common_red_button_circle"
                 android:text="@string/user_common_login"/>
 
-            <ImageView
-                android:id="@+id/text_image"
-                android:layout_width="match_parent"
-                android:layout_height="100dp"/>
         </LinearLayout>
     </ScrollView>
 </FrameLayout>

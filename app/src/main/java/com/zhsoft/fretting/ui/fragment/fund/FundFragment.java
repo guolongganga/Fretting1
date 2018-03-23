@@ -83,8 +83,8 @@ public class FundFragment extends XLazyFragment {
      * 频道数据展示
      */
     public void showChannel() {
-
-        FragmentManager fragmentManager = getFragmentManager();
+        //在Fragment中嵌套ViewPager，然后ViewPager中呈现Fragment的时候
+        FragmentManager fragmentManager = getChildFragmentManager();
         List<Fragment> fragmentList = new ArrayList<>();
 
         List<String> tabName = new ArrayList<>();

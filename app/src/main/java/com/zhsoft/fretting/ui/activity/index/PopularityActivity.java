@@ -114,7 +114,7 @@ public class PopularityActivity extends XActivity {
         currencyFragment.setArguments(mbundle);
         fragmentList.add(currencyFragment);
 
-        for (int i = 0; i < fragmentSize - 1; i++) {
+        for (int i = 1; i < fragmentSize; i++) {
             FundContentFragment fragment = new FundContentFragment();
             Bundle bundle = new Bundle();
             bundle.putString(Constant.FUND_TAB_NAME, tabName.get(i));

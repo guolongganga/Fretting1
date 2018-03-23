@@ -123,7 +123,7 @@ public class Constant {
     public static final String INVEST_STATUS = BASE_CONSTANT + "invest_status";
 
     //定投记录状态
-    public static final String INVEST_RECORD_STATUS = "invest_record_status";
+    public static final String FUND_OBJECT = "fund_object";
 
     //分红方式
     public static final String BONUS_TYPE = "bonus_type";
