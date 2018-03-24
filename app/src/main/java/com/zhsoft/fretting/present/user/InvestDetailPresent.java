@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.index.IndexResp;
@@ -35,17 +36,6 @@ public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
         params.setScheduled_protocol_id(protocol_id);
         reqData.setData(params);
 
-//        ArrayList<InvestRecordResp> list = new ArrayList<>();
-//        InvestRecordResp resp1 = new InvestRecordResp("2017-10-17", "星期一", "10.00", "定投成功");
-//        InvestRecordResp resp2 = new InvestRecordResp("2017-10-17", "星期一", "10.00", "确认成功");
-//        InvestRecordResp resp3 = new InvestRecordResp("2017-10-17", "星期一", "10.00", "撤单成功");
-//        InvestRecordResp resp4 = new InvestRecordResp("2017-10-28", "星期三", "20.00", "支付失败");
-//        InvestRecordResp resp5 = new InvestRecordResp("2017-10-28", "星期三", "20.00", "确认失败");
-//        list.add(resp1);
-//        list.add(resp2);
-//        list.add(resp3);
-//        list.add(resp4);
-//        list.add(resp5);
         Api.getApi()
                 .myTimesBuyDetail(reqData)
                 .compose(XApi.<InvestResp>getApiTransformer())
@@ -62,7 +52,10 @@ public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
                     public void onNext(InvestResp model) {
                         if (model != null && model.getStatus() == 200) {
                             getV().requestInvestDetailSuccess(model.getData());
-                        } else {
+                        } else if (model != null && model.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(model.getMessage());
+                            getV().areadyLogout();
+                        }  else {
                             getV().showToast(model.getMessage());
                             getV().requestInvestDetailFail();
                             XLog.e("返回数据为空");
@@ -70,11 +63,6 @@ public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
                     }
                 });
 
-//        if (true) {
-//            getV().requestInvestDetailSuccess(list);
-//        } else {
-//            getV().requestInvestDetailFail();
-//        }
     }
 
     /**
@@ -105,12 +93,15 @@ public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
                     }
 
                     @Override
-                    public void onNext(InvestResp resp) {
-                        if (resp != null && resp.getStatus() == 200) {
-                            getV().requestInvestSuccess(resp.getData());
+                    public void onNext(InvestResp model) {
+                        if (model != null && model.getStatus() == 200) {
+                            getV().requestInvestSuccess(model.getData());
+                        }  else if (model != null && model.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(model.getMessage());
+                            getV().areadyLogout();
                         } else {
                             getV().requestInvestFail();
-                            getV().showToast(resp.getMessage());
+                            getV().showToast(model.getMessage());
                             XLog.e("返回数据为空");
                         }
                     }
@@ -152,10 +143,13 @@ public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
                     public void onNext(BaseResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestChangeStateSuccess();
-                            //TODO 密码错误的状态码
-                        } else if (resp != null && resp.getStatus() == 526) {
+                        } else if (resp != null && resp.getStatus() == Constant.PASSWORD_ERROR_STATUS) {
+                            //密码错误的状态码
                             getV().passwordError(investState);
-                        } else {
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
+                        }  else {
                             getV().requestChangeStateFail();
                             getV().showToast(resp.getMessage());
                             XLog.e("返回数据为空");

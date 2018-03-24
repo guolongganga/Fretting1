@@ -50,6 +50,8 @@ public class UserHoldFragment extends XFragment {
         if (bundle != null) {
             fundList = bundle.getParcelableArrayList(Constant.FUND_OBJECT);
             if (fundList != null && fundList.size() > 0) {
+                xrvUserHold.setVisibility(View.VISIBLE);
+                tvEmpty.setVisibility(View.GONE);
                 getMyFundAdapter().addData(fundList);
             } else {
                 xrvUserHold.setVisibility(View.GONE);
@@ -93,4 +95,5 @@ public class UserHoldFragment extends XFragment {
     public void initEvents() {
 
     }
+
 }

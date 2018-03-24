@@ -2,6 +2,7 @@ package com.zhsoft.fretting.present.user;
 
 import android.util.Log;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.net.Api;
@@ -61,7 +62,10 @@ public class PhoneChangePresent extends XPresent<PhoneChangeActivity> {
                     public void onNext(BaseResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().disposeChangeResult();
-                        } else {
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
+                        }  else {
                             getV().requestFail();
                             getV().showToast(resp.getMessage());
                             XLog.e("返回数据为空");
@@ -75,9 +79,6 @@ public class PhoneChangePresent extends XPresent<PhoneChangeActivity> {
      * 获取图片验证码
      */
     public void getImageCode() {
-        //假装成功了
-//        ImageResp data = new ImageResp();
-//        getV().getImageCodeSuccess(data);
         CommonReqData reqData = new CommonReqData();
         reqData.setData("");
 
@@ -143,9 +144,6 @@ public class PhoneChangePresent extends XPresent<PhoneChangeActivity> {
                     }
                 });
 
-        //
-
-
     }
 
     /**
@@ -178,7 +176,10 @@ public class PhoneChangePresent extends XPresent<PhoneChangeActivity> {
                     public void onNext(BaseResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestPhoneCodeNoImageSuccess();
-                        } else {
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
+                        }  else {
                             getV().requestPhoneCodeNoImageFail();
                             getV().showToast(resp.getMessage());
                             XLog.e("返回数据为空");

@@ -20,6 +20,7 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.InvalidTokenEvent;
 import com.zhsoft.fretting.event.RefreshUserDataEvent;
 import com.zhsoft.fretting.model.ApplyBaseInfo;
 import com.zhsoft.fretting.model.fund.GetNextTimeResp;
@@ -32,6 +33,7 @@ import com.zhsoft.fretting.present.fund.InvestPersent;
 import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
 import com.zhsoft.fretting.ui.activity.user.BankCardActivity;
 import com.zhsoft.fretting.ui.activity.user.FindPwdTradeFirstActivity;
+import com.zhsoft.fretting.ui.activity.user.LoginActivity;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.ui.widget.FundBuyDialog;
 import com.zhsoft.fretting.ui.widget.MyClickText;
@@ -39,6 +41,7 @@ import com.zhsoft.fretting.ui.widget.OnTvClick;
 import com.zhsoft.fretting.ui.widget.SelectPopupWindow;
 import com.zhsoft.fretting.utils.Base64ImageUtil;
 import com.zhsoft.fretting.utils.KeyBoardUtils;
+import com.zhsoft.fretting.utils.RuntimeHelper;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -574,5 +577,19 @@ public class InvestActivity extends XActivity<InvestPersent> {
         tvAgreement.setMovementMethod(LinkMovementMethod.getInstance());
         tvAgreement.setHighlightColor(Color.TRANSPARENT); //设置点击后的颜色为透明
 
+    }
+
+    /**
+     * 已经登出系统，请重新登录
+     */
+    public void areadyLogout() {
+        httpLoadingDialog.dismiss();
+//        EventBus.getDefault().post(new InvalidTokenEvent());
+        //清除本地缓存，设置成未登录
+        RuntimeHelper.getInstance().isInvalidToken();
+        //跳转登录界面
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_INDEX_ACTIVITY);
+        startActivity(LoginActivity.class, bundle);
     }
 }

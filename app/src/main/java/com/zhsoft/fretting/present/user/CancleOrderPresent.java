@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.user.CancleOrderResp;
 import com.zhsoft.fretting.net.Api;
@@ -41,22 +42,15 @@ public class CancleOrderPresent extends XPresent<CancleOrderActivity> {
                     public void onNext(CancleOrderResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestOrderSuccess(resp.getData());
-                        } else {
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
+                        }  else {
                             getV().requestOrderFail();
                             getV().showToast(resp.getMessage());
                         }
                     }
                 });
-
-
-//        ArrayList<CancleOrderResp> list = new ArrayList<>();
-//        for (int i=0;i<5;i++ ){
-//            CancleOrderResp resp1 = new CancleOrderResp();
-//            resp1.setFund_name("博时精选基金"+i);
-//            resp1.setFund_code("05000"+i);
-//            list.add(resp1);
-//        }
-//        getV().requestOrderSuccess(list);
     }
 
     /**
@@ -92,9 +86,12 @@ public class CancleOrderPresent extends XPresent<CancleOrderActivity> {
                     public void onNext(BaseResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestCancleSuccess();
-                        } else if (resp != null && resp.getStatus() == 526) {
+                        } else if (resp != null && resp.getStatus() == Constant.PASSWORD_ERROR_STATUS) {
                             getV().passwordError();
-                        } else {
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
+                        }   else {
                             getV().requestCancleFail();
                             getV().showToast(resp.getMessage());
                         }

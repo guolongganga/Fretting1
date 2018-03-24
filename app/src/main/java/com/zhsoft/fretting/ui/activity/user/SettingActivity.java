@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.InvalidTokenEvent;
 import com.zhsoft.fretting.model.user.RiskInfoResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
@@ -19,6 +20,8 @@ import com.zhsoft.fretting.present.user.SettingPresent;
 import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
 import com.zhsoft.fretting.ui.activity.boot.WebRiskActivity;
 import com.zhsoft.fretting.utils.RuntimeHelper;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
@@ -194,14 +197,15 @@ public class SettingActivity extends XActivity<SettingPresent> {
         exit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //清空缓存数据
-                App.getSharedPref().putString(Constant.USERID, "");
-                App.getSharedPref().putString(Constant.TOKEN, "");
-                App.getSharedPref().putString(Constant.USER_CERTNO, "");
-                App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, "");
-//                EventBus.getDefault().post(new RefreshUserDataEvent());
-                //更新登录状态
-                RuntimeHelper.getInstance().setLogin(false);
+//                //清空缓存数据
+//                App.getSharedPref().putString(Constant.USERID, "");
+//                App.getSharedPref().putString(Constant.TOKEN, "");
+//                App.getSharedPref().putString(Constant.USER_CERTNO, "");
+//                App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, "");
+////                EventBus.getDefault().post(new RefreshUserDataEvent());
+//                //更新登录状态
+//                RuntimeHelper.getInstance().setLogin(false);
+                RuntimeHelper.getInstance().isInvalidToken();
 
                 showToast("安全退出");
                 finish();
@@ -245,5 +249,18 @@ public class SettingActivity extends XActivity<SettingPresent> {
         if (requestCode == Constant.WEB_RISK_ACTIVITY && resultCode == Constant.RISK_BACK_ACTIVITY) {
             getP().riskGrade(token, userId);
         }
+    }
+
+    /**
+     * 已经登出系统，请重新登录
+     */
+    public void areadyLogout() {
+        httpLoadingDialog.dismiss();
+        //清除本地缓存，设置成未登录
+        RuntimeHelper.getInstance().isInvalidToken();
+        //跳转登录界面
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_INDEX_ACTIVITY);
+        startActivity(LoginActivity.class, bundle);
     }
 }

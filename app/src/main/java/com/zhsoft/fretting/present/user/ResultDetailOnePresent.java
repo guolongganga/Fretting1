@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.user.ResultDetailResp;
 import com.zhsoft.fretting.net.Api;
@@ -50,7 +51,10 @@ public class ResultDetailOnePresent extends XPresent<ResultDetailOneActivity> {
                     public void onNext(ResultDetailResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestDetailSuccess(resp.getData());
-                        } else {
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
+                        }  else {
                             getV().requestDetailFail();
                             getV().showToast(resp.getMessage());
                         }
@@ -88,9 +92,12 @@ public class ResultDetailOnePresent extends XPresent<ResultDetailOneActivity> {
                     public void onNext(BaseResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestCancleSuccess();
-                        } else if (resp != null && resp.getStatus() == 526) {
+                        } else if (resp != null && resp.getStatus() == Constant.PASSWORD_ERROR_STATUS) {
                             getV().passwordError();
-                        } else {
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
+                        }  else {
                             getV().requestCancleFail();
                             getV().showToast(resp.getMessage());
                         }

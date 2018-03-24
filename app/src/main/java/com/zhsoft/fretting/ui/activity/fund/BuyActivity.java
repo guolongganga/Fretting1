@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.InvalidTokenEvent;
 import com.zhsoft.fretting.event.RefreshUserDataEvent;
 import com.zhsoft.fretting.model.ApplyBaseInfo;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
@@ -27,11 +28,13 @@ import com.zhsoft.fretting.model.fund.FundStatusResp;
 import com.zhsoft.fretting.present.fund.BuyPresent;
 import com.zhsoft.fretting.ui.activity.user.BankCardActivity;
 import com.zhsoft.fretting.ui.activity.user.FindPwdTradeFirstActivity;
+import com.zhsoft.fretting.ui.activity.user.LoginActivity;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.ui.widget.FundBuyDialog;
 import com.zhsoft.fretting.ui.widget.PopShow;
 import com.zhsoft.fretting.utils.Base64ImageUtil;
 import com.zhsoft.fretting.utils.BigDecimalUtil;
+import com.zhsoft.fretting.utils.RuntimeHelper;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -41,6 +44,7 @@ import java.util.List;
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
+import cn.droidlover.xdroidmvp.net.NetError;
 
 /**
  * 作者：sunnyzeng on 2018/1/8 11:55
@@ -357,5 +361,19 @@ public class BuyActivity extends XActivity<BuyPresent> {
     public void requestCalculationSuccess(CalculationResp calculationResp) {
         //如果输入的内容为空，则显示热搜视图
         tvPoundage.setText(calculationResp.getFare_sx() + "元");
+    }
+
+    /**
+     * 已经登出系统，请重新登录
+     */
+    public void areadyLogout() {
+        httpLoadingDialog.dismiss();
+//        EventBus.getDefault().post(new InvalidTokenEvent());
+        //清除本地缓存，设置成未登录
+        RuntimeHelper.getInstance().isInvalidToken();
+        //跳转登录界面
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_INDEX_ACTIVITY);
+        startActivity(LoginActivity.class, bundle);
     }
 }

@@ -1,17 +1,10 @@
 package com.zhsoft.fretting.present.user;
 
-import com.zhsoft.fretting.model.BaseResp;
-import com.zhsoft.fretting.model.user.MyBonusResp;
-import com.zhsoft.fretting.model.user.TransactionResp;
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.user.UpdateBonusResp;
 import com.zhsoft.fretting.net.Api;
-import com.zhsoft.fretting.params.BuyNowParams;
 import com.zhsoft.fretting.params.CommonReqData;
-import com.zhsoft.fretting.params.TransactionQueryParams;
 import com.zhsoft.fretting.ui.fragment.user.BonusModeFragment;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XPresent;
@@ -33,14 +26,6 @@ public class BonusModePresent extends XPresent<BonusModeFragment> {
 
         reqData.setData("");
 
-//        reqData.setToken("ad970168f83e484c8aba19ec2f033d71");
-//        reqData.setUserId("37f3f3b6e87843d8a50ff119adfd0f15");
-//
-//        BuyNowParams params = new BuyNowParams();
-//        params.setFund_code("3Q0103");
-//
-//        reqData.setData(params);
-
         Api.getApi()
                 .bonusXgPage(reqData)
                 .compose(XApi.<UpdateBonusResp>getApiTransformer())
@@ -57,6 +42,9 @@ public class BonusModePresent extends XPresent<BonusModeFragment> {
                     public void onNext(UpdateBonusResp model) {
                         if (model != null && model.getStatus() == 200) {
                             getV().showData(model.getData());
+                        } else if (model != null && model.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(model.getMessage());
+                            getV().areadyLogout();
                         } else {
                             getV().showToast(model.getMessage());
                             getV().showError();

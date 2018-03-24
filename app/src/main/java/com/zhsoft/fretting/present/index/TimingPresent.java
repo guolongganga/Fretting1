@@ -25,18 +25,6 @@ public class TimingPresent extends XPresent<TimingFragment> {
 
     public void loadData(final int pageno, int pagesize, String type, String orderBy) {
 
-//        List<FundResp> list = new ArrayList<>();
-//        for (int i = 0; i < 12; i++) {
-//            FundResp fundResp = new FundResp();
-//            fundResp.setName("招商安泰股票");
-//            fundResp.setCode("2017001");
-//            fundResp.setValue("0.3948");
-//            fundResp.setRange("+6.36%");
-//            list.add(fundResp);
-//        }
-//
-//        getV().showData(1, list);
-
         CommonReqData reqData = new CommonReqData();
         NewestFundParams params = new NewestFundParams();
         params.setPageSize(pagesize);

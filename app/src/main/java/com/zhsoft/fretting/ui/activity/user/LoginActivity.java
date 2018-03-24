@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.ChangeTabEvent;
 import com.zhsoft.fretting.event.RefreshUserDataEvent;
 import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.present.user.LoginPresent;
@@ -174,8 +175,10 @@ public class LoginActivity extends XActivity<LoginPresent> {
     private void skipTarget() {
         //如果是修改登录密码，修改交易密码，重置交易密码页面过来返回按钮都返回到主页面
         if (isNotEmpty(mRequestCode)) {
-            if (Constant.CHANGE_LOGIN_ACTIVITY.equals(mRequestCode) || Constant.CHANGE_TRADE_ACTIVITY.equals(mRequestCode)
-                    || Constant.FIND_TRADE_ACTIVITY.equals(mRequestCode)) {
+            if (Constant.SKIP_MAIN_ACTIVITY.equals(mRequestCode)) {
+                startActivity(MainActivity.class);
+            } else if (Constant.SKIP_INDEX_ACTIVITY.equals(mRequestCode)) {
+                EventBus.getDefault().post(new ChangeTabEvent(Constant.MAIN_INDEX));
                 startActivity(MainActivity.class);
             }
         }

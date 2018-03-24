@@ -24,9 +24,11 @@ import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.ChangeTabEvent;
+import com.zhsoft.fretting.event.InvalidTokenEvent;
 import com.zhsoft.fretting.event.RefreshBonusEvent;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.InvestResp;
+import com.zhsoft.fretting.model.fund.SellResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
@@ -397,6 +399,25 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
     }
 
     /**
+     * 赎回
+     */
+    private void baseToSellOut() {
+        if (RuntimeHelper.getInstance().isLogin()) {
+            //用户登录标识
+            token = App.getSharedPref().getString(Constant.TOKEN, "");
+            //用户编号
+            userId = App.getSharedPref().getString(Constant.USERID, "");
+            getP().sellFundPre(token, userId, fundCode);
+        } else {
+            //跳转回登录界面
+            Bundle bundle = new Bundle();
+            bundle.putString(Constant.SKIP_SIGN, Constant.WEB_ACTIVITY);
+            startActivity(LoginActivity.class, bundle);
+        }
+
+    }
+
+    /**
      * 定投计划
      */
     private void baseToInvestPlan() {
@@ -420,17 +441,6 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         Bundle bundle = new Bundle();
         bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
         startActivity(TransactionQuerySingleActivity.class, bundle);
-    }
-
-    /**
-     * 卖出
-     */
-    private void baseToSellOut() {
-        //TODO 卖出
-        Bundle bundle = new Bundle();
-        bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
-        bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
-        startActivity(SellActivity.class, bundle);
     }
 
     /**
@@ -733,4 +743,35 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         });
     }
 
+    /**
+     * 是否能赎回 请求访问失败
+     */
+    public void requestSellPreFail() {
+    }
+
+    /**
+     * 可以赎回
+     *
+     */
+    public void requestSellPreSuccess() {
+        // 卖出
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
+        bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
+        startActivity(SellActivity.class, bundle);
+    }
+
+    /**
+     * 已经登出系统，请重新登录
+     */
+    public void areadyLogout() {
+        httpLoadingDialog.dismiss();
+//        EventBus.getDefault().post(new InvalidTokenEvent());
+        //清除本地缓存，设置成未登录
+        RuntimeHelper.getInstance().isInvalidToken();
+        //跳转登录界面
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_INDEX_ACTIVITY);
+        startActivity(LoginActivity.class, bundle);
+    }
 }

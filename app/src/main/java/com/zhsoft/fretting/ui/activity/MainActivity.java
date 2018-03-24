@@ -14,6 +14,8 @@ import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.ChangeTabEvent;
+import com.zhsoft.fretting.event.InvalidTokenEvent;
+import com.zhsoft.fretting.ui.activity.user.LoginActivity;
 import com.zhsoft.fretting.ui.fragment.fund.FundFragment;
 import com.zhsoft.fretting.ui.fragment.user.UserFragment;
 import com.zhsoft.fretting.ui.fragment.index.IndexFragment;
@@ -131,7 +133,14 @@ public class MainActivity extends XActivity {
         tvUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                show(tvUser, 2);
+                if (RuntimeHelper.getInstance().isLogin()) {
+                    show(tvUser, 2);
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_INDEX_ACTIVITY);
+                    startActivity(LoginActivity.class, bundle);
+                }
+
             }
         });
     }
@@ -253,5 +262,20 @@ public class MainActivity extends XActivity {
             return;
         }
     }
+
+//    /**
+//     * 无效token
+//     *
+//     * @param event
+//     */
+//    @Subscribe(threadMode = ThreadMode.POSTING)
+//    public void onInvalidTokenEvent(InvalidTokenEvent event) {
+//        //清除本地缓存，设置成未登录
+//        RuntimeHelper.getInstance().isInvalidToken();
+//        //跳转登录界面
+//        Bundle bundle = new Bundle();
+//        bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_INDEX_ACTIVITY);
+//        startActivity(LoginActivity.class, bundle);
+//    }
 }
 

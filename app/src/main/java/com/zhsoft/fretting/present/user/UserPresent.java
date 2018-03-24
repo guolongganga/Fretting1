@@ -1,8 +1,10 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.user.UserAccountResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
+import com.zhsoft.fretting.ui.activity.user.LoginActivity;
 import com.zhsoft.fretting.ui.fragment.user.UserFragment;
 
 import cn.droidlover.xdroidmvp.log.XLog;
@@ -19,15 +21,13 @@ import cn.droidlover.xdroidmvp.net.XApi;
 public class UserPresent extends XPresent<UserFragment> {
 
 
-    public void getFundHome(String token,String userId) {
-
-        //伪数据
-//        List<MyFundResp> myFundRespList = new ArrayList<>();
-//        myFundRespList.add(new MyFundResp("华夏大盘精选混合1", 6793.44, 55.70, 206.67));
-//        myFundRespList.add(new MyFundResp("华夏大盘精选混合2", 6780.33, 56.70, 206.67));
-//        myFundRespList.add(new MyFundResp("华夏大盘精选混合3", 6772.22, 58.70, 206.67));
-//        myFundRespList.add(new MyFundResp("华夏大盘精选混合4", 6767.11, 58.70, 206.67));
-//        getV().showMyFund(myFundRespList);
+    /**
+     * 主页面 我的 - 数据
+     *
+     * @param token
+     * @param userId
+     */
+    public void getFundHome(String token, String userId) {
 
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
@@ -50,6 +50,9 @@ public class UserPresent extends XPresent<UserFragment> {
                     public void onNext(UserAccountResp model) {
                         if (model != null && model.getStatus() == 200) {
                             getV().showMyFund(model.getData());
+                        } else if (model != null && model.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(model.getMessage());
+                            getV().areadyLogout();
                         } else {
                             getV().showToast(model.getMessage());
                             getV().requestFundFail();

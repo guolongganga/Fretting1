@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.user.OccupationResp;
 import com.zhsoft.fretting.model.user.PersonInfoResp;
@@ -48,6 +49,9 @@ public class PersonInfoPresent extends XPresent<PersonInfoActivity> {
                     public void onNext(PersonInfoResp personInfoResp) {
                         if (personInfoResp != null && personInfoResp.getStatus() == 200) {
                             getV().requestUserInfoSuccess(personInfoResp.getData());
+                        } else if (personInfoResp != null && personInfoResp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(personInfoResp.getMessage());
+                            getV().areadyLogout();
                         } else {
                             getV().requestUserInfoFail();
                             getV().showToast(personInfoResp.getMessage());
@@ -85,6 +89,9 @@ public class PersonInfoPresent extends XPresent<PersonInfoActivity> {
                     public void onNext(OccupationResp occupationResp) {
                         if (occupationResp != null && occupationResp.getStatus() == 200) {
                             getV().getOccupationSuccess(occupationResp.getData());
+                        } else if (occupationResp != null && occupationResp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(occupationResp.getMessage());
+                            getV().areadyLogout();
                         } else {
                             getV().getOccupationFail();
                             getV().showToast(occupationResp.getMessage());
@@ -96,7 +103,6 @@ public class PersonInfoPresent extends XPresent<PersonInfoActivity> {
     }
 
     /**
-     *
      * @param token
      * @param userId
      * @param id_enddate
@@ -105,8 +111,8 @@ public class PersonInfoPresent extends XPresent<PersonInfoActivity> {
      * @param email
      * @param selectOccupation
      */
-    public void changeMyInformation(String token, String userId,String id_enddate,String address,String detaile_address,String email,OccupationResp selectOccupation){
-        CommonReqData reqData = new CommonReqData();
+    public void changeMyInformation(String token, String userId, String id_enddate, String address, String detaile_address, String email, OccupationResp selectOccupation) {
+        final CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
 
@@ -134,6 +140,9 @@ public class PersonInfoPresent extends XPresent<PersonInfoActivity> {
                     public void onNext(BaseResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().changeMyInformationSuccess();
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
                         } else {
                             getV().changeMyInformationFail();
                             getV().showToast(resp.getMessage());

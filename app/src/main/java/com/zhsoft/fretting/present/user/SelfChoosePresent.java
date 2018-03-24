@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.model.user.SelfChooseResp;
 import com.zhsoft.fretting.model.user.UserAccountResp;
@@ -32,28 +33,6 @@ public class SelfChoosePresent extends XPresent<SelfChooseActivity> {
      * @param userId
      */
     public void selfChooseFund(String sortJz, String sortZdf, String token, String userId) {
-//        ArrayList<NewestFundResp> list = new ArrayList();
-//
-//        NewestFundResp resp0 = new NewestFundResp();
-//        resp0.setFund_code("05000" + 0);
-//        resp0.setFund_name("招商安泰股票" + 0);
-//        resp0.setFund_rose(new BigDecimal(5.36));
-//        resp0.setIsOwn("1");
-//        resp0.setNet_value(new BigDecimal(0.3948));
-//        list.add(resp0);
-//
-//        for (int i = 1; i < 10; i++) {
-//            NewestFundResp resp1 = new NewestFundResp();
-//            resp1.setFund_code("05000" + i);
-//            resp1.setFund_name("招商安泰股票" + i);
-//            resp1.setFund_rose(new BigDecimal(5.36));
-//            resp1.setIsOwn("0");
-//            resp1.setNet_value(new BigDecimal(0.3948));
-//            list.add(resp1);
-//        }
-//        if (pageno != 1) {
-//            list = null;
-//        }
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -78,7 +57,10 @@ public class SelfChoosePresent extends XPresent<SelfChooseActivity> {
                     public void onNext(SelfChooseResp model) {
                         if (model != null && model.getStatus() == 200) {
                             getV().showData(model.getData());
-                        } else {
+                        } else if (model != null && model.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(model.getMessage());
+                            getV().areadyLogout();
+                        }  else {
                             getV().showToast(model.getMessage());
                             getV().requestFundFail();
                             XLog.e("返回数据为空");

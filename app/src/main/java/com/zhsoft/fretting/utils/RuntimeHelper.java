@@ -1,5 +1,11 @@
 package com.zhsoft.fretting.utils;
 
+import com.zhsoft.fretting.App;
+import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.InvalidTokenEvent;
+
+import org.greenrobot.eventbus.EventBus;
+
 /**
  * 单例存储唯一变量
  * Created by ${Yis}
@@ -39,5 +45,20 @@ public class RuntimeHelper {
 
     public void setLogin(boolean login) {
         isLogin = login;
+    }
+
+    /**
+     * 退出登录，发送退出登录的事件
+     */
+    public void isInvalidToken() {
+        //清空缓存数据
+        App.getSharedPref().putString(Constant.USERID, "");
+        App.getSharedPref().putString(Constant.TOKEN, "");
+        App.getSharedPref().putString(Constant.USER_CERTNO, "");
+        App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, "");
+//                EventBus.getDefault().post(new RefreshUserDataEvent());
+        //更新登录状态
+        isLogin = false;
+        EventBus.getDefault().post(new InvalidTokenEvent());
     }
 }

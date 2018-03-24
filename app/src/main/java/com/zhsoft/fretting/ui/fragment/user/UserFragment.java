@@ -15,6 +15,7 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.InvalidTokenEvent;
 import com.zhsoft.fretting.event.RefreshUserDataEvent;
 import com.zhsoft.fretting.model.user.HoldFundResp;
 import com.zhsoft.fretting.model.user.MyHoldFundResp;
@@ -43,6 +44,7 @@ import java.util.List;
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
+import cn.droidlover.xdroidmvp.net.NetError;
 
 /**
  * 作者：sunnyzeng on 2017/12/5
@@ -104,12 +106,12 @@ public class UserFragment extends XFragment<UserPresent> {
     /**
      * 我的持仓基金
      */
-    private ArrayList<MyHoldFundResp> fundList;
+    private ArrayList<MyHoldFundResp> fundList = new ArrayList<>();
 
     /**
      * 在途基金
      */
-    private ArrayList<HoldFundResp> passageList;
+    private ArrayList<HoldFundResp> passageList = new ArrayList<>();
 
 
     @Override
@@ -340,9 +342,17 @@ public class UserFragment extends XFragment<UserPresent> {
             tvTime.setText("(" + resps.getYesterday() + ")");
 
             //持仓基金
-            fundList = resps.getFundList();
+            if (fundList != null) {
+                fundList.clear();
+            }
+            fundList.addAll(resps.getFundList());
+
             //待确认基金
-            passageList = resps.getHoldList();
+            if (passageList != null) {
+                passageList.clear();
+            }
+            passageList.addAll(resps.getHoldList());
+
             showChannel();
 
         }
@@ -360,13 +370,14 @@ public class UserFragment extends XFragment<UserPresent> {
         tabName.add(Constant.MY_HOLD);
         tabName.add(Constant.MY_WAIT);
 
-        //TODO 数据不刷新
+        //我的持仓基金
         UserHoldFragment fragment = new UserHoldFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(Constant.FUND_OBJECT, fundList);
         fragment.setArguments(bundle);
         fragmentList.add(fragment);
 
+        //待确认基金
         WaitSureFragment waitSureFragment = new WaitSureFragment();
         Bundle bundle2 = new Bundle();
         bundle2.putParcelableArrayList(Constant.ACTIVITY_OBJECT, passageList);
@@ -413,4 +424,19 @@ public class UserFragment extends XFragment<UserPresent> {
     public void requestFundFail() {
         httpLoadingDialog.dismiss();
     }
+
+    /**
+     * 已经登出系统，请重新登录
+     */
+    public void areadyLogout() {
+        httpLoadingDialog.dismiss();
+//        EventBus.getDefault().post(new InvalidTokenEvent());
+        //清除本地缓存，设置成未登录
+        RuntimeHelper.getInstance().isInvalidToken();
+        //跳转登录界面
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_INDEX_ACTIVITY);
+        startActivity(LoginActivity.class, bundle);
+    }
+
 }

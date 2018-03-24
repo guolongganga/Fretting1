@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
@@ -22,22 +23,6 @@ public class MyInvestPresent extends XPresent<MyInvestActivity> {
 
     public void myInvestData(final int pageno, int pageSize, String token, String userId, String fundCode, String dtStatus, final String isFirst) {
 
-
-//        ArrayList<InvestPlanResp> list = new ArrayList<>();
-//        InvestPlanResp resp1 = new InvestPlanResp("博时精选基金" + 1, "05000" + 1, "每周三定投11.00元",
-//                "招商银行 储蓄卡", "2339", "2017-12-27", "定投中");
-//        InvestPlanResp resp2 = new InvestPlanResp("博时精选基金" + 2, "05000" + 2, "每周三定投12.00元",
-//                "招商银行 储蓄卡", "2339", "2017-12-28", "暂停");
-//        InvestPlanResp resp3 = new InvestPlanResp("博时精选基金" + 3, "05000" + 3, "每周三定投13.00元",
-//                "招商银行 储蓄卡", "2339", "2017-12-29", "终止");
-//        list.add(resp1);
-//        list.add(resp2);
-//        list.add(resp3);
-//        if (true) {
-//            getV().requestDataSuccess(pageno,list);
-//        } else {
-//            getV().requestDataFail();
-//        }
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -70,7 +55,10 @@ public class MyInvestPresent extends XPresent<MyInvestActivity> {
                                 first = true;
                             }
                             getV().requestDataSuccess(pageno, model.getData(), first);
-                        } else {
+                        } else if (model != null && model.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(model.getMessage());
+                            getV().areadyLogout();
+                        }  else {
                             getV().showToast(model.getMessage());
                             getV().requestDataFail();
                             XLog.e("返回数据为空");
@@ -78,5 +66,6 @@ public class MyInvestPresent extends XPresent<MyInvestActivity> {
                     }
                 });
     }
+
 
 }

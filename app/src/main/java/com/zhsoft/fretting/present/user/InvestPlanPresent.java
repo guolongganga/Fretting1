@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
 import com.zhsoft.fretting.net.Api;
@@ -24,6 +25,7 @@ public class InvestPlanPresent extends XPresent<InvestPlanActivity> {
 
     /**
      * 定投计划
+     *
      * @param token
      * @param userId
      * @param fundCode
@@ -51,6 +53,9 @@ public class InvestPlanPresent extends XPresent<InvestPlanActivity> {
                     public void onNext(InvestPlanResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestInvestPlanSuccess(resp.getData());
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
                         } else {
                             getV().requestInvestPlanFail();
                             getV().showToast(resp.getMessage());
@@ -85,6 +90,9 @@ public class InvestPlanPresent extends XPresent<InvestPlanActivity> {
                     public void onNext(InvestResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestInvestSuccess(resp.getData());
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
                         } else {
                             getV().requestInvestFail();
                             getV().showToast(resp.getMessage());

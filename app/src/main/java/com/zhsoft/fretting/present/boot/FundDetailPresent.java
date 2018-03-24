@@ -1,7 +1,9 @@
 package com.zhsoft.fretting.present.boot;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.InvestResp;
+import com.zhsoft.fretting.model.fund.SellResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.BuyFundParams;
@@ -24,6 +26,7 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
 
     /**
      * 购买基金验证
+     *
      * @param token
      * @param userId
      * @param fund_code
@@ -51,7 +54,10 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
                     public void onNext(BuyFundResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestBuyFundSuccess(resp.getData());
-                        } else {
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
+                        }  else {
                             getV().requestBuyFundFail();
                             getV().showToast(resp.getMessage());
                             XLog.e("返回数据为空");
@@ -62,13 +68,14 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
     }
 
     /**
-     * 基金定投
+     * 基金定投 准备
+     *
      * @param token
      * @param userId
      * @param fund_code
      * @param fund_name
      */
-    public void investTime(String token, String userId, String fund_code,String fund_name) {
+    public void investTime(String token, String userId, String fund_code, String fund_name) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -92,8 +99,55 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
                     public void onNext(InvestResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestInvestSuccess(resp.getData());
-                        } else {
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
+                        }  else {
                             getV().requestInvestFail();
+                            getV().showToast(resp.getMessage());
+                            XLog.e("返回数据为空");
+                        }
+                    }
+                });
+
+    }
+
+    /***
+     * 更换银行卡刷新购买验证接口，得到最新的银行卡信息
+     * @param token
+     * @param userId
+     * @param fund_code
+     */
+    public void sellFundPre(String token, String userId, String fund_code) {
+        CommonReqData reqData = new CommonReqData();
+        reqData.setToken(token);
+        reqData.setUserId(userId);
+        BuyFundParams params = new BuyFundParams();
+        params.setFund_code(fund_code);
+        reqData.setData(params);
+
+        Api.getApi().sellFundPre(reqData)
+                .compose(XApi.<SellResp>getApiTransformer())
+                .compose(XApi.<SellResp>getScheduler())
+                .compose(getV().<SellResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<SellResp>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        getV().requestSellPreFail();
+                        getV().showToast("请求失败");
+                    }
+
+                    @Override
+                    public void onNext(SellResp resp) {
+                        if (resp != null && resp.getStatus() == 200) {
+                            getV().requestSellPreSuccess();
+                        } else if (resp != null && resp.getStatus() == 529) {
+                            getV().showToast("不可赎回");
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
+                        }  else {
+                            getV().requestSellPreFail();
                             getV().showToast(resp.getMessage());
                             XLog.e("返回数据为空");
                         }
@@ -104,6 +158,7 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
 
     /**
      * 定投计划
+     *
      * @param token
      * @param userId
      * @param fundCode
@@ -131,7 +186,10 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
                     public void onNext(InvestPlanResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestInvestPlanSuccess(resp.getData());
-                        } else {
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
+                        }  else {
                             getV().requestInvestPlanFail();
                             getV().showToast(resp.getMessage());
                             XLog.e("返回数据为空");

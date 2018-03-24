@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.user.ResultDetailResp;
 import com.zhsoft.fretting.net.Api;
@@ -51,6 +52,9 @@ public class ResultDetailThreePresent extends XPresent<ResultDetailThreeActivity
                     public void onNext(ResultDetailResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestDetailSuccess(resp.getData());
+                        }  else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
                         } else {
                             getV().requestDetailFail();
                             getV().showToast(resp.getMessage());

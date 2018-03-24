@@ -10,11 +10,14 @@ import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.ChangeTabEvent;
+import com.zhsoft.fretting.event.InvalidTokenEvent;
 import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.fund.InvestSureResp;
 import com.zhsoft.fretting.present.fund.InvestSuccessPresent;
 import com.zhsoft.fretting.ui.activity.MainActivity;
+import com.zhsoft.fretting.ui.activity.user.LoginActivity;
 import com.zhsoft.fretting.ui.widget.ChenJingET;
+import com.zhsoft.fretting.utils.RuntimeHelper;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -155,5 +158,17 @@ public class InvestSuccessActivity extends XActivity<InvestSuccessPresent> {
         finish();
     }
 
-
+    /**
+     * 已经登出系统，请重新登录
+     */
+    public void areadyLogout() {
+        httpLoadingDialog.dismiss();
+//        EventBus.getDefault().post(new InvalidTokenEvent());
+        //清除本地缓存，设置成未登录
+        RuntimeHelper.getInstance().isInvalidToken();
+        //跳转登录界面
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_INDEX_ACTIVITY);
+        startActivity(LoginActivity.class, bundle);
+    }
 }

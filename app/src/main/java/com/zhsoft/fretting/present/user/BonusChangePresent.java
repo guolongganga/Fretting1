@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.BonusChangeParams;
@@ -18,6 +19,17 @@ import cn.droidlover.xdroidmvp.net.XApi;
  */
 
 public class BonusChangePresent extends XPresent<BonusChangeActivity> {
+    /**
+     * 修改分红方式详情
+     *
+     * @param fundCode
+     * @param autoBuy
+     * @param sharetype
+     * @param tradeacco
+     * @param password
+     * @param token
+     * @param userId
+     */
     public void loadBonusXgDeatilData(String fundCode, String autoBuy, String sharetype, String tradeacco, String password, String token, String userId) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
@@ -47,6 +59,9 @@ public class BonusChangePresent extends XPresent<BonusChangeActivity> {
                     public void onNext(BaseResp model) {
                         if (model != null && model.getStatus() == 200) {
                             getV().showData();
+                        } else if (model != null && model.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(model.getMessage());
+                            getV().areadyLogout();
                         } else {
                             getV().showToast(model.getMessage());
                             getV().showError();

@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.fund;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.BuyNowResp;
@@ -55,6 +56,9 @@ public class SellPresent extends XPresent<SellActivity> {
                     public void onNext(SellResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestFundSuccess(resp.getData());
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
                         } else {
                             getV().requestFundFail();
                             getV().showToast(resp.getMessage());
@@ -104,9 +108,12 @@ public class SellPresent extends XPresent<SellActivity> {
                     public void onNext(FundStatusResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestSellSuccess(resp.getData());
-                        } else if (resp != null && resp.getStatus() == 526) {
+                        } else if (resp != null && resp.getStatus() == Constant.PASSWORD_ERROR_STATUS) {
                             //密码错误状态码
                             getV().passwordError();
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
                         } else {
                             getV().requestSellFail();
                             getV().showToast(resp.getMessage());

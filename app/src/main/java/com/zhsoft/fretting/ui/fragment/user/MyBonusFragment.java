@@ -6,12 +6,17 @@ import android.view.View;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.InvalidTokenEvent;
 import com.zhsoft.fretting.model.user.MyBonusResp;
 import com.zhsoft.fretting.present.user.MyBonusPresent;
 import com.zhsoft.fretting.model.user.TransactionResp;
+import com.zhsoft.fretting.ui.activity.user.LoginActivity;
 import com.zhsoft.fretting.ui.adapter.user.MyBonusRecycleAdapter;
 import com.zhsoft.fretting.ui.adapter.user.TransactionContentRecycleAdapter;
 import com.zhsoft.fretting.ui.widget.StateView;
+import com.zhsoft.fretting.utils.RuntimeHelper;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -40,8 +45,6 @@ public class MyBonusFragment extends XFragment<MyBonusPresent> {
     private String token;
     /** 用户编号 */
     private String userId;
-    /** 加载圈 */
-    private HttpLoadingDialog httpLoadingDialog;
     private StateView errorView;
 
     @Override
@@ -165,6 +168,20 @@ public class MyBonusFragment extends XFragment<MyBonusPresent> {
 
     public void showError() {
         contentLayout.showError();
+    }
+
+    /**
+     * 已经登出系统，请重新登录
+     */
+    public void areadyLogout() {
+//        httpLoadingDialog.dismiss();
+//        EventBus.getDefault().post(new InvalidTokenEvent());
+        //清除本地缓存，设置成未登录
+        RuntimeHelper.getInstance().isInvalidToken();
+        //跳转登录界面
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_INDEX_ACTIVITY);
+        startActivity(LoginActivity.class, bundle);
     }
 
 }

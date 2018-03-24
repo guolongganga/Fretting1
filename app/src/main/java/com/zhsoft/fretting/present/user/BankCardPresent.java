@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.user.BankCardResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
@@ -28,9 +29,6 @@ public class BankCardPresent extends XPresent<BankCardActivity> {
         reqData.setToken(token);
         reqData.setUserId(userId);
 
-        //我的银行卡伪数据
-//        BankCardResp resp = new BankCardResp("https://timgsa.baidu.com/timg?image&quality=80&size=b10000_10000&sec=1513929817&di=14747966c80ca373dc7666fe07f3817e&src=http://hiphotos.baidu.com/exp/pic/item/b8405490f603738d6716214ab11bb051f819ec3f.jpg",
-//                "工商银行", "2588", "25785584559", "1");
         //如果成功
         Api.getApi()
                 .getMyBankCard(reqData)
@@ -42,7 +40,10 @@ public class BankCardPresent extends XPresent<BankCardActivity> {
                     public void onNext(BankCardResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().showBankCardData(resp.getData());
-                        } else {
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
+                        }   else {
                             getV().requestFail();
                             getV().showToast(resp.getMessage());
                         }
@@ -54,13 +55,6 @@ public class BankCardPresent extends XPresent<BankCardActivity> {
                         getV().showToast("更换银行卡请求失败");
                     }
                 });
-
-
-//        if (true) {
-//            getV().showData(resp);
-//        } else {
-//            getV().requestFail();
-//        }
 
     }
 
@@ -91,7 +85,10 @@ public class BankCardPresent extends XPresent<BankCardActivity> {
                     public void onNext(BankCardResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().isCanChange(resp.getData());
-                        } else {
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
+                        }   else {
                             getV().requestFail();
                             getV().showToast(resp.getMessage());
                         }

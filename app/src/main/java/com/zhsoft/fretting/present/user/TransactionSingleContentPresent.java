@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.user.TransactionResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
@@ -47,7 +48,10 @@ public class TransactionSingleContentPresent extends XPresent<TransactionSingleC
                     public void onNext(TransactionResp model) {
                         if (model != null && model.getStatus() == 200) {
                             getV().showData(pageno, model.getData());
-                        } else {
+                        }else if (model != null && model.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(model.getMessage());
+                            getV().areadyLogout();
+                        }  else {
                             getV().showToast(model.getMessage());
                             getV().showError();
                             XLog.e("返回数据为空");
@@ -85,6 +89,9 @@ public class TransactionSingleContentPresent extends XPresent<TransactionSingleC
                     public void onNext(TransactionResp model) {
                         if (model != null && model.getStatus() == 200) {
                             getV().showData(pageno, model.getData());
+                        } else if (model != null && model.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(model.getMessage());
+                            getV().areadyLogout();
                         } else {
                             getV().showToast(model.getMessage());
                             getV().showError();

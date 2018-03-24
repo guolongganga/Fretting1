@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.fund;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.BuyNowResp;
 import com.zhsoft.fretting.model.fund.CalculationResp;
@@ -53,6 +54,9 @@ public class BuyPresent extends XPresent<BuyActivity> {
                     public void onNext(BuyFundResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestBuyFundSuccess(resp.getData());
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
                         } else {
                             getV().requestBuyFundFail();
                             getV().showToast(resp.getMessage());
@@ -98,9 +102,12 @@ public class BuyPresent extends XPresent<BuyActivity> {
                     public void onNext(FundStatusResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestBuyNowSuccess(resp.getData());
-                        } else if (resp != null && resp.getStatus() == 526) {
+                        } else if (resp != null && resp.getStatus() == Constant.PASSWORD_ERROR_STATUS) {
                             //密码错误状态码
                             getV().passwordError();
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
                         } else {
                             getV().requestBuyNowFail();
                             getV().showToast(resp.getMessage());
@@ -141,6 +148,9 @@ public class BuyPresent extends XPresent<BuyActivity> {
                     public void onNext(CalculationResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestCalculationSuccess(resp.getData());
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
                         } else {
                             getV().requestCalculationFail();
                             getV().showToast(resp.getMessage());

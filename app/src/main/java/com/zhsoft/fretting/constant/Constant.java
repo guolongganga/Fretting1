@@ -72,13 +72,13 @@ public class Constant {
     public static final String SKIP_SIGN = "skip_sign";
 
     //变更登录密码 跳转登录页面 skip_sign
-    public static final String CHANGE_LOGIN_ACTIVITY = "300";
+    public static final String SKIP_MAIN_ACTIVITY = "300";
 
     //变更交易密码 跳转登录页面 skip_sign
-    public static final String CHANGE_TRADE_ACTIVITY = "301";
+    public static final String SKIP_INDEX_ACTIVITY = "301";
 
     //找回交易密码 跳转登录页面 skip_sign
-    public static final String FIND_TRADE_ACTIVITY = "302";
+//    public static final String FIND_TRADE_ACTIVITY = "302";
 
     //web页面 跳转登录页面 skip_sign
     public static final String WEB_ACTIVITY = "303";
@@ -264,4 +264,10 @@ public class Constant {
 
     //分红方式修改成功后返回 resultcode
     public static final int RISK_BACK_ACTIVITY = 205;
+
+    //接口状态值  未登录
+    public static final int NO_LOGIN_STATUS = 520;
+
+    //接口状态值  未登录
+    public static final int PASSWORD_ERROR_STATUS = 526;
 }

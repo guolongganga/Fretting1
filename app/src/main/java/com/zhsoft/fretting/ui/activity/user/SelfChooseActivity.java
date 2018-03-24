@@ -9,12 +9,16 @@ import android.widget.TextView;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
+import com.zhsoft.fretting.event.InvalidTokenEvent;
 import com.zhsoft.fretting.model.user.SelfChooseResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.present.user.SelfChoosePresent;
 import com.zhsoft.fretting.ui.activity.boot.FundDetailWebActivity;
 import com.zhsoft.fretting.ui.adapter.user.SelfChooseRecycleAdapter;
+import com.zhsoft.fretting.utils.RuntimeHelper;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -167,12 +171,20 @@ public class SelfChooseActivity extends XActivity<SelfChoosePresent> {
         }
     }
 
-    public void showError(NetError error) {
-
-    }
-
-
     public void requestFundFail() {
         httpLoadingDialog.dismiss();
+    }
+
+    /**
+     * 已经登出系统，请重新登录
+     */
+    public void areadyLogout() {
+        httpLoadingDialog.dismiss();
+        //清除本地缓存，设置成未登录
+        RuntimeHelper.getInstance().isInvalidToken();
+        //跳转登录界面
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_INDEX_ACTIVITY);
+        startActivity(LoginActivity.class, bundle);
     }
 }

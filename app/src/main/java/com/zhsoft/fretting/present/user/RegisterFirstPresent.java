@@ -73,9 +73,6 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
      * 获取图片验证码
      */
     public void getImageCode() {
-        //假装成功了
-//        ImageResp data = new ImageResp();
-//        getV().getImageCodeSuccess(data);
         CommonReqData reqData = new CommonReqData();
         reqData.setData("");
 

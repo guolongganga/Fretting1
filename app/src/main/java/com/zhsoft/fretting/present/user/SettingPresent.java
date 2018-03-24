@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.user.RiskInfoResp;
 import com.zhsoft.fretting.net.Api;
@@ -45,7 +46,10 @@ public class SettingPresent extends XPresent<SettingActivity> {
                     public void onNext(RiskInfoResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestRiskSuccess(resp.getData());
-                        }else{
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
+                        } else {
                             getV().requestRiskFail();
                             getV().showToast(resp.getMessage());
                             XLog.e("返回数据为空");

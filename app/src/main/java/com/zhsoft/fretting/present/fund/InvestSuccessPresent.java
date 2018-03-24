@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.fund;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
@@ -55,7 +56,10 @@ public class InvestSuccessPresent extends XPresent<InvestSuccessActivity> {
                         if (resp != null && resp.getStatus() == 200) {
                             //请求成功 返回实体
                             getV().requestSuccess(resp.getData());
-                        } else {
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
+                        }  else {
                             //请求失败
                             getV().requestFail();
                             getV().showToast(resp.getMessage());

@@ -50,6 +50,8 @@ public class WaitSureFragment extends XFragment {
         if (bundle != null) {
             fundList = bundle.getParcelableArrayList(Constant.ACTIVITY_OBJECT);
             if (fundList != null && fundList.size() > 0) {
+                xrvUserHold.setVisibility(View.VISIBLE);
+                tvEmpty.setVisibility(View.GONE);
                 getWaitSureAdapter().addData(fundList);
             } else {
                 xrvUserHold.setVisibility(View.GONE);

@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.fund;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.GetNextTimeResp;
 import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.fund.InvestSureResp;
@@ -53,6 +54,9 @@ public class InvestPersent extends XPresent<InvestActivity> {
                     public void onNext(InvestResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestInvestSuccess(resp.getData().getBankCardPageEntity());
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
                         } else {
                             getV().requestInvestFail();
                             getV().showToast(resp.getMessage());
@@ -98,6 +102,9 @@ public class InvestPersent extends XPresent<InvestActivity> {
                         if (resp != null && resp.getStatus() == 200) {
                             //请求成功 返回实体
                             getV().requestDeductTimeSuccess(resp.getData());
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
                         } else {
                             //请求失败
                             getV().requestDeductTimeFail();
@@ -159,8 +166,11 @@ public class InvestPersent extends XPresent<InvestActivity> {
                         if (resp != null && resp.getStatus() == 200) {
                             //请求成功 返回实体
                             getV().requestSureInvestSuccess(resp.getData());
-                        } else if (resp != null && resp.getStatus() == 526) {
+                        } else if (resp != null && resp.getStatus() == Constant.PASSWORD_ERROR_STATUS) {
                             getV().passwordError();
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
                         } else {
                             //请求失败
                             getV().requestSureInvestFail();

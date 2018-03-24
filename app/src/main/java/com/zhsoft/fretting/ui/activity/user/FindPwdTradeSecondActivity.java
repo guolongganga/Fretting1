@@ -145,7 +145,7 @@ public class FindPwdTradeSecondActivity extends XActivity<FindPwdTradeSecondPres
         RuntimeHelper.getInstance().setLogin(false);
         //跳转登录页面
         Bundle bundle = new Bundle();
-        bundle.putString(Constant.SKIP_SIGN, Constant.FIND_TRADE_ACTIVITY);
+        bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_MAIN_ACTIVITY);
         startActivity(LoginActivity.class,bundle);
         finish();
     }

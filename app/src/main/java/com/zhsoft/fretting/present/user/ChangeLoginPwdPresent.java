@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.ChangeLoginPwdParams;
@@ -47,14 +48,16 @@ public class ChangeLoginPwdPresent extends XPresent<ChangeLoginPwdActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestFail();
-//                        getV().showToast("变更登录密码请求失败");
                     }
 
                     @Override
                     public void onNext(BaseResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestSuccess();
-                        } else {
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(resp.getMessage());
+                            getV().areadyLogout();
+                        }  else {
                             getV().requestFail();
                             getV().showToast(resp.getMessage());
                             XLog.e("返回数据为空");
