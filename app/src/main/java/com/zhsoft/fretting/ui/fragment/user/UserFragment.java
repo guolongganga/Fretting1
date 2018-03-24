@@ -174,7 +174,7 @@ public class UserFragment extends XFragment<UserPresent> {
     @Override
     public void initEvents() {
         //TabLayout监听滑动或点击
-        mTabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+        mTabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 mViewPager.setCurrentItem(tab.getPosition(), false);
@@ -344,14 +344,6 @@ public class UserFragment extends XFragment<UserPresent> {
             //待确认基金
             passageList = resps.getHoldList();
             showChannel();
-
-//            //持仓基金
-//            if (resps.getFundList() != null && resps.getFundList().size() > 0) {
-//                getMyFundAdapter().addData(resps.getFundList());
-//            } else {
-//                xrvMyFund.setVisibility(View.GONE);
-//                tvEmpty.setVisibility(View.VISIBLE);
-//            }
 
         }
     }
