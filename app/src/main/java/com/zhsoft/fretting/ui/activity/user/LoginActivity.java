@@ -154,6 +154,10 @@ public class LoginActivity extends XActivity<LoginPresent> {
 
         if (Constant.WEB_ACTIVITY.equals(mRequestCode)) {
             finish();
+        }if (Constant.SKIP_INDEX_ACTIVITY.equals(mRequestCode)) {
+            EventBus.getDefault().post(new ChangeTabEvent(Constant.MAIN_INDEX));
+            startActivity(MainActivity.class);
+            finish();
         } else {
             startActivity(MainActivity.class);
             finish();

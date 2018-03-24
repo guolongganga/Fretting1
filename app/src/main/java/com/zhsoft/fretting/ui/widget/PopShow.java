@@ -1,7 +1,9 @@
 package com.zhsoft.fretting.ui.widget;
 
 import android.app.Activity;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -78,7 +80,7 @@ public class PopShow {
                 }
             }
         });
-        mPopWindow.showAsDropDown(view, 0, 0);
+        selfDropDown(mPopWindow, view);
     }
 
     /**
@@ -128,7 +130,8 @@ public class PopShow {
                 }
             }
         });
-        mPopWindow.showAtLocation(view, Gravity.CENTER | Gravity.BOTTOM, 0, 0);
+//        mPopWindow.showAtLocation(view, Gravity.CENTER | Gravity.BOTTOM, 0, 0);
+        selfDropDown(mPopWindow, view);
     }
 
     /**
@@ -178,7 +181,8 @@ public class PopShow {
                 }
             }
         });
-        mPopWindow.showAtLocation(view, Gravity.CENTER | Gravity.BOTTOM, 0, 0);
+//        mPopWindow.showAtLocation(view, Gravity.CENTER | Gravity.BOTTOM, 0, 0);
+        selfDropDown(mPopWindow, view);
     }
 
     /**
@@ -216,7 +220,8 @@ public class PopShow {
                 }
             }
         });
-        mPopWindow.showAsDropDown(view, 0, 0);
+//        mPopWindow.showAsDropDown(view, 0, 0);
+        selfDropDown(mPopWindow, view);
     }
 
 
@@ -228,5 +233,24 @@ public class PopShow {
 
     public interface OnClickPop {
         void setRange(int position);
+    }
+
+    /**
+     * 显示PopupWindow 适配android7。0+
+     *
+     * @param mPopWindow
+     * @param view
+     */
+    public void selfDropDown(PopupWindow mPopWindow, View view) {
+        //显示PopupWindow 适配android7。0+
+        if (Build.VERSION.SDK_INT >= 24) {
+            Rect visibleFrame = new Rect();
+            view.getGlobalVisibleRect(visibleFrame);
+            int height = view.getResources().getDisplayMetrics().heightPixels - visibleFrame.bottom;
+            mPopWindow.setHeight(height);
+            mPopWindow.showAsDropDown(view);
+        } else {
+            mPopWindow.showAsDropDown(view);
+        }
     }
 }
