@@ -78,7 +78,7 @@ public class MainActivity extends XActivity {
             super.handleMessage(msg);
             if (msg.what == 0) {
                 allowStateLoss = true;
-                show(tvUser, 0);
+                show(tvIndex, 0);
             } else if (msg.what == 2) {
                 allowStateLoss = true;
                 show(tvUser, 2);
