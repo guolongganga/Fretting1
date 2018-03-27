@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +38,7 @@ import com.zhsoft.fretting.utils.RuntimeHelper;
 import org.greenrobot.eventbus.EventBus;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -63,7 +65,7 @@ public class SellActivity extends XActivity<SellPresent> {
     /** 银行卡限额 */
     @BindView(R.id.bank_limit) TextView bankLimit;
     /** 更换银行卡 */
-    @BindView(R.id.tv_change) TextView tvChange;
+    @BindView(R.id.rl_change) RelativeLayout rlChange;
     /** 可用份额 */
     @BindView(R.id.available_share) TextView availableShare;
     /** 全部份额 */
@@ -180,7 +182,7 @@ public class SellActivity extends XActivity<SellPresent> {
         });
 
         //修改银行卡
-        tvChange.setOnClickListener(new View.OnClickListener() {
+        rlChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //跳转更换银行卡
@@ -219,7 +221,7 @@ public class SellActivity extends XActivity<SellPresent> {
             @Override
             public void onClick(View view) {
                 final String strAmount = getText(etAmount);
-                Double amount = Double.parseDouble(strAmount);
+                BigDecimal amount = BigDecimal.valueOf(Double.parseDouble(strAmount));
                 //表单验证通过才弹出Dialog
                 if (noNetWork()) {
                     showNetWorkError();
@@ -231,13 +233,12 @@ public class SellActivity extends XActivity<SellPresent> {
                 }
 
                 // 如果amount小于份额，重新填写购买金额
-                if (amount < sellResp.getMinVar().doubleValue()) {
+                if (amount.compareTo(sellResp.getMinVar()) < 0) {
                     showToast("剩余份额低于" + BigDecimalUtil.bigdecimalToString(sellResp.getMinVar()) + "份，请全部赎回");
                     return;
                 }
 
-                // 如果amount小于份额，重新填写购买金额
-                int comValue = BigDecimal.valueOf(amount).compareTo(sellResp.getEnable_shares());
+                int comValue = amount.compareTo(sellResp.getEnable_shares());
 
                 //表示bigdemical大于bigdemical2 输入金额大于可赎回份额
                 if (comValue == 1) {
@@ -247,30 +248,29 @@ public class SellActivity extends XActivity<SellPresent> {
 
                 BigDecimal subValue = sellResp.getEnable_shares().subtract(sellResp.getRemainVar());
 
-                int comValueTwo = BigDecimal.valueOf(amount).compareTo(subValue);
+                int comValueTwo = amount.compareTo(subValue);
 
                 if (comValue != 0 && comValueTwo == 1) {
                     ToastUtils.show(SellActivity.this, "剩余份额大于" + BigDecimalUtil.bigdecimalToString(subValue) + "份，且不等于" + BigDecimalUtil.bigdecimalToString(sellResp.getEnable_shares()) + "份，请全部赎回", Toast.LENGTH_LONG);
                     return;
                 }
-
+                DecimalFormat df = new DecimalFormat(",###,##0.00"); //保留两位小数
+                String dealAmount = df.format(amount);
                 //TODO 弹出框
-                if (fundBuyDialog == null) {
-                    fundBuyDialog = new FundBuyDialog
-                            .Builder(context)
-                            .setFundName(fundName)
-                            .setFundAmount("￥" + getText(etAmount) + ".00")
-                            .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
-                                @Override
-                                public void onFinish(String str) {
-                                    fundBuyDialog.dismiss();
+                fundBuyDialog = new FundBuyDialog
+                        .Builder(context)
+                        .setFundName(fundName)
+                        .setFundAmount("￥" + dealAmount)
+                        .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
+                            @Override
+                            public void onFinish(String str) {
+                                fundBuyDialog.dismiss();
 //                                    // 卖出接口
-                                    getP().sellFund(token, userId, fundCode, sellResp.getTrade_acco(),
-                                            str, fundName, strAmount, sellResp.getShare_type(), list.get(isSelector).getCode());
+                                getP().sellFund(token, userId, fundCode, sellResp.getTrade_acco(),
+                                        str, fundName, strAmount, sellResp.getShare_type(), list.get(isSelector).getCode());
 //                                    startActivity(SellSuccessActivity.class);
-                                }
-                            }).create();
-                }
+                            }
+                        }).create();
                 fundBuyDialog.show();
 
             }

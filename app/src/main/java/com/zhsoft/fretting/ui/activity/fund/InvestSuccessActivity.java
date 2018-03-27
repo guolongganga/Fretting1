@@ -10,7 +10,6 @@ import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.ChangeTabEvent;
-import com.zhsoft.fretting.event.InvalidTokenEvent;
 import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.fund.InvestSureResp;
 import com.zhsoft.fretting.present.fund.InvestSuccessPresent;

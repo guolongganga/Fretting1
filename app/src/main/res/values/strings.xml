@@ -104,7 +104,8 @@
     <string name="fund_change"><u>更换></u></string>
     <string name="fund_amount">金额</string>
     <string name="fund_sure">确定购买</string>
-    <string name="fund_support">基金销售服务由北京微动利投资管理有限公司提供\n基金销售资格：0000000000000</string>
+    <string name="fund_support_one">基金销售服务由北京微动利投资管理有限公司提供</string>
+    <string name="fund_support_two">基金销售资格：000000358</string>
 
     <!--基金详情页-->
     <string name="fund_detail">基金详情页</string>

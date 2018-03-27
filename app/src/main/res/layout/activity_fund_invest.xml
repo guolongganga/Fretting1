@@ -154,12 +154,27 @@
 
     </LinearLayout>
     <!--公司提供-->
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="@dimen/dimen_10"
-        android:text="@string/fund_support"
-        android:textColor="@color/color_f7182d"/>
+        android:layout_marginBottom="5dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fund_support_one"
+            android:textColor="@color/color_9B9B9B"
+            android:textSize="@dimen/text_size_12"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/fund_support_two"
+            android:textColor="@color/color_9B9B9B"
+            android:textSize="@dimen/text_size_12"/>
+    </LinearLayout>
 </RelativeLayout>

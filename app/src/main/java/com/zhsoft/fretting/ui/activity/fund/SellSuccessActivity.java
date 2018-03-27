@@ -46,6 +46,8 @@ public class SellSuccessActivity extends XActivity {
     @BindView(R.id.font_pay_success) TextView fontPaySuccess;
     @BindView(R.id.font_sure_number) TextView fontSureNumber;
     @BindView(R.id.font_query_income) TextView fontQueryIncome;
+    @BindView(R.id.line_one) View lineOne;
+    @BindView(R.id.line_two) View lineTwo;
     /** 购买成功传递过来的数据 */
     private FundStatusResp statusResp;
 
@@ -78,7 +80,10 @@ public class SellSuccessActivity extends XActivity {
                 //第一步
                 if ("1".equals(stepList.get(0).getIscpl())) {
                     //选中
-                    ivPaySuccess.setSelected(true);
+                    ivPaySuccess.setImageResource(R.drawable.icon_progress_choose);
+                } else {
+                    //未选中
+                    ivPaySuccess.setImageResource(R.drawable.icon_progress_unchoose);
                 }
                 fontPaySuccess.setText(stepList.get(0).getName());
                 tvPaySuccess.setText(stepList.get(0).getTime());
@@ -86,7 +91,11 @@ public class SellSuccessActivity extends XActivity {
                 //第二步
                 if ("1".equals(stepList.get(1).getIscpl())) {
                     //选中
-                    ivSureNumber.setSelected(true);
+                    ivSureNumber.setImageResource(R.drawable.icon_progress_choose);
+                    lineOne.setBackgroundColor(getResources().getColor(R.color.color_DC6F5A));
+                }else{
+                    ivSureNumber.setImageResource(R.drawable.icon_progress_unchoose);
+                    lineOne.setBackgroundColor(getResources().getColor(R.color.color_D8D8D8));
                 }
                 fontSureNumber.setText(stepList.get(1).getName());
                 tvSureNumber.setText(stepList.get(1).getTime());
@@ -94,7 +103,11 @@ public class SellSuccessActivity extends XActivity {
                 //第三步
                 if ("1".equals(stepList.get(2).getIscpl())) {
                     //选中
-                    ivQueryIncome.setSelected(true);
+                    lineTwo.setBackgroundColor(getResources().getColor(R.color.color_DC6F5A));
+                    ivQueryIncome.setImageResource(R.drawable.icon_progress_choose);
+                }else{
+                    lineTwo.setBackgroundColor(getResources().getColor(R.color.color_D8D8D8));
+                    ivQueryIncome.setImageResource(R.drawable.icon_progress_unchoose);
                 }
                 fontQueryIncome.setText(stepList.get(2).getName());
                 tvQueryIncome.setText(stepList.get(2).getTime());

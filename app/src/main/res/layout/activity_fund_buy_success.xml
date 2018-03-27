@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
              android:layout_width="match_parent"
              android:layout_height="match_parent">
 
@@ -10,7 +9,8 @@
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="66dp"
+        android:layout_marginTop="@dimen/dimen_62.5"
+        android:background="@color/white"
         android:scrollbars="vertical">
 
         <LinearLayout
@@ -20,18 +20,18 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_marginLeft="@dimen/dimen_30"
-                android:layout_marginRight="@dimen/dimen_30"
-                android:layout_marginTop="@dimen/dimen_20"
-                android:background="@color/color_ff6633">
+                android:layout_height="170dp"
+                android:layout_marginLeft="@dimen/dimen_20"
+                android:layout_marginRight="@dimen/dimen_20"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:background="@drawable/bg_trans_success_rect">
 
                 <TextView
                     android:id="@+id/tv_fund_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="@dimen/dimen_30"
                     android:text="xxxxxxx股票"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_18"/>
@@ -39,22 +39,29 @@
                 <TextView
                     android:id="@+id/tv_fund_amount"
                     android:layout_width="wrap_content"
-                    android:layout_centerHorizontal="true"
                     android:layout_height="wrap_content"
                     android:layout_below="@id/tv_fund_name"
+                    android:layout_centerHorizontal="true"
                     android:text="10.00元"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/text_size_18"/>
+                    android:textSize="@dimen/text_size_27"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen_01"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/dimen_45"
+                    android:background="@color/white"/>
 
                 <TextView
                     android:id="@+id/tv_bank_name"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_alignParentBottom="true"
-                    android:layout_alignParentRight="true"
                     android:layout_marginBottom="15dp"
                     android:layout_marginRight="15dp"
-                    android:text="招商银行 （2557）支付成功"
+                    android:gravity="center"
+                    android:text="招商银行 储蓄卡(8067)       支付成功"
                     android:textColor="@color/white"
                     android:textSize="@dimen/text_size_14"/>
             </RelativeLayout>
@@ -62,36 +69,36 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="@dimen/dimen_30"
+                android:layout_marginBottom="@dimen/dimen_30"
+                android:layout_marginLeft="@dimen/dimen_30"
+                android:layout_marginTop="@dimen/dimen_36"
                 android:text="购买进度"
-                android:textColor="@color/color_696969"
+                android:textColor="@color/color_666666"
                 android:textSize="@dimen/text_size_14"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginBottom="@dimen/dimen_30"
-                android:layout_marginLeft="@dimen/dimen_60"
+                android:layout_height="@dimen/dimen_38"
+                android:layout_marginLeft="@dimen/dimen_67"
                 android:layout_marginRight="@dimen/dimen_30">
 
                 <ImageView
                     android:id="@+id/iv_pay_success"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="38dp"
+                    android:layout_height="match_parent"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/selector_true"/>
+                    android:src="@drawable/icon_progress_choose"/>
 
                 <!--支付成功-->
                 <TextView
                     android:id="@+id/font_pay_success"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="17dp"
                     android:layout_toRightOf="@id/iv_pay_success"
                     android:text="支付成功"
-                    android:textColor="@color/color_333333"
-                    android:textSize="@dimen/text_size_14"/>
+                    android:textColor="@color/color_text_333"
+                    android:textSize="@dimen/text_size_16"/>
 
                 <!--2017/12/13  13:16:43-->
                 <TextView
@@ -101,35 +108,40 @@
                     android:layout_alignLeft="@id/font_pay_success"
                     android:layout_below="@id/font_pay_success"
                     android:text="2017/12/13  13:16:43"
-                    android:textColor="@color/color_696969"
-                    android:textSize="@dimen/text_size_14"/>
+                    android:textColor="@color/color_text_333"
+                    android:textSize="@dimen/text_size_12"/>
             </RelativeLayout>
+
+            <View
+                android:id="@+id/line_one"
+                android:layout_width="@dimen/dimen_1"
+                android:layout_height="@dimen/dimen_43"
+                android:layout_marginLeft="@dimen/dimen_86"
+                android:background="@color/color_D8D8D8"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginBottom="@dimen/dimen_30"
-                android:layout_marginLeft="@dimen/dimen_60"
+                android:layout_height="@dimen/dimen_38"
+                android:layout_marginLeft="@dimen/dimen_67"
                 android:layout_marginRight="@dimen/dimen_30">
 
                 <ImageView
                     android:id="@+id/iv_sure_number"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="38dp"
+                    android:layout_height="match_parent"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/selector_false"/>
+                    android:src="@drawable/icon_progress_unchoose"/>
 
                 <!--基金公司确认份额-->
                 <TextView
                     android:id="@+id/font_sure_number"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="17dp"
                     android:layout_toRightOf="@id/iv_sure_number"
                     android:text="基金公司确认份额"
-                    android:textColor="@color/color_333333"
-                    android:textSize="@dimen/text_size_14"/>
+                    android:textColor="@color/color_text_333"
+                    android:textSize="@dimen/text_size_16"/>
 
                 <!--2017/12/14-->
                 <TextView
@@ -139,35 +151,41 @@
                     android:layout_alignLeft="@id/font_sure_number"
                     android:layout_below="@id/font_sure_number"
                     android:text="2017/12/14"
-                    android:textColor="@color/color_696969"
-                    android:textSize="@dimen/text_size_14"/>
+                    android:textColor="@color/color_text_333"
+                    android:textSize="@dimen/text_size_12"/>
             </RelativeLayout>
+
+            <View
+                android:id="@+id/line_two"
+                android:layout_width="@dimen/dimen_1"
+                android:layout_height="@dimen/dimen_43"
+                android:layout_marginLeft="@dimen/dimen_86"
+                android:background="@color/color_D8D8D8"/>
 
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="50dp"
+                android:layout_height="@dimen/dimen_38"
                 android:layout_marginBottom="@dimen/dimen_30"
-                android:layout_marginLeft="@dimen/dimen_60"
+                android:layout_marginLeft="@dimen/dimen_67"
                 android:layout_marginRight="@dimen/dimen_30">
 
                 <ImageView
                     android:id="@+id/iv_query_income"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="38dp"
+                    android:layout_height="match_parent"
                     android:layout_centerVertical="true"
-                    android:src="@mipmap/selector_false"/>
+                    android:src="@drawable/icon_progress_unchoose"/>
 
                 <!--查询收益-->
                 <TextView
                     android:id="@+id/font_query_income"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginLeft="17dp"
                     android:layout_toRightOf="@id/iv_query_income"
                     android:text="查询收益"
-                    android:textColor="@color/color_333333"
-                    android:textSize="@dimen/text_size_14"/>
+                    android:textColor="@color/color_text_333"
+                    android:textSize="@dimen/text_size_16"/>
 
                 <!--2017/12/13  13:16:43-->
                 <TextView
@@ -177,10 +195,9 @@
                     android:layout_alignLeft="@id/font_query_income"
                     android:layout_below="@id/font_query_income"
                     android:text="2017/12/15  18:00前"
-                    android:textColor="@color/color_696969"
-                    android:textSize="@dimen/text_size_14"/>
+                    android:textColor="@color/color_text_333"
+                    android:textSize="@dimen/text_size_12"/>
             </RelativeLayout>
-
 
         </LinearLayout>
     </ScrollView>

@@ -23,7 +23,7 @@
                 android:layout_marginLeft="@dimen/dimen_30"
                 android:layout_marginRight="@dimen/dimen_30"
                 android:layout_marginTop="@dimen/dimen_20"
-                android:background="@color/color_ff6633">
+                android:background="@color/color_DC6F5A">
                 <!--股票名称-->
                 <TextView
                     android:id="@+id/tv_fund_name"

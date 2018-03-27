@@ -3,6 +3,7 @@ package com.zhsoft.fretting.ui.activity.fund;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.App;
@@ -39,6 +41,7 @@ import com.zhsoft.fretting.utils.RuntimeHelper;
 import org.greenrobot.eventbus.EventBus;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import butterknife.BindView;
@@ -63,7 +66,7 @@ public class BuyActivity extends XActivity<BuyPresent> {
     /** 银行卡限额 */
     @BindView(R.id.bank_limit) TextView bankLimit;
     /** 更换银行卡 */
-    @BindView(R.id.tv_change) TextView tvChange;
+    @BindView(R.id.rl_change) RelativeLayout rlChange;
     /** 申购费 */
     @BindView(R.id.tv_apply_fee) TextView tvApplyFee;
     /** 确认份额时间 */
@@ -119,6 +122,12 @@ public class BuyActivity extends XActivity<BuyPresent> {
         //获取缓存数据
         token = App.getSharedPref().getString(Constant.TOKEN, "");
         userId = App.getSharedPref().getString(Constant.USERID, "");
+        //中间横线
+        tvApplyFee.getPaint().setFlags(Paint.STRIKE_THRU_TEXT_FLAG);
+        // 抗锯齿
+        tvApplyFee.getPaint().setAntiAlias(true);
+        tvPoundage.setText("申购费  0.00元");
+
         if (bundle != null) {
             fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
             fundName = bundle.getString(Constant.FUND_DETAIL_NAME);
@@ -130,12 +139,12 @@ public class BuyActivity extends XActivity<BuyPresent> {
                 list = buyFundResp.getDefault_auto_buy();
                 tvBonusType.setText(list.get(isSelector).getContent());
                 //确认时间
-                tvSureTime.setText(buyFundResp.getInfo1());
+                tvSureTime.setText("·" + buyFundResp.getInfo1());
                 //查看收益时间
-                tvLookTime.setText(buyFundResp.getInfo2());
-                tvRate.setText("(费率" + buyFundResp.getCurr_rate() + "%)");
-                tvApplyFee.setText("申购费" + buyFundResp.getSource_rate() + "%");
-                etAmount.setHint("最低购买金额"+BigDecimalUtil.bigdecimalToString(buyFundResp.getLow_value())+"元");
+                tvLookTime.setText("·" + buyFundResp.getInfo2());
+                tvRate.setText(buyFundResp.getCurr_rate() + "%");
+                tvApplyFee.setText(buyFundResp.getSource_rate() + "%");
+                etAmount.setHint("最低购买金额" + BigDecimalUtil.bigdecimalToString(buyFundResp.getLow_value()) + "元");
             }
         }
 
@@ -192,27 +201,27 @@ public class BuyActivity extends XActivity<BuyPresent> {
                     showToast("最大投资金额为" + BigDecimalUtil.bigdecimalToString(buyFundResp.getHigh_value()) + "元");
                     return;
                 }
+                DecimalFormat df = new DecimalFormat(",###,##0.00"); //保留两位小数
+                String dealAmount = df.format(amount);
                 //弹出框
-                if (fundBuyDialog == null) {
-                    fundBuyDialog = new FundBuyDialog
-                            .Builder(context)
-                            .setFundName(fundName)
-                            .setFundAmount("￥" + getText(etAmount) + ".00")
-                            .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
-                                @Override
-                                public void onFinish(String str) {
-                                    fundBuyDialog.dismiss();
-                                    httpLoadingDialog.visible();
-                                    getP().purchase(token, userId, fundCode, strAmount, str, list.get(isSelector).getCode());
+                fundBuyDialog = new FundBuyDialog
+                        .Builder(context)
+                        .setFundName(fundName)
+                        .setFundAmount("￥" + dealAmount)
+                        .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
+                            @Override
+                            public void onFinish(String str) {
+                                fundBuyDialog.dismiss();
+                                httpLoadingDialog.visible();
+                                getP().purchase(token, userId, fundCode, strAmount, str, list.get(isSelector).getCode());
 
-                                }
-                            }).create();
-                }
+                            }
+                        }).create();
                 fundBuyDialog.show();
 
             }
         });
-        tvChange.setOnClickListener(new View.OnClickListener() {
+        rlChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(BankCardActivity.class, Constant.INVEST_BANK_ACTIVITY);
@@ -241,13 +250,15 @@ public class BuyActivity extends XActivity<BuyPresent> {
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
                 if (!"".equals(charSequence.toString())) {
-
-                    //如果输入的内容不为空，则根据关键字查询数据
+                    //如果输入的内容不为空，查询费率,确认按钮可点击
+                    sure.setBackgroundColor(getResources().getColor(R.color.color_4D7BFE));
                     getP().buyFundCalculation(token, userId, fundCode, getText(etAmount));
-
+                    sure.setClickable(true);
                 } else {
-                    //如果输入的内容为空，则显示热搜视图
-                    tvPoundage.setText("0.00元");
+                    //如果输入的内容为空，则不显示申购费，按钮不可点击
+                    sure.setBackgroundColor(getResources().getColor(R.color.color_B9D1F8));
+                    sure.setClickable(false);
+                    tvPoundage.setText("申购费  0.00元");
                 }
             }
 
@@ -359,8 +370,8 @@ public class BuyActivity extends XActivity<BuyPresent> {
      * @param calculationResp
      */
     public void requestCalculationSuccess(CalculationResp calculationResp) {
-        //如果输入的内容为空，则显示热搜视图
-        tvPoundage.setText(calculationResp.getFare_sx() + "元");
+        //申购费
+        tvPoundage.setText("申购费  " + calculationResp.getFare_sx() + "元");
     }
 
     /**

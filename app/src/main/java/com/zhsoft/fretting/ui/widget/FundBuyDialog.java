@@ -38,7 +38,7 @@ public class FundBuyDialog extends Dialog {
     }
 
     public interface OnPositiveButtonListener {
-        void onButtonClick(DialogInterface dialog,String str);
+        void onButtonClick(DialogInterface dialog, String str);
     }
 
     private static PayPwdEditText ppePwd;
@@ -185,7 +185,7 @@ public class FundBuyDialog extends Dialog {
             });
             ppePwd = (PayPwdEditText) layout.findViewById(R.id.ppe_pwd);
             //初始化交易密码输入框的样式
-            ppePwd.initStyle(R.drawable.edit_num_bg, 6, 0.44f, R.color.color_444444, R.color.color_444444, 20);
+            ppePwd.initStyle(R.drawable.edit_num_bg, 6, 1f, R.color.color_EFEFEF, R.color.color_000000, 20);
             ppePwd.setOnTextFinishListener(new PayPwdEditText.OnTextFinishListener() {
                 @Override
                 public void onFinish(String str) {//密码输入完后的回调
@@ -201,7 +201,7 @@ public class FundBuyDialog extends Dialog {
                     ((Button) layout.findViewById(R.id.positive_button))
                             .setOnClickListener(new View.OnClickListener() {
                                 public void onClick(View v) {
-                                    positiveButtonClickListener.onButtonClick(dialog,ppePwd.getPwdText().toString());
+                                    positiveButtonClickListener.onButtonClick(dialog, ppePwd.getPwdText().toString());
                                 }
                             });
                 }
@@ -231,8 +231,10 @@ public class FundBuyDialog extends Dialog {
             }
             if (positiveButtonText == null && negativeButtonText == null) {
                 layout.findViewById(R.id.view_btn_line).setVisibility(View.GONE);
+                layout.findViewById(R.id.ll_button).setVisibility(View.GONE);
             } else {
                 layout.findViewById(R.id.view_btn_line).setVisibility(View.VISIBLE);
+                layout.findViewById(R.id.ll_button).setVisibility(View.VISIBLE);
             }
             dialog.setContentView(layout);
             WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
