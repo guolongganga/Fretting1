@@ -303,7 +303,8 @@
                 android:gravity="center_vertical"
                 android:paddingLeft="@dimen/dimen_30"
                 android:text="定投记录"
-                android:textSize="@dimen/text_size_14"/>
+                android:textSize="@dimen/text_size_14"
+                android:visibility="gone"/>
 
             <include layout="@layout/layout_divider_horizontal"/>
 
@@ -311,7 +312,8 @@
             <cn.droidlover.xrecyclerview.XRecyclerView
                 android:id="@+id/xrv_invest_record"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
 
         </LinearLayout>
 
@@ -354,8 +356,8 @@
             android:layout_width="0dp"
             android:layout_margin="@dimen/dimen_5"
             android:layout_weight="1"
-            android:visibility="gone"
-            android:text="恢复"/>
+            android:text="恢复"
+            android:visibility="gone"/>
     </LinearLayout>
 
 </FrameLayout>

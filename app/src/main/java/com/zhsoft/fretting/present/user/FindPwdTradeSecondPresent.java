@@ -1,11 +1,9 @@
 package com.zhsoft.fretting.present.user;
 
-import android.util.Log;
-
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
-import com.zhsoft.fretting.params.FindLoginPwdSecondParams;
 import com.zhsoft.fretting.params.FindTradePwdSecondParams;
 import com.zhsoft.fretting.ui.activity.user.FindPwdTradeSecondActivity;
 
@@ -47,12 +45,12 @@ public class FindPwdTradeSecondPresent extends XPresent<FindPwdTradeSecondActivi
                     protected void onFail(NetError error) {
                         error.printStackTrace();
                         getV().requestFail();
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
                     public void onNext(BaseResp model) {
                         if (model != null && model.getStatus() == 200) {
-                            Log.e("hahah", "访问成功");
                             getV().requestSuccess(model.getData());
                         } else {
                             getV().requestFail();

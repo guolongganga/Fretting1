@@ -1,11 +1,11 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.params.MyInvestParams;
-import com.zhsoft.fretting.params.NewestFundParams;
 import com.zhsoft.fretting.ui.activity.user.MyInvestActivity;
 
 import cn.droidlover.xdroidmvp.log.XLog;
@@ -21,6 +21,17 @@ import cn.droidlover.xdroidmvp.net.XApi;
 
 public class MyInvestPresent extends XPresent<MyInvestActivity> {
 
+    /**
+     * 我的定投
+     *
+     * @param pageno
+     * @param pageSize
+     * @param token
+     * @param userId
+     * @param fundCode
+     * @param dtStatus
+     * @param isFirst
+     */
     public void myInvestData(final int pageno, int pageSize, String token, String userId, String fundCode, String dtStatus, final String isFirst) {
 
         CommonReqData reqData = new CommonReqData();
@@ -45,6 +56,7 @@ public class MyInvestPresent extends XPresent<MyInvestActivity> {
                     protected void onFail(NetError error) {
                         error.printStackTrace();
                         getV().requestDataFail();
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -58,7 +70,7 @@ public class MyInvestPresent extends XPresent<MyInvestActivity> {
                         } else if (model != null && model.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(model.getMessage());
                             getV().areadyLogout();
-                        }  else {
+                        } else {
                             getV().showToast(model.getMessage());
                             getV().requestDataFail();
                             XLog.e("返回数据为空");

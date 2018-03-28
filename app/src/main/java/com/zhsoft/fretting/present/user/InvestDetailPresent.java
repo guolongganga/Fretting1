@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.fund.InvestResp;
@@ -27,6 +28,13 @@ import cn.droidlover.xdroidmvp.net.XApi;
  */
 
 public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
+    /**
+     * 定投详情
+     *
+     * @param token
+     * @param userId
+     * @param protocol_id
+     */
     public void investDetailData(String token, String userId, String protocol_id) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
@@ -46,6 +54,7 @@ public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
                     protected void onFail(NetError error) {
                         error.printStackTrace();
                         getV().requestInvestDetailFail();
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -55,7 +64,7 @@ public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
                         } else if (model != null && model.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(model.getMessage());
                             getV().areadyLogout();
-                        }  else {
+                        } else {
                             getV().showToast(model.getMessage());
                             getV().requestInvestDetailFail();
                             XLog.e("返回数据为空");
@@ -80,7 +89,6 @@ public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
         params.setScheduled_protocol_id(protocol_id);
         reqData.setData(params);
 
-        //TODO 换修改接口
         Api.getApi().buyUpdataData(reqData)
                 .compose(XApi.<InvestResp>getApiTransformer())
                 .compose(XApi.<InvestResp>getScheduler())
@@ -89,14 +97,14 @@ public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestInvestFail();
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
                     public void onNext(InvestResp model) {
                         if (model != null && model.getStatus() == 200) {
                             getV().requestInvestSuccess(model.getData());
-                        }  else if (model != null && model.getStatus() == Constant.NO_LOGIN_STATUS) {
+                        } else if (model != null && model.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(model.getMessage());
                             getV().areadyLogout();
                         } else {
@@ -136,7 +144,7 @@ public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestChangeStateFail();
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -149,7 +157,7 @@ public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
                         } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(resp.getMessage());
                             getV().areadyLogout();
-                        }  else {
+                        } else {
                             getV().requestChangeStateFail();
                             getV().showToast(resp.getMessage());
                             XLog.e("返回数据为空");

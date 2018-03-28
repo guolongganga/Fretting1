@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.user.UpdateBonusResp;
 import com.zhsoft.fretting.net.Api;
@@ -19,6 +20,12 @@ import cn.droidlover.xdroidmvp.net.XApi;
 
 public class BonusModePresent extends XPresent<BonusModeFragment> {
 
+    /**
+     * 修改分红方式列表
+     *
+     * @param token
+     * @param userId
+     */
     public void loadBonusTypeData(String token, String userId) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
@@ -36,6 +43,7 @@ public class BonusModePresent extends XPresent<BonusModeFragment> {
                     protected void onFail(NetError error) {
                         error.printStackTrace();
                         getV().showError();
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override

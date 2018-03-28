@@ -1,17 +1,14 @@
 package com.zhsoft.fretting.present.user;
 
-import android.util.Log;
-
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
-import com.zhsoft.fretting.params.FindPwdFirstParams;
 import com.zhsoft.fretting.params.PhoneAndCodeParams;
 import com.zhsoft.fretting.params.PhoneCodeParams;
 import com.zhsoft.fretting.params.SendPhoneCodeParams;
-import com.zhsoft.fretting.ui.activity.user.FindPwdLoginFirstActivity;
 import com.zhsoft.fretting.ui.activity.user.PhoneChangeActivity;
 
 import cn.droidlover.xdroidmvp.log.XLog;
@@ -55,7 +52,7 @@ public class PhoneChangePresent extends XPresent<PhoneChangeActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestFail();
-                        getV().showToast("更换银行卡请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -91,6 +88,7 @@ public class PhoneChangePresent extends XPresent<PhoneChangeActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().getImageCodeFail();
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -130,6 +128,7 @@ public class PhoneChangePresent extends XPresent<PhoneChangeActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestPhoneCodeFail();
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -169,7 +168,7 @@ public class PhoneChangePresent extends XPresent<PhoneChangeActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestPhoneCodeNoImageFail();
-                        getV().showToast("获取短信验证码请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override

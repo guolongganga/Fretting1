@@ -95,8 +95,6 @@ public class InvestActivity extends XActivity<InvestPersent> {
     @BindView(R.id.rl_invest_day) RelativeLayout rlInvestDay;
     /** 定投周期 */
     @BindView(R.id.rl_invest_week) RelativeLayout rlInvestWeek;
-    /** 输入提示 最小购买金额 */
-    @BindView(R.id.tv_hint) TextView tv_hint;
 
     /** 定投周期选择 */
     private int cycleSelector = 1;
@@ -130,6 +128,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
     private String fundName;
     /** 首次交易月 */
     private String first_trade_month;
+    /** 协议编号 */
     private String protocol_id;
 
     @Override
@@ -160,10 +159,8 @@ public class InvestActivity extends XActivity<InvestPersent> {
         //如果是定投页面
         if (Constant.INVEST_ACTIVITY.equals(type)) {
             sure.setText("确定定投");
-//            getP().myBankCard(token, userId);
         } else if (Constant.INVEST_ACTIVITY_UPDATE.equals(type)) {
             sure.setText("确定修改");
-//            getP().myBankCard(token, userId);
         }
         //初始化选择器数据
         initWeeklyList();
@@ -186,7 +183,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
                 refreshBankView(investResp.getBankCardPageEntity());
 
                 //最小投资金额
-                tv_hint.setText("最低购买金额" + BigDecimalUtil.bigdecimalToString(investResp.getMinPurchaseAmt()) + "元");
+                etAmount.setHint("最低购买金额" + BigDecimalUtil.bigdecimalToString(investResp.getMinPurchaseAmt()) + "元");
                 //首次交易月
                 first_trade_month = investResp.getFirst_trade_month();
                 //下次扣款日
@@ -284,12 +281,14 @@ public class InvestActivity extends XActivity<InvestPersent> {
 
     @Override
     public void initEvents() {
+        /*返回*/
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+        /*定投周期选择*/
         rlInvestWeek.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -299,6 +298,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
                 cyclePopupWindow.showAtLocation(etInvestWeek, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
             }
         });
+        /*服务协议勾选*/
         registerServiceSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -309,7 +309,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
                 }
             }
         });
-
+        /*定投日选择*/
         rlInvestDay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -339,23 +339,9 @@ public class InvestActivity extends XActivity<InvestPersent> {
                 //显示窗口
                 dayPopupWindow.showAtLocation(etInvestDay, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
 
-//                final PopShow popShow = new PopShow(context, etInvestDay);
-//                popShow.showTextWithCode(selectList);
-//                popShow.setOnClickPop(new PopShow.OnClickPop() {
-//                    @Override
-//                    public void setRange(int position) {
-//                        etInvestDay.setText(selectList.get(position).getContent());
-////                        daySelector = position;
-//                        if (isNotEmpty(getText(etInvestDay)) && !getText(etInvestDay).equals(lastDayChoose)) {
-////                            showToast("内容改变啦");
-//                            getP().nextDeductTime("7af37b692611438cbda677386223bd0d", "ffa68a63c1e34aa48d17088e33d39b4f",
-//                                    fundCode, cycleList.get(cycleSelector).getCode(), selectList.get(position).getCode());
-//                        }
-//
-//                    }
-//                });
             }
         });
+        /*确定*/
         sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -370,9 +356,11 @@ public class InvestActivity extends XActivity<InvestPersent> {
                     showToast("请输入购买金额");
                     return;
                 }
-
-//                int amount = Integer.parseInt(strAmount);
-//                int minAmt = .intValue();
+                //如果amount小于0，重新填写购买金额
+                if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+                    showToast("请输入正确的投资金额");
+                    return;
+                }
                 //如果amount小于最小购买金额，重新填写购买金额
                 if (amount.compareTo(investResp.getMinPurchaseAmt()) < 0) {
                     showToast("最小投资金额为" + BigDecimalUtil.bigdecimalToString(investResp.getMinPurchaseAmt()) + "元");
@@ -390,6 +378,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
                     showToast("请阅读并同意协议");
                     return;
                 }
+                //格式化输入金额
                 DecimalFormat df = new DecimalFormat(",###,##0.00"); //保留两位小数
                 String dealAmount = df.format(amount);
                 fundBuyDialog = new FundBuyDialog
@@ -418,13 +407,14 @@ public class InvestActivity extends XActivity<InvestPersent> {
                 fundBuyDialog.show();
             }
         });
-
+        /*更换银行卡*/
         rlChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(BankCardActivity.class, Constant.INVEST_BANK_ACTIVITY);
             }
         });
+        /*金额输入监控*/
         etAmount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -435,12 +425,10 @@ public class InvestActivity extends XActivity<InvestPersent> {
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
                 if (!"".equals(charSequence.toString())) {
                     //如果输入的内容不为空，确认按钮可点击
-                    tv_hint.setVisibility(View.GONE);
                     sure.setBackgroundColor(getResources().getColor(R.color.color_4D7BFE));
                     sure.setClickable(true);
                 } else {
                     //如果输入的内容为空，按钮不可点击
-                    tv_hint.setVisibility(View.VISIBLE);
                     sure.setBackgroundColor(getResources().getColor(R.color.color_B9D1F8));
                     sure.setClickable(false);
                 }
@@ -505,18 +493,6 @@ public class InvestActivity extends XActivity<InvestPersent> {
         httpLoadingDialog.dismiss();
     }
 
-    /**
-     * 修改定投成功
-     */
-    public void requestUpdateInvestSuccess() {
-
-    }
-
-    /**
-     * 修改定投失败
-     */
-    public void requestUpdateInvestFail() {
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -574,6 +550,9 @@ public class InvestActivity extends XActivity<InvestPersent> {
         customDialog.show();
     }
 
+    /**
+     * 销毁
+     */
     @Override
     protected void onDestroy() {
         if (customDialog != null) {

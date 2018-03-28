@@ -6,7 +6,7 @@ import com.zhsoft.fretting.ui.activity.base.BaseWebActivity;
 
 /**
  * 作者：sunnyzeng on 2018/2/1 14:13
- * 描述：不带token userid
+ * 描述：不带token userid 公共H5页面
  */
 
 public class WebPublicActivity extends BaseWebActivity {

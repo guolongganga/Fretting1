@@ -49,9 +49,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignBaseline="@id/tv_range"
                 android:layout_marginBottom="@dimen/dimen_5"
-                android:visibility="invisible"
                 android:layout_toRightOf="@id/tv_range"
-                android:src="@drawable/icon_fund_day_raise"/>
+                android:src="@drawable/icon_fund_day_raise"
+                android:visibility="invisible"/>
         </RelativeLayout>
     </RelativeLayout>
     <!--横线-->
@@ -72,6 +72,7 @@
         app:recyclerBackgroundColor="@color/white"
         app:recyclerScrollbarNone="true"
         app:recyclerScrollbarStyle="outsideOverlay"
-        app:x_emptyLayoutId="@layout/view_empty"/>
+        app:x_emptyLayoutId="@layout/view_empty"
+        app:x_errorLayoutId="@layout/view_error"/>
 
 </LinearLayout>

@@ -2,6 +2,7 @@ package com.zhsoft.fretting.present.user;
 
 import android.util.Log;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.user.BankResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.BankListParams;
@@ -42,6 +43,7 @@ public class BankListPresent extends XPresent<BankListActivity> {
                     protected void onFail(NetError error) {
                         error.printStackTrace();
                         getV().requestFail();
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override

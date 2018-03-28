@@ -17,6 +17,7 @@ import com.zhsoft.fretting.model.user.BankResp;
 import com.zhsoft.fretting.present.user.BankCardChangePresent;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
 import com.zhsoft.fretting.ui.widget.ChenJingET;
+import com.zhsoft.fretting.utils.RuntimeHelper;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -59,6 +60,7 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
     private String userId;
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
+    private String trade_password;
 
     @Override
     public int getLayoutId() {
@@ -82,6 +84,9 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
         userId = App.getSharedPref().getString(Constant.USERID, "");
         strPhone = App.getSharedPref().getString(Constant.USER_PHONE, "");
         phone.setText(strPhone);
+        if (bundle != null) {
+            trade_password = bundle.getString(Constant.TRADE_PASSWORD, "");
+        }
         //弹出框
         httpLoadingDialog = new HttpLoadingDialog(context);
         httpLoadingDialog.setCanceledOnKeyBack();
@@ -133,7 +138,7 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
 
                 //发送请求验证码
                 httpLoadingDialog.visible();
-                getP().getMessageCode(phoneNumber);
+                getP().getMessageCode(phoneNumber, token, userId);
 
             }
         });
@@ -170,7 +175,7 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
                 }
                 //绑定银行卡接口
                 httpLoadingDialog.visible();
-                getP().changeBankCard(token, userId, bankResp, getText(banknumber), phoneNumber, getText(msgCode));
+                getP().changeBankCard(token, userId, bankResp, getText(banknumber), phoneNumber, getText(msgCode), trade_password);
             }
         });
 
@@ -218,5 +223,19 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
      */
     public void requestChangeFail() {
         httpLoadingDialog.dismiss();
+    }
+
+    /**
+     * 已经登出系统，请重新登录
+     */
+    public void areadyLogout() {
+//        httpLoadingDialog.dismiss();
+//        EventBus.getDefault().post(new InvalidTokenEvent());
+        //清除本地缓存，设置成未登录
+        RuntimeHelper.getInstance().isInvalidToken();
+        //跳转登录界面
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_INDEX_ACTIVITY);
+        startActivity(LoginActivity.class, bundle);
     }
 }

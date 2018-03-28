@@ -8,7 +8,7 @@ import com.zhsoft.fretting.ui.activity.base.BaseWebActivity;
 
 /**
  * 作者：sunnyzeng on 2018/2/1 14:13
- * 描述：带token和userID
+ * 描述：带token和userID H5页面 （风险测评）
  */
 
 public class WebRiskActivity extends BaseWebActivity {

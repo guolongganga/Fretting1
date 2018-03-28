@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.net.Api;
@@ -49,6 +50,7 @@ public class ChangeTradePwdPresent extends XPresent<ChangeTradePwdActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestFail();
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override

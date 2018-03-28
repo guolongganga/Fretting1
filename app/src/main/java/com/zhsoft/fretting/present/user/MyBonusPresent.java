@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.user.MyBonusResp;
 import com.zhsoft.fretting.model.user.TransactionResp;
@@ -20,6 +21,14 @@ import cn.droidlover.xdroidmvp.net.XApi;
  */
 
 public class MyBonusPresent extends XPresent<MyBonusFragment> {
+    /**
+     * 分红方式
+     *
+     * @param token
+     * @param userId
+     * @param pageno
+     * @param pageSize
+     */
     public void loadMyBonusData(String token, String userId, final int pageno, int pageSize) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
@@ -40,6 +49,7 @@ public class MyBonusPresent extends XPresent<MyBonusFragment> {
                     protected void onFail(NetError error) {
                         error.printStackTrace();
                         getV().showError();
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override

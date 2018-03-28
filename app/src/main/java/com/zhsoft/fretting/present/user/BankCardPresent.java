@@ -1,8 +1,10 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.user.BankCardResp;
 import com.zhsoft.fretting.net.Api;
+import com.zhsoft.fretting.params.BankCardChangeParams;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.ui.activity.user.BankCardActivity;
 
@@ -29,7 +31,6 @@ public class BankCardPresent extends XPresent<BankCardActivity> {
         reqData.setToken(token);
         reqData.setUserId(userId);
 
-        //如果成功
         Api.getApi()
                 .getMyBankCard(reqData)
                 .compose(XApi.<BankCardResp>getApiTransformer())
@@ -43,7 +44,7 @@ public class BankCardPresent extends XPresent<BankCardActivity> {
                         } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(resp.getMessage());
                             getV().areadyLogout();
-                        }   else {
+                        } else {
                             getV().requestFail();
                             getV().showToast(resp.getMessage());
                         }
@@ -52,7 +53,7 @@ public class BankCardPresent extends XPresent<BankCardActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestFail();
-                        getV().showToast("更换银行卡请求失败");
+                        getV().showToast(R.string.request_error);
                     }
                 });
 
@@ -64,11 +65,15 @@ public class BankCardPresent extends XPresent<BankCardActivity> {
      * @param token
      * @param userId
      */
-    public void changeBankCardCheck(String token, String userId) {
+    public void changeBankCardCheck(String token, String userId, String trade_password) {
         CommonReqData reqData = new CommonReqData();
 
         reqData.setToken(token);
         reqData.setUserId(userId);
+
+        BankCardChangeParams params = new BankCardChangeParams();
+        params.setTrade_password(trade_password);
+        reqData.setData(params);
 
         Api.getApi().changeBankCardCheck(reqData)
                 .compose(XApi.<BankCardResp>getApiTransformer())
@@ -78,17 +83,19 @@ public class BankCardPresent extends XPresent<BankCardActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestFail();
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
                     public void onNext(BankCardResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().isCanChange(resp.getData());
+                        } else if (resp != null && resp.getStatus() == Constant.PASSWORD_ERROR_STATUS) {
+                            getV().passwordError();
                         } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(resp.getMessage());
                             getV().areadyLogout();
-                        }   else {
+                        } else {
                             getV().requestFail();
                             getV().showToast(resp.getMessage());
                         }

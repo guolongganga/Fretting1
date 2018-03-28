@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
@@ -46,7 +47,7 @@ public class InvestPlanPresent extends XPresent<InvestPlanActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestInvestPlanFail();
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -66,6 +67,13 @@ public class InvestPlanPresent extends XPresent<InvestPlanActivity> {
 
     }
 
+    /**
+     * 基金定投
+     * @param token
+     * @param userId
+     * @param fund_code
+     * @param fund_name
+     */
     public void investTime(String token, String userId, String fund_code, String fund_name) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
@@ -83,7 +91,7 @@ public class InvestPlanPresent extends XPresent<InvestPlanActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestInvestFail();
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override

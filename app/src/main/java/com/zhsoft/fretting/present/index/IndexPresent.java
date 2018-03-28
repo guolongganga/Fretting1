@@ -19,6 +19,9 @@ import cn.droidlover.xdroidmvp.net.XApi;
 
 public class IndexPresent extends XPresent<IndexFragment> {
 
+    /**
+     * 首页数据
+     */
     public void loadData() {
 
         CommonReqData reqData = new CommonReqData();
@@ -38,7 +41,7 @@ public class IndexPresent extends XPresent<IndexFragment> {
                     public void onNext(IndexResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().showIndexData(resp.getData());
-                        }else {
+                        } else {
                             getV().requestIndexDataFail();
                             getV().showToast(resp.getMessage());
                             XLog.e("返回数据为空");

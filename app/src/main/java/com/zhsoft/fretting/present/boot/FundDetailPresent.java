@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.boot;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.InvestResp;
@@ -25,7 +26,7 @@ import cn.droidlover.xdroidmvp.net.XApi;
 public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
 
     /**
-     * 购买基金验证
+     * 购买基金 验证 （是否具备购买资格）
      *
      * @param token
      * @param userId
@@ -47,7 +48,7 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestBuyFundFail();
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -57,7 +58,7 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
                         } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(resp.getMessage());
                             getV().areadyLogout();
-                        }  else {
+                        } else {
                             getV().requestBuyFundFail();
                             getV().showToast(resp.getMessage());
                             XLog.e("返回数据为空");
@@ -68,7 +69,7 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
     }
 
     /**
-     * 基金定投 准备
+     * 基金定投 准备（是否具备定投资格）
      *
      * @param token
      * @param userId
@@ -92,7 +93,7 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestInvestFail();
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -102,7 +103,7 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
                         } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(resp.getMessage());
                             getV().areadyLogout();
-                        }  else {
+                        } else {
                             getV().requestInvestFail();
                             getV().showToast(resp.getMessage());
                             XLog.e("返回数据为空");
@@ -113,7 +114,7 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
     }
 
     /***
-     * 更换银行卡刷新购买验证接口，得到最新的银行卡信息
+     * 赎回验证 （是否能够赎回）
      * @param token
      * @param userId
      * @param fund_code
@@ -134,7 +135,7 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestSellPreFail();
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -146,7 +147,7 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
                         } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(resp.getMessage());
                             getV().areadyLogout();
-                        }  else {
+                        } else {
                             getV().requestSellPreFail();
                             getV().showToast(resp.getMessage());
                             XLog.e("返回数据为空");
@@ -157,7 +158,7 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
     }
 
     /**
-     * 定投计划
+     * 定投计划 验证 （是否有定投计划）
      *
      * @param token
      * @param userId
@@ -179,7 +180,7 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestInvestPlanFail();
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -189,7 +190,7 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
                         } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(resp.getMessage());
                             getV().areadyLogout();
-                        }  else {
+                        } else {
                             getV().requestInvestPlanFail();
                             getV().showToast(resp.getMessage());
                             XLog.e("返回数据为空");

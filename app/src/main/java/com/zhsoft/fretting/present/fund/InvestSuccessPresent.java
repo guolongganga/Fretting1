@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.fund;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.net.Api;
@@ -48,7 +49,7 @@ public class InvestSuccessPresent extends XPresent<InvestSuccessActivity> {
                     protected void onFail(NetError error) {
                         //请求失败
                         getV().requestFail();
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override

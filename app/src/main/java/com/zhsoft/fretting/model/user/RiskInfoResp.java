@@ -11,6 +11,15 @@ public class RiskInfoResp extends BaseResp<RiskInfoResp> {
     //1 表示已测， 0 表示 未测
     private String riskEvaluteStatus;
     private String riskEvaluteVal;
+    private String serviceTel;
+
+    public String getServiceTel() {
+        return serviceTel;
+    }
+
+    public void setServiceTel(String serviceTel) {
+        this.serviceTel = serviceTel;
+    }
 
     public String getRiskEvaluteStatus() {
         return riskEvaluteStatus;

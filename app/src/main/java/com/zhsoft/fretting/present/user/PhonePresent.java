@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.user.PhoneResp;
 import com.zhsoft.fretting.net.Api;
@@ -21,6 +22,13 @@ import cn.droidlover.xdroidmvp.net.XApi;
  */
 
 public class PhonePresent extends XPresent<PhoneActivity> {
+
+    /**
+     * 我的手机号码
+     *
+     * @param token
+     * @param userId
+     */
     public void getPhoneInfo(String token, String userId) {
 
         CommonReqData reqData = new CommonReqData();
@@ -36,14 +44,14 @@ public class PhonePresent extends XPresent<PhoneActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestFail();
-                        getV().showToast("请求我的手机号码失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
                     public void onNext(PhoneResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestSuccess(resp.getData());
-                        }  else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(resp.getMessage());
                             getV().areadyLogout();
                         } else {

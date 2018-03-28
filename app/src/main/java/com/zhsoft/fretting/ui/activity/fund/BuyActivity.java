@@ -101,7 +101,9 @@ public class BuyActivity extends XActivity<BuyPresent> {
     private String userId;
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
+    /** 分红方式 选中选项 */
     private int isSelector = 0;
+    /** 分红方式 */
     private List<ApplyBaseInfo> list;
 
 
@@ -171,12 +173,14 @@ public class BuyActivity extends XActivity<BuyPresent> {
 
     @Override
     public void initEvents() {
+        /*返回*/
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
             }
         });
+        /*确定购买*/
         sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -191,16 +195,22 @@ public class BuyActivity extends XActivity<BuyPresent> {
                     showToast("请输入购买金额");
                     return;
                 }
-                //TODO 如果amount小于最小购买金额，重新填写购买金额
+                //如果amount小于0，重新填写购买金额
+                if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+                    showToast("请输入正确的投资金额");
+                    return;
+                }
+                //如果amount小于最小购买金额，重新填写购买金额
                 if (amount.compareTo(buyFundResp.getLow_value()) < 0) {
                     showToast("最小投资金额为" + BigDecimalUtil.bigdecimalToString(buyFundResp.getLow_value()) + "元");
                     return;
                 }
-                //TODO 如果amount大于最大购买金额，重新填写购买金额
+                //如果amount大于最大购买金额，重新填写购买金额
                 if (amount.compareTo(buyFundResp.getHigh_value()) > 0) {
                     showToast("最大投资金额为" + BigDecimalUtil.bigdecimalToString(buyFundResp.getHigh_value()) + "元");
                     return;
                 }
+                //格式化输入金额
                 DecimalFormat df = new DecimalFormat(",###,##0.00"); //保留两位小数
                 String dealAmount = df.format(amount);
                 //弹出框
@@ -221,12 +231,14 @@ public class BuyActivity extends XActivity<BuyPresent> {
 
             }
         });
+        /*变更银行卡*/
         rlChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 startActivity(BankCardActivity.class, Constant.INVEST_BANK_ACTIVITY);
             }
         });
+        /*选择分红方式*/
         llBonus.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -241,6 +253,7 @@ public class BuyActivity extends XActivity<BuyPresent> {
                 });
             }
         });
+        /*金额输入监控*/
         etAmount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -269,6 +282,13 @@ public class BuyActivity extends XActivity<BuyPresent> {
         });
     }
 
+    /**
+     * 修改了银行卡就刷新本页面数据
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -345,6 +365,9 @@ public class BuyActivity extends XActivity<BuyPresent> {
         customDialog.show();
     }
 
+    /**
+     * 销毁
+     */
     @Override
     protected void onDestroy() {
         if (customDialog != null) {
@@ -359,13 +382,13 @@ public class BuyActivity extends XActivity<BuyPresent> {
     }
 
     /**
-     * 计算失败
+     * 计算申购费 失败
      */
     public void requestCalculationFail() {
     }
 
     /**
-     * 计算成功
+     * 计算申购费 成功
      *
      * @param calculationResp
      */

@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.boot;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
@@ -16,11 +17,14 @@ import cn.droidlover.xdroidmvp.net.XApi;
 
 /**
  * 作者：sunnyzeng on 2018/1/10 17:33
- * 描述：搜索页面控制器
+ * 描述：基金 搜索页面控制器
  */
 
 public class SearchPersent extends XPresent<SearchActivity> {
 
+    /**
+     * 热搜
+     */
     public void hotListData() {
 
         ArrayList<NewestFundResp> list = new ArrayList<>();
@@ -38,6 +42,13 @@ public class SearchPersent extends XPresent<SearchActivity> {
 
     }
 
+    /**
+     * 实时搜索
+     *
+     * @param pageno
+     * @param pageSize
+     * @param keyword
+     */
     public void searchData(final int pageno, int pageSize, String keyword) {
 
         CommonReqData reqData = new CommonReqData();
@@ -56,7 +67,7 @@ public class SearchPersent extends XPresent<SearchActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestSearchDataFail(error);
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -64,6 +75,7 @@ public class SearchPersent extends XPresent<SearchActivity> {
                         if (newestFundResp != null && newestFundResp.getStatus() == 200) {
                             getV().requestSearchDataSuccess(pageno, newestFundResp.getData());
                         } else {
+                            getV().requestSearchDataFail(null);
                             getV().showToast(newestFundResp.getMessage());
                             XLog.e("返回数据为空");
                         }

@@ -10,7 +10,7 @@
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="66dp"
+        android:layout_marginTop="@dimen/dimen_62.5"
         android:scrollbars="vertical">
 
         <LinearLayout
@@ -208,35 +208,35 @@
 
             <include layout="@layout/layout_divider_horizontal"/>
             <!--联系地址-->
-            <LinearLayout
-                android:id="@+id/linearlayout_area"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal"
-                android:paddingLeft="30dp"
-                android:paddingRight="15dp">
+            <!--<LinearLayout-->
+                <!--android:id="@+id/linearlayout_area"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="48dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:paddingLeft="30dp"-->
+                <!--android:paddingRight="15dp">-->
 
-                <TextView
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
-                    android:text="联系地址"
-                    android:textColor="@color/color_text_333"
-                    android:textSize="14sp"/>
+                <!--<TextView-->
+                    <!--android:layout_width="90dp"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:text="联系地址"-->
+                    <!--android:textColor="@color/color_text_333"-->
+                    <!--android:textSize="14sp"/>-->
 
-                <TextView
-                    android:id="@+id/address"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:gravity="center_vertical|right"
-                    android:hint="请选择"
-                    android:paddingLeft="@dimen/dimen_10"
-                    android:textColor="@color/color_text_333"
-                    android:textColorHint="@color/color_696969"
-                    />
+                <!--<TextView-->
+                    <!--android:id="@+id/address"-->
+                    <!--android:layout_width="0dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_weight="1"-->
+                    <!--android:gravity="center_vertical|right"-->
+                    <!--android:hint="请选择"-->
+                    <!--android:paddingLeft="@dimen/dimen_10"-->
+                    <!--android:textColor="@color/color_text_333"-->
+                    <!--android:textColorHint="@color/color_696969"-->
+                    <!--/>-->
 
-            </LinearLayout>
+            <!--</LinearLayout>-->
 
             <include layout="@layout/layout_divider_horizontal"/>
             <!--详细地址-->

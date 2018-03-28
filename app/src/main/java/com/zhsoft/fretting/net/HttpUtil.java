@@ -205,7 +205,7 @@ public interface HttpUtil {
     @POST(my_informationpage)
     Flowable<PersonInfoResp> myInformationPage(@Body CommonReqData reqData);
 
-    //变更登录密码
+    //变更个人信息
     @Headers("appType:Android")
     @POST(change_my_information)
     Flowable<BaseResp> changeMyInformation(@Body CommonReqData reqData);
@@ -245,7 +245,7 @@ public interface HttpUtil {
     @POST(buy_fund)
     Flowable<BuyFundResp> buyFund(@Body CommonReqData reqData);
 
-    //购买基金验证
+    //购买基金
     @Headers("appType:Android")
     @POST(purchase)
     Flowable<FundStatusResp> purchase(@Body CommonReqData reqData);
@@ -310,7 +310,7 @@ public interface HttpUtil {
     @POST(trade_query)
     Flowable<TransactionResp> tradeQueryData(@Body CommonReqData reqData);
 
-    //分红方式
+    //分红
     @Headers("appType:Android")
     @POST(share_out_bonus_trade)
     Flowable<TransactionResp> shareOutBonusTradeQuery(@Body CommonReqData reqData);
@@ -370,7 +370,7 @@ public interface HttpUtil {
     @POST(withdraw_apply_succDetail)
     Flowable<ResultDetailResp> withdrawApplySuccDetail(@Body CommonReqData reqData);
 
-    //撤单成功
+    //设置页面数据
     @Headers("appType:Android")
     @POST(setup_index)
     Flowable<RiskInfoResp> setupIndex(@Body CommonReqData reqData);
@@ -380,12 +380,12 @@ public interface HttpUtil {
     @POST(redeem_init)
     Flowable<SellResp> sellFundPre(@Body CommonReqData reqData);
 
-    //赎回准备
+    //确定赎回
     @Headers("appType:Android")
     @POST(open_remitbranch_bank)
     Flowable<FundStatusResp> sellFundSure(@Body CommonReqData reqData);
 
-    //计算这个手续费
+    //计算手续费
     @Headers("appType:Android")
     @POST(buy_fund_calculation)
     Flowable<CalculationResp> buyFundCalculation(@Body CommonReqData reqData);

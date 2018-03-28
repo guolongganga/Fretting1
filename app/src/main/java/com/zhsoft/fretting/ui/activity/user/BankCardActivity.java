@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.ui.activity.user;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -15,9 +16,10 @@ import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.ChangeBankCardEvent;
-import com.zhsoft.fretting.event.InvalidTokenEvent;
 import com.zhsoft.fretting.model.user.BankCardResp;
 import com.zhsoft.fretting.present.user.BankCardPresent;
+import com.zhsoft.fretting.ui.widget.CustomDialog;
+import com.zhsoft.fretting.ui.widget.FundBuyDialog;
 import com.zhsoft.fretting.utils.Base64ImageUtil;
 import com.zhsoft.fretting.utils.RuntimeHelper;
 
@@ -50,14 +52,22 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
 
     /** 加载图片 */
     private ImageLoader imageLoader = ImageLoader.getInstance();
-    private HttpLoadingDialog dialog;
+    /** 加载圈 */
+    private HttpLoadingDialog httpLoadingDialog;
+    /** 银行卡信息 */
     private BankCardResp bankCardResp;
     /** 用户编号 */
     private String userId;
     /** 登录标识 */
     private String token;
-
+    /** 是否修改了银行卡 */
     private String isChange = "1";
+    /** 输入密码弹框 */
+    private FundBuyDialog fundBuyDialog;
+    /** 密码错误弹框 */
+    private CustomDialog errorDialog;
+    /** 交易密码 */
+    private String trade_password;
 
     @Override
     public int getLayoutId() {
@@ -72,7 +82,7 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
     @Override
     public void initData(Bundle bundle) {
         headTitle.setText("我的银行卡");
-        dialog = new HttpLoadingDialog(context);
+        httpLoadingDialog = new HttpLoadingDialog(context);
         //获取用户缓存的userid 和 token
         userId = App.getSharedPref().getString(Constant.USERID, "");
         token = App.getSharedPref().getString(Constant.TOKEN, "");
@@ -81,7 +91,7 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
         EventBus.getDefault().register(this);
 
         //获取我的银行卡信息
-        dialog.visible();
+        httpLoadingDialog.visible();
         getP().getBankCardInfo(token, userId);
     }
 
@@ -96,9 +106,32 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
         btnChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //验证是否符合更换条件
-                dialog.visible();
-                getP().changeBankCardCheck(token, userId);
+                //弹出交易密码框
+                fundBuyDialog = new FundBuyDialog
+                        .Builder(context)
+                        .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
+                            @Override
+                            public void onFinish(String str) {
+                            }
+                        }).setPositiveButton("确定", new FundBuyDialog.OnPositiveButtonListener() {
+                            @Override
+                            public void onButtonClick(DialogInterface dialog, String str) {
+                                //验证是否符合更换条件
+                                dialog.dismiss();
+                                httpLoadingDialog.visible();
+                                trade_password = str;
+                                getP().changeBankCardCheck(token, userId, str);
+
+                            }
+                        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).create();
+
+                fundBuyDialog.show();
+
             }
         });
 
@@ -110,7 +143,7 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
      * @param resp
      */
     public void showBankCardData(BankCardResp resp) {
-        dialog.dismiss();
+        httpLoadingDialog.dismiss();
         bankCardResp = resp;
         //获取 图片Base64 字符串
         String strimage = resp.getBankLogo();
@@ -123,12 +156,37 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
         tradeNumber.setText(resp.getTa_acco());
     }
 
+    /**
+     * 更换银行卡 密码错误
+     */
+    public void passwordError() {
+        httpLoadingDialog.dismiss();
+        if (errorDialog == null) {
+            errorDialog = new CustomDialog.Builder(context)
+                    .setMessage("交易密码错误，请重试")
+                    .setNegativeButton("忘记密码", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            errorDialog.dismiss();
+                            startActivity(FindPwdTradeFirstActivity.class);
+                        }
+                    }).setPositiveButton("再试一次", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            errorDialog.dismiss();
+                            fundBuyDialog.show();
+                        }
+                    }).create();
+        }
+        errorDialog.show();
+    }
+
 
     /**
      * 获取用户银行卡信息失败
      */
     public void requestFail() {
-        dialog.dismiss();
+        httpLoadingDialog.dismiss();
     }
 
     @Override
@@ -145,7 +203,7 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
     @Subscribe(threadMode = ThreadMode.POSTING)
     public void changeBankEvent(ChangeBankCardEvent event) {
         //重新获取我的银行卡信息
-        dialog.visible();
+        httpLoadingDialog.visible();
         //修改了银行卡
         isChange = "0";
         getP().getBankCardInfo(token, userId);
@@ -158,9 +216,11 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
      * @param data
      */
     public void isCanChange(BankCardResp data) {
-        dialog.dismiss();
+        httpLoadingDialog.dismiss();
         if ("0".equals(data.getIsCanChangeBankNo())) {
-            startActivity(BankCardChangeActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putString(Constant.TRADE_PASSWORD, trade_password);
+            startActivity(BankCardChangeActivity.class, bundle);
         } else {
             showToast("您的账户在持仓或者在途交易期间，不能更换银行卡");
         }

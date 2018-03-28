@@ -12,6 +12,14 @@ public class ChangeBankCardParams extends CommonReqData<ChangeBankCardParams> {
     private String bankAccout;
     private String mobile;
     private String phoneCode;
+    private String trade_password;
+    public String getTrade_password() {
+        return trade_password;
+    }
+
+    public void setTrade_password(String trade_password) {
+        this.trade_password = trade_password;
+    }
 
     public BankResp getSelectBank() {
         return selectBank;

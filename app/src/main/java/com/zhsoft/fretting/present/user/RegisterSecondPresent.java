@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.user.BankResp;
@@ -8,6 +9,7 @@ import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.params.OpenAccountParams;
 import com.zhsoft.fretting.ui.activity.user.RegisterSecondActivity;
 
+import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XPresent;
 import cn.droidlover.xdroidmvp.net.ApiSubscriber;
 import cn.droidlover.xdroidmvp.net.NetError;
@@ -57,6 +59,7 @@ public class RegisterSecondPresent extends XPresent<RegisterSecondActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestOpenAccountFail();
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -67,8 +70,9 @@ public class RegisterSecondPresent extends XPresent<RegisterSecondActivity> {
                             getV().showToast(resp.getMessage());
                             getV().areadyLogout();
                         } else {
-                            getV().showToast(resp.getMessage());
                             getV().requestOpenAccountFail();
+                            getV().showToast(resp.getMessage());
+                            XLog.e("返回数据为空");
                         }
                     }
                 });

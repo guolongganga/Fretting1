@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.user.ResultDetailResp;
@@ -9,6 +10,7 @@ import com.zhsoft.fretting.params.ResultParams;
 import com.zhsoft.fretting.ui.activity.user.ResultDetailOneActivity;
 import com.zhsoft.fretting.ui.activity.user.ResultDetailThreeActivity;
 
+import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XPresent;
 import cn.droidlover.xdroidmvp.net.ApiSubscriber;
 import cn.droidlover.xdroidmvp.net.NetError;
@@ -22,7 +24,7 @@ import cn.droidlover.xdroidmvp.net.XApi;
 public class ResultDetailThreePresent extends XPresent<ResultDetailThreeActivity> {
 
     /**
-     * 结果详情页
+     * 撤单交易详情
      *
      * @param allot_no
      * @param token
@@ -45,7 +47,7 @@ public class ResultDetailThreePresent extends XPresent<ResultDetailThreeActivity
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestDetailFail();
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -58,6 +60,7 @@ public class ResultDetailThreePresent extends XPresent<ResultDetailThreeActivity
                         } else {
                             getV().requestDetailFail();
                             getV().showToast(resp.getMessage());
+                            XLog.e("返回数据为空");
                         }
                     }
                 });

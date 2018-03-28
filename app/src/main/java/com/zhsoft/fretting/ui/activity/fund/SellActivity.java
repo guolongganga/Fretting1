@@ -4,7 +4,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -163,7 +165,7 @@ public class SellActivity extends XActivity<SellPresent> {
             bankImage.setImageBitmap(bitmap);
         }
         //银行卡名称和尾号
-        bankName.setText(cardResp.getBankName());
+        bankName.setText(cardResp.getBankName() + "（" + cardResp.getBankNoTail() + "）");
         //银行卡限额
         bankLimit.setText("单笔上限" + cardResp.getLimit_per_payment() + "万，单日限额" + cardResp.getLimit_per_day() + "万");
     }
@@ -228,10 +230,14 @@ public class SellActivity extends XActivity<SellPresent> {
                     return;
                 }
                 if (!isNotEmpty(getText(etAmount))) {
-                    showToast("请输入购买金额");
+                    showToast("请输入赎回份额");
                     return;
                 }
-
+                //如果amount小于0，重新填写购买金额
+                if (amount.compareTo(BigDecimal.ZERO) <= 0) {
+                    showToast("请输入正确的赎回份额");
+                    return;
+                }
                 // 如果amount小于份额，重新填写购买金额
                 if (amount.compareTo(sellResp.getMinVar()) < 0) {
                     showToast("剩余份额低于" + BigDecimalUtil.bigdecimalToString(sellResp.getMinVar()) + "份，请全部赎回");
@@ -275,8 +281,39 @@ public class SellActivity extends XActivity<SellPresent> {
 
             }
         });
+        etAmount.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
+                if (!"".equals(charSequence.toString())) {
+                    //如果输入的内容不为空，确认按钮可点击
+                    sure.setBackgroundColor(getResources().getColor(R.color.color_4D7BFE));
+                    sure.setClickable(true);
+                } else {
+                    //如果输入的内容为空，按钮不可点击
+                    sure.setBackgroundColor(getResources().getColor(R.color.color_B9D1F8));
+                    sure.setClickable(false);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
+    /**
+     * 修改了银行卡就刷新本页面数据
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);

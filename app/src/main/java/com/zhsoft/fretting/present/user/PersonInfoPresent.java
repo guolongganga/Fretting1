@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.user.OccupationResp;
@@ -23,7 +24,7 @@ import cn.droidlover.xdroidmvp.net.XApi;
 public class PersonInfoPresent extends XPresent<PersonInfoActivity> {
 
     /**
-     * 获取用户信息
+     * 获取个人信息
      *
      * @param token
      * @param userId
@@ -42,7 +43,7 @@ public class PersonInfoPresent extends XPresent<PersonInfoActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestUserInfoFail();
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -82,7 +83,7 @@ public class PersonInfoPresent extends XPresent<PersonInfoActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().getOccupationFail();
-                        getV().showToast("请求职业失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -103,6 +104,7 @@ public class PersonInfoPresent extends XPresent<PersonInfoActivity> {
     }
 
     /**
+     * 变更个人信息
      * @param token
      * @param userId
      * @param id_enddate
@@ -133,7 +135,7 @@ public class PersonInfoPresent extends XPresent<PersonInfoActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().changeMyInformationFail();
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override

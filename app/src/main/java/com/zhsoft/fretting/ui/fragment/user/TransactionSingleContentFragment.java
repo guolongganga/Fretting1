@@ -46,7 +46,7 @@ public class TransactionSingleContentFragment extends XFragment<TransactionSingl
     private String userId;
     /** 基金编号 */
     private String fundCode;
-    private StateView errorView;
+//    private StateView errorView;
 
     @Override
     public int getLayoutId() {
@@ -95,13 +95,13 @@ public class TransactionSingleContentFragment extends XFragment<TransactionSingl
                     }
                 });
 
-        if (errorView == null) {
-            errorView = new StateView(context);
-        }
-        contentLayout.errorView(errorView);
+//        if (errorView == null) {
+//            errorView = new StateView(context);
+//        }
+//        contentLayout.errorView(errorView);
 
         contentLayout.loadingView(View.inflate(getContext(), R.layout.view_loading, null));
-//        contentLayout.showLoading();
+        contentLayout.showLoading();
         contentLayout.getRecyclerView().useDefLoadMoreView();
 
     }
@@ -134,12 +134,12 @@ public class TransactionSingleContentFragment extends XFragment<TransactionSingl
                 }
             }
         });
-        errorView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                requestTranData(1);
-            }
-        });
+//        errorView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                requestTranData(1);
+//            }
+//        });
     }
 
     /**

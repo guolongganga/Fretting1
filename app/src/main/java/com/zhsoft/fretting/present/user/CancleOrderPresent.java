@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.user.CancleOrderResp;
@@ -22,6 +23,12 @@ import cn.droidlover.xdroidmvp.net.XApi;
 
 public class CancleOrderPresent extends XPresent<CancleOrderActivity> {
 
+    /**
+     * 撤单列表
+     *
+     * @param token
+     * @param userId
+     */
     public void cancleOrderListData(String token, String userId) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
@@ -35,7 +42,7 @@ public class CancleOrderPresent extends XPresent<CancleOrderActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestOrderFail();
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -45,7 +52,7 @@ public class CancleOrderPresent extends XPresent<CancleOrderActivity> {
                         } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(resp.getMessage());
                             getV().areadyLogout();
-                        }  else {
+                        } else {
                             getV().requestOrderFail();
                             getV().showToast(resp.getMessage());
                         }
@@ -54,6 +61,8 @@ public class CancleOrderPresent extends XPresent<CancleOrderActivity> {
     }
 
     /**
+     * 撤单操作
+     *
      * @param allot_no
      * @param token
      * @param userId
@@ -79,7 +88,7 @@ public class CancleOrderPresent extends XPresent<CancleOrderActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestCancleFail();
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -91,7 +100,7 @@ public class CancleOrderPresent extends XPresent<CancleOrderActivity> {
                         } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(resp.getMessage());
                             getV().areadyLogout();
-                        }   else {
+                        } else {
                             getV().requestCancleFail();
                             getV().showToast(resp.getMessage());
                         }

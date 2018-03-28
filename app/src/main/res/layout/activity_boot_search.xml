@@ -91,6 +91,7 @@
         app:recyclerBackgroundColor="@color/white"
         app:recyclerScrollbarNone="true"
         app:recyclerScrollbarStyle="outsideOverlay"
+        app:x_errorLayoutId="@layout/view_error"
         app:x_emptyLayoutId="@layout/view_empty_search"/>
 
     <!--<TextView-->

@@ -58,7 +58,7 @@ import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
- * 通用WebView
+ * 基金详情WebView
  * Created by sunny on 2017/4/25
  */
 
@@ -93,23 +93,6 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
     private CustomDialog riskTestDialog;
     /** 风险等级 弹出框 */
     private CustomDialog validateDialog;
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        if (mWeb != null) {
-            mWeb.onResume();
-        }
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        if (mWeb != null) {
-            mWeb.onPause();
-        }
-    }
-
 
     @Override
     public int getLayoutId() {
@@ -261,7 +244,6 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         // 格式规定为:file:///android_asset/文件名.html
 //        mWeb.loadUrl("file:///android_asset/javascript.html");
 //        mWeb.loadUrl("https://20.1.149.117:8443/htmlNoPermission/fundDeta");
-//        mWeb.loadUrl("http://pdf.dfcfw.com/pdf/H2_AN201801091075420691_1.pdf");
 
     }
 
@@ -429,7 +411,6 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      * 变更分红方式
      */
     private void baseToBonus() {
-        //TODO 需要传递参数
         startActivity(BonusChangeActivity.class, Constant.WEB_BONUS_ACTIVITY);
     }
 
@@ -451,62 +432,6 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         EventBus.getDefault().post(new ChangeTabEvent(Constant.MAIN_INDEX));
         startActivity(MainActivity.class);
         finish();
-    }
-
-
-    /**
-     * 网页能返回上一级页面
-     */
-    @Override
-    public void onBackPressed() {
-
-        if (null != mWeb && mWeb.canGoBack()) {
-            httpLoadingDialog.visible();
-            mWeb.goBack();// 返回前一个页面
-        } else {
-            super.onBackPressed();
-        }
-    }
-
-    /**
-     * 销毁
-     */
-    @Override
-    protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
-        try {
-            if (mWeb != null) {
-                mWeb.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
-                mWeb.clearHistory();
-
-                ((ViewGroup) mWeb.getParent()).removeView(mWeb);
-                mWeb.destroy();
-                mWeb = null;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        //关闭弹出框 避免has leaked window android.widget
-        if (httpLoadingDialog != null) {
-            httpLoadingDialog.dismiss();
-        }
-        if (openAccountDialog != null) {
-            openAccountDialog.dismiss();
-            openAccountDialog = null;
-        }
-        if (personInfoDialog != null) {
-            personInfoDialog.dismiss();
-            personInfoDialog = null;
-        }
-        if (riskTestDialog != null) {
-            riskTestDialog.dismiss();
-            riskTestDialog = null;
-        }
-        if (validateDialog != null) {
-            validateDialog.dismiss();
-            validateDialog = null;
-        }
-        super.onDestroy();
     }
 
     /**
@@ -711,21 +636,6 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         }
     }
 
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (requestCode == Constant.WEB_BONUS_ACTIVITY && resultCode == Constant.BONUS_BACK_ACTIVITY) {
-//            final String chooseStyle = data.getStringExtra(Constant.BONUS_TYPE);
-//            //调用js中的函数：bonusJS(value) 修改分红方式
-//            mWeb.post(new Runnable() {
-//                @Override
-//                public void run() {
-//                    mWeb.loadUrl("javascript:bonusJS('" + chooseStyle + "')");
-//                }
-//            });
-//        }
-//    }
-
     /**
      * 修改分红方式
      *
@@ -751,7 +661,6 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
 
     /**
      * 可以赎回
-     *
      */
     public void requestSellPreSuccess() {
         // 卖出
@@ -774,4 +683,77 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_INDEX_ACTIVITY);
         startActivity(LoginActivity.class, bundle);
     }
+
+
+    /**
+     * 网页能返回上一级页面
+     */
+    @Override
+    public void onBackPressed() {
+
+        if (null != mWeb && mWeb.canGoBack()) {
+            httpLoadingDialog.visible();
+            mWeb.goBack();// 返回前一个页面
+        } else {
+            super.onBackPressed();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (mWeb != null) {
+            mWeb.onResume();
+        }
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (mWeb != null) {
+            mWeb.onPause();
+        }
+    }
+
+    /**
+     * 销毁
+     */
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        try {
+            if (mWeb != null) {
+                mWeb.loadDataWithBaseURL(null, "", "text/html", "utf-8", null);
+                mWeb.clearHistory();
+
+                ((ViewGroup) mWeb.getParent()).removeView(mWeb);
+                mWeb.destroy();
+                mWeb = null;
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //关闭弹出框 避免has leaked window android.widget
+        if (httpLoadingDialog != null) {
+            httpLoadingDialog.dismiss();
+        }
+        if (openAccountDialog != null) {
+            openAccountDialog.dismiss();
+            openAccountDialog = null;
+        }
+        if (personInfoDialog != null) {
+            personInfoDialog.dismiss();
+            personInfoDialog = null;
+        }
+        if (riskTestDialog != null) {
+            riskTestDialog.dismiss();
+            riskTestDialog = null;
+        }
+        if (validateDialog != null) {
+            validateDialog.dismiss();
+            validateDialog = null;
+        }
+        super.onDestroy();
+    }
+
 }

@@ -23,7 +23,7 @@ import cn.droidlover.xdroidmvp.net.XApi;
 public class FundContentPresent extends XPresent<FundContentFragment> {
 
     /**
-     * 基金数据
+     * 基金列表
      *
      * @param pageno
      * @param pagesize

@@ -44,7 +44,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginLeft="10dp"
-                        android:text="(110022)"
                         android:textColor="@color/color_333333"
                         android:textSize="@dimen/text_size_15"/>
                     <!--基金名称-->
@@ -53,7 +52,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toLeftOf="@id/tv_fund_code"
-                        android:text="xxxxx基金"
                         android:textColor="@color/color_333333"
                         android:textSize="@dimen/text_size_15"/>
                 </RelativeLayout>
@@ -76,7 +74,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:text="每周一"
                         android:textColor="@color/color_333333"
                         android:textSize="@dimen/text_size_15"/>
                 </RelativeLayout>
@@ -110,7 +107,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toLeftOf="@id/font_unit"
-                        android:text="120"
                         android:textColor="@color/color_333333"
                         android:textSize="@dimen/text_size_15"/>
                 </RelativeLayout>
@@ -135,7 +131,6 @@
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
                         android:layout_marginLeft="@dimen/dimen_5"
-                        android:text="(3527)"
                         android:textColor="@color/color_333333"
                         android:textSize="@dimen/text_size_15"/>
 
@@ -145,7 +140,6 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_toLeftOf="@id/tv_last_number"
-                        android:text="招商银行储蓄卡"
                         android:textColor="@color/color_333333"
                         android:textSize="@dimen/text_size_15"/>
 
@@ -165,7 +159,6 @@
                     android:id="@+id/tv_day_week"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="2017-12-18 星期一"
                     android:textColor="@color/color_333333"
                     android:textSize="@dimen/text_size_15"/>
                 <!--提示-->

@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.fund;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.BuyNowResp;
@@ -47,7 +48,7 @@ public class BuyPresent extends XPresent<BuyActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestBuyFundFail();
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -68,6 +69,8 @@ public class BuyPresent extends XPresent<BuyActivity> {
     }
 
     /**
+     * 基金购买
+     *
      * @param token
      * @param userId
      * @param fund_code
@@ -95,7 +98,7 @@ public class BuyPresent extends XPresent<BuyActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestBuyNowFail();
-                        getV().showToast("请求失败1111111");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -118,6 +121,8 @@ public class BuyPresent extends XPresent<BuyActivity> {
     }
 
     /**
+     * 计算手续费
+     *
      * @param token
      * @param userId
      * @param fund_code
@@ -141,7 +146,7 @@ public class BuyPresent extends XPresent<BuyActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestCalculationFail();
-                        getV().showToast("请求失败1111111");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override

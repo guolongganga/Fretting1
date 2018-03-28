@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.model.user.SelfChooseResp;
@@ -51,6 +52,7 @@ public class SelfChoosePresent extends XPresent<SelfChooseActivity> {
                     protected void onFail(NetError error) {
                         error.printStackTrace();
                         getV().requestFundFail();
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override

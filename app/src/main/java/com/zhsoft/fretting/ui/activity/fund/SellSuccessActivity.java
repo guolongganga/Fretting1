@@ -30,25 +30,44 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  */
 
 public class SellSuccessActivity extends XActivity {
+    /*返回*/
     @BindView(R.id.head_back) ImageButton headBack;
+    /*标题*/
     @BindView(R.id.head_title) TextView headTitle;
+    /*关闭*/
     @BindView(R.id.head_right) Button headRight;
+    /*基金名称*/
     @BindView(R.id.tv_fund_name) TextView tvFundName;
+    /*金额*/
     @BindView(R.id.tv_fund_amount) TextView tvFundAmount;
+    /*银行信息*/
     @BindView(R.id.tv_bank_name) TextView tvBankName;
+    /*申请成功 图标*/
     @BindView(R.id.iv_pay_success) ImageView ivPaySuccess;
+    /*申请成功 时间*/
     @BindView(R.id.tv_pay_success) TextView tvPaySuccess;
-    @BindView(R.id.iv_sure_number) ImageView ivSureNumber;
-    @BindView(R.id.tv_sure_number) TextView tvSureNumber;
-    @BindView(R.id.iv_query_income) ImageView ivQueryIncome;
-    @BindView(R.id.tv_query_income) TextView tvQueryIncome;
-    @BindView(R.id.scroll_view) ScrollView scrollView;
+    /*申请成功*/
     @BindView(R.id.font_pay_success) TextView fontPaySuccess;
+    /*基金公司确认卖出份额 图标*/
+    @BindView(R.id.iv_sure_number) ImageView ivSureNumber;
+    /*基金公司确认卖出份额 时间*/
+    @BindView(R.id.tv_sure_number) TextView tvSureNumber;
+    /*基金公司确认卖出份额*/
     @BindView(R.id.font_sure_number) TextView fontSureNumber;
+    /*资金回款到银行卡 图标*/
+    @BindView(R.id.iv_query_income) ImageView ivQueryIncome;
+    /*资金回款到银行卡 时间*/
+    @BindView(R.id.tv_query_income) TextView tvQueryIncome;
+    /*资金回款到银行卡*/
     @BindView(R.id.font_query_income) TextView fontQueryIncome;
+
+    /*ScrollView滑动*/
+    @BindView(R.id.scroll_view) ScrollView scrollView;
+    /*进度线一*/
     @BindView(R.id.line_one) View lineOne;
+    /*进度线二*/
     @BindView(R.id.line_two) View lineTwo;
-    /** 购买成功传递过来的数据 */
+    /** 赎回成功传递过来的数据 */
     private FundStatusResp statusResp;
 
     @Override
@@ -93,7 +112,7 @@ public class SellSuccessActivity extends XActivity {
                     //选中
                     ivSureNumber.setImageResource(R.drawable.icon_progress_choose);
                     lineOne.setBackgroundColor(getResources().getColor(R.color.color_DC6F5A));
-                }else{
+                } else {
                     ivSureNumber.setImageResource(R.drawable.icon_progress_unchoose);
                     lineOne.setBackgroundColor(getResources().getColor(R.color.color_D8D8D8));
                 }
@@ -105,7 +124,7 @@ public class SellSuccessActivity extends XActivity {
                     //选中
                     lineTwo.setBackgroundColor(getResources().getColor(R.color.color_DC6F5A));
                     ivQueryIncome.setImageResource(R.drawable.icon_progress_choose);
-                }else{
+                } else {
                     lineTwo.setBackgroundColor(getResources().getColor(R.color.color_D8D8D8));
                     ivQueryIncome.setImageResource(R.drawable.icon_progress_unchoose);
                 }

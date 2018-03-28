@@ -20,7 +20,7 @@ import cn.droidlover.xdroidmvp.net.XApi;
 public class FundCurrencyPresent extends XPresent<FundCurrencyFragment> {
 
     /**
-     * 基金数据
+     * 货币基金数据
      *
      * @param pageno
      * @param pagesize

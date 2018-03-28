@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.fund;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.fund.GetNextTimeResp;
 import com.zhsoft.fretting.model.fund.InvestResp;
@@ -47,7 +48,7 @@ public class InvestPersent extends XPresent<InvestActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestInvestFail();
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -94,7 +95,7 @@ public class InvestPersent extends XPresent<InvestActivity> {
                     protected void onFail(NetError error) {
                         //请求失败
                         getV().requestDeductTimeFail();
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -158,7 +159,7 @@ public class InvestPersent extends XPresent<InvestActivity> {
                     protected void onFail(NetError error) {
                         //请求失败
                         getV().requestSureInvestFail();
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -180,18 +181,6 @@ public class InvestPersent extends XPresent<InvestActivity> {
 
                     }
                 });
-
-    }
-
-    public void updateInvest(String token, String userId, String fundCode, String strAmount, String investWeek, String investDay) {
-
-        if (true) {
-            //请求成功 返回实体
-            getV().requestUpdateInvestSuccess();
-        } else {
-            //请求失败
-            getV().requestUpdateInvestFail();
-        }
 
     }
 }

@@ -96,7 +96,7 @@ public class InvestSuccessActivity extends XActivity<InvestSuccessPresent> {
 
     @Override
     public void initEvents() {
-
+        /*完成*/
         sure.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

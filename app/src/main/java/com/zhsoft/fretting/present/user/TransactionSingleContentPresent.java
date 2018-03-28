@@ -19,7 +19,16 @@ import cn.droidlover.xdroidmvp.net.XApi;
  */
 
 public class TransactionSingleContentPresent extends XPresent<TransactionSingleContentFragment> {
-
+    /**
+     * 交易查询 (买入，赎回，定投)
+     *
+     * @param token
+     * @param userId
+     * @param pageno
+     * @param pageSize
+     * @param tabType
+     * @param fundCode
+     */
     public void loadTransactionData(String token, String userId, final int pageno, int pageSize, String tabType, String fundCode) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
@@ -48,10 +57,10 @@ public class TransactionSingleContentPresent extends XPresent<TransactionSingleC
                     public void onNext(TransactionResp model) {
                         if (model != null && model.getStatus() == 200) {
                             getV().showData(pageno, model.getData());
-                        }else if (model != null && model.getStatus() == Constant.NO_LOGIN_STATUS) {
+                        } else if (model != null && model.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(model.getMessage());
                             getV().areadyLogout();
-                        }  else {
+                        } else {
                             getV().showToast(model.getMessage());
                             getV().showError();
                             XLog.e("返回数据为空");
@@ -61,6 +70,16 @@ public class TransactionSingleContentPresent extends XPresent<TransactionSingleC
 
     }
 
+    /**
+     * 分红
+     *
+     * @param token
+     * @param userId
+     * @param pageno
+     * @param pageSize
+     * @param tabType
+     * @param fundCode
+     */
     public void shareOutBonusTradeQuery(String token, String userId, final int pageno, int pageSize, String tabType, String fundCode) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);

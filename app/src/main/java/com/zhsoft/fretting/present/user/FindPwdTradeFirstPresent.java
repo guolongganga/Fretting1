@@ -1,14 +1,12 @@
 package com.zhsoft.fretting.present.user;
 
-import android.util.Log;
-
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.params.FindPwdFirstParams;
 import com.zhsoft.fretting.params.PhoneCodeParams;
-import com.zhsoft.fretting.ui.activity.user.FindPwdLoginFirstActivity;
 import com.zhsoft.fretting.ui.activity.user.FindPwdTradeFirstActivity;
 
 import cn.droidlover.xdroidmvp.log.XLog;
@@ -50,12 +48,12 @@ public class FindPwdTradeFirstPresent extends XPresent<FindPwdTradeFirstActivity
                     protected void onFail(NetError error) {
                         error.printStackTrace();
                         getV().requestFail();
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
                     public void onNext(BaseResp model) {
                         if (model != null && model.getStatus() == 200) {
-                            Log.e("hahah", "访问成功");
                             getV().disposeUpdateResult(model.getData());
                         } else {
                             getV().requestFail();
@@ -83,6 +81,7 @@ public class FindPwdTradeFirstPresent extends XPresent<FindPwdTradeFirstActivity
                     @Override
                     protected void onFail(NetError error) {
                         getV().getImageCodeFail();
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -123,6 +122,7 @@ public class FindPwdTradeFirstPresent extends XPresent<FindPwdTradeFirstActivity
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestPhoneCodeFail();
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override

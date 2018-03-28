@@ -17,6 +17,9 @@ public class Constant {
     //手机号 存本地
     public static final String USER_PHONE = BASE_CONSTANT + "user_phone";
 
+    //服务号码
+    public static final String SERVICE_TEL = BASE_CONSTANT + "service_tel";
+
     //身份证号
     public static final String USER_CERTNO = BASE_CONSTANT + "user_certno";
 
@@ -139,6 +142,9 @@ public class Constant {
 
     //页面标题
     public static final String ACTIVITY_TITLE = BASE_CONSTANT + "activity_title";
+
+    //交易密码
+    public static final String TRADE_PASSWORD = BASE_CONSTANT + "trade_password";
 
 
     /********************************************* 固定值 ********************************************/

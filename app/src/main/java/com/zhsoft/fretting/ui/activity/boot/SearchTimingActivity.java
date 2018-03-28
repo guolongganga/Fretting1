@@ -58,7 +58,7 @@ public class SearchTimingActivity extends XActivity<SearchTimingPersent> {
     @BindView(R.id.search_iv_delete) ImageView ivDelete;
 
     private SearchRecycleAdapter searchAdapter;
-    private StateView errorView;
+//    private StateView errorView;
     private int pageSize = 15;
 
 
@@ -110,13 +110,13 @@ public class SearchTimingActivity extends XActivity<SearchTimingPersent> {
                     }
                 });
 
-        if (errorView == null) {
-            errorView = new StateView(context);
-        }
-        contentLayout.errorView(errorView);
+//        if (errorView == null) {
+//            errorView = new StateView(context);
+//        }
+//        contentLayout.errorView(errorView);
 
         contentLayout.loadingView(View.inflate(context, R.layout.view_loading, null));
-//        contentLayout.showLoading();
+        contentLayout.showLoading();
         contentLayout.getRecyclerView().useDefLoadMoreView();
     }
 
@@ -302,40 +302,41 @@ public class SearchTimingActivity extends XActivity<SearchTimingPersent> {
      * 搜索失败
      */
     public void requestSearchDataFail(NetError error) {
-        if (error != null) {
-            switch (error.getType()) {
-                case NetError.ParseError:
-                    errorView.setMsg("数据解析异常");
-                    break;
-
-                case NetError.AuthError:
-                    errorView.setMsg("身份验证异常");
-                    break;
-
-                case NetError.BusinessError:
-                    errorView.setMsg("业务异常");
-                    break;
-
-                case NetError.NoConnectError:
-                    errorView.setMsg("网络无连接，点击重试");
-                    errorView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            getP().searchTimingData(1, pageSize, getText(etSearchKey));
-                        }
-                    });
-                    break;
-
-                case NetError.NoDataError:
-                    errorView.setMsg("数据为空");
-                    break;
-
-                case NetError.OtherError:
-                    errorView.setMsg("其他异常");
-                    break;
-            }
-            contentLayout.showError();
-        }
+//        if (error != null) {
+//            switch (error.getType()) {
+//                case NetError.ParseError:
+//                    errorView.setMsg("数据解析异常");
+//                    break;
+//
+//                case NetError.AuthError:
+//                    errorView.setMsg("身份验证异常");
+//                    break;
+//
+//                case NetError.BusinessError:
+//                    errorView.setMsg("业务异常");
+//                    break;
+//
+//                case NetError.NoConnectError:
+//                    errorView.setMsg("网络无连接，点击重试");
+//                    errorView.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            getP().searchTimingData(1, pageSize, getText(etSearchKey));
+//                        }
+//                    });
+//                    break;
+//
+//                case NetError.NoDataError:
+//                    errorView.setMsg("数据为空");
+//                    break;
+//
+//                case NetError.OtherError:
+//                    errorView.setMsg("其他异常");
+//                    break;
+//            }
+//            contentLayout.showError();
+//        }
+        showToast("网络加载失败");
         contentLayout.showError();
     }
 }

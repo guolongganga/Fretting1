@@ -51,7 +51,7 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
     private final int pageSize = 15;
     /** 基金类型 */
     private String tabType;
-    private StateView errorView;
+//    private StateView errorView;
 
     @Override
     public int getLayoutId() {
@@ -101,13 +101,13 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
                     }
                 });
 
-        if (errorView == null) {
-            errorView = new StateView(context);
-        }
-        contentLayout.errorView(errorView);
+//        if (errorView == null) {
+//            errorView = new StateView(context);
+//        }
+//        contentLayout.errorView(errorView);
 
         contentLayout.loadingView(View.inflate(getContext(), R.layout.view_loading, null));
-//        contentLayout.showLoading();
+        contentLayout.showLoading();
         contentLayout.getRecyclerView().useDefLoadMoreView();
 
     }
@@ -262,40 +262,41 @@ public class FundContentFragment extends XFragment<FundContentPresent> {
     }
 
     public void showError(NetError error) {
-        if (error != null) {
-            switch (error.getType()) {
-                case NetError.ParseError:
-                    errorView.setMsg("数据解析异常");
-                    break;
-
-                case NetError.AuthError:
-                    errorView.setMsg("身份验证异常");
-                    break;
-
-                case NetError.BusinessError:
-                    errorView.setMsg("业务异常");
-                    break;
-
-                case NetError.NoConnectError:
-                    errorView.setMsg("网络无连接，点击重试");
-                    errorView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View view) {
-                            refreshFundData(activityName);
-                        }
-                    });
-                    break;
-
-                case NetError.NoDataError:
-                    errorView.setMsg("数据为空");
-                    break;
-
-                case NetError.OtherError:
-                    errorView.setMsg("其他异常");
-                    break;
-            }
-            contentLayout.showError();
-        }
+//        if (error != null) {
+//            switch (error.getType()) {
+//                case NetError.ParseError:
+//                    errorView.setMsg("数据解析异常");
+//                    break;
+//
+//                case NetError.AuthError:
+//                    errorView.setMsg("身份验证异常");
+//                    break;
+//
+//                case NetError.BusinessError:
+//                    errorView.setMsg("业务异常");
+//                    break;
+//
+//                case NetError.NoConnectError:
+//                    errorView.setMsg("网络无连接，点击重试");
+//                    errorView.setOnClickListener(new View.OnClickListener() {
+//                        @Override
+//                        public void onClick(View view) {
+//                            refreshFundData(activityName);
+//                        }
+//                    });
+//                    break;
+//
+//                case NetError.NoDataError:
+//                    errorView.setMsg("数据为空");
+//                    break;
+//
+//                case NetError.OtherError:
+//                    errorView.setMsg("其他异常");
+//                    break;
+//            }
+//            contentLayout.showError();
+//        }
+        showToast("网络加载失败");
         contentLayout.showError();
     }
 }

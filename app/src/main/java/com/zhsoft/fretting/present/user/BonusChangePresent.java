@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.net.Api;
@@ -53,6 +54,7 @@ public class BonusChangePresent extends XPresent<BonusChangeActivity> {
                     protected void onFail(NetError error) {
                         error.printStackTrace();
                         getV().showError();
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override

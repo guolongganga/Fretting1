@@ -20,6 +20,15 @@ import cn.droidlover.xdroidmvp.net.XApi;
 
 public class TransactionContentPresent extends XPresent<TransactionContentFragment> {
 
+    /**
+     * 交易查询 (买入，赎回，定投)
+     *
+     * @param token
+     * @param userId
+     * @param pageno
+     * @param pageSize
+     * @param tabType
+     */
     public void loadTransactionData(String token, String userId, final int pageno, int pageSize, String tabType) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
@@ -47,7 +56,7 @@ public class TransactionContentPresent extends XPresent<TransactionContentFragme
                     public void onNext(TransactionResp model) {
                         if (model != null && model.getStatus() == 200) {
                             getV().showData(pageno, model.getData());
-                        }  else if (model != null && model.getStatus() == Constant.NO_LOGIN_STATUS) {
+                        } else if (model != null && model.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(model.getMessage());
                             getV().areadyLogout();
                         } else {
@@ -60,6 +69,15 @@ public class TransactionContentPresent extends XPresent<TransactionContentFragme
 
     }
 
+    /**
+     * 分红
+     *
+     * @param token
+     * @param userId
+     * @param pageno
+     * @param pageSize
+     * @param tabType
+     */
     public void shareOutBonusTradeQuery(String token, String userId, final int pageno, int pageSize, String tabType) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
@@ -87,7 +105,7 @@ public class TransactionContentPresent extends XPresent<TransactionContentFragme
                     public void onNext(TransactionResp model) {
                         if (model != null && model.getStatus() == 200) {
                             getV().showData(pageno, model.getData());
-                        }  else if (model != null && model.getStatus() == Constant.NO_LOGIN_STATUS) {
+                        } else if (model != null && model.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(model.getMessage());
                             getV().areadyLogout();
                         } else {

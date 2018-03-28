@@ -69,10 +69,10 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
     @BindView(R.id.linearlayout_duty) LinearLayout linearlayout_duty;
     /** 职业 */
     @BindView(R.id.duty) TextView duty;
-    /** 选择地址 */
-    @BindView(R.id.linearlayout_area) LinearLayout linearlayoutArea;
-    /** 地址 */
-    @BindView(R.id.address) TextView address;
+//    /** 选择地址 */
+//    @BindView(R.id.linearlayout_area) LinearLayout linearlayoutArea;
+//    /** 地址 */
+//    @BindView(R.id.address) TextView address;
     /** 详细地址 */
     @BindView(R.id.address_detail) TextView addressDetail;
     /** 保存按钮 */
@@ -87,8 +87,8 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
     private String userId;
     /** 登录标识 */
     private String token;
-    /** 地址弹出框 */
-    private CitySelectPopupWindow popupWindow;
+//    /** 地址弹出框 */
+//    private CitySelectPopupWindow popupWindow;
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
     /** 职业集合 */
@@ -126,21 +126,6 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
         //请求个人信息接口
         getP().getUserInfo(token, userId);
 
-        popupWindow = new CitySelectPopupWindow(this);
-        popupWindow.setCallBack(new CitySelectPopupWindow.CallBack() {
-            @Override
-            public void onSelectChange(String name) {
-                address.setText(name);
-            }
-        });
-
-
-//        headRight.setVisibility(View.VISIBLE);
-//        headRight.setText("编辑");
-//        if (!isNotEmpty(getText(email))) {
-//            clickUpdate.setVisibility(View.VISIBLE);
-//            clickUpdate.setText("去填写");
-//        }
     }
 
     @Override
@@ -253,15 +238,15 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
             }
         });
 
-        linearlayoutArea.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //关闭当前输入框
-                KeyBoardUtils.closeKeybord(PersonInfoActivity.this);
-                //显示窗口
-                popupWindow.showAtLocation(linearlayoutArea, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
-            }
-        });
+//        linearlayoutArea.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //关闭当前输入框
+//                KeyBoardUtils.closeKeybord(PersonInfoActivity.this);
+//                //显示窗口
+//                popupWindow.showAtLocation(linearlayoutArea, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
+//            }
+//        });
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -280,10 +265,10 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
                     showToast("职业不能为空");
                     return;
                 }
-                if (!isNotEmpty(getText(address))) {
-                    showToast("联系地址不能为空");
-                    return;
-                }
+//                if (!isNotEmpty(getText(address))) {
+//                    showToast("联系地址不能为空");
+//                    return;
+//                }
                 if (!isNotEmpty(getText(addressDetail))) {
                     showToast("详细地址不能为空");
                     return;
@@ -300,7 +285,7 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
                     id_enddate = getText(limitTime);
                 }
                 httpLoadingDialog.visible("保存中...");
-                getP().changeMyInformation(token, userId, id_enddate, getText(address), getText(addressDetail), getText(email), selectOccupationResp);
+                getP().changeMyInformation(token, userId, id_enddate, null, getText(addressDetail), getText(email), selectOccupationResp);
 
 //                showToast("保存");
 
@@ -346,12 +331,12 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
             } else {
                 duty.setHint("请选择");
             }
-            //地址
-            if (isNotEmpty(personInfoResp.getAddress())) {
-                address.setText(personInfoResp.getAddress());
-            } else {
-                address.setHint("请选择");
-            }
+//            //地址
+//            if (isNotEmpty(personInfoResp.getAddress())) {
+//                address.setText(personInfoResp.getAddress());
+//            } else {
+//                address.setHint("请选择");
+//            }
             //详细地址
             addressDetail.setText(personInfoResp.getDetaile_address());
             //基金账号

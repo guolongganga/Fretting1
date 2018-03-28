@@ -54,7 +54,7 @@ public class PopDropSelectorRecycleAdapter extends SimpleRecAdapter<ApplyBaseInf
         if (isSelector == position) {
             holder.ivSelector.setVisibility(View.VISIBLE);
         } else {
-            holder.ivSelector.setVisibility(View.GONE);
+            holder.ivSelector.setVisibility(View.INVISIBLE);
         }
 
         if (data.size() - 1 == position) {

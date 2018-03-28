@@ -44,7 +44,7 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
     private String token;
     /** 用户编号 */
     private String userId;
-    private StateView errorView;
+//    private StateView errorView;
 
     @Override
     public int getLayoutId() {
@@ -89,12 +89,13 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
                         requestTranData(page);
                     }
                 });
-        if (errorView == null) {
-            errorView = new StateView(context);
-        }
-        contentLayout.errorView(errorView);
+//        if (errorView == null) {
+//            errorView = new StateView(context);
+//        }
+//        contentLayout.errorView(errorView);
+
         contentLayout.loadingView(View.inflate(getContext(), R.layout.view_loading, null));
-//        contentLayout.showLoading();
+        contentLayout.showLoading();
         contentLayout.getRecyclerView().useDefLoadMoreView();
 
     }
@@ -128,12 +129,12 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
                 }
             }
         });
-        errorView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                requestTranData(1);
-            }
-        });
+//        errorView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                requestTranData(1);
+//            }
+//        });
     }
 
     /**

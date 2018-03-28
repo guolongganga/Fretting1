@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.fund;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.fund.BuyFundResp;
@@ -28,7 +29,7 @@ import cn.droidlover.xdroidmvp.net.XApi;
 public class SellPresent extends XPresent<SellActivity> {
 
     /***
-     * 更换银行卡刷新购买验证接口，得到最新的银行卡信息
+     * 更换银行卡刷新赎回验证接口，得到最新的银行卡信息
      * @param token
      * @param userId
      * @param fund_code
@@ -49,7 +50,7 @@ public class SellPresent extends XPresent<SellActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestFundFail();
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -70,13 +71,15 @@ public class SellPresent extends XPresent<SellActivity> {
     }
 
     /**
+     * 赎回
+     *
      * @param token
      * @param userId
      * @param fund_code
      * @param password
      */
     public void sellFund(String token, String userId, String fund_code, String trade_acco, String password
-            , String fund_name, String shares, String share_type,String fund_exceed_flag) {
+            , String fund_name, String shares, String share_type, String fund_exceed_flag) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -101,7 +104,7 @@ public class SellPresent extends XPresent<SellActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestSellFail();
-                        getV().showToast("请求失败1111111");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -121,7 +124,6 @@ public class SellPresent extends XPresent<SellActivity> {
                         }
                     }
                 });
-//        getV().requestSellSuccess();
 
     }
 

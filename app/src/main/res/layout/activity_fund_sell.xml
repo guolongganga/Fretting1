@@ -24,8 +24,7 @@
                 android:layout_height="@dimen/dimen_35"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="@dimen/dimen_15"
-                android:layout_marginRight="@dimen/dimen_15"
-                android:src="@mipmap/ic_launcher_round"/>
+                android:layout_marginRight="@dimen/dimen_15"/>
             <!--银行名称和尾号 招商银行(2339)-->
             <TextView
                 android:id="@+id/bank_name"
@@ -33,7 +32,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:layout_toRightOf="@id/bank_image"
-                android:text="招商银行(2339)"
                 android:textColor="@color/color_text_333"
                 android:textSize="18dp"/>
             <!--限额 单笔上限10万，单日限额50万-->
@@ -44,7 +42,6 @@
                 android:layout_below="@id/bank_name"
                 android:layout_marginTop="@dimen/dimen_2"
                 android:layout_toRightOf="@id/bank_image"
-                android:text="单笔上限10万，单日限额50万"
                 android:textColor="@color/color_999999"
                 android:textSize="@dimen/dimen_12"/>
             <!--更换-->
@@ -80,22 +77,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="24.55份"
                 android:textColor="@color/color_main"
                 android:textSize="@dimen/text_size_12"/>
 
-            <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text=""-->
-            <!--android:textColor="@color/color_f7182d"-->
-            <!--android:textSize="@dimen/text_size_14"/>-->
             <TextView
                 android:id="@+id/tv_min_sell"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="@dimen/dimen_10"
-                android:text="(最低赎回10.00份)"
                 android:textColor="@color/color_main"
                 android:textSize="@dimen/text_size_12"/>
         </LinearLayout>
@@ -123,7 +112,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@null"
-                android:hint="请输入卖出份额"
+                android:hint="请输入赎回份额"
                 android:inputType="number"
                 android:textColor="@color/color_333333"
                 android:textColorHint="@color/color_CCCCCC"
@@ -182,7 +171,8 @@
         <!--确认购买-->
         <Button
             android:id="@+id/sure"
-            style="@style/common_red_button_circle"
+            style="@style/common_blue_button_rect"
+            android:background="@color/color_B9D1F8"
             android:layout_marginTop="80dp"
             android:text="立即卖出"
             android:textSize="@dimen/text_size_14"/>

@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.boot;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.fund.NewestFundResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
@@ -17,13 +18,16 @@ import cn.droidlover.xdroidmvp.net.XApi;
 
 /**
  * 作者：sunnyzeng on 2018/1/10 17:33
- * 描述：搜索页面控制器
+ * 描述：定投排行 搜索页面控制器
  */
 
 public class SearchTimingPersent extends XPresent<SearchTimingActivity> {
 
+    /**
+     * 热搜
+     */
     public void hotListData() {
-
+        //伪数据
         ArrayList<NewestFundResp> list = new ArrayList<>();
         for (int i = 0; i < 5; i++) {
             NewestFundResp newestFundResp = new NewestFundResp();
@@ -39,6 +43,13 @@ public class SearchTimingPersent extends XPresent<SearchTimingActivity> {
 
     }
 
+    /**
+     * 实时搜索
+     *
+     * @param pageno
+     * @param pageSize
+     * @param keyword
+     */
     public void searchTimingData(final int pageno, int pageSize, String keyword) {
 
         CommonReqData reqData = new CommonReqData();
@@ -57,7 +68,7 @@ public class SearchTimingPersent extends XPresent<SearchTimingActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestSearchDataFail(error);
-                        getV().showToast("请求失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override

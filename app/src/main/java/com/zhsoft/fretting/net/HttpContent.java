@@ -129,7 +129,6 @@ public class HttpContent {
     public static final String buy_fund_calculation = "permissionCheck/buyFundNew/calculation";
 
 
-
     /************************************************ html页面 **************************************************/
 
     /** 基金详情页 */
@@ -146,6 +145,8 @@ public class HttpContent {
     public static final String openaccount_instructions = "htmlNoPermission/openAccount/instructions";
     /** 定投的协议 */
     public static final String agreement_fdtimesbuy = "htmlNoPermission/agreement/fdTimesBuy";
+    /** 关于我们 */
+    public static final String about_us = "htmlNoPermission/aboutUs";
 
 
 }

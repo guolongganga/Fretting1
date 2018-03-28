@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.user.RiskInfoResp;
@@ -21,7 +22,7 @@ import cn.droidlover.xdroidmvp.net.XApi;
 public class SettingPresent extends XPresent<SettingActivity> {
 
     /**
-     * 风险等级或是否做了风险测评
+     * 风险等级或是否做了风险测评 服务电话
      *
      * @param token
      * @param userId
@@ -40,6 +41,7 @@ public class SettingPresent extends XPresent<SettingActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestRiskFail();
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override

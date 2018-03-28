@@ -59,7 +59,7 @@ public class SettingActivity extends XActivity<SettingPresent> {
     @BindView(R.id.exit) Button exit;
 
     /** 客服电话 */
-    private static final String PHONE_NUMBER = "13717832879";
+    private String serviceTel;
     /** 登录标识 */
     private String token;
     /** 用户编号 */
@@ -93,6 +93,8 @@ public class SettingActivity extends XActivity<SettingPresent> {
         userId = App.getSharedPref().getString(Constant.USERID, "");
         //获得本地缓存的开户标识
         isOpenAccount = App.getSharedPref().getString(Constant.IS_OPEN_ACCOUNT, "");
+        //获得本地缓存的服务号码
+        serviceTel = App.getSharedPref().getString(Constant.SERVICE_TEL, "");
         //请求是否风险等级或是否做过风险等级
         httpLoadingDialog.visible();
         getP().riskGrade(token, userId);
@@ -168,13 +170,13 @@ public class SettingActivity extends XActivity<SettingPresent> {
             @Override
             public void onClick(View view) {
                 //获取文本框中的电话号码值
-//            String number = phoneNumber.getText().toString();
+                //String number = phoneNumber.getText().toString();
 
                 //掉用拨号权限 新建一个意图
                 Intent intent = new Intent();
                 //在把意图添加给操作系统时，操作系统会自动为intent添加类别，所以可省略
                 intent.setAction(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:" + PHONE_NUMBER));
+                intent.setData(Uri.parse("tel:" + serviceTel));
                 //将意图添加给操作系统执行
                 startActivity(intent);
 
@@ -184,7 +186,7 @@ public class SettingActivity extends XActivity<SettingPresent> {
             @Override
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
-                bundle.putString(Constant.WEB_LINK, "https://www.baidu.com/?tn=96928074_hao_pg");
+                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.about_us);
                 startActivity(WebPublicActivity.class, bundle);
             }
         });
@@ -228,6 +230,11 @@ public class SettingActivity extends XActivity<SettingPresent> {
     public void requestRiskSuccess(RiskInfoResp data) {
         httpLoadingDialog.dismiss();
         riskEvaluteStatus = data.getRiskEvaluteStatus();
+        //服务号码
+        serviceTel = data.getServiceTel();
+        //缓存本地
+        App.getSharedPref().putString(Constant.SERVICE_TEL, serviceTel);
+
         if ("0".equals(riskEvaluteStatus)) {
             tvRiskGrade.setText("未测");
         } else {

@@ -1,8 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
-import android.util.Log;
-
-import com.zhsoft.fretting.model.BaseResp;
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
@@ -47,13 +45,12 @@ public class LoginPresent extends XPresent<LoginActivity> {
                     protected void onFail(NetError error) {
                         error.printStackTrace();
                         getV().loginFail();
-                        getV().showToast("登录失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
                     public void onNext(LoginResp model) {
                         if (model != null && model.getStatus() == 200) {
-                            Log.e("hahah", "访问成功");
                             getV().showData(model.getData());
                         } else {
                             getV().loginFail();

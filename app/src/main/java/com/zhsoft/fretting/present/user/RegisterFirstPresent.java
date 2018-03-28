@@ -2,6 +2,7 @@ package com.zhsoft.fretting.present.user;
 
 import android.util.Log;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.model.user.ImageResp;
@@ -51,13 +52,12 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
                     protected void onFail(NetError error) {
                         error.printStackTrace();
                         getV().requestFail();
-                        getV().showToast("注册失败");
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
                     public void onNext(LoginResp model) {
                         if (model != null && model.getStatus() == 200) {
-                            Log.e("hahah", "访问成功");
                             getV().commitSuccess(model.getData());
                         } else {
                             getV().requestFail();
@@ -85,6 +85,7 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().getImageCodeFail();
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
@@ -124,6 +125,7 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestPhoneCodeFail();
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override

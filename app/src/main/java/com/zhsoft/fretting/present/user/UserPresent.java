@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.present.user;
 
+import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.user.UserAccountResp;
 import com.zhsoft.fretting.net.Api;
@@ -44,6 +45,7 @@ public class UserPresent extends XPresent<UserFragment> {
                     protected void onFail(NetError error) {
                         error.printStackTrace();
                         getV().requestFundFail();
+                        getV().showToast(R.string.request_error);
                     }
 
                     @Override
