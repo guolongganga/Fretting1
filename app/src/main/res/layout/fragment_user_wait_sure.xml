@@ -6,36 +6,40 @@
     <!--待确认基金-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginLeft="@dimen/dimen_15"
-        android:layout_marginRight="@dimen/dimen_15"
-        android:layout_marginTop="@dimen/dimen_10"
-        android:background="@color/color_E7E7E7"
+        android:layout_height="@dimen/dimen_35"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:paddingLeft="@dimen/dimen_15">
+        android:paddingLeft="@dimen/dimen_15"
+        android:paddingRight="@dimen/dimen_15">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="业务类型"/>
+            android:text="业务类型"
+            android:textColor="@color/color_97A1B7"
+            android:textSize="@dimen/text_size_11"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
-            android:text="金额/份额"/>
+            android:text="金额/份额"
+            android:textColor="@color/color_97A1B7"
+            android:textSize="@dimen/text_size_11"/>
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="center"
-            android:text="申请时间"/>
+            android:gravity="right"
+            android:text="申请时间"
+            android:textColor="@color/color_97A1B7"
+            android:textSize="@dimen/text_size_11"/>
     </LinearLayout>
 
+    <View style="@style/divider_half_e7"/>
 
     <cn.droidlover.xrecyclerview.XRecyclerView
         android:id="@+id/xrv_user_hold"
@@ -52,6 +56,7 @@
         android:layout_marginBottom="@dimen/dimen_70"
         android:layout_marginTop="@dimen/dimen_20"
         android:text="暂无待确认基金"
+        android:textSize="@dimen/text_size_14"
         android:visibility="gone"
         />
 </LinearLayout>

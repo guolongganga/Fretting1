@@ -57,7 +57,7 @@ public class UserFragment extends XFragment<UserPresent> {
     /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
     /** 设置 */
-    @BindView(R.id.head_right_imgbtn) ImageButton headRightImgbtn;
+    @BindView(R.id.head_right) Button headRight;
     /** 总资产 */
     @BindView(R.id.tv_total_assets) TextView tvTotalAssets;
     /** 昨日收益 */
@@ -124,9 +124,9 @@ public class UserFragment extends XFragment<UserPresent> {
         //设置标题
         headBack.setVisibility(View.GONE);
         headTitle.setText("我的");
-        headRightImgbtn.setVisibility(View.VISIBLE);
-        headRightImgbtn.setImageResource(R.mipmap.icon_user_set);
-
+        headRight.setVisibility(View.VISIBLE);
+        headRight.setText("设置");
+        mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         //加载框
         httpLoadingDialog = new HttpLoadingDialog(context);
         //是否开户
@@ -164,11 +164,13 @@ public class UserFragment extends XFragment<UserPresent> {
         if (Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
             //已开户
             toFinishRegister.setVisibility(View.GONE);
-            llFundContent.setVisibility(View.VISIBLE);
+//            llFundContent.setVisibility(View.VISIBLE);
+            mViewPager.setVisibility(View.VISIBLE);
         } else {
             //未开户
             toFinishRegister.setVisibility(View.VISIBLE);
-            llFundContent.setVisibility(View.GONE);
+//            llFundContent.setVisibility(View.GONE);
+            mViewPager.setVisibility(View.GONE);
         }
     }
 
@@ -193,7 +195,7 @@ public class UserFragment extends XFragment<UserPresent> {
             }
         });
         //设置按钮
-        headRightImgbtn.setOnClickListener(new View.OnClickListener() {
+        headRight.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!RuntimeHelper.getInstance().isLogin()) {
@@ -291,35 +293,6 @@ public class UserFragment extends XFragment<UserPresent> {
         return new UserPresent();
     }
 
-//    /**
-//     * 初始化我的基金adapter
-//     *
-//     * @return
-//     */
-//    public SimpleRecAdapter getMyFundAdapter() {
-//        MyFundRecyleAdapter adapter = new MyFundRecyleAdapter(context);
-//        xrvMyFund.setAdapter(adapter);
-//        adapter.setRecItemClick(new RecyclerItemCallback<HoldFundResp, MyFundRecyleAdapter.ViewHolder>() {
-//            @Override
-//            public void onItemClick(int position, HoldFundResp model, int tag, MyFundRecyleAdapter.ViewHolder holder) {
-//                super.onItemClick(position, model, tag, holder);
-//                switch (tag) {
-//                    //点击
-//                    case MyFundRecyleAdapter.ITEM_CLICK:
-//                        //跳转基金详情页
-//                        Bundle bundle = new Bundle();
-//                        bundle.putInt(Constant.WEB_TITLE, R.string.fund_detail);
-//                        bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.hold_fund_detail);
-//                        bundle.putString(Constant.FUND_DETAIL_CODE, model.getFundCode());
-//                        bundle.putString(Constant.FUND_DETAIL_NAME, model.getFundName());
-//                        startActivity(FundDetailWebActivity.class, bundle);
-//                        break;
-//                }
-//            }
-//        });
-//        return adapter;
-//    }
-
     /**
      * 获得我的基金数据
      *
@@ -333,13 +306,13 @@ public class UserFragment extends XFragment<UserPresent> {
             //昨日收益
             tvYesterdayIncome.setText(BigDecimalUtil.bigdecimalToString(resps.getYesterdayIncome()));
             //累计收益时间
-            tvTimeAccumlate.setText("累计收益(元)");
+//            tvTimeAccumlate.setText("累计收益(元)");
             //累计收益
             tvAccumulateEarn.setText(BigDecimalUtil.bigdecimalToString(resps.getTotalIncome()));
             //在途资产
             tvPassage.setText(BigDecimalUtil.bigdecimalToString(resps.getOntheRoadAssets()));
             //收益时间
-            tvTime.setText("(" + resps.getYesterday() + ")");
+            tvTime.setText("昨日收益(" + resps.getYesterday() + ")");
 
             //持仓基金
             if (fundList != null) {

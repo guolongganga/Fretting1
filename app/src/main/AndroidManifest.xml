@@ -6,9 +6,9 @@
     <application
         android:name=".App"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/ic_logo"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup,icon">
@@ -38,7 +38,6 @@
         <!--注册第二步 实名绑卡-->
         <activity android:name=".ui.activity.user.RegisterSecondActivity"></activity>
         <!--注册第三步 设置交易密码页-->
-        <activity android:name=".ui.activity.user.RegisterSetTradePwdActivity"></activity>
         <!--注册成功-->
         <activity android:name=".ui.activity.user.RegisterSuccessActivity"></activity>
         <!--设置-->

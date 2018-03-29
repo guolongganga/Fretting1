@@ -5,66 +5,65 @@
               android:orientation="vertical">
 
     <include layout="@layout/layout_head"/>
-    <!--登录密码-->
+
     <LinearLayout
-        android:id="@+id/ll_changepwd_login"
+        android:layout_marginTop="@dimen/dimen_22"
         android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:layout_marginTop="@dimen/dimen_50"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="30dp"
-        android:paddingRight="@dimen/dimen_30">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_15"
+        android:layout_marginRight="@dimen/dimen_15"
+        android:background="@color/color_FFFFFF"
+        android:orientation="vertical"
+        android:paddingLeft="@dimen/dimen_15"
+        android:paddingRight="@dimen/dimen_15">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/user_update_pwd_login"
-            android:textColor="@color/color_text_333"
-            android:textSize="14sp"/>
+        <!--登录密码-->
+        <LinearLayout
+            android:id="@+id/ll_changepwd_login"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_66"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="@string/user_update_pwd_update"
-            android:textColor="@color/colorPrimary"
-            android:textSize="14sp"/>
+            <TextView
+                android:text="@string/user_update_pwd_login"
+                style="@style/text_bold_16"/>
 
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="@string/user_update_pwd_update"
+                android:textColor="@color/color_4D7BFE"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
+
+        <View style="@style/divider_half_ba"/>
+
+        <!--交易密码-->
+        <LinearLayout
+            android:id="@+id/ll_changepwd_trade"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dimen_66"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:text="@string/user_update_pwd_trade"
+                style="@style/text_bold_16"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="@string/user_update_pwd_update"
+                android:textColor="@color/color_4D7BFE"
+                android:textSize="16sp"/>
+
+        </LinearLayout>
     </LinearLayout>
-
-    <include layout="@layout/layout_divider_horizontal"/>
-
-    <!--交易密码-->
-    <LinearLayout
-        android:id="@+id/ll_changepwd_trade"
-        android:layout_width="match_parent"
-        android:layout_height="48dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingLeft="30dp"
-        android:paddingRight="@dimen/dimen_30">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/user_update_pwd_trade"
-            android:textColor="@color/color_text_333"
-            android:textSize="14sp"/>
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:gravity="right"
-            android:text="@string/user_update_pwd_update"
-            android:textColor="@color/colorPrimary"
-            android:textSize="14sp"/>
-
-    </LinearLayout>
-
-    <include layout="@layout/layout_divider_horizontal"/>
-
 
 </LinearLayout>

@@ -22,7 +22,7 @@ public class BankCardResp extends BaseResp<BankCardResp> implements Parcelable {
     /** 交易账号 */
     private String ta_acco;
     /** 是否能够更改银行卡  0代表不能 1代表能 */
-    private String isCanChangeBankNo;
+//    private String isCanChangeBankNo;
     private String limit_per_day;
     private String limit_per_month;
     private String limit_per_payment;
@@ -59,13 +59,13 @@ public class BankCardResp extends BaseResp<BankCardResp> implements Parcelable {
         this.ta_acco = ta_acco;
     }
 
-    public String getIsCanChangeBankNo() {
-        return isCanChangeBankNo;
-    }
-
-    public void setIsCanChangeBankNo(String isCanChangeBankNo) {
-        this.isCanChangeBankNo = isCanChangeBankNo;
-    }
+//    public String getIsCanChangeBankNo() {
+//        return isCanChangeBankNo;
+//    }
+//
+//    public void setIsCanChangeBankNo(String isCanChangeBankNo) {
+//        this.isCanChangeBankNo = isCanChangeBankNo;
+//    }
 
     public String getLimit_per_day() {
         return limit_per_day;
@@ -102,7 +102,6 @@ public class BankCardResp extends BaseResp<BankCardResp> implements Parcelable {
         dest.writeString(this.bankName);
         dest.writeString(this.bankNoTail);
         dest.writeString(this.ta_acco);
-        dest.writeString(this.isCanChangeBankNo);
         dest.writeString(this.limit_per_day);
         dest.writeString(this.limit_per_month);
         dest.writeString(this.limit_per_payment);
@@ -116,7 +115,6 @@ public class BankCardResp extends BaseResp<BankCardResp> implements Parcelable {
         this.bankName = in.readString();
         this.bankNoTail = in.readString();
         this.ta_acco = in.readString();
-        this.isCanChangeBankNo = in.readString();
         this.limit_per_day = in.readString();
         this.limit_per_month = in.readString();
         this.limit_per_payment = in.readString();

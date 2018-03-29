@@ -31,10 +31,12 @@
     <!-- 发送验证码 -->
     <style name="AppTheme.Button_send_code">
         <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:background">@android:color/transparent</item>
+        <item name="android:layout_height">@dimen/dimen_30</item>
+        <item name="android:background">@drawable/send_code_btn_selecor</item>
         <item name="android:text">@string/user_common_send_code</item>
-        <item name="android:textColor">@color/colorPrimary</item>
+        <item name="android:paddingLeft">@dimen/dimen_10</item>
+        <item name="android:paddingRight">@dimen/dimen_10</item>
+        <item name="android:textColor">@color/color_FFFFFF</item>
         <item name="android:textSize">@dimen/text_size_14</item>
         <item name="android:gravity">center</item>
     </style>
@@ -50,6 +52,32 @@
         <item name="android:background">@drawable/shape_rect_red_btn</item>
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/text_size_14</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!--红色矩形按钮 登录-->
+    <style name="common_red_button_rect_login">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:layout_marginLeft">@dimen/dimen_62.5</item>
+        <item name="android:layout_marginRight">@dimen/dimen_62.5</item>
+        <item name="android:layout_marginTop">@dimen/dimen_73</item>
+        <item name="android:background">@color/color_main</item>
+        <item name="android:textColor">@color/white</item>
+        <item name="android:textSize">@dimen/text_size_17</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <!--红色矩形按钮 注册-->
+    <style name="common_red_button_rect_register">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">44dp</item>
+        <item name="android:layout_marginLeft">@dimen/dimen_62.5</item>
+        <item name="android:layout_marginRight">@dimen/dimen_62.5</item>
+        <item name="android:layout_marginTop">@dimen/dimen_15</item>
+        <item name="android:background">@drawable/bg_red_rect_register</item>
+        <item name="android:textColor">@color/color_main</item>
+        <item name="android:textSize">@dimen/text_size_17</item>
         <item name="android:gravity">center</item>
     </style>
 
@@ -81,14 +109,14 @@
     <!--用户设置 横条-->
     <style name="user_setting_line">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">@dimen/dimen_48</item>
+        <item name="android:layout_height">@dimen/dimen_54</item>
         <item name="android:gravity">center_vertical</item>
-        <item name="android:drawableRight">@mipmap/icon_common_arrow</item>
-        <item name="android:paddingLeft">@dimen/dimen_30</item>
+        <item name="android:drawableRight">@drawable/icon_common_arrow</item>
         <item name="android:drawablePadding">@dimen/dimen_30</item>
-        <item name="android:paddingRight">@dimen/dimen_30</item>
+        <item name="android:paddingRight">@dimen/dimen_15</item>
+        <item name="android:background">@color/color_FFFFFF</item>
         <item name="android:textColor">@color/color_text_333</item>
-        <item name="android:textSize">14sp</item>
+        <item name="android:textSize">@dimen/text_size_17</item>
     </style>
 
     <!--用户已登录界面 自选，定投，交易查询，分红，撤单-->
@@ -99,7 +127,7 @@
         <item name="android:gravity">center</item>
         <item name="android:drawablePadding">@dimen/dimen_5</item>
         <item name="android:textColor">@color/color_text_333</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">@dimen/text_size_12</item>
     </style>
 
     <!--设置TabLayout的字体大小-->
@@ -111,6 +139,11 @@
     <style name="MyTabLayoutTextAppearanceInverse" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
         <item name="android:textSize">@dimen/text_size_15</item>
         <item name="android:textColor">@color/color_2A2A2A</item>
+    </style>
+
+    <style name="UserTabLayoutTextAppearanceInverse" parent="TextAppearance.AppCompat.Widget.ActionBar.Title.Inverse">
+        <item name="android:textSize">@dimen/text_size_16</item>
+        <item name="android:textColor">@color/color_727272</item>
     </style>
 
     <!--弹出地址和职务选择器动画-->
@@ -151,6 +184,37 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">@dimen/dimen_01</item>
         <item name="android:background">@color/color_E7E7E7</item>
+    </style>
+
+    <style name="divider_half_ba">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_01</item>
+        <item name="android:background">@color/color_BAB9CA</item>
+    </style>
+
+    <style name="divider_half_ff">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dimen_01</item>
+        <item name="android:background">@color/color_FFFFFF</item>
+    </style>
+
+    <style name="text_bold_16">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">@color/color_text_333</item>
+        <item name="android:textSize">@dimen/text_size_16</item>
+    </style>
+
+    <style name="edit_user_15">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:background">@null</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:textColorHint">@color/color_CCCCCC</item>
+        <item name="android:textColor">@color/color_text_333</item>
+        <item name="android:textSize">@dimen/text_size_15</item>
     </style>
 
 </resources>

@@ -201,7 +201,7 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@mipmap/icon_common_arrow"/>
+                    android:src="@drawable/icon_common_arrow_right"/>
 
             </LinearLayout>
 
@@ -340,7 +340,7 @@
                 android:layout_marginBottom="@dimen/dimen_5"
                 android:layout_marginLeft="@dimen/dimen_15"
                 android:layout_marginTop="@dimen/dimen_5"
-                android:text="注：密码长度为6位纯数字，但不能含3个连续相同，3个以上（含3个）的连续数字"
+                android:text="密码长度为6位，只能包含数字、字母，不能含有3个连续相同，3个以上(含3个)的连续数字或字母"
                 android:textColor="@color/color_696969"
                 android:textSize="@dimen/text_size_14"/>
 
@@ -377,8 +377,8 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="center_vertical"
-                        android:hint="请输入新的六位纯数字"
-                        android:inputType="numberPassword"
+                        android:hint="请输入新的交易密码"
+                        android:inputType="textPassword"
                         android:maxLength="6"
                         android:singleLine="true"
                         android:textColor="@color/color_text_333"
@@ -422,8 +422,8 @@
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="center_vertical"
-                        android:hint="请确认新的六位纯数字"
-                        android:inputType="numberPassword"
+                        android:hint="请确认新的交易密码"
+                        android:inputType="textPassword"
                         android:maxLength="6"
                         android:singleLine="true"
                         android:textColor="@color/color_text_333"

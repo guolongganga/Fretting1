@@ -10,7 +10,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_40">
+        android:layout_height="@dimen/dimen_38">
 
         <TextView
             android:layout_width="wrap_content"
@@ -19,20 +19,23 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dimen_15"
             android:text="基金名称"
-            android:textColor="@color/color_333333"/>
+            android:textColor="@color/color_97A1B7"
+            android:textSize="@dimen/text_size_11"/>
 
         <CheckBox
             android:id="@+id/ck_networth"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dimen_100"
             android:layout_height="match_parent"
             android:layout_centerInParent="true"
             android:button="@null"
             android:drawablePadding="@dimen/dimen_5"
             android:drawableRight="@drawable/ck_user_arrow_selector"
+            android:gravity="right|center_vertical"
             android:paddingLeft="@dimen/dimen_5"
             android:paddingRight="@dimen/dimen_5"
             android:text="净值"
-            android:textColor="@color/color_333333"/>
+            android:textColor="@color/color_97A1B7"
+            android:textSize="@dimen/text_size_11"/>
 
         <CheckBox
             android:id="@+id/ck_range"
@@ -49,7 +52,8 @@
             android:paddingLeft="@dimen/dimen_5"
             android:paddingRight="@dimen/dimen_5"
             android:text="涨跌幅"
-            android:textColor="@color/color_333333"/>
+            android:textColor="@color/color_97A1B7"
+            android:textSize="@dimen/text_size_11"/>
 
     </RelativeLayout>
 

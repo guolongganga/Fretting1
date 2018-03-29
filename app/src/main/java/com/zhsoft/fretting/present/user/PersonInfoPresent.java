@@ -113,7 +113,7 @@ public class PersonInfoPresent extends XPresent<PersonInfoActivity> {
      * @param email
      * @param selectOccupation
      */
-    public void changeMyInformation(String token, String userId, String id_enddate, String address, String detaile_address, String email, OccupationResp selectOccupation) {
+    public void changeMyInformation(String token, String userId, String id_enddate, String address, String detaile_address, String email, OccupationResp selectOccupation, String trade_password) {
         final CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -124,6 +124,7 @@ public class PersonInfoPresent extends XPresent<PersonInfoActivity> {
         params.setDetaile_address(detaile_address);
         params.setEmail(email);
         params.setOccupation(selectOccupation);
+        params.setTrade_password(trade_password);
         reqData.setData(params);
 
         Api.getApi()
@@ -142,7 +143,9 @@ public class PersonInfoPresent extends XPresent<PersonInfoActivity> {
                     public void onNext(BaseResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().changeMyInformationSuccess();
-                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                        } else if (resp != null && resp.getStatus() == Constant.PASSWORD_ERROR_STATUS) {
+                            getV().passwordError();
+                        }  else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(resp.getMessage());
                             getV().areadyLogout();
                         } else {

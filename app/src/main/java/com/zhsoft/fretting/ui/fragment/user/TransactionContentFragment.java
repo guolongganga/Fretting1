@@ -95,7 +95,7 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
 //        contentLayout.errorView(errorView);
 
         contentLayout.loadingView(View.inflate(getContext(), R.layout.view_loading, null));
-        contentLayout.showLoading();
+//        contentLayout.showLoading();
         contentLayout.getRecyclerView().useDefLoadMoreView();
 
     }

@@ -23,7 +23,7 @@
     <string name="user_common_message_code_hint">请输入短信验证码</string>
     <string name="user_common_send_code">获取验证码</string>
     <string name="user_common_next">下一步</string>
-    <string name="user_common_ten_register"><u>10秒开户>></u></string>
+    <string name="user_common_ten_register">10秒开户</string>
     <string name="user_common_login">登录</string>
     <string name="user_common_finish">完成</string>
     <string name="user_common_query_hint">搜索基金名称/代码</string>
@@ -47,43 +47,43 @@
 
     <!--注册（基金开户 验证手机号）第一步-->
     <string name="user_register_first_tv_hint_phone">此手机号为接收交易通知等</string>
-    <string name="user_register_first_choose_account"><u>选择已有账户登录>></u></string>
-    <string name="user_register_first_no_message_code"><u>无法收到验证码?</u></string>
+    <string name="user_register_first_choose_account">选择已有账户登录</string>
+    <string name="user_register_first_no_message_code">无法收到验证码?</string>
     <string name="user_register_first_no_message_code_hint">1.网络通讯异常可能会造成短信丢失，请重新获取或稍后再试;\n2.请核实手机是否欠费停机，或者屏蔽了系统短信</string>
 
     <!--登录-->
     <string name="user_login_username">用户</string>
     <string name="user_login_username_hint">请输入注册手机号/身份证号</string>
-    <string name="user_login_forget_password"><u>忘记登录密码</u></string>
+    <string name="user_login_forget_password">忘记登录密码</string>
 
     <!--开户成功-->
     <string name="user_register_success_congratulation">恭喜您申请开户成功！</string>
     <string name="user_register_success_name">姓名</string>
     <string name="user_register_success_identity">身份证号</string>
-    <string name="user_register_success_risk"><u>去做风险等级测评>></u></string>
+    <string name="user_register_success_risk">去做风险等级测评</string>
 
     <!--变更交易密码-->
     <string name="user_update_tradepwd">变更交易密码</string>
     <string name="user_update_tradepwd_old">旧交易密码</string>
     <string name="user_update_tradepwd_old_hint">请输入旧的交易密码</string>
     <string name="user_update_tradepwd_new">新交易密码</string>
-    <string name="user_update_tradepwd_new_hint">请输入新的六位纯数字</string>
-    <string name="user_update_tradepwd_new_again">再次输入交易密码</string>
-    <string name="user_update_tradepwd_new_again_hint">请确认新的六位纯数字</string>
-    <string name="user_update_tradepwd_reset"><u>重置交易密码</u></string>
+    <string name="user_update_tradepwd_new_hint">请输入新的交易密码</string>
+    <string name="user_update_tradepwd_new_again">确认交易密码</string>
+    <string name="user_update_tradepwd_new_again_hint">请确认新的交易密码</string>
+    <string name="user_update_tradepwd_reset">重置交易密码</string>
 
     <!--变更登录密码-->
     <string name="user_update_loginpwd">变更登录密码</string>
     <string name="user_update_loginpwd_new">新登录密码</string>
     <string name="user_update_loginpwd_new_hint">请输入登录密码</string>
-    <string name="user_update_loginpwd_new_again">再次输入登录密码</string>
+    <string name="user_update_loginpwd_new_again">确认登录密码</string>
     <string name="user_update_loginpwd_new_again_hint">请再次输入登录密码</string>
 
     <!--变更密码-->
     <string name="user_update_pwd">变更密码</string>
     <string name="user_update_pwd_login">登录密码</string>
     <string name="user_update_pwd_trade">交易密码</string>
-    <string name="user_update_pwd_update"><u>修改></u></string>
+    <string name="user_update_pwd_update">修改</string>
 
     <!--我的银行卡-->
     <string name="user_bank_card_hint">注：若您账户在持仓或者在途交易期间，则不能更换银行卡</string>
@@ -102,7 +102,7 @@
 
     <!--基金购买页-->
     <string name="fund_buy">购买</string>
-    <string name="fund_change"><u>更换></u></string>
+    <string name="fund_change">更换</string>
     <string name="fund_amount">金额</string>
     <string name="fund_sure">确定购买</string>
     <string name="fund_support_one">基金销售服务由北京微动利投资管理有限公司提供</string>

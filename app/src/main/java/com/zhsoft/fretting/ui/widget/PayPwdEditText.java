@@ -21,7 +21,7 @@ import android.widget.TextView;
 /**
  * 仿支付宝、微信 密码输入框
  */
-public class PayPwdEditText extends RelativeLayout{
+public class PayPwdEditText extends RelativeLayout {
 
     private EditText editText; //文本编辑框
     private Context context;
@@ -48,15 +48,14 @@ public class PayPwdEditText extends RelativeLayout{
     }
 
     /**
-     * @param bgdrawable 背景drawable
-     * @param pwdlength 密码长度
+     * @param bgdrawable    背景drawable
+     * @param pwdlength     密码长度
      * @param splilinewidth 分割线宽度
      * @param splilinecolor 分割线颜色
-     * @param pwdcolor 密码字体颜色
-     * @param pwdsize 密码字体大小
+     * @param pwdcolor      密码字体颜色
+     * @param pwdsize       密码字体大小
      */
-    public void initStyle(int bgdrawable, int pwdlength, float splilinewidth, int splilinecolor, int pwdcolor, int pwdsize)
-    {
+    public void initStyle(int bgdrawable, int pwdlength, float splilinewidth, int splilinecolor, int pwdcolor, int pwdsize) {
         this.pwdlength = pwdlength;
         initEdit(bgdrawable);
         initShowInput(bgdrawable, pwdlength, splilinewidth, splilinecolor, pwdcolor, pwdsize);
@@ -64,15 +63,16 @@ public class PayPwdEditText extends RelativeLayout{
 
     /**
      * 初始化编辑框
+     *
      * @param bgcolor
      */
-    private void initEdit(int bgcolor)
-    {
+    private void initEdit(int bgcolor) {
         editText = new EditText(context);
         editText.setBackgroundResource(bgcolor);
 //        editText.setCursorVisible(true);
         editText.setTextSize(0);
-        editText.setInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD | InputType.TYPE_CLASS_NUMBER);
+//        editText.setInputType(InputType.TYPE_NUMBER_VARIATION_PASSWORD | InputType.TYPE_CLASS_NUMBER);
+        editText.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD | InputType.TYPE_CLASS_TEXT);
         editText.setFilters(new InputFilter[]{new InputFilter.LengthFilter(pwdlength)});
         editText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -89,10 +89,8 @@ public class PayPwdEditText extends RelativeLayout{
             @Override
             public void afterTextChanged(Editable s) {
                 initDatas(s);
-                if(s.length() == pwdlength)
-                {
-                    if(onTextFinishListener != null)
-                    {
+                if (s.length() == pwdlength) {
+                    if (onTextFinishListener != null) {
                         onTextFinishListener.onFinish(s.toString().trim());
                     }
                 }
@@ -105,32 +103,30 @@ public class PayPwdEditText extends RelativeLayout{
     }
 
     /**
-     * @param bgcolor 背景drawable
-     * @param pwdlength 密码长度
+     * @param bgcolor       背景drawable
+     * @param pwdlength     密码长度
      * @param slpilinewidth 分割线宽度
      * @param splilinecolor 分割线颜色
-     * @param pwdcolor 密码字体颜色
-     * @param pwdsize 密码字体大小
+     * @param pwdcolor      密码字体颜色
+     * @param pwdsize       密码字体大小
      */
-    public void initShowInput(int bgcolor, int pwdlength, float slpilinewidth, int splilinecolor, int pwdcolor, int pwdsize)
-    {
+    public void initShowInput(int bgcolor, int pwdlength, float slpilinewidth, int splilinecolor, int pwdcolor, int pwdsize) {
         //添加密码框父布局
         linearLayout = new LinearLayout(context);
         linearLayout.setBackgroundResource(bgcolor);
-        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT,LayoutParams.MATCH_PARENT);
+        LayoutParams layoutParams = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         linearLayout.setLayoutParams(layoutParams);
         linearLayout.setOrientation(LinearLayout.HORIZONTAL);
         addView(linearLayout);
 
         //添加密码框
         textViews = new TextView[pwdlength];
-        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0,LayoutParams.MATCH_PARENT);
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(0, LayoutParams.MATCH_PARENT);
         params.weight = 1;
         params.gravity = Gravity.CENTER;
 
-        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(dip2px(context, slpilinewidth),LayoutParams.MATCH_PARENT);
-        for(int i = 0; i < textViews.length; i++)
-        {
+        LinearLayout.LayoutParams params2 = new LinearLayout.LayoutParams(dip2px(context, slpilinewidth), LayoutParams.MATCH_PARENT);
+        for (int i = 0; i < textViews.length; i++) {
             final int index = i;
             TextView textView = new TextView(context);
             textView.setGravity(Gravity.CENTER);
@@ -141,8 +137,7 @@ public class PayPwdEditText extends RelativeLayout{
             linearLayout.addView(textView, params);
 
 
-            if(i < textViews.length - 1)
-            {
+            if (i < textViews.length - 1) {
                 View view = new View(context);
                 view.setBackgroundColor(context.getResources().getColor(splilinecolor));
                 linearLayout.addView(view, params2);
@@ -152,11 +147,12 @@ public class PayPwdEditText extends RelativeLayout{
 
     /**
      * 是否显示明文
+     *
      * @param showPwd
      */
     public void setShowPwd(boolean showPwd) {
         int length = textViews.length;
-        for(int i = 0; i < length; i++) {
+        for (int i = 0; i < length; i++) {
             if (showPwd) {
                 textViews[i].setTransformationMethod(PasswordTransformationMethod.getInstance());
             } else {
@@ -167,12 +163,12 @@ public class PayPwdEditText extends RelativeLayout{
 
     /**
      * 设置显示类型
+     *
      * @param type
      */
-    public void setInputType(int type)
-    {
+    public void setInputType(int type) {
         int length = textViews.length;
-        for(int i = 0; i < length; i++) {
+        for (int i = 0; i < length; i++) {
             textViews[i].setInputType(type);
         }
     }
@@ -180,11 +176,9 @@ public class PayPwdEditText extends RelativeLayout{
     /**
      * 清除文本框
      */
-    public void clearText()
-    {
+    public void clearText() {
         editText.setText("");
-        for(int i = 0; i < pwdlength; i++)
-        {
+        for (int i = 0; i < pwdlength; i++) {
             textViews[i].setText("");
         }
     }
@@ -195,41 +189,31 @@ public class PayPwdEditText extends RelativeLayout{
 
     /**
      * 根据输入字符，显示密码个数
+     *
      * @param s
      */
-    public void initDatas(Editable s)
-    {
-        if(s.length() > 0)
-        {
+    public void initDatas(Editable s) {
+        if (s.length() > 0) {
             int length = s.length();
-            for(int i = 0; i < pwdlength; i++)
-            {
-                if(i < length)
-                {
-                    for(int j = 0; j < length; j++)
-                    {
+            for (int i = 0; i < pwdlength; i++) {
+                if (i < length) {
+                    for (int j = 0; j < length; j++) {
                         char ch = s.charAt(j);
                         textViews[j].setText(String.valueOf(ch));
                     }
-                }
-                else
-                {
+                } else {
                     textViews[i].setText("");
                 }
             }
-        }
-        else
-        {
-            for(int i = 0; i < pwdlength; i++)
-            {
+        } else {
+            for (int i = 0; i < pwdlength; i++) {
                 textViews[i].setText("");
             }
         }
     }
 
-    public String getPwdText()
-    {
-        if(editText != null)
+    public String getPwdText() {
+        if (editText != null)
             return editText.getText().toString().trim();
         return "";
     }
@@ -239,16 +223,14 @@ public class PayPwdEditText extends RelativeLayout{
         return (int) (dipValue * scale + 0.5f);
     }
 
-    public interface OnTextFinishListener
-    {
+    public interface OnTextFinishListener {
         void onFinish(String str);
     }
 
     /**
      * 获得焦点
      */
-    public void setFocus()
-    {
+    public void setFocus() {
         editText.requestFocus();
         editText.setFocusable(true);
         showKeyBord(editText);
@@ -256,12 +238,12 @@ public class PayPwdEditText extends RelativeLayout{
 
     /**
      * 显示键盘
+     *
      * @param view
      */
-    public void showKeyBord(View view)
-    {
+    public void showKeyBord(View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.showSoftInput(view,InputMethodManager.SHOW_FORCED);
+        imm.showSoftInput(view, InputMethodManager.SHOW_FORCED);
 
     }
 

@@ -18,7 +18,7 @@
             android:id="@+id/iv_close"
             android:layout_width="45dp"
             android:layout_height="wrap_content"
-            android:src="@mipmap/icon_user_close" />
+            android:src="@drawable/icon_common_close" />
 
 
         <TextView

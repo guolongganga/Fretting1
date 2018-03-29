@@ -89,7 +89,7 @@ public class BankCardPresent extends XPresent<BankCardActivity> {
                     @Override
                     public void onNext(BankCardResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
-                            getV().isCanChange(resp.getData());
+                            getV().isCanChange();
                         } else if (resp != null && resp.getStatus() == Constant.PASSWORD_ERROR_STATUS) {
                             getV().passwordError();
                         } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {

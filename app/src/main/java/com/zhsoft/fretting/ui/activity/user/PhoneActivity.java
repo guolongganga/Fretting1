@@ -32,8 +32,8 @@ public class PhoneActivity extends XActivity<PhonePresent> {
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
     @BindView(R.id.head_title) TextView headTitle;
-    /** 图片 */
-    @BindView(R.id.img_sign) ImageView imgSign;
+//    /** 图片 */
+//    @BindView(R.id.img_sign) ImageView imgSign;
     /** 电话号码 */
     @BindView(R.id.phone_number) TextView phoneNumber;
     /** 更改电话号码 */

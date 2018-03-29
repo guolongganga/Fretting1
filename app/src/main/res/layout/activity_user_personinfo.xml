@@ -340,8 +340,7 @@
             <!--下一步-->
             <Button
                 android:id="@+id/btn_save"
-                style="@style/common_red_button_circle"
-                android:layout_width="150dp"
+                style="@style/common_blue_button_rect"
                 android:layout_gravity="center_horizontal"
                 android:text="保存"/>
 

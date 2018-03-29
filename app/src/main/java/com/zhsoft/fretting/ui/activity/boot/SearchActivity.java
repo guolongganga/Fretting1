@@ -116,7 +116,7 @@ public class SearchActivity extends XActivity<SearchPersent> {
 //        contentLayout.errorView(errorView);
 
         contentLayout.loadingView(View.inflate(context, R.layout.view_loading, null));
-        contentLayout.showLoading();
+//        contentLayout.showLoading();
         contentLayout.getRecyclerView().useDefLoadMoreView();
     }
 

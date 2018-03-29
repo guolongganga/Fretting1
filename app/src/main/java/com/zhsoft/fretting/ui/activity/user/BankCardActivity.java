@@ -189,11 +189,6 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
         httpLoadingDialog.dismiss();
     }
 
-    @Override
-    protected void onDestroy() {
-        EventBus.getDefault().unregister(this);
-        super.onDestroy();
-    }
 
     /**
      * 修改银行卡事件
@@ -213,17 +208,12 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
     /**
      * 是否能修改银行卡
      *
-     * @param data
      */
-    public void isCanChange(BankCardResp data) {
+    public void isCanChange() {
         httpLoadingDialog.dismiss();
-        if ("0".equals(data.getIsCanChangeBankNo())) {
-            Bundle bundle = new Bundle();
-            bundle.putString(Constant.TRADE_PASSWORD, trade_password);
-            startActivity(BankCardChangeActivity.class, bundle);
-        } else {
-            showToast("您的账户在持仓或者在途交易期间，不能更换银行卡");
-        }
+        Bundle bundle = new Bundle();
+        bundle.putString(Constant.TRADE_PASSWORD, trade_password);
+        startActivity(BankCardChangeActivity.class, bundle);
     }
 
     @Override
@@ -240,6 +230,20 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
         intent.putExtra(Constant.CHANGE_BANK, isChange);
         setResult(Constant.SUCCESS_BACK_BANK, intent);
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        EventBus.getDefault().unregister(this);
+        if (errorDialog != null) {
+            errorDialog.dismiss();
+            errorDialog = null;
+        }
+        if (fundBuyDialog != null) {
+            fundBuyDialog.dismiss();
+            fundBuyDialog = null;
+        }
+        super.onDestroy();
     }
 
     /**

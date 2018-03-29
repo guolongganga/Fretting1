@@ -139,14 +139,23 @@ public class BuyActivity extends XActivity<BuyPresent> {
             if (buyFundResp != null) {
                 refreshBankView(buyFundResp);
                 list = buyFundResp.getDefault_auto_buy();
-                tvBonusType.setText(list.get(isSelector).getContent());
+                if (list != null && list.size() > 0) {
+                    tvBonusType.setText(list.get(isSelector).getContent());
+                }
                 //确认时间
                 tvSureTime.setText("·" + buyFundResp.getInfo1());
                 //查看收益时间
                 tvLookTime.setText("·" + buyFundResp.getInfo2());
                 tvRate.setText(buyFundResp.getCurr_rate() + "%");
                 tvApplyFee.setText(buyFundResp.getSource_rate() + "%");
-                etAmount.setHint("最低购买金额" + BigDecimalUtil.bigdecimalToString(buyFundResp.getLow_value()) + "元");
+                String minValue;
+                if (buyFundResp.getLow_value() != null) {
+                    minValue = BigDecimalUtil.bigdecimalToString(buyFundResp.getLow_value());
+                } else {
+                    minValue = "0.00";
+                }
+
+                etAmount.setHint("最低购买金额" + minValue + "元");
             }
         }
 

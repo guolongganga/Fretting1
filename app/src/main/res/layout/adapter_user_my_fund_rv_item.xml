@@ -3,7 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/ll_content"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="@dimen/dimen_98"
     android:orientation="vertical">
     <!--我的持仓基金-->
     <TextView
@@ -13,10 +13,10 @@
         android:layout_marginBottom="@dimen/dimen_10"
         android:layout_marginLeft="@dimen/dimen_30"
         android:layout_marginRight="@dimen/dimen_15"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="13dp"
         android:text=""
-        android:textColor="@color/color_text_333"
-        android:textSize="@dimen/text_size_14"/>
+        android:textColor="@color/color_383F50"
+        android:textSize="@dimen/text_size_15"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,16 +37,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="金额"
-                android:textColor="@color/color_696969"
-                android:textSize="@dimen/text_size_14"/>
+                android:textColor="@color/color_ABABAB"
+                android:textSize="@dimen/text_size_12"/>
 
             <TextView
                 android:id="@+id/tv_money"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="@color/color_text_333"
-                android:textSize="@dimen/text_size_14"
+                android:textColor="@color/color_383F50"
+                android:textSize="@dimen/text_size_16"
                 />
         </LinearLayout>
 
@@ -61,16 +61,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="昨日收益"
-                android:textColor="@color/color_696969"
-                android:textSize="@dimen/text_size_14"/>
+                android:textColor="@color/color_ABABAB"
+                android:textSize="@dimen/text_size_12"/>
 
             <TextView
                 android:id="@+id/tv_yesterday"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="@color/x_red"
-                android:textSize="@dimen/text_size_14"
+                android:textColor="@color/color_main"
+                android:textSize="@dimen/text_size_16"
                 />
         </LinearLayout>
 
@@ -84,16 +84,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="持有收益"
-                android:textColor="@color/color_696969"
-                android:textSize="@dimen/text_size_14"/>
+                android:textColor="@color/color_ABABAB"
+                android:textSize="@dimen/text_size_12"/>
 
             <TextView
                 android:id="@+id/tv_hold"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textColor="@color/x_red"
-                android:textSize="@dimen/text_size_14"
+                android:textColor="@color/color_main"
+                android:textSize="@dimen/text_size_16"
                 />
         </LinearLayout>
     </LinearLayout>

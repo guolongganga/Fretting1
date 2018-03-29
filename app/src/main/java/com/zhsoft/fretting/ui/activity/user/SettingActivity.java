@@ -1,8 +1,13 @@
 package com.zhsoft.fretting.ui.activity.user;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.Settings;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -58,6 +63,8 @@ public class SettingActivity extends XActivity<SettingPresent> {
     /** 安全退出 */
     @BindView(R.id.exit) Button exit;
 
+    /** 针对即使获取了拨打电话的权限依然报错问题的解决方案 */
+    private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
     /** 客服电话 */
     private String serviceTel;
     /** 登录标识 */
@@ -169,16 +176,7 @@ public class SettingActivity extends XActivity<SettingPresent> {
         callAgent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //获取文本框中的电话号码值
-                //String number = phoneNumber.getText().toString();
-
-                //掉用拨号权限 新建一个意图
-                Intent intent = new Intent();
-                //在把意图添加给操作系统时，操作系统会自动为intent添加类别，所以可省略
-                intent.setAction(Intent.ACTION_CALL);
-                intent.setData(Uri.parse("tel:" + serviceTel));
-                //将意图添加给操作系统执行
-                startActivity(intent);
+                callPhonePermission();
 
             }
         });
@@ -257,6 +255,43 @@ public class SettingActivity extends XActivity<SettingPresent> {
             getP().riskGrade(token, userId);
         }
     }
+
+    public void callPhonePermission() {
+        // 检查是否获得了权限（Android6.0运行时权限）
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) != PackageManager.PERMISSION_GRANTED) {
+            // 没有获得授权，申请授权
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.CALL_PHONE)) {
+                // 返回值：
+                //如果app之前请求过该权限,被用户拒绝, 这个方法就会返回true.
+                //如果用户之前拒绝权限的时候勾选了对话框中”Don’t ask again”的选项,那么这个方法会返回false.
+                //如果设备策略禁止应用拥有这条权限, 这个方法也返回false.
+                // 弹窗需要解释为何需要该权限，再次请求授权
+                showToast("请授权拨号！");
+                // 帮跳转到该应用的设置界面，让用户手动授权
+                Intent intent = new Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
+                Uri uri = Uri.fromParts("package", getPackageName(), null);
+                intent.setData(uri);
+                startActivity(intent);
+            } else {
+                // 不需要解释为何需要该权限，直接请求授权
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.CALL_PHONE}, MY_PERMISSIONS_REQUEST_CALL_PHONE);
+            }
+        } else {
+            // 已经获得授权，可以打电话
+            CallPhone();
+        }
+    }
+
+    private void CallPhone() {
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_CALL);
+        //url:统一资源定位符
+        //uri:统一资源标示符（更广）
+        intent.setData(Uri.parse("tel:" + serviceTel));
+        //开启系统拨号器
+        startActivity(intent);
+    }
+
 
     /**
      * 已经登出系统，请重新登录

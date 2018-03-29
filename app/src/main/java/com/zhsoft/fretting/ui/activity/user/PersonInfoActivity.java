@@ -1,6 +1,7 @@
 package com.zhsoft.fretting.ui.activity.user;
 
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -19,6 +20,8 @@ import com.zhsoft.fretting.event.InvalidTokenEvent;
 import com.zhsoft.fretting.model.user.OccupationResp;
 import com.zhsoft.fretting.model.user.PersonInfoResp;
 import com.zhsoft.fretting.present.user.PersonInfoPresent;
+import com.zhsoft.fretting.ui.widget.CustomDialog;
+import com.zhsoft.fretting.ui.widget.FundBuyDialog;
 import com.zhsoft.fretting.ui.widget.PopShow;
 import com.zhsoft.fretting.ui.widget.CitySelectPopupWindow;
 import com.zhsoft.fretting.utils.KeyBoardUtils;
@@ -95,6 +98,10 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
     private ArrayList<OccupationResp> listOccupation;
     /** 选择的职业 */
     private OccupationResp selectOccupationResp;
+    /** 输入密码弹框 */
+    private FundBuyDialog fundBuyDialog;
+    /** 密码错误弹框 */
+    private CustomDialog errorDialog;
 
     @Override
     public int getLayoutId() {
@@ -278,16 +285,39 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
                     return;
                 }
                 //身份证有限期
-                String id_enddate;
+                final String id_enddate;
                 if (ivSelector.isSelected()) {
                     id_enddate = "1";
                 } else {
                     id_enddate = getText(limitTime);
                 }
                 httpLoadingDialog.visible("保存中...");
-                getP().changeMyInformation(token, userId, id_enddate, null, getText(addressDetail), getText(email), selectOccupationResp);
+                //弹出交易密码框
+                fundBuyDialog = new FundBuyDialog
+                        .Builder(context)
+                        .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
+                            @Override
+                            public void onFinish(String str) {
+                            }
+                        }).setPositiveButton("确定", new FundBuyDialog.OnPositiveButtonListener() {
+                            @Override
+                            public void onButtonClick(DialogInterface dialog, String str) {
+                                //验证是否符合更换条件
+                                dialog.dismiss();
+                                httpLoadingDialog.visible();
+                                getP().changeMyInformation(token, userId, id_enddate, null, getText(addressDetail), getText(email), selectOccupationResp, str);
 
-//                showToast("保存");
+
+                            }
+                        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        }).create();
+
+                fundBuyDialog.show();
+
 
             }
         });
@@ -387,6 +417,31 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
     }
 
     /**
+     * 更换银行卡 密码错误
+     */
+    public void passwordError() {
+        httpLoadingDialog.dismiss();
+        if (errorDialog == null) {
+            errorDialog = new CustomDialog.Builder(context)
+                    .setMessage("交易密码错误，请重试")
+                    .setNegativeButton("忘记密码", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            errorDialog.dismiss();
+                            startActivity(FindPwdTradeFirstActivity.class);
+                        }
+                    }).setPositiveButton("再试一次", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            errorDialog.dismiss();
+                            fundBuyDialog.show();
+                        }
+                    }).create();
+        }
+        errorDialog.show();
+    }
+
+    /**
      * 已经登出系统，请重新登录
      */
     public void areadyLogout() {
@@ -398,5 +453,18 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
         Bundle bundle = new Bundle();
         bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_INDEX_ACTIVITY);
         startActivity(LoginActivity.class, bundle);
+    }
+
+    @Override
+    protected void onDestroy() {
+        if (errorDialog != null) {
+            errorDialog.dismiss();
+            errorDialog = null;
+        }
+        if (fundBuyDialog != null) {
+            fundBuyDialog.dismiss();
+            fundBuyDialog = null;
+        }
+        super.onDestroy();
     }
 }

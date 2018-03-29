@@ -10,7 +10,7 @@
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginTop="66dp"
+        android:layout_marginTop="@dimen/dimen_62.5"
         android:scrollbars="vertical">
 
         <LinearLayout
@@ -21,14 +21,15 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginLeft="@dimen/dimen_30"
                 android:text="@string/user_register_first_tv_hint_phone"
-                android:textColor="@color/color_696969"
+                android:textColor="@color/color_999999"
                 android:textSize="@dimen/text_size_12"/>
             <!--手机号-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/dimen_66"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
@@ -36,24 +37,16 @@
                 android:paddingRight="15dp">
 
                 <TextView
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dimen_83"
                     android:text="@string/user_common_phone"
-                    android:textColor="@color/color_text_333"
-                    android:textSize="@dimen/text_size_14"/>
+                    style="@style/text_bold_16"/>
                 <!--请输入手机号-->
                 <EditText
                     android:id="@+id/phone_number"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@null"
                     android:hint="@string/user_common_phone_hint"
                     android:inputType="number"
                     android:maxLength="11"
-                    android:singleLine="true"
-                    android:textColorHint="@color/color_696969"
-                    android:textSize="@dimen/text_size_14"/>
+                    style="@style/edit_user_15"/>
 
             </LinearLayout>
             <!--提示-->
@@ -61,25 +54,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:layout_marginLeft="@dimen/dimen_30"
                 android:text="@string/user_common_tv_hint_password"
-                android:textColor="@color/color_696969"
+                android:textColor="@color/color_999999"
                 android:textSize="@dimen/text_size_12"/>
             <!--登录密码-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/dimen_66"
                 android:background="@color/white"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
-                android:paddingLeft="@dimen/small_margin_size"
-                android:paddingRight="15dp">
+                android:paddingLeft="@dimen/dimen_15"
+                android:paddingRight="@dimen/dimen_15">
 
                 <TextView
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dimen_83"
                     android:text="@string/user_common_password"
-                    android:textColor="@color/color_text_333"
-                    android:textSize="@dimen/text_size_14"/>
+                    style="@style/text_bold_16"/>
 
                 <!--<EditText-->
                 <!--android:layout_width="0dp"-->
@@ -107,15 +99,11 @@
                         android:id="@+id/password"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@android:color/transparent"
                         android:gravity="center_vertical"
                         android:hint="@string/user_common_password_hint"
                         android:inputType="textPassword"
                         android:maxLength="16"
-                        android:singleLine="true"
-                        android:textColor="@color/color_text_333"
-                        android:textColorHint="@color/color_696969"
-                        android:textSize="@dimen/text_size_14"/>
+                        style="@style/edit_user_15"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -124,7 +112,7 @@
             <!--确认密码-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/dimen_66"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:gravity="center_vertical"
@@ -133,11 +121,9 @@
                 android:paddingRight="15dp">
 
                 <TextView
-                    android:layout_width="90dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="@dimen/dimen_83"
                     android:text="@string/user_common_password_again"
-                    android:textColor="@color/color_text_333"
-                    android:textSize="@dimen/text_size_14"/>
+                    style="@style/text_bold_16"/>
 
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"
@@ -152,63 +138,20 @@
                         android:id="@+id/password_again"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@android:color/transparent"
                         android:gravity="center_vertical"
                         android:hint="@string/user_common_password_again_hint"
                         android:inputType="textPassword"
                         android:maxLength="16"
-                        android:singleLine="true"
-                        android:textColor="@color/color_text_333"
-                        android:textColorHint="@color/color_696969"
-                        android:textSize="@dimen/text_size_14"/>
+                        style="@style/edit_user_15"/>
 
                 </android.support.design.widget.TextInputLayout>
 
             </LinearLayout>
-            <!--图片验证码-->
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="48dp"-->
-                <!--android:layout_marginTop="10dp"-->
-                <!--android:background="@color/white"-->
-                <!--android:gravity="center_vertical"-->
-                <!--android:orientation="horizontal"-->
-                <!--android:paddingLeft="@dimen/small_margin_size"-->
-                <!--android:paddingRight="15dp">-->
 
-                <!--<TextView-->
-                    <!--android:layout_width="90dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:text="@string/user_common_picture_code"-->
-                    <!--android:textColor="@color/color_text_333"-->
-                    <!--android:textSize="@dimen/text_size_14"/>-->
-                <!--&lt;!&ndash;输入图片验证码&ndash;&gt;-->
-                <!--<EditText-->
-                    <!--android:id="@+id/image_code"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="match_parent"-->
-                    <!--android:layout_weight="1"-->
-                    <!--android:background="@null"-->
-                    <!--android:hint="@string/user_common_picture_code_hint"-->
-                    <!--android:inputType="text"-->
-                    <!--android:maxLength="11"-->
-                    <!--android:singleLine="true"-->
-                    <!--android:textColorHint="@color/color_696969"-->
-                    <!--android:textSize="@dimen/text_size_14"-->
-                    <!--/>-->
-                <!--&lt;!&ndash;图片&ndash;&gt;-->
-                <!--<ImageView-->
-                    <!--android:id="@+id/image"-->
-                    <!--android:layout_width="65dp"-->
-                    <!--android:layout_height="25dp"-->
-                    <!--android:src="@mipmap/ic_launcher"-->
-                    <!--/>-->
-
-            <!--</LinearLayout>-->
             <!--验证码-->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/dimen_66"
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:gravity="center_vertical"
@@ -217,24 +160,17 @@
                 android:paddingRight="15dp">
 
                 <TextView
-                    android:layout_width="90dp"
+                    android:layout_width="@dimen/dimen_83"
                     android:layout_height="wrap_content"
                     android:text="@string/user_common_message_code"
-                    android:textColor="@color/color_text_333"
-                    android:textSize="@dimen/text_size_14"/>
+                    style="@style/text_bold_16"/>
                 <!--请输入验证码-->
                 <EditText
                     android:id="@+id/msg_code"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@null"
                     android:hint="@string/user_common_message_code_hint"
                     android:inputType="text"
                     android:maxLength="11"
-                    android:singleLine="true"
-                    android:textColorHint="@color/color_696969"
-                    android:textSize="@dimen/text_size_14"/>
+                    style="@style/edit_user_15"/>
                 <!--获取验证码-->
                 <com.zhsoft.fretting.ui.widget.CountdownButton
                     android:id="@+id/get_verify_code"
@@ -244,9 +180,10 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dimen_13"
                 android:layout_marginLeft="@dimen/small_margin_size"
-                android:layout_marginRight="@dimen/small_margin_size"
+                android:layout_marginRight="@dimen/dimen_20"
                 android:gravity="center_vertical">
                 <!--选择已有账户登录-->
                 <!--<TextView-->
@@ -266,14 +203,14 @@
                     android:layout_alignParentRight="true"
                     android:autoLink="all"
                     android:text="@string/user_register_first_no_message_code"
-                    android:textColor="@color/colorPrimary"
+                    android:textColor="@color/color_407FE7"
                     android:textSize="@dimen/text_size_14"/>
 
             </RelativeLayout>
 
             <Button
                 android:id="@+id/btn_next"
-                style="@style/common_red_button_circle"
+                style="@style/common_blue_button_rect"
                 android:text="@string/user_common_next"/>
         </LinearLayout>
     </ScrollView>
