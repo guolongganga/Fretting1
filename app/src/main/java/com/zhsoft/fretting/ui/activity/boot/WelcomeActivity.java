@@ -45,14 +45,14 @@ public class WelcomeActivity extends XActivity {
     @Override
     public void initData(Bundle savedInstanceState) {
         View viewOne = LayoutInflater.from(context).inflate(R.layout.item_one_welcome, null);
-        View viewTwo = LayoutInflater.from(context).inflate(R.layout.item_two_welcome, null);
+//        View viewTwo = LayoutInflater.from(context).inflate(R.layout.item_two_welcome, null);
         View viewThree = LayoutInflater.from(context).inflate(R.layout.item_three_welcome, null);
 
         btnGo = viewThree.findViewById(R.id.btn_go);
 
         dataList = new ArrayList<>();
         dataList.add(viewOne);
-        dataList.add(viewTwo);
+//        dataList.add(viewTwo);
         dataList.add(viewThree);
 
         WelcomeViewpagerAdapter adapter = new WelcomeViewpagerAdapter(context, dataList);

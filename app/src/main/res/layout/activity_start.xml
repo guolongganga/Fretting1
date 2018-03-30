@@ -16,19 +16,15 @@
             android:layout_height="match_parent"
             android:visibility="gone"/>
 
-        <RelativeLayout
-            android:id="@+id/rl_ssp_adv"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone"/>
-
         <ImageView
             android:id="@+id/iv_start"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="@dimen/dimen_206"
             android:adjustViewBounds="true"
             android:scaleType="fitXY"
-            android:src="@mipmap/ic_launcher"/>
+            android:src="@drawable/img_start"/>
 
         <ImageView
             android:id="@+id/iv_jump"
@@ -53,12 +49,22 @@
 
     </RelativeLayout>
 
-    <ImageView
-        android:layout_width="match_parent"
+    <TextView
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:scaleType="fitXY"
-        android:src="@mipmap/start_logo"
-        android:visibility="invisible"/>
+        android:layout_gravity="center_horizontal"
+        android:text="微银基金·与您共成长"
+        android:textColor="@color/color_504B4A"
+        android:textSize="@dimen/text_size_22"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="@dimen/dimen_47"
+        android:layout_marginTop="@dimen/dimen_8"
+        android:text="证监会全程监管 | 民生银行资金监管"
+        android:textColor="@color/color_818181"
+        android:textSize="@dimen/text_size_12"/>
 
 </LinearLayout>

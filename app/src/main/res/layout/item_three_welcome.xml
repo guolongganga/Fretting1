@@ -1,25 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:gravity="center_horizontal"
+              android:orientation="vertical">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_72"
+        android:text="购买基金方便快捷"
+        android:textColor="@color/color_A81C00"
+        android:textSize="@dimen/text_size_23"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dimen_20"
+        android:text="一键定投基金   优质基金智能推荐"
+        android:textColor="@color/color_A81C00"
+        android:textSize="@dimen/text_size_15"/>
 
     <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@android:color/transparent"
-        android:scaleType="fitXY"
-        android:src="@mipmap/item_three_welcome" />
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/dimen_30"
+        android:layout_marginRight="@dimen/dimen_30"
+        android:layout_marginTop="@dimen/dimen_72"
+        android:src="@drawable/img_welcome_two"/>
 
     <Button
         android:id="@+id/btn_go"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dimen_40"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_margin="@dimen/dimen_30"
-        android:background="@drawable/welcome_start_selector"
-        android:text="立即体验"
-        android:textColor="@android:color/white"
-        android:textSize="@dimen/text_size_14" />
+        android:layout_width="@dimen/dimen_200"
+        android:layout_height="@dimen/dimen_50"
+        android:layout_marginTop="@dimen/dimen_50"
+        android:background="@drawable/shape_red_rect_welcome"
+        android:text="立即购买"
+        android:textColor="@color/color_FFFFFF"
+        android:textSize="@dimen/text_size_14"
+        />
 
-</RelativeLayout>
+</LinearLayout>

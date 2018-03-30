@@ -47,6 +47,7 @@
     <color name="color_508CEE">#508CEE</color>
     <color name="color_DCDCDC">#DCDCDC</color>
     <color name="color_D1D1D6">#D1D1D6</color>
+    <color name="color_A81C00">#A81C00</color>
 
     <!--默认浅细线颜色-->
     <color name="color_F9F9F9">#F9F9F9</color>
@@ -75,6 +76,8 @@
     <color name="color_9B9B9B">#9B9B9B</color>
     <color name="color_000000">#000000</color>
     <color name="color_888888">#888888</color>
+    <color name="color_818181">#818181</color>
     <color name="color_727272">#727272</color>
+    <color name="color_504B4A">#504B4A</color>
 
 </resources>
