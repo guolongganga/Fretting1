@@ -54,23 +54,16 @@
                 android:paddingRight="15dp">
 
                 <TextView
-                    android:layout_width="95dp"
+                    android:layout_width="110dp"
                     android:layout_height="wrap_content"
                     android:text="姓名"
-                    android:textColor="@color/color_text_333"
-                    android:textSize="@dimen/text_size_14"/>
+                    style="@style/text_bold_16"/>
                 <!--请输入姓名-->
                 <EditText
                     android:id="@+id/user_name"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@null"
                     android:hint="请输入姓名"
                     android:inputType="text"
-                    android:singleLine="true"
-                    android:textColorHint="@color/color_696969"
-                    android:textSize="@dimen/text_size_14"
+                    style="@style/edit_user_15"
                     />
 
             </LinearLayout>
@@ -88,23 +81,15 @@
                 android:paddingRight="15dp">
 
                 <TextView
-                    android:layout_width="95dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="110dp"
                     android:text="身份证号"
-                    android:textColor="@color/color_text_333"
-                    android:textSize="@dimen/text_size_14"/>
+                    style="@style/text_bold_16"/>
                 <!--请输入身份证号-->
                 <EditText
                     android:id="@+id/identity"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@null"
                     android:hint="请输入身份证号"
                     android:inputType="text"
-                    android:singleLine="true"
-                    android:textColorHint="@color/color_696969"
-                    android:textSize="@dimen/text_size_14"
+                    style="@style/edit_user_15"
                     />
 
             </LinearLayout>
@@ -122,23 +107,15 @@
                 android:paddingRight="15dp">
 
                 <TextView
-                    android:layout_width="95dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="110dp"
                     android:text="邮箱(可选)"
-                    android:textColor="@color/color_text_333"
-                    android:textSize="@dimen/text_size_14"/>
+                    style="@style/text_bold_16"/>
                 <!--请输入邮箱-->
                 <EditText
                     android:id="@+id/email"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@null"
                     android:hint="请输入邮箱"
                     android:inputType="text"
-                    android:singleLine="true"
-                    android:textColorHint="@color/color_696969"
-                    android:textSize="@dimen/text_size_14"
+                    style="@style/edit_user_15"
                     />
 
             </LinearLayout>
@@ -180,11 +157,9 @@
                 android:paddingRight="@dimen/small_margin_size">
                 <!--银行名称-->
                 <TextView
-                    android:layout_width="95dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="110dp"
                     android:text="银行名称"
-                    android:textColor="@color/color_text_333"
-                    android:textSize="@dimen/text_size_14"/>
+                    style="@style/text_bold_16"/>
                 <!--显示选择的银行-->
                 <TextView
                     android:id="@+id/banck_name"
@@ -195,8 +170,8 @@
                     android:gravity="center_vertical"
                     android:hint="请选择"
                     android:textColor="@color/color_text_333"
-                    android:textColorHint="@color/color_696969"
-                    android:textSize="@dimen/text_size_14"/>
+                    android:textColorHint="@color/color_CCCCCC"
+                    android:textSize="@dimen/text_size_15"/>
                 <!--小箭头-->
                 <ImageView
                     android:layout_width="wrap_content"
@@ -217,23 +192,15 @@
                 android:paddingRight="15dp">
 
                 <TextView
-                    android:layout_width="95dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="110dp"
                     android:text="银行卡号"
-                    android:textColor="@color/color_text_333"
-                    android:textSize="@dimen/text_size_14"/>
+                    style="@style/text_bold_16"/>
                 <!--请输入银行卡号-->
                 <EditText
                     android:id="@+id/banknumber"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@null"
                     android:hint="请输入银行卡号"
                     android:inputType="number"
-                    android:singleLine="true"
-                    android:textColorHint="@color/color_696969"
-                    android:textSize="@dimen/text_size_14"
+                    style="@style/edit_user_15"
                     />
 
             </LinearLayout>
@@ -250,65 +217,21 @@
                 android:paddingRight="15dp">
 
                 <TextView
-                    android:layout_width="95dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="110dp"
                     android:text="手机号"
-                    android:textColor="@color/color_text_333"
-                    android:textSize="@dimen/text_size_14"/>
+                    style="@style/text_bold_16"/>
                 <!--请输入预留手机号-->
                 <EditText
                     android:id="@+id/phone"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="@null"
                     android:hint="请输入预留手机号"
                     android:inputType="number"
                     android:maxLength="11"
-                    android:singleLine="true"
-                    android:textColorHint="@color/color_696969"
-                    android:textSize="@dimen/text_size_14"
+                    style="@style/edit_user_15"
                     />
 
             </LinearLayout>
 
             <include layout="@layout/layout_divider_horizontal"/>
-            <!--验证码-->
-            <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="48dp"-->
-            <!--android:background="@color/white"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:orientation="horizontal"-->
-            <!--android:paddingLeft="@dimen/small_margin_size"-->
-            <!--android:paddingRight="15dp">-->
-
-            <!--<TextView-->
-            <!--android:layout_width="70dp"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:text="验证码"-->
-            <!--android:textColor="@color/color_text_333"-->
-            <!--android:textSize="@dimen/text_size_14"/>-->
-            <!--&lt;!&ndash;请输入验证码&ndash;&gt;-->
-            <!--<EditText-->
-            <!--android:id="@+id/msg_code"-->
-            <!--android:layout_width="0dp"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_weight="1"-->
-            <!--android:background="@null"-->
-            <!--android:hint="请输入验证码"-->
-            <!--android:inputType="number"-->
-            <!--android:maxLength="11"-->
-            <!--android:singleLine="true"-->
-            <!--android:textColorHint="@color/color_696969"-->
-            <!--android:textSize="@dimen/text_size_14"-->
-            <!--/>-->
-            <!--&lt;!&ndash;获取验证码&ndash;&gt;-->
-            <!--<com.zhsoft.fretting.ui.widget.CountdownButton-->
-            <!--android:id="@+id/get_verify_code"-->
-            <!--style="@style/AppTheme.Button_send_code"/>-->
-
-            <!--</LinearLayout>-->
 
             <!--设置交易密码-->
             <LinearLayout
@@ -341,8 +264,8 @@
                 android:layout_marginLeft="@dimen/dimen_15"
                 android:layout_marginTop="@dimen/dimen_5"
                 android:text="密码长度为6位，只能包含数字、字母，不能含有3个连续相同，3个以上(含3个)的连续数字或字母"
-                android:textColor="@color/color_696969"
-                android:textSize="@dimen/text_size_14"/>
+                android:textColor="@color/color_999999"
+                android:textSize="@dimen/text_size_12"/>
 
             <include layout="@layout/layout_divider_horizontal"/>
             <!--新交易密码-->
@@ -356,11 +279,9 @@
                 android:paddingRight="15dp">
 
                 <TextView
-                    android:layout_width="95dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="110dp"
                     android:text="交易密码"
-                    android:textColor="@color/color_text_333"
-                    android:textSize="@dimen/text_size_14"/>
+                    style="@style/text_bold_16"/>
                 <!--小眼睛点击-->
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"
@@ -375,15 +296,10 @@
                         android:id="@+id/password"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@android:color/transparent"
-                        android:gravity="center_vertical"
                         android:hint="请输入新的交易密码"
                         android:inputType="textPassword"
                         android:maxLength="6"
-                        android:singleLine="true"
-                        android:textColor="@color/color_text_333"
-                        android:textColorHint="@color/color_696969"
-                        android:textSize="@dimen/text_size_14"/>
+                        style="@style/edit_user_15"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -401,11 +317,9 @@
                 android:paddingRight="15dp">
 
                 <TextView
-                    android:layout_width="95dp"
-                    android:layout_height="wrap_content"
+                    android:layout_width="110dp"
                     android:text="确认交易密码"
-                    android:textColor="@color/color_text_333"
-                    android:textSize="@dimen/text_size_14"/>
+                    style="@style/text_bold_16"/>
                 <!--小眼睛点击-->
                 <android.support.design.widget.TextInputLayout
                     android:layout_width="0dp"
@@ -420,15 +334,10 @@
                         android:id="@+id/password_again"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@android:color/transparent"
-                        android:gravity="center_vertical"
                         android:hint="请确认新的交易密码"
                         android:inputType="textPassword"
                         android:maxLength="6"
-                        android:singleLine="true"
-                        android:textColor="@color/color_text_333"
-                        android:textColorHint="@color/color_696969"
-                        android:textSize="@dimen/text_size_14"/>
+                        style="@style/edit_user_15"/>
 
                 </android.support.design.widget.TextInputLayout>
 
@@ -460,7 +369,8 @@
                     android:layout_marginLeft="@dimen/dimen_10"
                     android:layout_weight="1"
                     android:text="我已阅读并同意微动利证券投资基金投资人权益须知 和微动利基金销售服务协议"
-                    android:textColor="@color/color_f7182d"/>
+                    android:textColor="@color/color_9B9B9B"
+                    android:textSize="@dimen/text_size_12"/>
 
             </LinearLayout>
 

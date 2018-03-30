@@ -118,6 +118,7 @@
     <dimen name="dimen_32">32dp</dimen>
     <dimen name="dimen_48">48dp</dimen>
     <dimen name="dimen_64">64dp</dimen>
+    <dimen name="dimen_63">63dp</dimen>
 
     <dimen name="textview_text_size">16sp</dimen>
     <dimen name="small_margin_size">15dp</dimen>

@@ -24,237 +24,238 @@
                 android:layout_height="wrap_content"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:paddingLeft="@dimen/dimen_30">
-                <!--定投基金-->
-                <LinearLayout
-                    android:layout_width="match_parent"
+                android:paddingLeft="@dimen/dimen_15"
+                android:paddingRight="@dimen/dimen_15">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_10"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="30dp">
 
                     <TextView
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:text="定投基金:"
-                        android:textColor="@color/color_696969"
-                        android:textSize="@dimen/text_size_14"/>
-                    <!--基金名称-->
-                    <TextView
-                        android:id="@+id/tv_fund_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_5"
-                        android:layout_marginRight="@dimen/dimen_5"
-                        android:text="xxxxx基金"
-                        android:textColor="@color/color_333333"
-                        android:textSize="@dimen/text_size_14"/>
+                        android:layout_alignParentLeft="true"
+                        android:text="定投基金"
+                        android:textColor="@color/color_888888"
+                        android:textSize="@dimen/text_size_15"/>
                     <!--基金编号-->
                     <TextView
                         android:id="@+id/tv_fund_code"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="（110022）"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="@dimen/dimen_40"
+                        android:text=""
                         android:textColor="@color/color_333333"
-                        android:textSize="@dimen/text_size_14"/>
+                        android:textSize="@dimen/text_size_15"/>
+                    <!--基金名称-->
+                    <TextView
+                        android:id="@+id/tv_fund_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toLeftOf="@id/tv_fund_code"
+                        android:text=""
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/text_size_15"/>
 
                     <TextView
                         android:id="@+id/tv_invest_status"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
                         android:layout_marginLeft="@dimen/dimen_10"
                         android:text="暂停"
                         android:textColor="@color/color_f7182d"
                         android:textSize="@dimen/text_size_14"
                         android:visibility="gone"/>
+                </RelativeLayout>
 
-                </LinearLayout>
+
                 <!--定投日-->
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <RelativeLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_5"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="@dimen/dimen_20">
 
                     <TextView
-                        android:layout_width="70dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:text="定投日:"
-                        android:textColor="@color/color_696969"
-                        android:textSize="@dimen/text_size_14"/>
-                    <!--每周一/每月2日-->
+                        android:layout_alignParentLeft="true"
+                        android:text="定投日"
+                        android:textColor="@color/color_888888"
+                        android:textSize="@dimen/text_size_15"/>
+                    <!--每月几日-->
                     <TextView
                         android:id="@+id/tv_invest_day"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_5"
-                        android:layout_marginRight="@dimen/dimen_5"
-                        android:text="每周一"
+                        android:layout_alignParentRight="true"
                         android:textColor="@color/color_333333"
-                        android:textSize="@dimen/text_size_14"/>
+                        android:textSize="@dimen/text_size_15"/>
+                </RelativeLayout>
 
-                </LinearLayout>
                 <!--定投金额-->
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <RelativeLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_5"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="@dimen/dimen_20">
 
                     <TextView
-                        android:layout_width="70dp"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:text="定投金额:"
-                        android:textColor="@color/color_696969"
-                        android:textSize="@dimen/text_size_14"/>
+                        android:layout_alignParentLeft="true"
+                        android:text="定投金额"
+                        android:textColor="@color/color_888888"
+                        android:textSize="@dimen/text_size_15"/>
+
+                    <!--单位-->
+                    <TextView
+                        android:id="@+id/font_unit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:text="元"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/text_size_15"/>
+
                     <!--金额-->
                     <TextView
                         android:id="@+id/tv_sum"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_5"
-                        android:layout_marginRight="@dimen/dimen_5"
-                        android:text="10.00"
+                        android:layout_toLeftOf="@id/font_unit"
                         android:textColor="@color/color_333333"
-                        android:textSize="@dimen/text_size_14"/>
-                    <!--单位：元-->
+                        android:textSize="@dimen/text_size_15"/>
+                </RelativeLayout>
+                <!--累计定投-->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:text="累计定投"
+                        android:textColor="@color/color_888888"
+                        android:textSize="@dimen/text_size_15"/>
+
+                    <!--单位-->
+                    <TextView
+                        android:id="@+id/font_unit_two"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
                         android:text="元"
                         android:textColor="@color/color_333333"
-                        android:textSize="@dimen/text_size_14"/>
+                        android:textSize="@dimen/text_size_15"/>
 
-                </LinearLayout>
-                <!--累计定投-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_5"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:text="累计定投:"
-                        android:textColor="@color/color_696969"
-                        android:textSize="@dimen/text_size_14"/>
                     <!--金额-->
                     <TextView
                         android:id="@+id/tv_total"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_5"
-                        android:layout_marginRight="@dimen/dimen_5"
-                        android:text="80.00"
+                        android:layout_toLeftOf="@id/font_unit_two"
                         android:textColor="@color/color_333333"
-                        android:textSize="@dimen/text_size_14"/>
-                    <!--单位：元-->
+                        android:textSize="@dimen/text_size_15"/>
+                </RelativeLayout>
+
+                <!--已投期数-->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="元"
-                        android:textColor="@color/color_333333"
-                        android:textSize="@dimen/text_size_14"/>
+                        android:layout_alignParentLeft="true"
+                        android:text="已投期数"
+                        android:textColor="@color/color_888888"
+                        android:textSize="@dimen/text_size_15"/>
 
-                </LinearLayout>
-                <!--已投期数-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_5"
-                    android:orientation="horizontal">
-
+                    <!--单位：期-->
                     <TextView
-                        android:layout_width="70dp"
+                        android:id="@+id/font_unit_qi"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:text="已投期数:"
-                        android:textColor="@color/color_696969"
-                        android:textSize="@dimen/text_size_14"/>
+                        android:layout_alignParentRight="true"
+                        android:text="期"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/text_size_15"/>
+
                     <!--期数-->
                     <TextView
                         android:id="@+id/tv_stage"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_5"
-                        android:layout_marginRight="@dimen/dimen_5"
-                        android:text="0"
+                        android:layout_toLeftOf="@id/font_unit_qi"
                         android:textColor="@color/color_333333"
-                        android:textSize="@dimen/text_size_14"/>
-                    <!--单位：期-->
+                        android:textSize="@dimen/text_size_15"/>
+                </RelativeLayout>
+
+                <!--支付方式-->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen_20">
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="期"
-                        android:textColor="@color/color_333333"
-                        android:textSize="@dimen/text_size_14"/>
+                        android:layout_alignParentLeft="true"
+                        android:text="支付方式"
+                        android:textColor="@color/color_888888"
+                        android:textSize="@dimen/text_size_15"/>
 
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dimen_10"
-                    android:orientation="horizontal">
-                    <!--支付方式-->
+                    <!--尾号-->
                     <TextView
-                        android:layout_width="70dp"
+                        android:id="@+id/tv_bank_tail"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:text="支付方式:"
-                        android:textColor="@color/color_696969"
-                        android:textSize="@dimen/text_size_14"/>
+                        android:layout_alignParentRight="true"
+                        android:layout_marginLeft="@dimen/dimen_5"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/text_size_15"/>
+
                     <!--银行名称-->
                     <TextView
                         android:id="@+id/tv_bank_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_5"
-                        android:layout_marginRight="@dimen/dimen_5"
-                        android:text="招商银行储蓄卡"
+                        android:layout_toLeftOf="@id/tv_last_number"
                         android:textColor="@color/color_333333"
-                        android:textSize="@dimen/text_size_14"/>
-                    <!--银行尾号-->
+                        android:textSize="@dimen/text_size_15"/>
+
+                </RelativeLayout>
+
+                <!--协议号-->
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen_30"
+                    android:layout_marginTop="@dimen/dimen_20">
+
                     <TextView
-                        android:id="@+id/tv_bank_tail"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="（3527）"
-                        android:textColor="@color/color_333333"
-                        android:textSize="@dimen/text_size_14"/>
-
-                </LinearLayout>
-                <!--协议号-->
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dimen_10"
-                    android:layout_marginTop="@dimen/dimen_5"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="70dp"
-                        android:layout_height="wrap_content"
-                        android:gravity="right"
-                        android:text="协议号:"
-                        android:textColor="@color/color_f7182d"
-                        android:textSize="@dimen/text_size_12"/>
+                        android:layout_alignParentLeft="true"
+                        android:text="协议号"
+                        android:textColor="@color/color_888888"
+                        android:textSize="@dimen/text_size_15"/>
                     <!--协议号:2017339782885588885-->
                     <TextView
                         android:id="@+id/tv_protocol_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/dimen_5"
-                        android:layout_marginRight="@dimen/dimen_5"
-                        android:text="2017339782885588885"
-                        android:textColor="@color/color_f7182d"
-                        android:textSize="@dimen/text_size_12"/>
+                        android:layout_alignParentRight="true"
+                        android:textColor="@color/color_333333"
+                        android:textSize="@dimen/text_size_15"/>
+                </RelativeLayout>
 
-                </LinearLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -263,7 +264,8 @@
                 android:layout_marginTop="10dp"
                 android:background="@color/white"
                 android:orientation="vertical"
-                android:paddingLeft="@dimen/dimen_40">
+                android:paddingLeft="@dimen/dimen_15"
+                android:paddingRight="@dimen/dimen_15">
                 <!--具体扣款时间 2017-12-18 星期一-->
                 <TextView
                     android:id="@+id/tv_day_week"
@@ -327,7 +329,7 @@
         <!--终止-->
         <Button
             android:id="@+id/btn_end"
-            style="@style/common_red_button_circle"
+            style="@style/common_blue_button_rect"
             android:layout_width="0dp"
             android:layout_margin="@dimen/dimen_5"
             android:layout_weight="1"
@@ -335,7 +337,7 @@
         <!--暂停-->
         <Button
             android:id="@+id/btn_stop"
-            style="@style/common_red_button_circle"
+            style="@style/common_blue_button_rect"
             android:layout_width="0dp"
             android:layout_margin="@dimen/dimen_5"
             android:layout_weight="1"
@@ -344,7 +346,7 @@
         <!--修改-->
         <Button
             android:id="@+id/btn_update"
-            style="@style/common_red_button_circle"
+            style="@style/common_blue_button_rect"
             android:layout_width="0dp"
             android:layout_margin="@dimen/dimen_5"
             android:layout_weight="1"
@@ -352,7 +354,7 @@
         <!--恢复-->
         <Button
             android:id="@+id/btn_recovery"
-            style="@style/common_red_button_circle"
+            style="@style/common_blue_button_rect"
             android:layout_width="0dp"
             android:layout_margin="@dimen/dimen_5"
             android:layout_weight="1"

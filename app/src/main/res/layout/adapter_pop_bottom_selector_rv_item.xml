@@ -10,6 +10,7 @@
         android:layout_height="match_parent"
         android:layout_centerInParent="true"
         android:gravity="center"
+        android:textSize="@dimen/text_size_14"
         android:textColor="@color/color_333333"/>
 
     <View

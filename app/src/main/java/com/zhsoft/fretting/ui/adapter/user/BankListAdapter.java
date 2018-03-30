@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
@@ -58,7 +59,7 @@ public class BankListAdapter extends SimpleRecAdapter<BankResp, BankListAdapter.
         } else {
             holder.viewLine.setVisibility(View.VISIBLE);
         }
-        holder.llContent.setOnClickListener(new View.OnClickListener() {
+        holder.rlContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 getRecItemClick().onItemClick(position, resp, ITEM_CLICK, holder);
@@ -74,7 +75,7 @@ public class BankListAdapter extends SimpleRecAdapter<BankResp, BankListAdapter.
         /** 银行限额 */
         @BindView(R.id.bank_limit) TextView bankLimit;
         /** 内容 */
-        @BindView(R.id.ll_content) LinearLayout llContent;
+        @BindView(R.id.rl_content) RelativeLayout rlContent;
         /** 分割线 */
         @BindView(R.id.view_line) View viewLine;
 
