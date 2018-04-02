@@ -1,15 +1,13 @@
 package com.zhsoft.fretting.present.user;
 
-import android.util.Log;
-
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.model.BaseResp;
 import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.model.user.ImageResp;
-import com.zhsoft.fretting.model.user.PhoneCodeResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.params.PhoneCodeParams;
+import com.zhsoft.fretting.params.RegisterFirstCheckPhoneParams;
 import com.zhsoft.fretting.params.RegisterFirstParams;
 import com.zhsoft.fretting.ui.activity.user.RegisterFirstActivity;
 
@@ -62,7 +60,7 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
                         } else {
                             getV().requestFail();
                             getV().showToast(model.getMessage());
-                            XLog.e("返回数据为空");
+//                            XLog.e("返回数据为空");
                         }
                     }
                 });
@@ -140,5 +138,33 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
                     }
                 });
 
+    }
+
+    public void checkPhoneExist(String text) {
+        CommonReqData reqData = new CommonReqData();
+        RegisterFirstCheckPhoneParams params = new RegisterFirstCheckPhoneParams();
+        params.setPhoneNo(text);
+        reqData.setData(params);
+        Api.getApi().checkPhoneExist(reqData)
+                .compose(XApi.<BaseResp>getApiTransformer())
+                .compose(XApi.<BaseResp>getScheduler())
+                .compose(getV().<BaseResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<BaseResp>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        getV().checkPhoneExistFail(false);
+                    }
+
+                    @Override
+                    public void onNext(BaseResp resp) {
+                        if (resp != null && resp.getStatus() == 200) {
+                            getV().checkPhoneExistSuccess();
+                        } else {
+                            getV().checkPhoneExistFail(true);
+                            getV().showToast(resp.getMessage());
+
+                        }
+                    }
+                });
     }
 }

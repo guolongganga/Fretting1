@@ -133,13 +133,13 @@ public class MainActivity extends XActivity {
         tvUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (RuntimeHelper.getInstance().isLogin()) {
+//                if (RuntimeHelper.getInstance().isLogin()) {
                     show(tvUser, 2);
-                } else {
-                    Bundle bundle = new Bundle();
-                    bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_INDEX_ACTIVITY);
-                    startActivity(LoginActivity.class, bundle);
-                }
+//                } else {
+//                    Bundle bundle = new Bundle();
+//                    bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_INDEX_ACTIVITY);
+//                    startActivity(LoginActivity.class, bundle);
+//                }
 
             }
         });

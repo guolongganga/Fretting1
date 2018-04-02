@@ -2,6 +2,8 @@ package com.zhsoft.fretting.ui.activity.user;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,36 +33,74 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  */
 
 public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
-    /** 返回按钮 */
-    @BindView(R.id.head_back) ImageButton headBack;
-    /** 标题 */
-    @BindView(R.id.head_title) TextView headTitle;
-    /** 选择银行 */
-    @BindView(R.id.ll_choose_bank) LinearLayout llChooseBank;
-    /** 银行名称 */
-    @BindView(R.id.banck_name) TextView bankName;
-    /** 银行卡号 */
-    @BindView(R.id.banknumber) EditText banknumber;
-    /** 预留手机号 */
-    @BindView(R.id.phone) EditText phone;
-    /** 短信验证码 */
-    @BindView(R.id.msg_code) EditText msgCode;
-    /** 获取短信验证码 */
-    @BindView(R.id.get_verify_code) CountdownButton getVerifyCode;
-    /** 保存按钮 */
-    @BindView(R.id.btn_save) Button btnSave;
+    /**
+     * 返回按钮
+     */
+    @BindView(R.id.head_back)
+    ImageButton headBack;
+    /**
+     * 标题
+     */
+    @BindView(R.id.head_title)
+    TextView headTitle;
+    /**
+     * 选择银行
+     */
+    @BindView(R.id.ll_choose_bank)
+    LinearLayout llChooseBank;
+    /**
+     * 银行名称
+     */
+    @BindView(R.id.banck_name)
+    TextView bankName;
+    /**
+     * 银行卡号
+     */
+    @BindView(R.id.banknumber)
+    EditText banknumber;
+    /**
+     * 预留手机号
+     */
+    @BindView(R.id.phone)
+    EditText phone;
+    /**
+     * 短信验证码
+     */
+    @BindView(R.id.msg_code)
+    EditText msgCode;
+    /**
+     * 获取短信验证码
+     */
+    @BindView(R.id.get_verify_code)
+    CountdownButton getVerifyCode;
+    /**
+     * 保存按钮
+     */
+    @BindView(R.id.btn_save)
+    Button btnSave;
 
-    /** 已选择的银行 */
+    /**
+     * 已选择的银行
+     */
     private BankResp bankResp;
-    /** 注册手机号 */
+    /**
+     * 注册手机号
+     */
     private String strPhone;
-    /** 登录标识 */
+    /**
+     * 登录标识
+     */
     private String token;
-    /** 用户编号 */
+    /**
+     * 用户编号
+     */
     private String userId;
-    /** 加载框 */
+    /**
+     * 加载框
+     */
     private HttpLoadingDialog httpLoadingDialog;
     private String trade_password;
+    private boolean shouldStopChange = false;
 
     @Override
     public int getLayoutId() {
@@ -95,6 +135,44 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
 
     @Override
     public void initEvents() {
+        banknumber.addTextChangedListener(new TextWatcher() {
+            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (shouldStopChange) {
+                    shouldStopChange = false;
+                    return;
+                }
+
+                shouldStopChange = true;
+
+                String str = s.toString().trim().replaceAll(" ", "");
+                int len = str.length();
+                int courPos;
+
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < len; i++) {
+                    builder.append(str.charAt(i));
+                    if (i == 3 || i == 7 || i == 11 || i == 15) {
+                        if (i != len - 1)
+                            builder.append(" ");
+                    }
+                }
+                courPos = builder.length();
+                banknumber.setText(builder.toString());
+                banknumber.setSelection(courPos);
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -59,7 +59,7 @@ public class FindPwdLoginFirstPresent extends XPresent<FindPwdLoginFirstActivity
                             getV().disposeUpdateResult(model.getData());
                         } else {
                             getV().requestFail();
-                            getV().showToast(model.getMessage());
+//                            getV().showToast(model.getMessage());
                             XLog.e("返回数据为空");
                         }
                     }

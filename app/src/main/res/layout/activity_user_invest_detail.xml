@@ -226,7 +226,7 @@
                         android:id="@+id/tv_bank_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_toLeftOf="@id/tv_last_number"
+                        android:layout_toLeftOf="@id/tv_bank_tail"
                         android:textColor="@color/color_333333"
                         android:textSize="@dimen/text_size_15"/>
 

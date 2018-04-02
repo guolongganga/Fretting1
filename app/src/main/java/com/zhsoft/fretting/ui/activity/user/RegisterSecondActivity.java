@@ -3,8 +3,10 @@ package com.zhsoft.fretting.ui.activity.user;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
 import android.view.View;
 import android.widget.Button;
@@ -33,7 +35,10 @@ import org.greenrobot.eventbus.EventBus;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
+import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
+
+import static android.icu.lang.UProperty.WHITE_SPACE;
 
 /**
  * 作者：sunnyzeng on 2017/12/14 13:54
@@ -86,6 +91,7 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
     private String token;
     /** 注册的手机号 */
     private String strPhone;
+    private boolean shouldStopChange = false;
 
     @Override
     public int getLayoutId() {
@@ -149,6 +155,45 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
 //
 //            }
 //        });
+        banknumber.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if (shouldStopChange) {
+                    shouldStopChange = false;
+                    return;
+                }
+
+                shouldStopChange = true;
+
+                String str = s.toString().trim().replaceAll(" ", "");
+                int len = str.length();
+                int courPos;
+
+                StringBuilder builder = new StringBuilder();
+                for (int i = 0; i < len; i++) {
+                    builder.append(str.charAt(i));
+                    if (i == 3 || i == 7 || i == 11 || i == 15) {
+                        if (i != len - 1)
+                            builder.append(" ");
+                    }
+                }
+                courPos = builder.length();
+                banknumber.setText(builder.toString());
+                banknumber.setSelection(courPos);
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -272,7 +317,7 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
      */
     public void requestOpenAccountFail() {
         httpLoadingDialog.dismiss();
-        showToast("开户失败");
+//        showToast("开户失败");
     }
 
     /**

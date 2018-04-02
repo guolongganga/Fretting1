@@ -11,8 +11,8 @@ public class Api {
     public static final String API_BASE_URL = "https://114.242.38.89:18443/";//测试服务器外网
 //    public static final String API_BASE_URL = "https://20.1.149.115:8443/";//经理
 //    public static final String API_BASE_URL = "https://20.1.149.116:8443/";//陈
-//    public static final String API_BASE_URL = "https://20.1.149.117:8443/";//苑
-//        public static final String API_BASE_URL = "https://20.1.149.125:8443/";//聂
+//    public static final String API_BASE_URL = "https://20.1.149.114:8443/";//苑
+//        public static final String API_BASE_URL = "https://20.1.149.130:8443/";//聂 老竹
 
     private static HttpUtil httpUtil;
 

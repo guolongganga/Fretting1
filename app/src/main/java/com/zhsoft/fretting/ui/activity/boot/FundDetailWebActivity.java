@@ -111,7 +111,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         headRightImgbtn.setImageResource(R.drawable.icon_common_search_white);
         EventBus.getDefault().register(this);
         httpLoadingDialog = new HttpLoadingDialog(context);
-        httpLoadingDialog.visible();
+
         //标题
 //        int title = bundle.getInt(Constant.WEB_TITLE);
         //链接
@@ -218,8 +218,8 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
                 pb.setVisibility(View.VISIBLE);
                 pb.setProgress(newProgress);
                 if (newProgress == 100) {
-                    pb.setVisibility(View.GONE);
-                    httpLoadingDialog.dismiss();
+                    pb.setVisibility(View.INVISIBLE);
+//                    httpLoadingDialog.dismiss();
                 }
                 super.onProgressChanged(view, newProgress);
             }
@@ -353,6 +353,12 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             //用户编号
             userId = App.getSharedPref().getString(Constant.USERID, "");
             getP().buyFund(token, userId, fundCode);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    httpLoadingDialog.visible();
+                }
+            });
         } else {
             //跳转回登录界面
             Bundle bundle = new Bundle();
@@ -372,6 +378,13 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             userId = App.getSharedPref().getString(Constant.USERID, "");
             //判断是否能够定投
             getP().investTime(token, userId, fundCode, fundName);
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    httpLoadingDialog.visible();
+                }
+            });
+
         } else {
             //跳转回登录界面
             Bundle bundle = new Bundle();
@@ -390,6 +403,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             //用户编号
             userId = App.getSharedPref().getString(Constant.USERID, "");
             getP().sellFundPre(token, userId, fundCode);
+            httpLoadingDialog.visible();
         } else {
             //跳转回登录界面
             Bundle bundle = new Bundle();
@@ -403,7 +417,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      * 定投计划
      */
     private void baseToInvestPlan() {
-//        httpLoadingDialog.visible();
+        httpLoadingDialog.visible();
         getP().buyOnFundData(token, userId, fundCode);
     }
 
@@ -438,6 +452,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      * 购买（是否符合购买资格）失败
      */
     public void requestBuyFundFail() {
+        httpLoadingDialog.dismiss();
     }
 
 
@@ -445,6 +460,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      * 购买（是否符合购买资格）成功 跳转购买页面
      */
     public void requestBuyFundSuccess(final BuyFundResp resp) {
+        httpLoadingDialog.dismiss();
         if (Constant.TO_OPEN_ACCOUNT.equals(resp.getCanBuy()) || Constant.TO_PERSON_INFO.equals(resp.getCanBuy())
                 || Constant.TO_RISK_TEST.equals(resp.getCanBuy())) {
             switchDialog(resp.getCanBuy());
@@ -488,7 +504,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      * 请求定投验证接口失败
      */
     public void requestInvestFail() {
-
+        httpLoadingDialog.dismiss();
     }
 
     /**
@@ -497,6 +513,8 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      * @param resp
      */
     public void requestInvestSuccess(final InvestResp resp) {
+
+        httpLoadingDialog.dismiss();
         if (Constant.TO_OPEN_ACCOUNT.equals(resp.getCanBuy()) || Constant.TO_PERSON_INFO.equals(resp.getCanBuy())
                 || Constant.TO_RISK_TEST.equals(resp.getCanBuy())) {
             switchDialog(resp.getCanBuy());
@@ -544,7 +562,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      * @param planResp
      */
     public void requestInvestPlanSuccess(InvestPlanResp planResp) {
-//        httpLoadingDialog.dismiss();
+        httpLoadingDialog.dismiss();
         //1有 0没有 定投
         if ("0".equals(planResp.getHasDt())) {
             //跳转定投购买
@@ -563,7 +581,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      * 去定投计划失败
      */
     public void requestInvestPlanFail() {
-//        httpLoadingDialog.dismiss();
+        httpLoadingDialog.dismiss();
     }
 
     /**

@@ -20,14 +20,12 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import com.nostra13.universalimageloader.core.ImageLoader;
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.LoginResp;
 import com.zhsoft.fretting.model.user.ImageResp;
 import com.zhsoft.fretting.present.user.RegisterFirstPresent;
-import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.utils.Base64ImageUtil;
@@ -36,6 +34,7 @@ import com.zhsoft.fretting.ui.widget.ChenJingET;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
+import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
@@ -153,6 +152,15 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
 
     @Override
     public void initEvents() {
+        phoneNumber.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                XLog.d("是否获取焦点" + hasFocus);
+                if (!hasFocus) {
+                    getP().checkPhoneExist(getText(phoneNumber));
+                }
+            }
+        });
 
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -411,6 +419,7 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
         mPopWindow.dismiss();
         //开始倒计时
         getVerifyCode.start();
+        showToast(R.string.success_send_phone_verify);
     }
 
     /**
@@ -419,7 +428,8 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
     public void requestPhoneCodeFail() {
         //获取失败的原因
         getVerifyCode.cancel();
-        showToast("后台那家伙说你输错验证码了...老铁");
+//        showToast("后台那家伙说你输错验证码了...老铁");
+        showToast(context.getString(R.string.wrong_phone_verify));
     }
 
 
@@ -451,4 +461,14 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
         finish();
     }
 
+    public void checkPhoneExistFail(boolean isExist) {
+        if (isExist) {
+            phoneNumber.setText("");
+            phoneNumber.requestFocus();
+        }
+    }
+
+    public void checkPhoneExistSuccess() {
+
+    }
 }

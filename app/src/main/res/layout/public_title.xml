@@ -17,7 +17,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/dimen_15"
             android:layout_marginRight="@dimen/dimen_15"
-            android:src="@mipmap/icon_back" />
+            android:src="@drawable/icon_common_back" />
 
     </RelativeLayout>
 

@@ -1,10 +1,15 @@
 package com.zhsoft.fretting.ui.activity.boot;
 
+import android.animation.Animator;
+import android.animation.TimeInterpolator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.animation.LinearInterpolator;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.zhsoft.fretting.App;
 import com.zhsoft.fretting.ui.activity.MainActivity;
@@ -12,12 +17,16 @@ import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Logger;
 
 import butterknife.BindView;
+import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
+import io.reactivex.Scheduler;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 作者：sunnyzeng on 2017/12/5
@@ -27,7 +36,7 @@ import io.reactivex.disposables.Disposable;
 public class StartActivity extends XActivity {
 
     @BindView(R.id.iv_jump)
-    ImageView ivJump;
+    TextView ivJump;
     @BindView(R.id.progress_bar)
     ProgressBar progressBar;
 
@@ -35,6 +44,7 @@ public class StartActivity extends XActivity {
 
     @BindView(R.id.iv_start)
     ImageView ivStart;//启动图
+    private ValueAnimator animator;//倒计时
 
 
     @Override
@@ -56,38 +66,74 @@ public class StartActivity extends XActivity {
             return;
         }
         setTranslucentStatus(false);
-        boolean firstUse = App.getSharedPref().getBoolean(Constant.FIRST_USE, true);
-        if (firstUse) {
-            //加载引导页面
-            WelcomeActivity.launch(context);
-            finish();
-            App.getSharedPref().putBoolean(Constant.FIRST_USE, false);
-        } else {
-            //启动页面 RxJava启动延迟启动
-            Observable.timer(2, TimeUnit.SECONDS).subscribe(new Observer<Long>() {
 
-                @Override
-                public void onSubscribe(Disposable d) {
+        animator = ValueAnimator.ofInt(3, 0);
+        animator.setInterpolator(new LinearInterpolator());
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator) {
+                ivJump.setText("跳过" + valueAnimator.getAnimatedValue().toString());
+            }
+        });
+        animator.setDuration(3000);
+        animator.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animator) {
 
-                }
+            }
 
-                @Override
-                public void onNext(Long value) {
-
-                }
-
-                @Override
-                public void onError(Throwable e) {
-
-                }
-
-                @Override
-                public void onComplete() {
+            @Override
+            public void onAnimationEnd(Animator animator) {
+                boolean firstUse = App.getSharedPref().getBoolean(Constant.FIRST_USE, true);
+                if (firstUse) {
+                    //加载引导页面
+                    WelcomeActivity.launch(context);
+                } else {
+                    //启动主页
                     startActivity(MainActivity.class);
-                    finish();
                 }
-            });
-        }
+                finish();
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animator) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animator) {
+
+            }
+        });
+        animator.start();
+
+
+//            Observable.timer(3, TimeUnit.SECONDS)
+//                    .subscribe(new Observer<Long>() {
+//
+//                @Override
+//                public void onSubscribe(Disposable d) {
+//
+//                }
+//
+//                @Override
+//                public void onNext(Long value) {
+////                    Logger.global.info("跳过"+value.intValue());
+////                    ivJump.setText("跳过"+value.intValue());
+//                }
+//
+//                @Override
+//                public void onError(Throwable e) {
+//
+//                }
+//
+//                @Override
+//                public void onComplete() {
+//                    startActivity(MainActivity.class);
+//                    finish();
+//                }
+//            });
+
     }
 
     @Override
@@ -95,6 +141,10 @@ public class StartActivity extends XActivity {
         ivJump.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (animator != null) {
+                    animator.cancel();
+                    animator = null;
+                }
                 ivJump.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
                 MainActivity.launch(context);

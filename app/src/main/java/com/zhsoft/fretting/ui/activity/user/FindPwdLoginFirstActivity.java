@@ -277,6 +277,7 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
         mPopWindow.dismiss();
         //开始倒计时
         getVerifyCode.start();
+        showToast(R.string.success_send_phone_verify);
     }
 
     /**
@@ -285,6 +286,6 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
     public void requestPhoneCodeFail() {
         //获取失败的原因
         getVerifyCode.cancel();
-        showToast("后台那家伙说你输错验证码了...老铁");
+        showToast(R.string.wrong_phone_verify);
     }
 }

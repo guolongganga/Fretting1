@@ -1,21 +1,25 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@android:id/background">
-        <shape>
-            <gradient
-                android:centerColor="@color/color_main_tint"
-                android:endColor="@color/color_main_tint"
-                android:startColor="@color/color_main_tint" />
-        </shape>
+        <clip>
+            <shape>
+                <solid android:color="@color/color999999"/>
+                <!--<gradient-->
+                    <!--android:centerColor="@color/color_main_tint"-->
+                    <!--android:endColor="@color/color_main_tint"-->
+                    <!--android:startColor="@color/color_main_tint" />-->
+            </shape>
+        </clip>
     </item>
 
     <item android:id="@android:id/secondaryProgress">
         <clip>
             <shape>
-                <gradient
-                    android:centerColor="#234"
-                    android:endColor="#a24"
-                    android:startColor="#234" />
+                <solid android:color="@color/color_main_tint"/>
+                <!--<gradient-->
+                    <!--android:centerColor="#234"-->
+                    <!--android:endColor="#a24"-->
+                    <!--android:startColor="#234" />-->
             </shape>
         </clip>
     </item>
@@ -23,10 +27,11 @@
     <item android:id="@android:id/progress">
         <clip>
             <shape>
-                <gradient
-                    android:centerColor="#40000000"
-                    android:endColor="#44000000"
-                    android:startColor="#33000001" />
+                <solid android:color="@color/colorAccent"/>
+                <!--<gradient-->
+                    <!--android:centerColor="#40000000"-->
+                    <!--android:endColor="#44000000"-->
+                    <!--android:startColor="#33000001" />-->
             </shape>
         </clip>
     </item>

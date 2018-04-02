@@ -93,14 +93,16 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:gravity="center_vertical">
+                android:layout_height="35dp"
+                android:layout_marginTop="5dp"
+                >
                 <!--10秒开户-->
                 <TextView
                     android:id="@+id/register"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentLeft="true"
+                    android:gravity="center_vertical"
                     android:text="@string/user_common_ten_register"
                     android:layout_marginLeft="@dimen/dimen_30"
                     android:textColor="@color/color_407FE7"
@@ -109,8 +111,9 @@
                 <TextView
                     android:id="@+id/find_password"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_alignParentRight="true"
+                    android:gravity="center_vertical"
                     android:layout_marginRight="@dimen/dimen_22"
                     android:text="@string/user_login_forget_password"
                     android:textColor="@color/color_407FE7"

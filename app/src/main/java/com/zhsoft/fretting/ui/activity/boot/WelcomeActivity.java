@@ -7,14 +7,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 
+import com.zhsoft.fretting.App;
+import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.ui.activity.MainActivity;
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.ui.adapter.boot.WelcomeViewpagerAdapter;
+import com.zhsoft.fretting.ui.widget.InkPageIndicator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 import cn.droidlover.xdroidmvp.router.Router;
 
@@ -29,6 +33,9 @@ public class WelcomeActivity extends XActivity {
 
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
+
+    @BindView(R.id.indicator)
+    InkPageIndicator indicator;
 
     private List<View> dataList;
 
@@ -57,6 +64,7 @@ public class WelcomeActivity extends XActivity {
 
         WelcomeViewpagerAdapter adapter = new WelcomeViewpagerAdapter(context, dataList);
         mViewPager.setAdapter(adapter);
+        indicator.setViewPager(mViewPager);
     }
 
     @Override
@@ -67,6 +75,7 @@ public class WelcomeActivity extends XActivity {
             public void onClick(View v) {
                 MainActivity.launch(context);
                 finish();
+                App.getSharedPref().putBoolean(Constant.FIRST_USE, false);
             }
         });
     }

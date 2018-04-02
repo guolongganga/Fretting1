@@ -346,7 +346,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
             @Override
             public void onClick(View view) {
                 final String strAmount = getText(etAmount);
-                BigDecimal amount = BigDecimal.valueOf(Double.parseDouble(strAmount));
+
                 //表单验证通过才弹出Dialog
                 if (noNetWork()) {
                     showNetWorkError();
@@ -356,6 +356,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
                     showToast("请输入购买金额");
                     return;
                 }
+                BigDecimal amount = BigDecimal.valueOf(Double.parseDouble(strAmount));
                 //如果amount小于0，重新填写购买金额
                 if (amount.compareTo(BigDecimal.ZERO) <= 0) {
                     showToast("请输入正确的投资金额");

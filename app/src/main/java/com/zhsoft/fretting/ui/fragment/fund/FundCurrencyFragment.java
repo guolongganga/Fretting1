@@ -222,5 +222,6 @@ public class FundCurrencyFragment extends XFragment<FundCurrencyPresent> {
 //        }
         showToast("网络加载失败");
         contentLayout.showError();
+
     }
 }

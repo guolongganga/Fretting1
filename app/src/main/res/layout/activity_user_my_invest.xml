@@ -24,10 +24,16 @@
             <!--基金排序-->
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_alignBaseline="@+id/relativeLayout"
+                android:layout_alignBottom="@+id/relativeLayout"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
                 android:paddingLeft="@dimen/dimen_15">
                 <!--基金名称 条件-->
                 <TextView
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
                     android:id="@+id/tv_fund"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -35,7 +41,7 @@
                     android:paddingRight="5dp"
                     android:text="基金名称"
                     android:textColor="@color/color_97A1B7"
-                    android:textSize="@dimen/text_size_11"/>
+                    android:textSize="@dimen/text_size_11" />
                 <!--小三角图标-->
                 <ImageView
                     android:layout_width="wrap_content"
@@ -43,17 +49,20 @@
                     android:layout_alignBaseline="@id/tv_fund"
                     android:layout_marginBottom="@dimen/dimen_5"
                     android:layout_toRightOf="@id/tv_fund"
-                    android:src="@drawable/icon_fund_day_raise"/>
+                    android:src="@drawable/icon_fund_day_raise" />
             </RelativeLayout>
 
             <!--全部定投状态-->
             <RelativeLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
-                android:paddingRight="@dimen/dimen_15">
+                android:paddingRight="@dimen/dimen_15"
+                android:id="@+id/relativeLayout">
                 <!--全部定投状态 条件-->
                 <TextView
+                    android:paddingTop="5dp"
+                    android:paddingBottom="5dp"
                     android:id="@+id/tv_range"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"

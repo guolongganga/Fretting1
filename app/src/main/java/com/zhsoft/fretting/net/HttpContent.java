@@ -127,6 +127,9 @@ public class HttpContent {
     public static final String open_remitbranch_bank = "permissionCheck/redeem/openremitbranchbank";
     /** 计算这个手续费 */
     public static final String buy_fund_calculation = "permissionCheck/buyFundNew/calculation";
+   /**开户检测手机号是否存在*/
+    public static final String open_check_phone_exist = "noPermission/registCheckPhoneNo";
+
 
 
     /************************************************ html页面 **************************************************/

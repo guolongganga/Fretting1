@@ -67,6 +67,7 @@ import static com.zhsoft.fretting.net.HttpContent.my_times_buy_index;
 import static com.zhsoft.fretting.net.HttpContent.my_times_buy_state_change;
 import static com.zhsoft.fretting.net.HttpContent.newest_fund;
 import static com.zhsoft.fretting.net.HttpContent.open_account;
+import static com.zhsoft.fretting.net.HttpContent.open_check_phone_exist;
 import static com.zhsoft.fretting.net.HttpContent.open_remitbranch_bank;
 import static com.zhsoft.fretting.net.HttpContent.password_change_login;
 import static com.zhsoft.fretting.net.HttpContent.password_change_trade;
@@ -389,4 +390,9 @@ public interface HttpUtil {
     @Headers("appType:Android")
     @POST(buy_fund_calculation)
     Flowable<CalculationResp> buyFundCalculation(@Body CommonReqData reqData);
+
+    //注册检测手机号是否存在
+    @Headers("appType:Android")
+    @POST(open_check_phone_exist)
+    Flowable<BaseResp> checkPhoneExist(@Body CommonReqData reqData);
 }

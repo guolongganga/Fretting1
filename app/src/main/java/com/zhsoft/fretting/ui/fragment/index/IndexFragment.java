@@ -428,7 +428,7 @@ public class IndexFragment extends XFragment<IndexPresent> {
                 banner.setOnItemClickListener(new FlyBanner.OnItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
-                        showToast("点击了第" + position + "张图片");
+//                        showToast("点击了第" + position + "张图片");
                         Bundle bundle = new Bundle();
                         bundle.putString(Constant.WEB_LINK, bannerList.get(position).getAppurl());
                         startActivity(WebPublicActivity.class, bundle);

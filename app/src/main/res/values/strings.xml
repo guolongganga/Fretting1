@@ -6,7 +6,7 @@
     <string name="buy">购买</string>
 
 
-    <string name="app_name">微动利</string>
+    <string name="app_name">微银基金</string>
     <string name="click_logout">再按一次退出</string>
     <string name="request_error">服务器繁忙，请稍后重试</string>
 
@@ -114,5 +114,7 @@
     <!--结果页-->
     <string name="result_title_buy">交易详情</string>
     <string name="result_title_sell">卖出详情</string>
+    <string name="wrong_phone_verify">验证码输入错误，请重试</string>
+    <string name="success_send_phone_verify">手机验证码已发送</string>
 
 </resources>
