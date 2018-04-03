@@ -113,7 +113,7 @@
                 android:layout_weight="1"
                 android:background="@null"
                 android:hint="请输入赎回份额"
-                android:inputType="number"
+                android:inputType="numberDecimal|number"
                 android:textColor="@color/color_333333"
                 android:textColorHint="@color/color_CCCCCC"
                 android:textSize="@dimen/text_size_16"/>

@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.View;
@@ -182,6 +183,7 @@ public class BuyActivity extends XActivity<BuyPresent> {
 
     @Override
     public void initEvents() {
+        etAmount.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(2)});
         /*返回*/
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,13 +223,13 @@ public class BuyActivity extends XActivity<BuyPresent> {
                     return;
                 }
                 //格式化输入金额
-                DecimalFormat df = new DecimalFormat(",###,##0.00"); //保留两位小数
-                String dealAmount = df.format(amount);
+//                DecimalFormat df = new DecimalFormat(",###,##0.00"); //保留两位小数
+//                String dealAmount = df.format(amount);
                 //弹出框
                 fundBuyDialog = new FundBuyDialog
                         .Builder(context)
                         .setFundName(fundName)
-                        .setFundAmount("￥" + dealAmount)
+                        .setFundAmount("￥" + amount)
                         .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
                             @Override
                             public void onFinish(String str) {
@@ -272,7 +274,12 @@ public class BuyActivity extends XActivity<BuyPresent> {
 
             @Override
             public void onTextChanged(CharSequence charSequence, int start, int before, int count) {
-                if (!"".equals(charSequence.toString())) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!"".equals(s.toString())) {
                     //如果输入的内容不为空，查询费率,确认按钮可点击
                     sure.setBackgroundColor(getResources().getColor(R.color.color_4D7BFE));
                     getP().buyFundCalculation(token, userId, fundCode, getText(etAmount));
@@ -283,11 +290,6 @@ public class BuyActivity extends XActivity<BuyPresent> {
                     sure.setClickable(false);
                     tvPoundage.setText("申购费  0.00元");
                 }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
             }
         });
     }
@@ -404,7 +406,11 @@ public class BuyActivity extends XActivity<BuyPresent> {
      */
     public void requestCalculationSuccess(CalculationResp calculationResp) {
         //申购费
-        tvPoundage.setText("申购费  " + calculationResp.getFare_sx() + "元");
+        String rate = calculationResp.getFare_sx();
+        if (rate.equals("null")){
+            rate = "0.00";
+        }
+        tvPoundage.setText("申购费  " + rate + "元");
     }
 
     /**

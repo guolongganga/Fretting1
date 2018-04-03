@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -156,7 +157,7 @@ public abstract class XActivity<P extends IPresent> extends RxAppCompatActivity 
 
     private void setTitleHeight(View view) {
         if (view != null) {
-            ColorRelativeLayout title = (ColorRelativeLayout) view.findViewById(R.id.title);
+            ColorRelativeLayout title =  view.findViewById(R.id.title);
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.KITKAT) {
                 if (title != null) {
                     ViewGroup.LayoutParams lp = title.getLayoutParams();
@@ -227,9 +228,28 @@ public abstract class XActivity<P extends IPresent> extends RxAppCompatActivity 
     public void startActivity(Class<?> clazz) {
         this.startActivity(clazz, (Bundle) null, 0);
     }
+    //启动Activity
+    public void startActivityDelay(final Class<?> clazz) {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(clazz, (Bundle) null, 0);
+            }
+        },300);
+
+    }
 
     public void startActivity(Class<?> clazz, Bundle bundle) {
         this.startActivity(clazz, bundle, 0);
+    }
+    public void startActivityDelay(final Class<?> clazz, final Bundle bundle) {
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                startActivity(clazz, bundle, 0);
+            }
+        },300);
     }
 
     public void startActivity(Class<?> clazz, int requestCode) {

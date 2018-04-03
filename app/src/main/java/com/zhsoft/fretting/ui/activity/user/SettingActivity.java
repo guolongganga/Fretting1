@@ -1,13 +1,16 @@
 package com.zhsoft.fretting.ui.activity.user;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -24,6 +27,7 @@ import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.present.user.SettingPresent;
 import com.zhsoft.fretting.ui.activity.boot.WebPublicActivity;
 import com.zhsoft.fretting.ui.activity.boot.WebRiskActivity;
+import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.utils.RuntimeHelper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -77,6 +81,7 @@ public class SettingActivity extends XActivity<SettingPresent> {
     private HttpLoadingDialog httpLoadingDialog;
     /** 是否开户 */
     private String isOpenAccount;
+    private CustomDialog dialog;
 
     @Override
 
@@ -105,6 +110,13 @@ public class SettingActivity extends XActivity<SettingPresent> {
         //请求是否风险等级或是否做过风险等级
         httpLoadingDialog.visible();
         getP().riskGrade(token, userId);
+
+        setRippBac(personinfo);
+        setRippBac(phone);
+        setRippBac(passwordManager);
+        setRippBac(bankcard);
+
+        setRippBac(aboutUs);
     }
 
 
@@ -118,7 +130,7 @@ public class SettingActivity extends XActivity<SettingPresent> {
                     showToast("您还未开户，请先去开户");
                     return;
                 }
-                startActivity(PersonInfoActivity.class);
+                startActivityDelay(PersonInfoActivity.class);
             }
         });
         phone.setOnClickListener(new View.OnClickListener() {
@@ -128,7 +140,7 @@ public class SettingActivity extends XActivity<SettingPresent> {
                     showToast("您还未开户，请先去开户");
                     return;
                 }
-                startActivity(PhoneActivity.class);
+                startActivityDelay(PhoneActivity.class);
             }
         });
         passwordManager.setOnClickListener(new View.OnClickListener() {
@@ -138,7 +150,7 @@ public class SettingActivity extends XActivity<SettingPresent> {
                     showToast("您还未开户，请先去开户");
                     return;
                 }
-                startActivity(ChangePwdActivity.class);
+                startActivityDelay(ChangePwdActivity.class);
             }
         });
         bankcard.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +160,7 @@ public class SettingActivity extends XActivity<SettingPresent> {
                     showToast("您还未开户，请先去开户");
                     return;
                 }
-                startActivity(BankCardActivity.class);
+                startActivityDelay(BankCardActivity.class);
             }
         });
         riskTest.setOnClickListener(new View.OnClickListener() {
@@ -185,7 +197,7 @@ public class SettingActivity extends XActivity<SettingPresent> {
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.about_us);
-                startActivity(WebPublicActivity.class, bundle);
+                startActivityDelay(WebPublicActivity.class, bundle);
             }
         });
 //        changeUser.setOnClickListener(new View.OnClickListener() {
@@ -205,10 +217,27 @@ public class SettingActivity extends XActivity<SettingPresent> {
 ////                EventBus.getDefault().post(new RefreshUserDataEvent());
 //                //更新登录状态
 //                RuntimeHelper.getInstance().setLogin(false);
-                RuntimeHelper.getInstance().isInvalidToken();
 
-                showToast("安全退出");
-                finish();
+                if (dialog == null) {
+                    dialog = new CustomDialog.Builder(context)
+                            .setMessage("您确定要退出吗？")
+                            .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialog.dismiss();
+                                }
+                            }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    dialog.dismiss();
+                                    RuntimeHelper.getInstance().isInvalidToken();
+
+                                    showToast("安全退出");
+                                    finish();
+                                }
+                            }).create();
+                }
+                dialog.show();
             }
         });
         headBack.setOnClickListener(new View.OnClickListener() {
@@ -304,5 +333,24 @@ public class SettingActivity extends XActivity<SettingPresent> {
         Bundle bundle = new Bundle();
         bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_INDEX_ACTIVITY);
         startActivity(LoginActivity.class, bundle);
+    }
+
+    /**
+     * 设置水波纹点击背景
+     * @param itemView
+     */
+    private void setRippBac(View itemView){
+        if (itemView.getBackground() == null) {
+            TypedValue typedValue = new TypedValue();
+            Resources.Theme theme = itemView.getContext().getTheme();
+            int top = itemView.getPaddingTop();
+            int bottom = itemView.getPaddingBottom();
+            int left = itemView.getPaddingLeft();
+            int right = itemView.getPaddingRight();
+            if (theme.resolveAttribute(android.R.attr.selectableItemBackground, typedValue, true)) {
+                itemView.setBackgroundResource(typedValue.resourceId);
+            }
+            itemView.setPadding(left, top, right, bottom);
+        }
     }
 }

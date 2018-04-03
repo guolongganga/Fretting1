@@ -7,6 +7,7 @@
     <include layout="@layout/layout_head"/>
 
     <ScrollView
+        android:background="#eee"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -17,14 +18,16 @@
             android:orientation="vertical">
 
             <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/dimen_10"
                 android:background="@color/color_FFFFFF"
                 android:orientation="vertical"
-                android:paddingLeft="@dimen/dimen_15">
+                >
                 <!--个人信息-->
                 <TextView
+
                     android:id="@+id/personinfo"
                     style="@style/user_setting_line"
                     android:text="个人信息"
@@ -106,12 +109,13 @@
                 android:layout_height="wrap_content"
                 android:background="@color/color_FFFFFF"
                 android:orientation="vertical"
-                android:paddingLeft="@dimen/dimen_15"
+
                 >
                 <!--客服电话-->
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dimen_54"
+                    android:paddingLeft="@dimen/dimen_15"
                     android:gravity="center_vertical">
 
                     <TextView

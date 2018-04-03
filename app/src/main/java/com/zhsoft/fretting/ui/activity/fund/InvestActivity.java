@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextUtils;
@@ -57,6 +58,7 @@ import java.util.Map;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
+import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
@@ -281,6 +283,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
 
     @Override
     public void initEvents() {
+        etAmount.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(2)});
         /*返回*/
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -380,12 +383,12 @@ public class InvestActivity extends XActivity<InvestPersent> {
                     return;
                 }
                 //格式化输入金额
-                DecimalFormat df = new DecimalFormat(",###,##0.00"); //保留两位小数
-                String dealAmount = df.format(amount);
+//                DecimalFormat df = new DecimalFormat(",###,##0.00"); //保留两位小数
+//                String dealAmount = df.format(amount);
                 fundBuyDialog = new FundBuyDialog
                         .Builder(context)
                         .setFundName(fundName)
-                        .setFundAmount("￥" + dealAmount)
+                        .setFundAmount("￥" + amount)
                         .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
                             @Override
                             public void onFinish(String str) {
@@ -433,6 +436,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
                     sure.setBackgroundColor(getResources().getColor(R.color.color_B9D1F8));
                     sure.setClickable(false);
                 }
+
             }
 
             @Override

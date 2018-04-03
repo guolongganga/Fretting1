@@ -1,13 +1,17 @@
 package com.zhsoft.fretting.ui.activity;
 
 import android.app.Activity;
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.TypedValue;
 import android.view.View;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.zhsoft.fretting.App;
@@ -29,6 +33,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
 import cn.droidlover.xdroidmvp.router.Router;
 
@@ -39,15 +44,24 @@ import cn.droidlover.xdroidmvp.router.Router;
 
 public class MainActivity extends XActivity {
     //菜单按钮
-    /** 首页 */
-    @BindView(R.id.tv_index)
-    TextView tvIndex;
-    /** 基金 */
-    @BindView(R.id.tv_fund)
-    TextView tvFund;
-    /** 我的 */
-    @BindView(R.id.tv_user)
-    TextView tvUser;
+//    /** 首页 */
+//    @BindView(R.id.tv_index)
+//    TextView tvIndex;
+//    /** 基金 */
+//    @BindView(R.id.tv_fund)
+//    TextView tvFund;
+//    /** 我的 */
+//    @BindView(R.id.tv_user)
+//    TextView tvUser;
+
+    @BindView(R.id.main_bottom_rg)
+    RadioGroup radioGroup;
+    @BindView(R.id.main_bottom_index)
+    RadioButton radioButtonIndex;
+    @BindView(R.id.main_bottom_fund)
+    RadioButton radioButtonFund;
+    @BindView(R.id.main_bottom_mine)
+    RadioButton radioButtonMine;
 
     /** 碎片集合 */
     private List<Fragment> fragments;
@@ -58,7 +72,7 @@ public class MainActivity extends XActivity {
     /** 当前Tab页面索引 */
     private int currentTab;
     /** 底部tab */
-    private List<TextView> textViews;
+//    private List<TextView> textViews;
     /** 用户编号 */
     private String userId;
     /** 登录标识 */
@@ -78,10 +92,12 @@ public class MainActivity extends XActivity {
             super.handleMessage(msg);
             if (msg.what == 0) {
                 allowStateLoss = true;
-                show(tvIndex, 0);
+//                show(0);
+                radioButtonIndex.setChecked(true);
             } else if (msg.what == 2) {
                 allowStateLoss = true;
-                show(tvUser, 2);
+                radioButtonMine.setChecked(true);
+//                show(2);
             }
         }
     };
@@ -103,43 +119,64 @@ public class MainActivity extends XActivity {
         fragments.add(new FundFragment());
         fragments.add(new UserFragment());
 
-        textViews = new ArrayList<>();
-        textViews.add(tvIndex);
-        textViews.add(tvFund);
-        textViews.add(tvUser);
+//        textViews = new ArrayList<>();
+//        textViews.add(tvIndex);
+//        textViews.add(tvFund);
+//        textViews.add(tvUser);
 
         //默认显示主页
-        show(tvIndex, 0);
+        show(0);
+        setRippBac(radioButtonIndex);
+        setRippBac(radioButtonFund);
+        setRippBac(radioButtonMine);
 
     }
 
     @Override
     public void initEvents() {
-        //切换底部菜单
-        tvIndex.setOnClickListener(new View.OnClickListener() {
+//        //切换底部菜单
+//        tvIndex.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                show(tvIndex, 0);
+//            }
+//        });
+//
+//        tvFund.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                show(tvFund, 1);
+//            }
+//        });
+//
+//        tvUser.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+////                if (RuntimeHelper.getInstance().isLogin()) {
+//                show(tvUser, 2);
+////                } else {
+////                    Bundle bundle = new Bundle();
+////                    bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_INDEX_ACTIVITY);
+////                    startActivity(LoginActivity.class, bundle);
+////                }
+//
+//            }
+//        });
+        radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(View v) {
-                show(tvIndex, 0);
-            }
-        });
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                switch (checkedId){
+                    case R.id.main_bottom_index:
+                        show(0);
+                        break;
+                    case R.id.main_bottom_fund:
+                        show(1);
+                        break;
+                    case R.id.main_bottom_mine:
+                        show(2);
+                        break;
+                }
 
-        tvFund.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                show(tvFund, 1);
-            }
-        });
-
-        tvUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                if (RuntimeHelper.getInstance().isLogin()) {
-                    show(tvUser, 2);
-//                } else {
-//                    Bundle bundle = new Bundle();
-//                    bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_INDEX_ACTIVITY);
-//                    startActivity(LoginActivity.class, bundle);
-//                }
 
             }
         });
@@ -157,10 +194,9 @@ public class MainActivity extends XActivity {
     /**
      * 切换底部菜单栏
      *
-     * @param textView 点击的tab
      * @param idx      当前位置
      */
-    public void show(TextView textView, int idx) {
+    public void show(int idx) {
         for (int i = 0; i < fragments.size(); i++) {
             fragment = fragments.get(i);
             ft = getSupportFragmentManager().beginTransaction();
@@ -173,24 +209,24 @@ public class MainActivity extends XActivity {
                     ft.add(R.id.fl_content, fragment);
                 }
 
-                Drawable drawable = null;
-                if (idx == 0) {
-                    drawable = getResources().getDrawable(R.drawable.tab_index);
-
-                } else if (idx == 1) {
-                    drawable = getResources().getDrawable(R.drawable.tab_fund);
-                } else if (idx == 2) {
-                    drawable = getResources().getDrawable(R.drawable.tab_user);
-                }
-                // 这一步必须要做,否则不会显示.
-                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
-                textView.setCompoundDrawables(null, drawable, null, null);
-                textView.setTextColor(getResources().getColor(R.color.color_main));
-                textView.setSelected(true);
+//                Drawable drawable = null;
+//                if (idx == 0) {
+//                    drawable = getResources().getDrawable(R.drawable.tab_index);
+//
+//                } else if (idx == 1) {
+//                    drawable = getResources().getDrawable(R.drawable.tab_fund);
+//                } else if (idx == 2) {
+//                    drawable = getResources().getDrawable(R.drawable.tab_user);
+//                }
+//                // 这一步必须要做,否则不会显示.
+//                drawable.setBounds(0, 0, drawable.getMinimumWidth(), drawable.getMinimumHeight());
+//                textView.setCompoundDrawables(null, drawable, null, null);
+//                textView.setTextColor(getResources().getColor(R.color.color_main));
+//                textView.setSelected(true);
                 ft.show(fragment);
             } else {
-                textViews.get(i).setTextColor(getResources().getColor(R.color.color_666666));
-                textViews.get(i).setSelected(false);
+//                textViews.get(i).setTextColor(getResources().getColor(R.color.color_666666));
+//                textViews.get(i).setSelected(false);
                 ft.hide(fragment);
             }
 
@@ -262,7 +298,24 @@ public class MainActivity extends XActivity {
             return;
         }
     }
-
+    /**
+     * 设置水波纹点击背景
+     * @param itemView
+     */
+    private void setRippBac(View itemView){
+        if (itemView.getBackground() == null) {
+            TypedValue typedValue = new TypedValue();
+            Resources.Theme theme = itemView.getContext().getTheme();
+            int top = itemView.getPaddingTop();
+            int bottom = itemView.getPaddingBottom();
+            int left = itemView.getPaddingLeft();
+            int right = itemView.getPaddingRight();
+            if (theme.resolveAttribute(android.R.attr.selectableItemBackground, typedValue, true)) {
+                itemView.setBackgroundResource(typedValue.resourceId);
+            }
+            itemView.setPadding(left, top, right, bottom);
+        }
+    }
 //    /**
 //     * 无效token
 //     *

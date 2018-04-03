@@ -52,7 +52,7 @@ public abstract class BaseWebActivity<P> extends XActivity {
     @BindView(R.id.pb)
     public ProgressBar pb;
     /** 加载圈 */
-    public HttpLoadingDialog httpLoadingDialog;
+//    public HttpLoadingDialog httpLoadingDialog;
     /** 加载地址 */
     public String link;
 
@@ -67,8 +67,8 @@ public abstract class BaseWebActivity<P> extends XActivity {
     public void initData(Bundle bundle) {
 
         link = bundle.getString(Constant.WEB_LINK);
-        httpLoadingDialog = new HttpLoadingDialog(context);
-        httpLoadingDialog.visible();
+//        httpLoadingDialog = new HttpLoadingDialog(context);
+//        httpLoadingDialog.visible();
         webSetting();
         //添加header
         String ua = mWeb.getSettings().getUserAgentString();
@@ -98,7 +98,7 @@ public abstract class BaseWebActivity<P> extends XActivity {
 
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                httpLoadingDialog.visible();
+//                httpLoadingDialog.visible();
                 return super.shouldOverrideUrlLoading(view, url);
             }
 
@@ -111,7 +111,7 @@ public abstract class BaseWebActivity<P> extends XActivity {
                 String title = view.getTitle();
                 XLog.d("WebView", "TITLE=" + title);
                 headTitle.setText(title);
-                httpLoadingDialog.dismiss();
+//                httpLoadingDialog.dismiss();
                 /**
                  *  如果紧跟着
                  *  webView.loadUrl(file:///android_asset/index.html);
