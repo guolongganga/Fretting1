@@ -168,7 +168,7 @@ public class InvestPersent extends XPresent<InvestActivity> {
                             //请求成功 返回实体
                             getV().requestSureInvestSuccess(resp.getData());
                         } else if (resp != null && resp.getStatus() == Constant.PASSWORD_ERROR_STATUS) {
-                            getV().passwordError();
+                            getV().passwordError(resp.getMessage());
                         } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(resp.getMessage());
                             getV().areadyLogout();

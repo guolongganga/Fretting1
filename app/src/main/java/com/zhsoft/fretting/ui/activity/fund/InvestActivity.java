@@ -366,7 +366,9 @@ public class InvestActivity extends XActivity<InvestPersent> {
                     return;
                 }
                 //如果amount小于最小购买金额，重新填写购买金额
-                if (amount.compareTo(investResp.getMinPurchaseAmt()) < 0) {
+
+//                if (amount.compareTo(investResp.getMinPurchaseAmt()) < 0) {
+                if (Float.parseFloat(strAmount) < 0) {
                     showToast("最小投资金额为" + BigDecimalUtil.bigdecimalToString(investResp.getMinPurchaseAmt()) + "元");
                     return;
                 }
@@ -534,11 +536,12 @@ public class InvestActivity extends XActivity<InvestPersent> {
 
     /**
      * 提交定投数据，返回输入密码错误
+     * @param message
      */
-    public void passwordError() {
+    public void passwordError(String message) {
         httpLoadingDialog.dismiss();
         customDialog = new CustomDialog.Builder(context)
-                .setMessage("交易密码错误，请重试")
+                .setMessage(message)
                 .setNegativeButton("忘记密码", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

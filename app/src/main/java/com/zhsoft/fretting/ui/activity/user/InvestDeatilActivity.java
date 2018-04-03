@@ -396,11 +396,11 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
     /**
      * 立即购买 密码错误
      */
-    public void passwordError(final String investState) {
+    public void passwordError(final String investState,String message) {
         httpLoadingDialog.dismiss();
         if (customDialog == null) {
             customDialog = new CustomDialog.Builder(context)
-                    .setMessage("交易密码错误，请重试")
+                    .setMessage(message)
                     .setNegativeButton("忘记密码", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

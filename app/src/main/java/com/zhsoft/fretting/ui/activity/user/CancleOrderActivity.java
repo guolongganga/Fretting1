@@ -198,12 +198,13 @@ public class CancleOrderActivity extends XActivity<CancleOrderPresent> {
 
     /**
      * 撤单 密码错误
+     * @param message
      */
-    public void passwordError() {
+    public void passwordError(String message) {
         httpLoadingDialog.dismiss();
         if (errorDialog == null) {
             errorDialog = new CustomDialog.Builder(context)
-                    .setMessage("交易密码错误，请重试")
+                    .setMessage(message)
                     .setNegativeButton("忘记密码", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialogInterface, int i) {

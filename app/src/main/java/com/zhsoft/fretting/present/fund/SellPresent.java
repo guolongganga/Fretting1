@@ -113,7 +113,7 @@ public class SellPresent extends XPresent<SellActivity> {
                             getV().requestSellSuccess(resp.getData());
                         } else if (resp != null && resp.getStatus() == Constant.PASSWORD_ERROR_STATUS) {
                             //密码错误状态码
-                            getV().passwordError();
+                            getV().passwordError(resp.getMessage());
                         } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(resp.getMessage());
                             getV().areadyLogout();

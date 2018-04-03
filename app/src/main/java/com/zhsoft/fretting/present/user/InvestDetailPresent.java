@@ -153,7 +153,8 @@ public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
                             getV().requestChangeStateSuccess();
                         } else if (resp != null && resp.getStatus() == Constant.PASSWORD_ERROR_STATUS) {
                             //密码错误的状态码
-                            getV().passwordError(investState);
+//                            getV().passwordError(investState);
+                            getV().passwordError(investState,resp.getMessage());
                         } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(resp.getMessage());
                             getV().areadyLogout();
