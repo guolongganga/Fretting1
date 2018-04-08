@@ -5,24 +5,32 @@
     android:orientation="vertical">
 
     <!--<com.zhsoft.fretting.ui.widget.TitleView-->
-        <!--android:id="@+id/title_view"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content" />-->
-    <include layout="@layout/layout_head"/>
+    <!--android:id="@+id/title_view"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content" />-->
+    <include layout="@layout/layout_head" />
 
-    <ProgressBar
-        android:id="@+id/pb"
-        style="?android:attr/progressBarStyleHorizontal"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:indeterminateOnly="false"
-        android:max="100"
-        android:progressDrawable="@drawable/progress_bar_states"></ProgressBar>
+        android:layout_height="match_parent">
 
-    <WebView
-        android:id="@+id/my_web"
-        android:scrollbars="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+
+        <WebView
+            android:id="@+id/my_web"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scrollbars="vertical" />
+        <ProgressBar
+            android:id="@+id/pb"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:indeterminateOnly="false"
+            android:max="100"
+            android:progressDrawable="@drawable/progress_bar_states">
+
+        </ProgressBar>
+
+    </RelativeLayout>
 
 </LinearLayout>

@@ -1,11 +1,18 @@
 package com.zhsoft.fretting.ui.fragment.user;
 
 
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.AlertDialog;
+import android.system.Os;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -20,6 +27,7 @@ import com.zhsoft.fretting.event.RefreshUserDataEvent;
 import com.zhsoft.fretting.model.user.HoldFundResp;
 import com.zhsoft.fretting.model.user.MyHoldFundResp;
 import com.zhsoft.fretting.model.user.UserAccountResp;
+import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.present.user.UserPresent;
 import com.zhsoft.fretting.ui.activity.user.BonusActivity;
 import com.zhsoft.fretting.ui.activity.user.CancleOrderActivity;
@@ -43,6 +51,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
+import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
 import cn.droidlover.xdroidmvp.net.NetError;
 
@@ -52,56 +61,127 @@ import cn.droidlover.xdroidmvp.net.NetError;
  */
 
 public class UserFragment extends XFragment<UserPresent> {
-    /** 返回按钮 */
-    @BindView(R.id.head_back) ImageButton headBack;
-    /** 标题 */
-    @BindView(R.id.head_title) TextView headTitle;
-    /** 设置 */
-    @BindView(R.id.head_right) Button headRight;
-    /** 总资产 */
-    @BindView(R.id.tv_total_assets) TextView tvTotalAssets;
-    /** 昨日收益 */
-    @BindView(R.id.tv_yesterday_income) TextView tvYesterdayIncome;
-    /** 累计收益时间 */
-    @BindView(R.id.tv_time_accumlate) TextView tvTimeAccumlate;
-    /** 累计收益 */
-    @BindView(R.id.tv_accumulate_earn) TextView tvAccumulateEarn;
-    /** 在途资产 */
-    @BindView(R.id.tv_passage) TextView tvPassage;
-    /** 收益时间 */
-    @BindView(R.id.tv_time) TextView tvTime;
-    /** 登录 */
-    @BindView(R.id.login) Button login;
-    /** 注册 */
-    @BindView(R.id.register) Button register;
-    /** 自选 */
-    @BindView(R.id.self_choose) TextView selfChoose;
-    /** 定投 */
-    @BindView(R.id.timing) TextView timing;
-    /** 交易查询 */
-    @BindView(R.id.transaction) TextView transaction;
-    /** 分红 */
-    @BindView(R.id.profit) TextView profit;
-    /** 撤单 */
-    @BindView(R.id.remove) TextView remove;
-    /** 未登录界面 */
-    @BindView(R.id.ll_logout) LinearLayout llLogout;
-    /** 已开户页卡界面 */
-    @BindView(R.id.ll_fund_content) LinearLayout llFundContent;
-    /** 去开户 */
-    @BindView(R.id.to_finish_register) Button toFinishRegister;
-    /** 页卡标签 */
-    @BindView(R.id.tab_layout) TabLayout mTabLayout;
-    /** 页卡 */
-    @BindView(R.id.view_pager) ViewPager mViewPager;
+    /**
+     * 返回按钮
+     */
+    @BindView(R.id.head_back)
+    ImageButton headBack;
+    /**
+     * 标题
+     */
+    @BindView(R.id.head_title)
+    TextView headTitle;
+    /**
+     * 设置
+     */
+    @BindView(R.id.head_right)
+    Button headRight;
+    /**
+     * 总资产
+     */
+    @BindView(R.id.tv_total_assets)
+    TextView tvTotalAssets;
+    /**
+     * 昨日收益
+     */
+    @BindView(R.id.tv_yesterday_income)
+    TextView tvYesterdayIncome;
+    /**
+     * 累计收益时间
+     */
+    @BindView(R.id.tv_time_accumlate)
+    TextView tvTimeAccumlate;
+    /**
+     * 累计收益
+     */
+    @BindView(R.id.tv_accumulate_earn)
+    TextView tvAccumulateEarn;
+    /**
+     * 在途资产
+     */
+    @BindView(R.id.tv_passage)
+    TextView tvPassage;
+    /**
+     * 收益时间
+     */
+    @BindView(R.id.tv_time)
+    TextView tvTime;
+    /**
+     * 登录
+     */
+    @BindView(R.id.login)
+    Button login;
+    /**
+     * 注册
+     */
+    @BindView(R.id.register)
+    Button register;
+    /**
+     * 自选
+     */
+    @BindView(R.id.self_choose)
+    TextView selfChoose;
+    /**
+     * 定投
+     */
+    @BindView(R.id.timing)
+    TextView timing;
+    /**
+     * 交易查询
+     */
+    @BindView(R.id.transaction)
+    TextView transaction;
+    /**
+     * 分红
+     */
+    @BindView(R.id.profit)
+    TextView profit;
+    /**
+     * 撤单
+     */
+    @BindView(R.id.remove)
+    TextView remove;
+    /**
+     * 未登录界面
+     */
+    @BindView(R.id.ll_logout)
+    LinearLayout llLogout;
+    /**
+     * 已开户页卡界面
+     */
+    @BindView(R.id.ll_fund_content)
+    LinearLayout llFundContent;
+    /**
+     * 去开户
+     */
+    @BindView(R.id.to_finish_register)
+    Button toFinishRegister;
+    /**
+     * 页卡标签
+     */
+    @BindView(R.id.tab_layout)
+    TabLayout mTabLayout;
+    /**
+     * 页卡
+     */
+    @BindView(R.id.view_pager)
+    ViewPager mViewPager;
 
-    /** 是否开户 */
+    /**
+     * 是否开户
+     */
     private String isOpenAccount;
-    /** 用户编号 */
+    /**
+     * 用户编号
+     */
     private String userId;
-    /** 登录标识 */
+    /**
+     * 登录标识
+     */
     private String token;
-    /** 加载圈 */
+    /**
+     * 加载圈
+     */
     private HttpLoadingDialog httpLoadingDialog;
     /**
      * 我的持仓基金
@@ -213,6 +293,25 @@ public class UserFragment extends XFragment<UserPresent> {
                 startActivity(LoginActivity.class);
             }
         });
+        if (App.isDebug)
+            login.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View v) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                    builder.setTitle("请选择您的测试服务器地址");
+                    builder.setSingleChoiceItems(Api.urls, App.getSharedPref().getInt("url", 0), new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+
+                            Api.resetUrl(which);
+                            dialog.dismiss();
+                            showToast("设置成功 " + Api.urls[which]);
+                        }
+                    });
+                    builder.create().show();
+                    return true;
+                }
+            });
         //注册
         register.setOnClickListener(new View.OnClickListener() {
             @Override

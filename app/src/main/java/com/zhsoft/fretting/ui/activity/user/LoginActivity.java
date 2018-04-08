@@ -72,6 +72,7 @@ public class LoginActivity extends XActivity<LoginPresent> {
 
         if (isNotEmpty(phone)) {
             username.setText(phone);
+            username.setSelection(phone.length());
         }
 
         if (bundle != null) {

@@ -179,6 +179,9 @@ public class Constant {
     //购买验证，未开户，跳转开户页面
     public static final Object TO_OPEN_ACCOUNT = "toOpenAccount";
 
+    //购买验证，您所绑定的银行卡暂不支持该基金定投业务,请选择申购方式购买！
+    public static final Object TO_CHANGE_ACCOUNT = "toChangeType";
+
     //购买验证，补全个人信息，跳转个人信息
     public static final Object TO_PERSON_INFO = "toPersonInfo";
 

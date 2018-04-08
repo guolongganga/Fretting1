@@ -116,5 +116,7 @@
     <string name="result_title_sell">卖出详情</string>
     <string name="wrong_phone_verify">验证码输入错误，请重试</string>
     <string name="success_send_phone_verify">手机验证码已发送</string>
+    <!--基金详情页，定投按钮，失败提示-->
+    <string name="invest_notallow">您所绑定的银行卡暂不支持该基金定投业务,请选择申购方式购买！</string>
 
 </resources>

@@ -203,7 +203,7 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
         //修改了银行卡
         isChange = "0";
         getP().getBankCardInfo(token, userId);
-        showToast("修改啦");
+//        showToast("修改啦");
     }
 
     /**

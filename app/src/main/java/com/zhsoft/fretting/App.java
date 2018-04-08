@@ -8,10 +8,13 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
+import com.zhsoft.fretting.net.Api;
 
 import java.io.File;
 
+import cn.droidlover.xdroidmvp.XDroidConf;
 import cn.droidlover.xdroidmvp.cache.SharedPref;
+import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.net.NetError;
 import cn.droidlover.xdroidmvp.net.NetProvider;
 import cn.droidlover.xdroidmvp.net.RequestHandler;
@@ -29,10 +32,16 @@ public class App extends Application {
 
     private static Context context;
     private static SharedPref sharedPref;
+    public static boolean isDebug = true;
+    public static int _urlindex;
 
     @Override
     public void onCreate() {
         super.onCreate();
+        context = this;
+        _urlindex = getSharedPref().getInt("url", 0);
+        //设置是否打印日志
+        XDroidConf.LOG = isDebug;
 //        //集成内存泄漏检测
 //        if (LeakCanary.isInAnalyzerProcess(this)) {
 //            // This process is dedicated to LeakCanary for heap analysis.
@@ -42,7 +51,7 @@ public class App extends Application {
 //        enabledStrictMode();
 //        LeakCanary.install(this);
 
-        context = this;
+
 
         initImageLoader(context);
 
@@ -93,6 +102,7 @@ public class App extends Application {
                 return false;
             }
         });
+
 
     }
 

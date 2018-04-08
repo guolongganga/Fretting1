@@ -147,8 +147,7 @@ public class StartActivity extends XActivity {
                 }
                 ivJump.setVisibility(View.GONE);
                 progressBar.setVisibility(View.VISIBLE);
-                MainActivity.launch(context);
-                finish();
+//                finish();
             }
         });
     }

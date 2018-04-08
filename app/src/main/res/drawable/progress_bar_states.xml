@@ -1,37 +1,35 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@android:id/background">
-        <clip>
-            <shape>
-                <solid android:color="@color/color999999"/>
-                <!--<gradient-->
-                    <!--android:centerColor="@color/color_main_tint"-->
-                    <!--android:endColor="@color/color_main_tint"-->
-                    <!--android:startColor="@color/color_main_tint" />-->
-            </shape>
-        </clip>
+
+        <shape>
+            <solid android:color="@color/color_B3FFFFFF" />
+            <!--<gradient-->
+            <!--android:centerColor="@color/color_main_tint"-->
+            <!--android:endColor="@color/color_main_tint"-->
+            <!--android:startColor="@color/color_main_tint" />-->
+        </shape>
     </item>
 
-    <item android:id="@android:id/secondaryProgress">
-        <clip>
-            <shape>
-                <solid android:color="@color/color_main_tint"/>
-                <!--<gradient-->
-                    <!--android:centerColor="#234"-->
-                    <!--android:endColor="#a24"-->
-                    <!--android:startColor="#234" />-->
-            </shape>
-        </clip>
-    </item>
+    <!--<item android:id="@android:id/secondaryProgress">-->
+    <!--<clip>-->
+    <!--<shape>-->
+    <!--<solid android:color="@color/color_main_tint"/>-->
+    <!--&lt;!&ndash;<gradient&ndash;&gt;-->
+    <!--&lt;!&ndash;android:centerColor="#234"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:endColor="#a24"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:startColor="#234" />&ndash;&gt;-->
+    <!--</shape>-->
+    <!--</clip>-->
+    <!--</item>-->
 
     <item android:id="@android:id/progress">
         <clip>
             <shape>
-                <solid android:color="@color/colorAccent"/>
-                <!--<gradient-->
-                    <!--android:centerColor="#40000000"-->
-                    <!--android:endColor="#44000000"-->
-                    <!--android:startColor="#33000001" />-->
+                <!--<solid android:color="@color/color_1862b7" />-->
+                <gradient
+                android:endColor="@color/color_1862b7"
+                android:startColor="@color/color_1a7bcd" />
             </shape>
         </clip>
     </item>

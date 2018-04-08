@@ -543,7 +543,15 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
                         }).create();
             }
             validateDialog.show();
-        } else {
+        }else if (Constant.TO_CHANGE_ACCOUNT.equals(resp.getCanBuy())){
+            new CustomDialog.Builder(context).setMessage(R.string.invest_notallow).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.dismiss();
+                }
+            }).create().show();
+
+        } else{
 
             //去定投
             Bundle bundle = new Bundle();
