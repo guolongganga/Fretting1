@@ -51,61 +51,99 @@ import cn.droidlover.xrecyclerview.XRecyclerView;
 
 public class IndexFragment extends XFragment<IndexPresent> {
 
-    /** 轮播图 */
+    /**
+     * 轮播图
+     */
     @BindView(R.id.banner)
     FlyBanner banner;
-    /** 人气产品 */
+    /**
+     * 人气产品
+     */
     @BindView(R.id.xrv_popularity)
     XRecyclerView xrvPopularity;
-    /** 人气产品 更多 */
+    /**
+     * 人气产品 更多
+     */
     @BindView(R.id.popularity_more)
     TextView popularityMore;
-    /** 明星基金 */
+    /**
+     * 明星基金
+     */
     @BindView(R.id.ll_star)
     RelativeLayout llStar;
-    /** 明星基金 收益率 */
+    /**
+     * 明星基金 收益率
+     */
     @BindView(R.id.tv_seven_earnings)
     TextView tvSevenEarnings;
-    /** 明星基金 收益率描述 */
+    /**
+     * 明星基金 收益率描述
+     */
     @BindView(R.id.tv_star_rate_desc)
     TextView tvStarRateDesc;
-    /** 明星基金 百分号 */
+    /**
+     * 明星基金 百分号
+     */
     @BindView(R.id.tv_percent)
     TextView tvPercent;
-    /** 明星基金 名称 */
+    /**
+     * 明星基金 名称
+     */
     @BindView(R.id.tv_wan_earnings)
     TextView tvWanarnings;
-    /** 明星基金 购买 */
+    /**
+     * 明星基金 购买
+     */
     @BindView(R.id.btn_buy)
     Button btnBuy;
-    /** 指数基金产品1 */
+    /**
+     * 指数基金产品1
+     */
     @BindView(R.id.rl_finger_one)
     RelativeLayout rlFingerOne;
-    /** 指数基金产品1 名称 */
+    /**
+     * 指数基金产品1 名称
+     */
     @BindView(R.id.tv_nvshen)
     TextView tvNvshen;
-    /** 指数基金产品1 收益 */
+    /**
+     * 指数基金产品1 收益
+     */
     @BindView(R.id.tv_nvshen_shouyi)
     TextView tvNvshenShouyi;
-    /** 指数基金产品1 收益描述 */
+    /**
+     * 指数基金产品1 收益描述
+     */
     @BindView(R.id.tv_finger_one_desc)
     TextView tvFingerOneDesc;
-    /** 指数基金产品2 */
+    /**
+     * 指数基金产品2
+     */
     @BindView(R.id.rl_finger_two)
     RelativeLayout rlFingerTwo;
-    /** 指数基金产品2 名称 */
+    /**
+     * 指数基金产品2 名称
+     */
     @BindView(R.id.tv_chihuo)
     TextView tvChihuo;
-    /** 指数基金产品2 收益 */
+    /**
+     * 指数基金产品2 收益
+     */
     @BindView(R.id.tv_chihuo_shouyi)
     TextView tvChihuoShouyi;
-    /** 指数基金产品2 收益描述 */
+    /**
+     * 指数基金产品2 收益描述
+     */
     @BindView(R.id.tv_finger_two_desc)
     TextView tvFingerTwoDesc;
-    /** 优选定投 更多 */
+    /**
+     * 优选定投 更多
+     */
     @BindView(R.id.timing_more)
     TextView timingMore;
-    /** 优选定投 */
+    /**
+     * 优选定投
+     */
     @BindView(R.id.xrv_prefer)
     XRecyclerView xrvPrefer;
 
@@ -117,42 +155,64 @@ public class IndexFragment extends XFragment<IndexPresent> {
 //    /** 优选定投 利率 */
 //    @BindView(R.id.preferred_rate)
 //    TextView preferredRate;
-    /** 搜索 */
+    /**
+     * 搜索
+     */
     @BindView(R.id.rl_name_search)
     RelativeLayout rlNameSearch;
-    /** 专题一 */
+    /**
+     * 专题一
+     */
     @BindView(R.id.iv_theme_one)
     ImageView ivThemeOne;
-    /** 专题二 */
+    /**
+     * 专题二
+     */
     @BindView(R.id.iv_theme_two)
     ImageView ivThemeTwo;
-    /** 专题三 */
+    /**
+     * 专题三
+     */
     @BindView(R.id.iv_theme_three)
     ImageView ivThemeThree;
 //    /** 立即定投 */
 //    @BindView(R.id.btn_invest)
 //    Button btnInvest;
-    /** ScrollView */
+    /**
+     * ScrollView
+     */
     @BindView(R.id.scroll_view)
     NestedScrollView scrollView;
-    /** 下拉刷新 */
+    /**
+     * 下拉刷新
+     */
     @BindView(R.id.swipe_container)
     SwipeRefreshLayout swipeRefreshLayout;
-    /** 网络错误，点击重试 */
+    /**
+     * 网络错误，点击重试
+     */
     @BindView(R.id.error_view)
     TextView errorView;
 
 
-    /** 明星基金 */
+    /**
+     * 明星基金
+     */
     private ProductModel startModel;
     private ArrayList<BannerModel> themeList;
 //    /** 优选定投 */
 //    private ProductModel preferredVote;
-    /** 指数基金1 */
+    /**
+     * 指数基金1
+     */
     private ProductModel fingerOne;
-    /** 指数基金2 */
+    /**
+     * 指数基金2
+     */
     private ProductModel fingertwo;
-    /** 加载圈 */
+    /**
+     * 加载圈
+     */
     private HttpLoadingDialog httpLoadingDialog;
 
 
@@ -182,6 +242,9 @@ public class IndexFragment extends XFragment<IndexPresent> {
         httpLoadingDialog.visible();
         getP().loadData();
     }
+
+
+    boolean adClickable = false;
 
     @Override
     public void initEvents() {
@@ -293,7 +356,7 @@ public class IndexFragment extends XFragment<IndexPresent> {
         ivThemeOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (themeList != null) {
+                if (themeList != null && adClickable) {
                     Bundle bundle = new Bundle();
                     bundle.putString(Constant.WEB_LINK, themeList.get(0).getAppurl());
                     startActivity(WebPublicActivity.class, bundle);
@@ -304,7 +367,7 @@ public class IndexFragment extends XFragment<IndexPresent> {
         ivThemeTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (themeList != null) {
+                if (themeList != null && adClickable) {
                     Bundle bundle = new Bundle();
                     bundle.putString(Constant.WEB_LINK, themeList.get(1).getAppurl());
                     startActivity(WebPublicActivity.class, bundle);
@@ -315,7 +378,7 @@ public class IndexFragment extends XFragment<IndexPresent> {
         ivThemeThree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (themeList != null) {
+                if (themeList != null && adClickable) {
                     Bundle bundle = new Bundle();
                     bundle.putString(Constant.WEB_LINK, themeList.get(1).getAppurl());
                     startActivity(WebPublicActivity.class, bundle);
@@ -429,9 +492,11 @@ public class IndexFragment extends XFragment<IndexPresent> {
                     @Override
                     public void onItemClick(int position) {
 //                        showToast("点击了第" + position + "张图片");
-                        Bundle bundle = new Bundle();
-                        bundle.putString(Constant.WEB_LINK, bannerList.get(position).getAppurl());
-                        startActivity(WebPublicActivity.class, bundle);
+                        if (adClickable) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString(Constant.WEB_LINK, bannerList.get(position).getAppurl());
+                            startActivity(WebPublicActivity.class, bundle);
+                        }
                     }
                 });
             }

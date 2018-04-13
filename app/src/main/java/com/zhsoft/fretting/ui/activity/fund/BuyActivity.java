@@ -56,55 +56,120 @@ import cn.droidlover.xdroidmvp.net.NetError;
  */
 
 public class BuyActivity extends XActivity<BuyPresent> {
-    /** 返回 */
-    @BindView(R.id.head_back) ImageButton headBack;
-    /** 标题 */
-    @BindView(R.id.head_title) TextView headTitle;
-    /** 银行logo */
-    @BindView(R.id.bank_image) ImageView bankImage;
-    /** 银行卡名称和尾号 */
-    @BindView(R.id.bank_name) TextView bankName;
-    /** 银行卡限额 */
-    @BindView(R.id.bank_limit) TextView bankLimit;
-    /** 更换银行卡 */
-    @BindView(R.id.rl_change) RelativeLayout rlChange;
-    /** 申购费 */
-    @BindView(R.id.tv_apply_fee) TextView tvApplyFee;
-    /** 确认份额时间 */
-    @BindView(R.id.tv_sure_time) TextView tvSureTime;
-    /** 查看收益时间 */
-    @BindView(R.id.tv_look_time) TextView tvLookTime;
-    /** 购买金额 */
-    @BindView(R.id.et_amount) EditText etAmount;
-    /** 确认购买 */
-    @BindView(R.id.sure) Button sure;
-    /** 分红方式 */
-    @BindView(R.id.ll_bonus) LinearLayout llBonus;
-    /** 分红方式 */
-    @BindView(R.id.tv_bonus_type) TextView tvBonusType;
-    /** 手续费 */
-    @BindView(R.id.tv_poundage) TextView tvPoundage;
-    /** 费率 */
-    @BindView(R.id.tv_rate) TextView tvRate;
-    /** 输入密码弹框 */
+    /**
+     * 返回
+     */
+    @BindView(R.id.head_back)
+    ImageButton headBack;
+    /**
+     * 标题
+     */
+    @BindView(R.id.head_title)
+    TextView headTitle;
+    /**
+     * 银行logo
+     */
+    @BindView(R.id.bank_image)
+    ImageView bankImage;
+    /**
+     * 银行卡名称和尾号
+     */
+    @BindView(R.id.bank_name)
+    TextView bankName;
+    /**
+     * 银行卡限额
+     */
+    @BindView(R.id.bank_limit)
+    TextView bankLimit;
+    /**
+     * 更换银行卡
+     */
+    @BindView(R.id.rl_change)
+    RelativeLayout rlChange;
+    /**
+     * 申购费
+     */
+    @BindView(R.id.tv_apply_fee)
+    TextView tvApplyFee;
+    /**
+     * 确认份额时间
+     */
+    @BindView(R.id.tv_sure_time)
+    TextView tvSureTime;
+    /**
+     * 查看收益时间
+     */
+    @BindView(R.id.tv_look_time)
+    TextView tvLookTime;
+    /**
+     * 购买金额
+     */
+    @BindView(R.id.et_amount)
+    EditText etAmount;
+    /**
+     * 确认购买
+     */
+    @BindView(R.id.sure)
+    Button sure;
+    /**
+     * 分红方式
+     */
+    @BindView(R.id.ll_bonus)
+    LinearLayout llBonus;
+    /**
+     * 分红方式
+     */
+    @BindView(R.id.tv_bonus_type)
+    TextView tvBonusType;
+    /**
+     * 手续费
+     */
+    @BindView(R.id.tv_poundage)
+    TextView tvPoundage;
+    /**
+     * 费率
+     */
+    @BindView(R.id.tv_rate)
+    TextView tvRate;
+    /**
+     * 输入密码弹框
+     */
     private FundBuyDialog fundBuyDialog;
-    /** 密码错误弹框 */
+    /**
+     * 密码错误弹框
+     */
     private CustomDialog customDialog;
-    /** 得到的用户购买准备数据 */
+    /**
+     * 得到的用户购买准备数据
+     */
     private BuyFundResp buyFundResp;
-    /** 基金代码 */
+    /**
+     * 基金代码
+     */
     private String fundCode;
-    /** 基金名称 */
+    /**
+     * 基金名称
+     */
     private String fundName;
-    /** 登录标识 */
+    /**
+     * 登录标识
+     */
     private String token;
-    /** 用户编号 */
+    /**
+     * 用户编号
+     */
     private String userId;
-    /** 加载框 */
+    /**
+     * 加载框
+     */
     private HttpLoadingDialog httpLoadingDialog;
-    /** 分红方式 选中选项 */
+    /**
+     * 分红方式 选中选项
+     */
     private int isSelector = 0;
-    /** 分红方式 */
+    /**
+     * 分红方式
+     */
     private List<ApplyBaseInfo> list;
 
 
@@ -183,7 +248,7 @@ public class BuyActivity extends XActivity<BuyPresent> {
 
     @Override
     public void initEvents() {
-        etAmount.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(2)});
+        etAmount.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
         /*返回*/
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -285,10 +350,13 @@ public class BuyActivity extends XActivity<BuyPresent> {
                     getP().buyFundCalculation(token, userId, fundCode, getText(etAmount));
                     sure.setClickable(true);
                 } else {
+                    tvPoundage.setText("申购费  0.00元");
+                    tvRate.setText(buyFundResp.getCurr_rate() + "%");
+                    tvApplyFee.setText(buyFundResp.getSource_rate() + "%");
                     //如果输入的内容为空，则不显示申购费，按钮不可点击
                     sure.setBackgroundColor(getResources().getColor(R.color.color_B9D1F8));
                     sure.setClickable(false);
-                    tvPoundage.setText("申购费  0.00元");
+
                 }
             }
         });
@@ -354,6 +422,7 @@ public class BuyActivity extends XActivity<BuyPresent> {
 
     /**
      * 立即购买 密码错误
+     *
      * @param message
      */
     public void passwordError(String message) {
@@ -406,12 +475,19 @@ public class BuyActivity extends XActivity<BuyPresent> {
      * @param calculationResp
      */
     public void requestCalculationSuccess(CalculationResp calculationResp) {
-        //申购费
-        String rate = calculationResp.getFare_sx();
-        if (rate.equals("null")){
-            rate = "0.00";
+        if (sure.isClickable()) {
+            //申购费
+            String rate = calculationResp.getFare_sx();
+            if (rate.equals("null")) {
+                rate = "0.00";
+            }
+            tvPoundage.setText("申购费  " + rate + "元");
+            tvRate.setText(calculationResp.getCurr_rate() + "%");
+            tvApplyFee.setText(calculationResp.getSource_rate() + "%");
+        }else {
+            tvRate.setText(buyFundResp.getCurr_rate() + "%");
+            tvApplyFee.setText(buyFundResp.getSource_rate() + "%");
         }
-        tvPoundage.setText("申购费  " + rate + "元");
     }
 
     /**

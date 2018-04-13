@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          xmlns:tools="http://schemas.android.com/tools"
-          package="com.zhsoft.fretting">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.zhsoft.fretting">
 
     <application
         android:name=".App"
@@ -22,9 +22,9 @@
             android:name=".ui.activity.boot.StartActivity"
             android:theme="@style/NoTitle_FullScreen">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
@@ -124,6 +124,16 @@
     </application>
 
     <!--权限设置-->
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.CALL_PHONE"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+
+    <meta-data
+        android:name="UMENG_APPKEY"
+        android:value="5ad05d348f4a9d3227000185" />
+    <meta-data
+        android:name="UMENG_CHANNEL"
+        android:value="Official Website" />
 </manifest>

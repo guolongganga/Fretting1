@@ -15,6 +15,15 @@ public class HoldFundResp implements Parcelable {
     private String balance;//持有金额或者份额
     private String applyDate;
     private String fundName;
+    private String payStatus;
+
+    public String getPayStatus() {
+        return payStatus;
+    }
+
+    public void setPayStatus(String payStatus) {
+        this.payStatus = payStatus;
+    }
 
     public String getBusinBoardType() {
         return businBoardType;
@@ -59,6 +68,7 @@ public class HoldFundResp implements Parcelable {
         dest.writeString(this.balance);
         dest.writeString(this.applyDate);
         dest.writeString(this.fundName);
+        dest.writeString(this.payStatus);
     }
 
     public HoldFundResp() {
@@ -69,6 +79,7 @@ public class HoldFundResp implements Parcelable {
         this.balance = in.readString();
         this.applyDate = in.readString();
         this.fundName = in.readString();
+        this.payStatus = in.readString();
     }
 
     public static final Creator<HoldFundResp> CREATOR = new Creator<HoldFundResp>() {

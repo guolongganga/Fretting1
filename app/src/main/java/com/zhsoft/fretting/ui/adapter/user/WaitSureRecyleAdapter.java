@@ -44,7 +44,7 @@ public class WaitSureRecyleAdapter extends SimpleRecAdapter<HoldFundResp, WaitSu
         holder.tvAmount.setText(resp.getBalance());
         holder.tvType.setText(resp.getBusinBoardType());
         holder.tvTime.setText(resp.getApplyDate());
-
+        holder.tvPaystatus.setText(resp.getPayStatus());
         holder.llContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -55,16 +55,35 @@ public class WaitSureRecyleAdapter extends SimpleRecAdapter<HoldFundResp, WaitSu
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
-        /** 内容区域 */
-        @BindView(R.id.ll_content) LinearLayout llContent;
-        /** 基金名称 */
-        @BindView(R.id.tv_fund_name) TextView tvFundName;
-        /** 金额/份额 */
-        @BindView(R.id.tv_amount) TextView tvAmount;
-        /** 申请时间 */
-        @BindView(R.id.tv_time) TextView tvTime;
-        /** 业务类型 */
-        @BindView(R.id.tv_type) TextView tvType;
+        /**
+         * 内容区域
+         */
+        @BindView(R.id.ll_content)
+        LinearLayout llContent;
+        /**
+         * 基金名称
+         */
+        @BindView(R.id.tv_fund_name)
+        TextView tvFundName;
+        /**
+         * 金额/份额
+         */
+        @BindView(R.id.tv_amount)
+        TextView tvAmount;
+        /**
+         * 申请时间
+         */
+        @BindView(R.id.tv_time)
+        TextView tvTime;
+        /**
+         * 业务类型
+         */
+        @BindView(R.id.tv_type)
+        TextView tvType;
+        //        支付状态
+        @BindView(R.id.tv_paystatus)
+        TextView tvPaystatus;
+
 
         public ViewHolder(View itemView) {
             super(itemView);

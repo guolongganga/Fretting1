@@ -33,8 +33,16 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="right"
+            android:gravity="center"
             android:text="申请时间"
+            android:textColor="@color/color_97A1B7"
+            android:textSize="@dimen/text_size_11"/>
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="right"
+            android:text="支付状态"
             android:textColor="@color/color_97A1B7"
             android:textSize="@dimen/text_size_11"/>
     </LinearLayout>
