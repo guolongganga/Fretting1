@@ -167,6 +167,11 @@ public class UserFragment extends XFragment<UserPresent> {
     @BindView(R.id.view_pager)
     ViewPager mViewPager;
 
+    @BindView(R.id.user_frame_top)
+    LinearLayout userFrameTop;
+    @BindView(R.id.ll_fund_middle)
+    LinearLayout llFundMiddlw;
+
     /**
      * 是否开户
      */
@@ -216,7 +221,7 @@ public class UserFragment extends XFragment<UserPresent> {
 
 //        xrvMyFund.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
         //如果已登录，请求我的持仓基金数据
-        if (RuntimeHelper.getInstance().isLogin()) {
+        if (RuntimeHelper.getInstance().isLogin() && Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
             requestFund();
         }
 
@@ -244,13 +249,17 @@ public class UserFragment extends XFragment<UserPresent> {
         if (Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
             //已开户
             toFinishRegister.setVisibility(View.GONE);
-//            llFundContent.setVisibility(View.VISIBLE);
+            llFundContent.setVisibility(View.VISIBLE);
             mViewPager.setVisibility(View.VISIBLE);
+            userFrameTop.setVisibility(View.VISIBLE);
+            llFundMiddlw.setVisibility(View.VISIBLE);
         } else {
             //未开户
             toFinishRegister.setVisibility(View.VISIBLE);
-//            llFundContent.setVisibility(View.GONE);
+            llFundContent.setVisibility(View.GONE);
+            userFrameTop.setVisibility(View.INVISIBLE);
             mViewPager.setVisibility(View.GONE);
+            llFundMiddlw.setVisibility(View.GONE);
         }
     }
 

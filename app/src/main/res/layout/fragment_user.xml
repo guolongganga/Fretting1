@@ -17,6 +17,7 @@
         android:visibility="visible">
 
         <LinearLayout
+            android:id="@+id/user_frame_top"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_143"
             android:background="@color/color_main"
@@ -157,6 +158,7 @@
         </LinearLayout>
         <!--快速入口-->
         <LinearLayout
+            android:id="@+id/ll_fund_middle"
             android:layout_width="match_parent"
             android:layout_height="@dimen/dimen_70"
             android:layout_marginBottom="@dimen/dimen_10"
