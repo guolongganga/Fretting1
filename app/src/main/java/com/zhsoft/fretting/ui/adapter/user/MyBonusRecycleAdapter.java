@@ -46,7 +46,7 @@ public class MyBonusRecycleAdapter extends SimpleRecAdapter<MyBonusResp, MyBonus
             holder.tvStatus.setVisibility(View.GONE);
 
         holder.tvType.setText(resp.getAutoBuyVal());
-        holder.tvFundName.setText(resp.getFundname());
+        holder.tvFundName.setText(resp.getFundName());
         holder.tvFundCode.setText(resp.getFundcode());
         holder.tvTime.setText(resp.getDividenddate());
         holder.llContent.setOnClickListener(new View.OnClickListener() {

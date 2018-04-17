@@ -18,7 +18,7 @@ import android.widget.TextView;
 
 import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
-import com.umeng.analytics.MobclickAgent;
+//import com.umeng.analytics.MobclickAgent;
 
 import butterknife.Unbinder;
 import cn.droidlover.xdroidmvp.R;
@@ -87,13 +87,14 @@ public abstract class XActivity<P extends IPresent> extends RxAppCompatActivity 
         super.onResume();
         // 设置页面竖屏
         setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
-        MobclickAgent.onResume(this);
+//        MobclickAgent.onResume(this);
+
     }
 
     @Override
     protected void onPause() {
         super.onPause();
-        MobclickAgent.onPause(this);
+//        MobclickAgent.onPause(this);
     }
 
     @Override

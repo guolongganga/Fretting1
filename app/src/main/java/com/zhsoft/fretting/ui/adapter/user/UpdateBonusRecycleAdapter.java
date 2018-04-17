@@ -1,5 +1,6 @@
 package com.zhsoft.fretting.ui.adapter.user;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -38,18 +39,26 @@ public class UpdateBonusRecycleAdapter extends SimpleRecAdapter<UpdateBonusResp,
         return R.layout.adapter_user_update_bonus_rv_item;
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         UpdateBonusResp resp = data.get(position);
-        holder.tvFundName.setText(resp.getFundname());
+        holder.tvFundName.setText(resp.getFundName());
         holder.tvFundCode.setText(resp.getFundcode());
         holder.tvBonusType.setText(resp.getAutoBuyVal());
-        holder.llContent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                getRecItemClick().onItemClick(position, data.get(position), ITEM_CLICK, holder);
-            }
-        });
+
+        if (resp.getForbidModiAutobuyFlag().equals("0")){
+            holder.llContent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    getRecItemClick().onItemClick(position, data.get(position), ITEM_CLICK, holder);
+                }
+            });
+
+        }else{
+            holder.tvBonusType.setTextColor(R.color.color_999999);
+        }
+
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

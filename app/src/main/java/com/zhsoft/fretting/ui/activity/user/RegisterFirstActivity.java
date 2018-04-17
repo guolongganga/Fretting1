@@ -3,10 +3,13 @@ package com.zhsoft.fretting.ui.activity.user;
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +39,7 @@ import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
+import me.leefeng.viewlibrary.PEditTextView;
 
 /**
  * 作者：sunnyzeng on 2017/12/11 17:35
@@ -112,7 +116,7 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
 //    private String messageCode;
 
     //验证码pop
-    PopupWindow mPopWindow;
+    AlertDialog mPopWindow;
     //关闭pop
     ImageView ivClose;
     //图片验证码
@@ -123,6 +127,7 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
     EditText etCode;
 
     private CustomDialog customDialog;
+    private String TAG="RegisterFirstActivity";
 
 
     @Override
@@ -314,18 +319,22 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
      */
     public void showImageCode(final String phone) {
         //设置contentView
+        AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.PEditTextView);
         View contentView = LayoutInflater.from(context).inflate(R.layout.pop_show_image_code, null);
-        mPopWindow = new PopupWindow(contentView,
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
-        mPopWindow.setContentView(contentView);
-        mPopWindow.setFocusable(true);
-        //外部是否可以点击
-        mPopWindow.setBackgroundDrawable(new BitmapDrawable());
-        mPopWindow.setOutsideTouchable(true);
-
-        //解决popupwindow中弹出输入法被遮挡问题
-        mPopWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        mPopWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
+        mPopWindow = builder.create();
+        mPopWindow.setView(contentView,0,0,0,0);
+//        View contentView = LayoutInflater.from(context).inflate(R.layout.pop_show_image_code, null);
+//        mPopWindow = new PopupWindow(contentView,
+//                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
+//        mPopWindow.setContentView(contentView);
+//        mPopWindow.setFocusable(true);
+//        //外部是否可以点击
+//        mPopWindow.setBackgroundDrawable(new BitmapDrawable());
+//        mPopWindow.setOutsideTouchable(true);
+//
+//        //解决popupwindow中弹出输入法被遮挡问题
+//        mPopWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+//        mPopWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
 
         FrameLayout flContent = contentView.findViewById(R.id.fl_content);
         flContent.getBackground().setAlpha(150);
@@ -353,7 +362,13 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
                 getP().getImageCode();
             }
         });
-
+        PEditTextView etInput = contentView.findViewById(R.id.et_input);
+        etInput.setListener(new PEditTextView.PEditTextFinishListener() {
+            @Override
+            public void callBack(String s) {
+                getP().getMessageCode(phone, s, image_code_id);
+            }
+        });
         //监听EditText的输入长度
         etCode.addTextChangedListener(new TextWatcher() {
             @Override
@@ -376,8 +391,10 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
                 }
             }
         });
+        mPopWindow.show();
+
         //显示PopupWindow
-        mPopWindow.showAtLocation(getVerifyCode, Gravity.CENTER, 0, 0);
+//        mPopWindow.showAtLocation(getVerifyCode, Gravity.CENTER, 0, 0);
     }
 
     /**

@@ -17,7 +17,7 @@ public class UpdateBonusResp extends BaseResp<List<UpdateBonusResp>> implements 
     private String autoBuyVal;
     private String forbidModiAutobuyFlag;
     private String fundcode;
-    private String fundname;
+    private String fundName;
     private String fundtype;
     private String melonmethod;
     private String sharetype;
@@ -56,12 +56,12 @@ public class UpdateBonusResp extends BaseResp<List<UpdateBonusResp>> implements 
         this.fundcode = fundcode;
     }
 
-    public String getFundname() {
-        return fundname;
+    public String getFundName() {
+        return fundName;
     }
 
-    public void setFundname(String fundname) {
-        this.fundname = fundname;
+    public void setFundName(String fundName) {
+        this.fundName = fundName;
     }
 
     public String getFundtype() {
@@ -115,7 +115,7 @@ public class UpdateBonusResp extends BaseResp<List<UpdateBonusResp>> implements 
         dest.writeString(this.autoBuyVal);
         dest.writeString(this.forbidModiAutobuyFlag);
         dest.writeString(this.fundcode);
-        dest.writeString(this.fundname);
+        dest.writeString(this.fundName);
         dest.writeString(this.fundtype);
         dest.writeString(this.melonmethod);
         dest.writeString(this.sharetype);
@@ -131,7 +131,7 @@ public class UpdateBonusResp extends BaseResp<List<UpdateBonusResp>> implements 
         this.autoBuyVal = in.readString();
         this.forbidModiAutobuyFlag = in.readString();
         this.fundcode = in.readString();
-        this.fundname = in.readString();
+        this.fundName = in.readString();
         this.fundtype = in.readString();
         this.melonmethod = in.readString();
         this.sharetype = in.readString();

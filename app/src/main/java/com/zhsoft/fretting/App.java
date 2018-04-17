@@ -8,8 +8,9 @@ import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.ImageLoaderConfiguration;
 import com.nostra13.universalimageloader.core.assist.QueueProcessingType;
 import com.nostra13.universalimageloader.utils.StorageUtils;
-import com.umeng.analytics.MobclickAgent;
-import com.umeng.commonsdk.UMConfigure;
+//import com.umeng.analytics.MobclickAgent;
+//import com.umeng.commonsdk.UMConfigure;
+import com.tencent.bugly.crashreport.CrashReport;
 import com.zhsoft.fretting.net.Api;
 
 import java.io.File;
@@ -105,8 +106,9 @@ public class App extends Application {
             }
         });
 //        初始化友盟
-        UMConfigure.init(context,UMConfigure.DEVICE_TYPE_PHONE,"5ad05d348f4a9d3227000185");
-        MobclickAgent.setScenarioType(context, MobclickAgent.EScenarioType.E_UM_NORMAL);
+//        UMConfigure.init(context,UMConfigure.DEVICE_TYPE_PHONE,"5ad05d348f4a9d3227000185");
+//        MobclickAgent.setScenarioType(context, MobclickAgent.EScenarioType.E_UM_NORMAL);
+        CrashReport.initCrashReport(context, "0bd343e2ea", isDebug);
     }
 
     /**

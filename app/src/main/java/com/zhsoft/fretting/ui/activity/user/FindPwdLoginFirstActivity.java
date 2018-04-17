@@ -3,9 +3,11 @@ package com.zhsoft.fretting.ui.activity.user;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +31,7 @@ import com.zhsoft.fretting.ui.widget.ChenJingET;
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
+import me.leefeng.viewlibrary.PEditTextView;
 
 /**
  * 作者：sunnyzeng on 2017/12/13 15:48
@@ -36,25 +39,47 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  */
 
 public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresent> {
-    /** 返回按钮 */
-    @BindView(R.id.head_back) ImageButton headBack;
-    /** 标题 */
-    @BindView(R.id.head_title) TextView headTitle;
-    /** 手机号码 */
-    @BindView(R.id.phone) EditText phone;
-    /** 短信验证码 */
-    @BindView(R.id.msg_code) EditText msgCode;
-    /** 获取短信验证码 */
-    @BindView(R.id.get_verify_code) CountdownButton getVerifyCode;
-    /** 下一步按钮 */
-    @BindView(R.id.btn_next) Button btnNext;
+    /**
+     * 返回按钮
+     */
+    @BindView(R.id.head_back)
+    ImageButton headBack;
+    /**
+     * 标题
+     */
+    @BindView(R.id.head_title)
+    TextView headTitle;
+    /**
+     * 手机号码
+     */
+    @BindView(R.id.phone)
+    EditText phone;
+    /**
+     * 短信验证码
+     */
+    @BindView(R.id.msg_code)
+    EditText msgCode;
+    /**
+     * 获取短信验证码
+     */
+    @BindView(R.id.get_verify_code)
+    CountdownButton getVerifyCode;
+    /**
+     * 下一步按钮
+     */
+    @BindView(R.id.btn_next)
+    Button btnNext;
 
-    /** 加载框 */
+    /**
+     * 加载框
+     */
     private HttpLoadingDialog httpLoadingDialog;
-    /** 图片验证码id */
+    /**
+     * 图片验证码id
+     */
     private String image_code_id;
     //验证码pop
-    PopupWindow mPopWindow;
+    AlertDialog mPopWindow;
     //关闭pop
     ImageView ivClose;
     //图片验证码
@@ -63,6 +88,7 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
     TextView tvRefresh;
     //输入验证码
     EditText etCode;
+    PEditTextView etInput;
 
     @Override
     public int getLayoutId() {
@@ -154,18 +180,21 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
      */
     public void showImageCode(final String phone) {
         //设置contentView
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.PEditTextView);
         View contentView = LayoutInflater.from(context).inflate(R.layout.pop_show_image_code, null);
-        mPopWindow = new PopupWindow(contentView,
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
-        mPopWindow.setContentView(contentView);
-        mPopWindow.setFocusable(true);
-        //外部是否可以点击
-        mPopWindow.setBackgroundDrawable(new BitmapDrawable());
-        mPopWindow.setOutsideTouchable(true);
-
-        //解决popupwindow中弹出输入法被遮挡问题
-        mPopWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        mPopWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
+        mPopWindow = builder.create();
+        mPopWindow.setView(contentView, 0, 0, 0, 0);
+//            mPopWindow = new PopupWindow(contentView,
+//                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
+//            mPopWindow.setContentView(contentView);
+//            mPopWindow.setFocusable(true);
+//            //外部是否可以点击
+//            mPopWindow.setBackgroundDrawable(new BitmapDrawable());
+//            mPopWindow.setOutsideTouchable(true);
+//
+//            //解决popupwindow中弹出输入法被遮挡问题
+//            mPopWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+//            mPopWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
 
         FrameLayout flContent = contentView.findViewById(R.id.fl_content);
         flContent.getBackground().setAlpha(150);
@@ -174,9 +203,17 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
         ivCode = contentView.findViewById(R.id.iv_code);
         tvRefresh = contentView.findViewById(R.id.tv_refresh);
         etCode = contentView.findViewById(R.id.et_code);
+        etInput = contentView.findViewById(R.id.et_input);
+        etInput.setListener(new PEditTextView.PEditTextFinishListener() {
+            @Override
+            public void callBack(String s) {
+                getP().getMessageCode(phone, s, image_code_id);
+            }
+        });
 
         //网络请求去获取图片
         getP().getImageCode();
+
 
         //关闭pop
         ivClose.setOnClickListener(new View.OnClickListener() {
@@ -193,31 +230,32 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
                 getP().getImageCode();
             }
         });
-
         //监听EditText的输入长度
-        etCode.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
 
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-                String etImageCode = getText(etCode);
-                int len = etImageCode.length();
-                if (len == 4) {
-                    //获取验证码
-                    getP().getMessageCode(phone, etImageCode, image_code_id);
-                }
-            }
-        });
+//        etCode.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+//
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable editable) {
+//                String etImageCode = getText(etCode);
+//                int len = etImageCode.length();
+//                if (len == 4) {
+//                    //获取验证码
+//                    getP().getMessageCode(phone, etImageCode, image_code_id);
+//                }
+//            }
+//        });
         //显示PopupWindow
-        mPopWindow.showAtLocation(getVerifyCode, Gravity.CENTER, 0, 0);
+//        mPopWindow.showAtLocation(getVerifyCode, Gravity.CENTER, 0, 0);
+        mPopWindow.show();
     }
 
 
@@ -288,4 +326,5 @@ public class FindPwdLoginFirstActivity extends XActivity<FindPwdLoginFirstPresen
         getVerifyCode.cancel();
         showToast(R.string.wrong_phone_verify);
     }
+
 }

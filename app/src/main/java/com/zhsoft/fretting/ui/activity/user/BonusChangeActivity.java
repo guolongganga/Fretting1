@@ -68,7 +68,7 @@ public class BonusChangeActivity extends XActivity<BonusChangePresent> {
         //获得基金代码
         if (bundle != null) {
             updateBonusResp = bundle.getParcelable(Constant.ACTIVITY_OBJECT);
-            tvFundName.setText(updateBonusResp.getFundname());
+            tvFundName.setText(updateBonusResp.getFundName());
             tvFundCode.setText(updateBonusResp.getFundcode());
             //如果是现金红利
             if ("1".equals(updateBonusResp.getAutoBuy())) {

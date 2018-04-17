@@ -19,12 +19,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    buildToolsVersion '27.0.2'
 }
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile rootProject.ext.dependencies["appcompat-v7"]
-    compile rootProject.ext.dependencies["support-v4"]
+//    compile rootProject.ext.dependencies["support-v4"]
     compile rootProject.ext.dependencies["design"]
     compile rootProject.ext.dependencies["annotations"]
     compile rootProject.ext.dependencies["recyclerview-v7"]
@@ -43,8 +44,11 @@ dependencies {
     compile rootProject.ext.dependencies["rxlifecycle-components"]
     compile rootProject.ext.dependencies["rxpermissions"]
     compile rootProject.ext.dependencies["roundedimageview"]
-    compile files('libs/umeng-analytics-7.4.0.jar')
-    compile files('libs/umeng-common-1.4.0.jar')
+
+//    compile files('libs/umeng-analytics-7.4.0.jar')
+//    compile files('libs/umeng-common-1.4.0.jar')
+//    compile 'com.umeng.sdk:common:latest.integration'
+//    compile 'com.umeng.sdk:analytics:latest.integration'
 }
 
 tasks.withType(JavaCompile) {

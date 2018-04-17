@@ -3,9 +3,11 @@ package com.zhsoft.fretting.ui.activity.user;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +31,7 @@ import com.zhsoft.fretting.ui.widget.ChenJingET;
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
+import me.leefeng.viewlibrary.PEditTextView;
 
 /**
  * 作者：sunnyzeng on 2017/12/13 15:48
@@ -36,26 +39,48 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  */
 
 public class FindPwdTradeFirstActivity extends XActivity<FindPwdTradeFirstPresent> {
-    /** 返回按钮 */
-    @BindView(R.id.head_back) ImageButton headBack;
-    /** 标题 */
-    @BindView(R.id.head_title) TextView headTitle;
-    /** 手机号码 */
-    @BindView(R.id.phone) EditText phone;
-    /** 短信验证码 */
-    @BindView(R.id.msg_code) EditText msgCode;
-    /** 获取验证码 */
-    @BindView(R.id.get_verify_code) CountdownButton getVerifyCode;
-    /** 下一步按钮 */
-    @BindView(R.id.btn_next) Button btnNext;
+    /**
+     * 返回按钮
+     */
+    @BindView(R.id.head_back)
+    ImageButton headBack;
+    /**
+     * 标题
+     */
+    @BindView(R.id.head_title)
+    TextView headTitle;
+    /**
+     * 手机号码
+     */
+    @BindView(R.id.phone)
+    EditText phone;
+    /**
+     * 短信验证码
+     */
+    @BindView(R.id.msg_code)
+    EditText msgCode;
+    /**
+     * 获取验证码
+     */
+    @BindView(R.id.get_verify_code)
+    CountdownButton getVerifyCode;
+    /**
+     * 下一步按钮
+     */
+    @BindView(R.id.btn_next)
+    Button btnNext;
 
-    /** 加载框 */
+    /**
+     * 加载框
+     */
     private HttpLoadingDialog httpLoadingDialog;
-    /** 图片验证码id */
+    /**
+     * 图片验证码id
+     */
     private String image_code_id;
 
     //验证码pop
-    PopupWindow mPopWindow;
+    AlertDialog mPopWindow;
     //关闭pop
     ImageView ivClose;
     //图片验证码
@@ -155,18 +180,22 @@ public class FindPwdTradeFirstActivity extends XActivity<FindPwdTradeFirstPresen
      */
     public void showImageCode(final String phone) {
         //设置contentView
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.PEditTextView);
         View contentView = LayoutInflater.from(context).inflate(R.layout.pop_show_image_code, null);
-        mPopWindow = new PopupWindow(contentView,
-                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
-        mPopWindow.setContentView(contentView);
-        mPopWindow.setFocusable(true);
-        //外部是否可以点击
-        mPopWindow.setBackgroundDrawable(new BitmapDrawable());
-        mPopWindow.setOutsideTouchable(true);
-
-        //解决popupwindow中弹出输入法被遮挡问题
-        mPopWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
-        mPopWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
+        mPopWindow = builder.create();
+        mPopWindow.setView(contentView, 0, 0, 0, 0);
+//        View contentView = LayoutInflater.from(context).inflate(R.layout.pop_show_image_code, null);
+//        mPopWindow = new PopupWindow(contentView,
+//                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);
+//        mPopWindow.setContentView(contentView);
+//        mPopWindow.setFocusable(true);
+//        //外部是否可以点击
+//        mPopWindow.setBackgroundDrawable(new BitmapDrawable());
+//        mPopWindow.setOutsideTouchable(true);
+//
+//        //解决popupwindow中弹出输入法被遮挡问题
+//        mPopWindow.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE | WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
+//        mPopWindow.setInputMethodMode(PopupWindow.INPUT_METHOD_NEEDED);
 
         FrameLayout flContent = contentView.findViewById(R.id.fl_content);
         flContent.getBackground().setAlpha(150);
@@ -178,6 +207,13 @@ public class FindPwdTradeFirstActivity extends XActivity<FindPwdTradeFirstPresen
 
         //网络请求去获取图片
         getP().getImageCode();
+        PEditTextView etInput = contentView.findViewById(R.id.et_input);
+        etInput.setListener(new PEditTextView.PEditTextFinishListener() {
+            @Override
+            public void callBack(String s) {
+                getP().getMessageCode(phone, s, image_code_id);
+            }
+        });
 
         //关闭pop
         ivClose.setOnClickListener(new View.OnClickListener() {
@@ -217,8 +253,9 @@ public class FindPwdTradeFirstActivity extends XActivity<FindPwdTradeFirstPresen
                 }
             }
         });
+        mPopWindow.show();
         //显示PopupWindow
-        mPopWindow.showAtLocation(getVerifyCode, Gravity.CENTER, 0, 0);
+//        mPopWindow.showAtLocation(getVerifyCode, Gravity.CENTER, 0, 0);
     }
 
 

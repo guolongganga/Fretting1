@@ -106,14 +106,14 @@
                     <!--交易密码-->
                     <EditText
                         android:id="@+id/password"
+                        style="@style/edit_user_15"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="@android:color/transparent"
                         android:gravity="center_vertical"
                         android:hint="请输入交易密码"
-                        android:inputType="numberPassword"
-                        android:maxLength="6"
-                        style="@style/edit_user_15"/>
+                        android:inputType="textPassword"
+                        android:maxLength="6" />
 
                 </android.support.design.widget.TextInputLayout>
 

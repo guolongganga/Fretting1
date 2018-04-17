@@ -14,7 +14,7 @@
         android:layout_marginLeft="@dimen/dimen_30"
         android:layout_marginRight="@dimen/dimen_15"
         android:layout_marginTop="13dp"
-        android:text=""
+        android:text="title"
         android:textColor="@color/color_383F50"
         android:textSize="@dimen/text_size_15"/>
 

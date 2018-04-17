@@ -41,11 +41,11 @@ public class MyFundRecyleAdapter extends SimpleRecAdapter<MyHoldFundResp, MyFund
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
         final MyHoldFundResp resp = data.get(position);
-        holder.tvName.setText(resp.getFundName());
-        holder.tvMoney.setText(BigDecimalUtil.bigdecimalToString(resp.getTotalEarn()));
+        holder.tvName.setText(resp.getFundName()+"("+resp.getFundCode()+")");
+        holder.tvMoney.setText(BigDecimalUtil.bigdecimalToString(resp.getHoldAmount()));
 
         RateStyleUtil.amountStyle(context, holder.tvYesterday, resp.getEarningsLastDay());
-        RateStyleUtil.amountStyle(context, holder.tvHold, resp.getHoldAmount());
+        RateStyleUtil.amountStyle(context, holder.tvHold, resp.getTotalEarn());
 //        holder.tvYesterday.setText("+" + BigDecimalUtil.bigdecimalToString(resp.getEarningsLastDay()));
 //        holder.tvHold.setText("-" + BigDecimalUtil.bigdecimalToString(resp.getHoldAmount()));
         if (resp.getSureNumber() == null || "0".equals(resp.getSureNumber())) {

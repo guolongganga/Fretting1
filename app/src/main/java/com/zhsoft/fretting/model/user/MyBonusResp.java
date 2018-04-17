@@ -12,7 +12,7 @@ import java.util.List;
 public class MyBonusResp extends BaseResp<List<MyBonusResp>> {
     private String autoBuy;//类型：1
     private String autoBuyVal;//类型：现金分红
-    private String fundname;
+    private String fundName;
     private String fundcode;
     private String dividenddate;//日期
     private String bonusTotal;//份额或者是金额
@@ -35,12 +35,12 @@ public class MyBonusResp extends BaseResp<List<MyBonusResp>> {
         this.autoBuyVal = autoBuyVal;
     }
 
-    public String getFundname() {
-        return fundname;
+    public String getFundName() {
+        return fundName;
     }
 
-    public void setFundname(String fundname) {
-        this.fundname = fundname;
+    public void setFundName(String fundName) {
+        this.fundName = fundName;
     }
 
     public String getFundcode() {
