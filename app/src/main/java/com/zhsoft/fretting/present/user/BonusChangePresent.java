@@ -1,8 +1,11 @@
 package com.zhsoft.fretting.present.user;
 
+import android.util.TimingLogger;
+
 import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.model.BaseResp;
+import com.zhsoft.fretting.model.user.UpdateBonusResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.params.BonusChangeParams;
 import com.zhsoft.fretting.params.CommonReqData;
@@ -20,6 +23,8 @@ import cn.droidlover.xdroidmvp.net.XApi;
  */
 
 public class BonusChangePresent extends XPresent<BonusChangeActivity> {
+
+
     /**
      * 修改分红方式详情
      *

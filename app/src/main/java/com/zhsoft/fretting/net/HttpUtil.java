@@ -27,6 +27,7 @@ import com.zhsoft.fretting.model.user.SelfChooseResp;
 import com.zhsoft.fretting.model.user.TransactionResp;
 import com.zhsoft.fretting.model.user.UpdateBonusResp;
 import com.zhsoft.fretting.model.user.UserAccountResp;
+import com.zhsoft.fretting.model.user.WebBonusResp;
 import com.zhsoft.fretting.params.CommonReqData;
 
 import io.reactivex.Flowable;
@@ -329,7 +330,7 @@ public interface HttpUtil {
     //修改分红方式详情
     @Headers("appType:Android")
     @POST(bonus_xg_details)
-    Flowable<UpdateBonusResp> bonusXgDeatil(@Body CommonReqData reqData);
+    Flowable<WebBonusResp> bonusXgDeatil(@Body CommonReqData reqData);
 
     //修改分红方式详情
     @Headers("appType:Android")

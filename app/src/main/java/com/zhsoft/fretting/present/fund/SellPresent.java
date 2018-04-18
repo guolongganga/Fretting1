@@ -117,6 +117,8 @@ public class SellPresent extends XPresent<SellActivity> {
                         } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(resp.getMessage());
                             getV().areadyLogout();
+                        } else if (resp.getStatus() == 536) {
+                            getV().showToast(resp.getMessage());
                         } else {
                             getV().requestSellFail();
                             getV().showToast(resp.getMessage());

@@ -239,27 +239,27 @@ public class SellActivity extends XActivity<SellPresent> {
                     return;
                 }
                 // 如果amount小于份额，重新填写购买金额
-                if (amount.compareTo(sellResp.getMinVar()) < 0) {
-                    showToast("剩余份额低于" + BigDecimalUtil.bigdecimalToString(sellResp.getMinVar()) + "份，请全部赎回");
-                    return;
-                }
+//                if (amount.compareTo(sellResp.getMinVar()) < 0) {
+//                    showToast("剩余份额低于" + BigDecimalUtil.bigdecimalToString(sellResp.getMinVar()) + "份，请全部赎回");
+//                    return;
+//                }
 
-                int comValue = amount.compareTo(sellResp.getEnable_shares());
+//                int comValue = amount.compareTo(sellResp.getEnable_shares());
 
                 //表示bigdemical大于bigdemical2 输入金额大于可赎回份额
-                if (comValue == 1) {
-                    ToastUtils.show(SellActivity.this, "可赎回份额为" + BigDecimalUtil.bigdecimalToString(sellResp.getEnable_shares()) + "份", Toast.LENGTH_LONG);
-                    return;
-                }
+//                if (comValue == 1) {
+//                    ToastUtils.show(SellActivity.this, "可赎回份额为" + BigDecimalUtil.bigdecimalToString(sellResp.getEnable_shares()) + "份", Toast.LENGTH_LONG);
+//                    return;
+//                }
 
                 BigDecimal subValue = sellResp.getEnable_shares().subtract(sellResp.getRemainVar());
 
-                int comValueTwo = amount.compareTo(subValue);
+//                int comValueTwo = amount.compareTo(subValue);
 
-                if (comValue != 0 && comValueTwo == 1) {
-                    ToastUtils.show(SellActivity.this, "剩余份额大于" + BigDecimalUtil.bigdecimalToString(subValue) + "份，且不等于" + BigDecimalUtil.bigdecimalToString(sellResp.getEnable_shares()) + "份，请全部赎回", Toast.LENGTH_LONG);
-                    return;
-                }
+//                if (comValue != 0 && comValueTwo == 1) {
+//                    ToastUtils.show(SellActivity.this, "剩余份额大于" + BigDecimalUtil.bigdecimalToString(subValue) + "份，且不等于" + BigDecimalUtil.bigdecimalToString(sellResp.getEnable_shares()) + "份，请全部赎回", Toast.LENGTH_LONG);
+//                    return;
+//                }
                 DecimalFormat df = new DecimalFormat(",###,##0.00"); //保留两位小数
                 String dealAmount = df.format(amount);
                 //TODO 弹出框

@@ -6,17 +6,25 @@ import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.fund.SellResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
+import com.zhsoft.fretting.model.user.UpdateBonusResp;
+import com.zhsoft.fretting.model.user.WebBonusResp;
 import com.zhsoft.fretting.net.Api;
+import com.zhsoft.fretting.params.BonusChangeParams;
 import com.zhsoft.fretting.params.BuyFundParams;
 import com.zhsoft.fretting.params.CommonReqData;
 import com.zhsoft.fretting.params.InvestParams;
 import com.zhsoft.fretting.ui.activity.boot.FundDetailWebActivity;
+
+import org.reactivestreams.Subscriber;
+import org.reactivestreams.Subscription;
 
 import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XPresent;
 import cn.droidlover.xdroidmvp.net.ApiSubscriber;
 import cn.droidlover.xdroidmvp.net.NetError;
 import cn.droidlover.xdroidmvp.net.XApi;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * 作者：sunnyzeng on 2018/1/12 16:43
@@ -193,6 +201,45 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
                         } else {
                             getV().requestInvestPlanFail();
                             getV().showToast(resp.getMessage());
+                            XLog.e("返回数据为空");
+                        }
+                    }
+                });
+
+    }
+
+    //跳转分红详情
+    public void loadBonusData(String fundCode, String token, String userId) {
+        CommonReqData<BonusChangeParams> reqData = new CommonReqData();
+        reqData.setToken(token);
+        reqData.setUserId(userId);
+        BonusChangeParams params = new BonusChangeParams();
+        params.setFundCode(fundCode);
+        reqData.setData(params);
+
+
+
+        Api.getApi().bonusXgDeatil(reqData)
+                .compose(XApi.<WebBonusResp>getApiTransformer())
+                .compose(XApi.<WebBonusResp>getScheduler())
+                .compose(getV().<WebBonusResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<WebBonusResp>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        XLog.e(error.getMessage());
+                    }
+
+                    @Override
+                    public void onNext(WebBonusResp model) {
+                        XLog.e(model.getData().getFundName());
+                        if (model != null && model.getStatus() == 200) {
+                            getV().loadBonusDataSuccess(model.getData());
+                        } else if (model != null && model.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(model.getMessage());
+                            getV().areadyLogout();
+                        } else {
+                            getV().showToast(model.getMessage());
+
                             XLog.e("返回数据为空");
                         }
                     }

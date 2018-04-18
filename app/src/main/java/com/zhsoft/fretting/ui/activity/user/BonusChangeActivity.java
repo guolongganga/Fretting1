@@ -13,6 +13,7 @@ import com.zhsoft.fretting.R;
 import com.zhsoft.fretting.constant.Constant;
 import com.zhsoft.fretting.event.InvalidTokenEvent;
 import com.zhsoft.fretting.model.user.UpdateBonusResp;
+import com.zhsoft.fretting.model.user.WebBonusResp;
 import com.zhsoft.fretting.present.user.BonusChangePresent;
 import com.zhsoft.fretting.ui.widget.ChenJingET;
 import com.zhsoft.fretting.utils.RuntimeHelper;
@@ -29,21 +30,33 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  */
 
 public class BonusChangeActivity extends XActivity<BonusChangePresent> {
-    @BindView(R.id.head_back) ImageButton headBack;
-    @BindView(R.id.head_title) TextView headTitle;
-    @BindView(R.id.tv_fund_name) TextView tvFundName;
-    @BindView(R.id.tv_fund_code) TextView tvFundCode;
-    @BindView(R.id.rb_again) RadioButton rbAgain;
-    @BindView(R.id.rb_carsh) RadioButton rbCarsh;
-    @BindView(R.id.password) EditText password;
-    @BindView(R.id.btn_save) Button btnSave;
+    @BindView(R.id.head_back)
+    ImageButton headBack;
+    @BindView(R.id.head_title)
+    TextView headTitle;
+    @BindView(R.id.tv_fund_name)
+    TextView tvFundName;
+    @BindView(R.id.tv_fund_code)
+    TextView tvFundCode;
+    @BindView(R.id.rb_again)
+    RadioButton rbAgain;
+    @BindView(R.id.rb_carsh)
+    RadioButton rbCarsh;
+    @BindView(R.id.password)
+    EditText password;
+    @BindView(R.id.btn_save)
+    Button btnSave;
 
     private HttpLoadingDialog httpLoadingDialog;
     private String chooseStyle;
     private UpdateBonusResp updateBonusResp;
-    /** 登录标识 */
+    /**
+     * 登录标识
+     */
     private String token;
-    /** 用户编号 */
+    /**
+     * 用户编号
+     */
     private String userId;
 
     @Override
@@ -67,7 +80,19 @@ public class BonusChangeActivity extends XActivity<BonusChangePresent> {
 
         //获得基金代码
         if (bundle != null) {
-            updateBonusResp = bundle.getParcelable(Constant.ACTIVITY_OBJECT);
+            if (bundle.getBoolean("isFromWeb")){
+                WebBonusResp webBonusResp = bundle.getParcelable(Constant.ACTIVITY_OBJECT);
+                updateBonusResp = new UpdateBonusResp();
+                updateBonusResp.setFundcode(webBonusResp.getFundcode());
+                updateBonusResp.setFundName(webBonusResp.getFundName());
+                updateBonusResp.setAutoBuy(webBonusResp.getAutoBuy());
+                updateBonusResp.setSharetype(webBonusResp.getSharetype());
+                updateBonusResp.setTradeacco(webBonusResp.getTradeacco());
+
+            }else {
+
+                updateBonusResp = bundle.getParcelable(Constant.ACTIVITY_OBJECT);
+            }
             tvFundName.setText(updateBonusResp.getFundName());
             tvFundCode.setText(updateBonusResp.getFundcode());
             //如果是现金红利
@@ -111,9 +136,11 @@ public class BonusChangeActivity extends XActivity<BonusChangePresent> {
                     showToast("并未修改分红方式");
                     return;
                 }
-                showToast("保存，分红方式为：" + chooseStyle);
+//                showToast("保存，分红方式为：" + chooseStyle);
                 httpLoadingDialog.visible();
-                getP().loadBonusXgDeatilData(updateBonusResp.getFundcode(), chooseStyle, updateBonusResp.getSharetype(), updateBonusResp.getTradeacco(), getText(password), token, userId);
+                getP().loadBonusXgDeatilData(updateBonusResp.getFundcode(), chooseStyle,
+                        updateBonusResp.getSharetype(), updateBonusResp.getTradeacco(),
+                        getText(password), token, userId);
 
             }
         });
@@ -131,6 +158,7 @@ public class BonusChangeActivity extends XActivity<BonusChangePresent> {
     public void showError() {
         httpLoadingDialog.dismiss();
     }
+
     /**
      * 已经登出系统，请重新登录
      */
@@ -144,4 +172,6 @@ public class BonusChangeActivity extends XActivity<BonusChangePresent> {
         bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_INDEX_ACTIVITY);
         startActivity(LoginActivity.class, bundle);
     }
+
+
 }

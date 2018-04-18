@@ -197,6 +197,8 @@ public class UserFragment extends XFragment<UserPresent> {
      * 在途基金
      */
     private ArrayList<HoldFundResp> passageList = new ArrayList<>();
+    private WaitSureFragment waitSureFragment;
+    private UserHoldFragment userHoldFragment;
 
 
     @Override
@@ -221,11 +223,11 @@ public class UserFragment extends XFragment<UserPresent> {
 
 //        xrvMyFund.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
         //如果已登录，请求我的持仓基金数据
-        if (RuntimeHelper.getInstance().isLogin() && Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
-            requestFund();
-        }
+
+        showChannel();
 
     }
+
 
     /**
      * 我的资产请求
@@ -234,8 +236,8 @@ public class UserFragment extends XFragment<UserPresent> {
         //获得本地缓存的token和userID
         userId = App.getSharedPref().getString(Constant.USERID, "");
         token = App.getSharedPref().getString(Constant.TOKEN, "");
-        httpLoadingDialog.visible();
-        httpLoadingDialog.setCanceledOnKeyBack();
+//        httpLoadingDialog.visible();
+//        httpLoadingDialog.setCanceledOnKeyBack();
         getP().getFundHome(token, userId);
     }
 
@@ -434,7 +436,13 @@ public class UserFragment extends XFragment<UserPresent> {
             }
             passageList.addAll(resps.getHoldList());
 
-            showChannel();
+//            showChannel();
+            Bundle bundle = new Bundle();
+            bundle.putParcelableArrayList(Constant.FUND_OBJECT, fundList);
+            userHoldFragment.initData(bundle);
+            Bundle bundle2 = new Bundle();
+            bundle2.putParcelableArrayList(Constant.ACTIVITY_OBJECT, passageList);
+            waitSureFragment.initData(bundle2);
 
         }
     }
@@ -445,21 +453,21 @@ public class UserFragment extends XFragment<UserPresent> {
     public void showChannel() {
 
         FragmentManager fragmentManager = getChildFragmentManager();
-        List<Fragment> fragmentList = new ArrayList<>();
+        List fragmentList = new ArrayList<>();
 
         List<String> tabName = new ArrayList<>();
         tabName.add(Constant.MY_HOLD);
         tabName.add(Constant.MY_WAIT);
 
         //我的持仓基金
-        UserHoldFragment fragment = new UserHoldFragment();
+         userHoldFragment = new UserHoldFragment();
         Bundle bundle = new Bundle();
         bundle.putParcelableArrayList(Constant.FUND_OBJECT, fundList);
-        fragment.setArguments(bundle);
-        fragmentList.add(fragment);
+        userHoldFragment.setArguments(bundle);
+        fragmentList.add(userHoldFragment);
 
         //待确认基金
-        WaitSureFragment waitSureFragment = new WaitSureFragment();
+         waitSureFragment = new WaitSureFragment();
         Bundle bundle2 = new Bundle();
         bundle2.putParcelableArrayList(Constant.ACTIVITY_OBJECT, passageList);
         waitSureFragment.setArguments(bundle2);
@@ -479,6 +487,9 @@ public class UserFragment extends XFragment<UserPresent> {
             llLogout.setVisibility(View.GONE);
         } else {
             llLogout.setVisibility(View.VISIBLE);
+        }
+        if (RuntimeHelper.getInstance().isLogin() && Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
+            requestFund();
         }
     }
 

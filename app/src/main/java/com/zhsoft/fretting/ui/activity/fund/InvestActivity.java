@@ -67,71 +67,151 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  */
 
 public class InvestActivity extends XActivity<InvestPersent> {
-    /** 返回 */
-    @BindView(R.id.head_back) ImageButton headBack;
-    /** 标题 */
-    @BindView(R.id.head_title) TextView headTitle;
-    /** 银行logo */
-    @BindView(R.id.bank_image) ImageView bankImage;
-    /** 银行名称 */
-    @BindView(R.id.bank_name) TextView bankName;
-    /** 银行限额 */
-    @BindView(R.id.bank_limit) TextView bankLimit;
-    /** 修改银行卡 */
-    @BindView(R.id.rl_change) RelativeLayout rlChange;
-    /** 购买金额 */
-    @BindView(R.id.et_amount) EditText etAmount;
-    /** 定投周期 */
-    @BindView(R.id.tv_invest_week) TextView etInvestWeek;
-    /** 定投日 */
-    @BindView(R.id.tv_invest_day) TextView etInvestDay;
-    /** 下次扣款时间 */
-    @BindView(R.id.tv_next_time) TextView tvNextTime;
-    /** 确定按钮 */
-    @BindView(R.id.sure) Button sure;
-    /** 勾选框 */
-    @BindView(R.id.register_service_select) ImageView registerServiceSelect;
-    /** 注册协议 */
-    @BindView(R.id.tv_agreement) TextView tvAgreement;
-    /** 定投日 */
-    @BindView(R.id.rl_invest_day) RelativeLayout rlInvestDay;
-    /** 定投周期 */
-    @BindView(R.id.rl_invest_week) RelativeLayout rlInvestWeek;
+    /**
+     * 返回
+     */
+    @BindView(R.id.head_back)
+    ImageButton headBack;
+    /**
+     * 标题
+     */
+    @BindView(R.id.head_title)
+    TextView headTitle;
+    /**
+     * 银行logo
+     */
+    @BindView(R.id.bank_image)
+    ImageView bankImage;
+    /**
+     * 银行名称
+     */
+    @BindView(R.id.bank_name)
+    TextView bankName;
+    /**
+     * 银行限额
+     */
+    @BindView(R.id.bank_limit)
+    TextView bankLimit;
+    /**
+     * 修改银行卡
+     */
+    @BindView(R.id.rl_change)
+    RelativeLayout rlChange;
+    /**
+     * 购买金额
+     */
+    @BindView(R.id.et_amount)
+    EditText etAmount;
+    /**
+     * 定投周期
+     */
+    @BindView(R.id.tv_invest_week)
+    TextView etInvestWeek;
+    /**
+     * 定投日
+     */
+    @BindView(R.id.tv_invest_day)
+    TextView etInvestDay;
+    /**
+     * 下次扣款时间
+     */
+    @BindView(R.id.tv_next_time)
+    TextView tvNextTime;
+    /**
+     * 确定按钮
+     */
+    @BindView(R.id.sure)
+    Button sure;
+    /**
+     * 勾选框
+     */
+    @BindView(R.id.register_service_select)
+    ImageView registerServiceSelect;
+    /**
+     * 注册协议
+     */
+    @BindView(R.id.tv_agreement)
+    TextView tvAgreement;
+    /**
+     * 定投日
+     */
+    @BindView(R.id.rl_invest_day)
+    RelativeLayout rlInvestDay;
+    /**
+     * 定投周期
+     */
+    @BindView(R.id.rl_invest_week)
+    RelativeLayout rlInvestWeek;
 
-    /** 定投周期选择 */
+    /**
+     * 定投周期选择
+     */
     private int cycleSelector = 1;
-    /** 定投周期选择编号 */
+    /**
+     * 定投周期选择编号
+     */
     private String cycleSelectorCode;
-    /** 定投日选择编号 */
+    /**
+     * 定投日选择编号
+     */
     private String daySelectorCode;
-    /** 周期集合 */
+    /**
+     * 周期集合
+     */
     private ArrayList<ApplyBaseInfo> cycleList;
-    /** 周期对应的定投日总集合 */
+    /**
+     * 周期对应的定投日总集合
+     */
     private Map<String, ArrayList<ApplyBaseInfo>> dayMap;
-    /** 周期弹出框 */
+    /**
+     * 周期弹出框
+     */
     private SelectPopupWindow cyclePopupWindow;
-    /** 交易密码弹出框 */
+    /**
+     * 交易密码弹出框
+     */
     private FundBuyDialog fundBuyDialog;
-    /** 结果弹出框 */
+    /**
+     * 结果弹出框
+     */
     private CustomDialog customDialog;
-    /** 投资页的类型，是定投，还是定投修改 */
+    /**
+     * 投资页的类型，是定投，还是定投修改
+     */
     private String type;
-    /** 加载框 */
+    /**
+     * 加载框
+     */
     private HttpLoadingDialog httpLoadingDialog;
-    /** 登录标识 */
+    /**
+     * 登录标识
+     */
     private String token;
-    /** 用户编号 */
+    /**
+     * 用户编号
+     */
     private String userId;
-    /** 得到的用户购买准备数据 */
+    /**
+     * 得到的用户购买准备数据
+     */
     private InvestResp investResp;
-    /** 基金代码 */
+    /**
+     * 基金代码
+     */
     private String fundCode;
-    /** 基金名称 */
+    /**
+     * 基金名称
+     */
     private String fundName;
-    /** 首次交易月 */
+    /**
+     * 首次交易月
+     */
     private String first_trade_month;
-    /** 协议编号 */
+    /**
+     * 协议编号
+     */
     private String protocol_id;
+    private float limitPerPay;
 
     @Override
     public int getLayoutId() {
@@ -283,7 +363,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
 
     @Override
     public void initEvents() {
-        etAmount.setFilters(new InputFilter[] {new DecimalDigitsInputFilter(2)});
+        etAmount.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(2)});
         /*返回*/
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -363,6 +443,10 @@ public class InvestActivity extends XActivity<InvestPersent> {
                 //如果amount小于0，重新填写购买金额
                 if (amount.compareTo(BigDecimal.ZERO) <= 0) {
                     showToast("请输入正确的投资金额");
+                    return;
+                }
+                if (Float.parseFloat(strAmount) / 10000 > limitPerPay) {
+                    showToast("超出单笔限额");
                     return;
                 }
                 //如果amount小于最小购买金额，重新填写购买金额
@@ -530,12 +614,14 @@ public class InvestActivity extends XActivity<InvestPersent> {
         //银行卡名称和尾号
         bankName.setText(bankCardResp.getBankName() + "（" + bankCardResp.getBankNoTail() + "）");
         //银行限额
+        limitPerPay = Float.parseFloat(bankCardResp.getLimit_per_payment());
         bankLimit.setText("单笔限额" + bankCardResp.getLimit_per_payment() + "万，单日限额" + bankCardResp.getLimit_per_day() + "万");
 
     }
 
     /**
      * 提交定投数据，返回输入密码错误
+     *
      * @param message
      */
     public void passwordError(String message) {

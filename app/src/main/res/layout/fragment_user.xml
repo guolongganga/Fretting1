@@ -191,6 +191,7 @@
                 android:text="@string/user_profit"/>
             <!--撤单-->
             <TextView
+                android:visibility="gone"
                 android:id="@+id/remove"
                 style="@style/user_text_top_image"
                 android:drawableTop="@drawable/icon_user_chedan"

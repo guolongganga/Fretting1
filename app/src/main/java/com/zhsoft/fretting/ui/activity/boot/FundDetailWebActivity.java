@@ -30,6 +30,8 @@ import com.zhsoft.fretting.model.fund.BuyFundResp;
 import com.zhsoft.fretting.model.fund.InvestResp;
 import com.zhsoft.fretting.model.fund.SellResp;
 import com.zhsoft.fretting.model.user.InvestPlanResp;
+import com.zhsoft.fretting.model.user.UpdateBonusResp;
+import com.zhsoft.fretting.model.user.WebBonusResp;
 import com.zhsoft.fretting.net.Api;
 import com.zhsoft.fretting.net.HttpContent;
 import com.zhsoft.fretting.present.boot.FundDetailPresent;
@@ -64,34 +66,67 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
 
-    /** 返回按钮 */
-    @BindView(R.id.head_back) ImageButton headBack;
-    /** 标题 */
-    @BindView(R.id.head_title) TextView headTitle;
-    /** 右侧图片按钮 */
-    @BindView(R.id.head_right_imgbtn) ImageButton headRightImgbtn;
-    /** WebView */
-    @BindView(R.id.my_web) WebView mWeb;
-    /** 进度条 */
-    @BindView(R.id.pb) ProgressBar pb;
-    /** 用户登录标识 */
+    /**
+     * 返回按钮
+     */
+    @BindView(R.id.head_back)
+    ImageButton headBack;
+    /**
+     * 标题
+     */
+    @BindView(R.id.head_title)
+    TextView headTitle;
+    /**
+     * 右侧图片按钮
+     */
+    @BindView(R.id.head_right_imgbtn)
+    ImageButton headRightImgbtn;
+    /**
+     * WebView
+     */
+    @BindView(R.id.my_web)
+    WebView mWeb;
+    /**
+     * 进度条
+     */
+    @BindView(R.id.pb)
+    ProgressBar pb;
+    /**
+     * 用户登录标识
+     */
     private String token = "";
-    /** 用户编号 */
+    /**
+     * 用户编号
+     */
     private String userId = "";
-    /** 基金代码 */
+    /**
+     * 基金代码
+     */
     private String fundCode;
-    /** 基金名称 */
+    /**
+     * 基金名称
+     */
     private String fundName;
-    /** 加载圈 */
+    /**
+     * 加载圈
+     */
     private HttpLoadingDialog httpLoadingDialog;
 
-    /** 去开户 弹出框 */
+    /**
+     * 去开户 弹出框
+     */
     private CustomDialog openAccountDialog;
-    /** 去补全个人信息 弹出框 */
+    /**
+     * 去补全个人信息 弹出框
+     */
     private CustomDialog personInfoDialog;
-    /** 去开户 去风险测评 */
+    /**
+     * 去开户 去风险测评
+     */
     private CustomDialog riskTestDialog;
-    /** 风险等级 弹出框 */
+    /**
+     * 风险等级 弹出框
+     */
     private CustomDialog validateDialog;
 
     @Override
@@ -425,7 +460,9 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      * 变更分红方式
      */
     private void baseToBonus() {
-        startActivity(BonusChangeActivity.class, Constant.WEB_BONUS_ACTIVITY);
+//        httpLoadingDialog.visible();
+        getP().loadBonusData(fundCode, token, userId);
+
     }
 
     /**
@@ -543,7 +580,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
                         }).create();
             }
             validateDialog.show();
-        }else if (Constant.TO_CHANGE_ACCOUNT.equals(resp.getCanBuy())){
+        } else if (Constant.TO_CHANGE_ACCOUNT.equals(resp.getCanBuy())) {
             new CustomDialog.Builder(context).setMessage(R.string.invest_notallow).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -551,7 +588,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
                 }
             }).create().show();
 
-        } else{
+        } else {
 
             //去定投
             Bundle bundle = new Bundle();
@@ -782,4 +819,17 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         super.onDestroy();
     }
 
+    /**
+     * 获取分红成功，跳转分红界面
+     *
+     * @param model
+     */
+    public void loadBonusDataSuccess(final WebBonusResp model) {
+//        httpLoadingDialog.dismiss();
+        Bundle bundle = new Bundle();
+        bundle.putBoolean("isFromWeb",true);
+        bundle.putParcelable(Constant.ACTIVITY_OBJECT, model);
+        startActivity(BonusChangeActivity.class, bundle);
+
+    }
 }
