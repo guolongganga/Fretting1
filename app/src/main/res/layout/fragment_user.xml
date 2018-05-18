@@ -1,13 +1,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:app="http://schemas.android.com/apk/res-auto"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@color/color_F9F9F9"
-             android:orientation="vertical"
-             tools:context=".ui.fragment.user.UserFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_F9F9F9"
+    android:orientation="vertical"
+    tools:context=".ui.fragment.user.UserFragment">
     <!--头部标题-->
-    <include layout="@layout/layout_head"/>
+    <include layout="@layout/layout_head" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -42,7 +42,7 @@
                         android:layout_marginTop="@dimen/dimen_10"
                         android:text="@string/user_total_assets"
                         android:textColor="@color/color_FFFFFF"
-                        android:textSize="@dimen/text_size_13"/>
+                        android:textSize="@dimen/text_size_13" />
                     <!--总资产-->
                     <TextView
                         android:id="@+id/tv_total_assets"
@@ -52,7 +52,7 @@
                         android:layout_centerHorizontal="true"
                         android:text="--.--"
                         android:textColor="@color/color_FFFFFF"
-                        android:textSize="@dimen/text_size_32"/>
+                        android:textSize="@dimen/text_size_32" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -68,7 +68,7 @@
                         android:layout_marginTop="@dimen/dimen_10"
                         android:text="@string/user_passage"
                         android:textColor="@color/color_FFFFFF"
-                        android:textSize="@dimen/text_size_13"/>
+                        android:textSize="@dimen/text_size_13" />
 
                     <!--在途资产-->
                     <TextView
@@ -79,7 +79,7 @@
                         android:layout_centerHorizontal="true"
                         android:text="--.--"
                         android:textColor="@color/color_FFFFFF"
-                        android:textSize="@dimen/text_size_32"/>
+                        android:textSize="@dimen/text_size_32" />
                 </RelativeLayout>
             </LinearLayout>
 
@@ -87,7 +87,7 @@
                 style="@style/divider_half_ff"
                 android:layout_marginLeft="@dimen/dimen_15"
                 android:layout_marginRight="@dimen/dimen_15"
-                android:layout_marginTop="@dimen/dimen_5"/>
+                android:layout_marginTop="@dimen/dimen_5" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -109,7 +109,7 @@
                         android:layout_height="wrap_content"
                         android:text="昨日收益(12/04)"
                         android:textColor="@color/color_FFFFFF"
-                        android:textSize="@dimen/text_size_12"/>
+                        android:textSize="@dimen/text_size_12" />
                     <!--昨日收益-->
                     <TextView
                         android:id="@+id/tv_yesterday_income"
@@ -118,15 +118,14 @@
                         android:layout_marginTop="@dimen/dimen_5"
                         android:text="--.--"
                         android:textColor="@color/color_FFFFFF"
-                        android:textSize="@dimen/text_size_15"
-                        />
+                        android:textSize="@dimen/text_size_15" />
                 </LinearLayout>
 
 
                 <View
                     android:layout_width="@dimen/dimen_01"
                     android:layout_height="match_parent"
-                    android:background="@color/color_FFFFFF"/>
+                    android:background="@color/color_FFFFFF" />
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -141,7 +140,7 @@
                         android:layout_height="wrap_content"
                         android:text="累计收益(元)"
                         android:textColor="@color/color_FFFFFF"
-                        android:textSize="@dimen/text_size_12"/>
+                        android:textSize="@dimen/text_size_12" />
                     <!--累计收益-->
                     <TextView
                         android:id="@+id/tv_accumulate_earn"
@@ -150,8 +149,7 @@
                         android:layout_marginTop="@dimen/dimen_5"
                         android:text="--.--"
                         android:textColor="@color/color_FFFFFF"
-                        android:textSize="@dimen/text_size_15"
-                        />
+                        android:textSize="@dimen/text_size_15" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -170,41 +168,40 @@
                 android:id="@+id/self_choose"
                 style="@style/user_text_top_image"
                 android:drawableTop="@drawable/icon_user_zixuan"
-                android:text="@string/user_self_choose"/>
+                android:text="@string/user_self_choose" />
             <!--定投-->
             <TextView
                 android:id="@+id/timing"
                 style="@style/user_text_top_image"
                 android:drawableTop="@drawable/icon_user_dingtou"
-                android:text="@string/user_timing"/>
+                android:text="@string/user_timing" />
             <!--交易查询-->
             <TextView
                 android:id="@+id/transaction"
                 style="@style/user_text_top_image"
                 android:drawableTop="@drawable/icon_user_jiaoyi"
-                android:text="@string/user_transaction"/>
+                android:text="@string/user_transaction" />
             <!--分红-->
             <TextView
                 android:id="@+id/profit"
                 style="@style/user_text_top_image"
                 android:drawableTop="@drawable/icon_user_fenhong"
-                android:text="@string/user_profit"/>
+                android:text="@string/user_profit" />
             <!--撤单-->
             <TextView
-                android:visibility="gone"
                 android:id="@+id/remove"
                 style="@style/user_text_top_image"
                 android:drawableTop="@drawable/icon_user_chedan"
-                android:text="@string/user_remove"/>
+                android:text="@string/user_remove"
+                android:visibility="gone" />
 
         </LinearLayout>
 
         <!--如果未开户则不显示这个-->
-        <LinearLayout
+        <RelativeLayout
             android:id="@+id/ll_fund_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:visibility="visible">
             <!--滑动标签栏-->
             <android.support.design.widget.TabLayout
@@ -219,34 +216,39 @@
                 app:tabMode="fixed"
                 app:tabSelectedTextColor="@color/color_text_333"
                 app:tabTextAppearance="@style/UserTabLayoutTextAppearanceInverse"
-                app:tabTextColor="@color/color_727272"/>
+                app:tabTextColor="@color/color_727272" />
 
             <!--分割线-->
-            <View style="@style/divider_half_e7"/>
+            <View
+                style="@style/divider_half_e7"
+                android:layout_below="@id/tab_layout" />
             <!--页卡-->
             <android.support.v4.view.ViewPager
                 android:id="@+id/view_pager"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_below="@id/tab_layout"
+                android:layout_marginTop="0.5dp"
                 android:background="@color/white"
-                android:visibility="gone"/>
-        </LinearLayout>
+                android:visibility="visible" />
+
+            <Button
+                android:id="@+id/to_finish_register"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dimen_50"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginLeft="@dimen/dimen_62.5"
+                android:layout_marginRight="@dimen/dimen_62.5"
+                android:layout_marginTop="@dimen/dimen_70"
+                android:background="@drawable/bg_blue_rect_open"
+                android:text="您还未开户，去开户>"
+                android:textColor="@color/color_508CEE"
+                android:textSize="@dimen/text_size_17"
+                android:visibility="visible" />
+
+        </RelativeLayout>
 
         <!--未开户显示去开户-->
-        <Button
-            android:id="@+id/to_finish_register"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/dimen_50"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginLeft="@dimen/dimen_62.5"
-            android:layout_marginRight="@dimen/dimen_62.5"
-            android:layout_marginTop="@dimen/dimen_70"
-            android:background="@drawable/bg_blue_rect_open"
-            android:text="您还未开户，去开户>"
-            android:textColor="@color/color_508CEE"
-            android:textSize="@dimen/text_size_17"
-            android:visibility="gone"
-            />
 
     </LinearLayout>
     <!--</ScrollView>-->
@@ -268,17 +270,17 @@
             android:layout_width="@dimen/dimen_100"
             android:layout_height="@dimen/dimen_100"
             android:layout_marginTop="@dimen/dimen_122"
-            android:src="@drawable/logo"/>
+            android:src="@drawable/logo" />
 
         <Button
             android:id="@+id/login"
             style="@style/common_red_button_rect_login"
-            android:text="立即登录"/>
+            android:text="立即登录" />
 
         <Button
             android:id="@+id/register"
             style="@style/common_red_button_rect_register"
-            android:text="10秒开户"/>
+            android:text="10秒开户" />
     </LinearLayout>
 
 </FrameLayout>

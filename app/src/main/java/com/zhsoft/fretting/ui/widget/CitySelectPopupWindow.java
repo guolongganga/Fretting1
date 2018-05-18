@@ -10,7 +10,7 @@ import android.widget.Button;
 import android.widget.PopupWindow;
 
 
-import com.zhsoft.fretting.R;
+import cn.com.buyforyou.fund.R;
 import com.zhsoft.fretting.ui.widget.wheel.OnWheelChangedListener;
 import com.zhsoft.fretting.ui.widget.wheel.WheelView;
 import com.zhsoft.fretting.ui.widget.wheel.adapters.ArrayWheelAdapter;

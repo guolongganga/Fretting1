@@ -12,7 +12,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.zhsoft.fretting.R;
+import cn.com.buyforyou.fund.R;
 
 
 /**

@@ -218,4 +218,6 @@ public abstract class XFragment<P extends IPresent> extends RxFragment implement
     public void showNetWorkError() {
         showToast("请检查您的网络!");
     }
+
+
 }

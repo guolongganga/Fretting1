@@ -34,7 +34,7 @@ import android.view.ViewGroup.LayoutParams;
 import android.view.animation.Interpolator;
 import android.widget.LinearLayout;
 
-import com.zhsoft.fretting.R;
+import cn.com.buyforyou.fund.R;
 import com.zhsoft.fretting.ui.widget.wheel.adapters.WheelViewAdapter;
 
 import java.util.LinkedList;

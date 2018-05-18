@@ -84,10 +84,11 @@
                     android:layout_weight="1"
                     android:background="@null"
                     android:hint="最低购买金额1000元"
+
                     android:inputType="numberDecimal|number"
                     android:textColor="@color/color_333333"
                     android:textColorHint="@color/color_CCCCCC"
-                    android:textSize="@dimen/text_size_27"/>
+                    android:textSize="20sp"/>
             </LinearLayout>
 
             <View style="@style/divider_half_e7"/>

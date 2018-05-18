@@ -12,14 +12,14 @@ import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 
-import com.zhsoft.fretting.App;
-import com.zhsoft.fretting.R;
-import com.zhsoft.fretting.model.ApplyBaseInfo;
-import com.zhsoft.fretting.model.fund.NewestFundResp;
-import com.zhsoft.fretting.ui.adapter.boot.PopBottomSelectorRecycleAdapter;
-import com.zhsoft.fretting.ui.adapter.boot.PopBottomSelectorRecycleAdapter2;
-import com.zhsoft.fretting.ui.adapter.boot.SearchRecycleAdapter;
-import com.zhsoft.fretting.ui.adapter.boot.PopDropSelectorRecycleAdapter;
+import cn.com.buyforyou.fund.App;
+import cn.com.buyforyou.fund.R;
+import cn.com.buyforyou.fund.model.ApplyBaseInfo;
+import cn.com.buyforyou.fund.model.fund.NewestFundResp;
+import cn.com.buyforyou.fund.ui.adapter.boot.PopBottomSelectorRecycleAdapter;
+import cn.com.buyforyou.fund.ui.adapter.boot.PopBottomSelectorRecycleAdapter2;
+import cn.com.buyforyou.fund.ui.adapter.boot.SearchRecycleAdapter;
+import cn.com.buyforyou.fund.ui.adapter.boot.PopDropSelectorRecycleAdapter;
 
 import java.util.List;
 import java.util.Map;

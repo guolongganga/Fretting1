@@ -38,7 +38,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Interpolator;
 
-import com.zhsoft.fretting.R;
+import cn.com.buyforyou.fund.R;
 
 import java.util.Arrays;
 

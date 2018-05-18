@@ -1,0 +1,38 @@
+[
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/release/color-v23/abc_tint_spinner.xml",
+        "source": "/Users/limxing/.android/build-cache/e412236e8ef8f45ebdfefef440c8faeec1cec5e0/output/res/color-v23/abc_tint_spinner.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/release/color-v23/abc_color_highlight_material.xml",
+        "source": "/Users/limxing/.android/build-cache/e412236e8ef8f45ebdfefef440c8faeec1cec5e0/output/res/color-v23/abc_color_highlight_material.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/release/color-v23/abc_tint_switch_thumb.xml",
+        "source": "/Users/limxing/.android/build-cache/e412236e8ef8f45ebdfefef440c8faeec1cec5e0/output/res/color-v23/abc_tint_switch_thumb.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/release/color-v23/abc_tint_seek_thumb.xml",
+        "source": "/Users/limxing/.android/build-cache/e412236e8ef8f45ebdfefef440c8faeec1cec5e0/output/res/color-v23/abc_tint_seek_thumb.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/release/color-v23/abc_tint_edittext.xml",
+        "source": "/Users/limxing/.android/build-cache/e412236e8ef8f45ebdfefef440c8faeec1cec5e0/output/res/color-v23/abc_tint_edittext.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/release/color-v23/abc_tint_default.xml",
+        "source": "/Users/limxing/.android/build-cache/e412236e8ef8f45ebdfefef440c8faeec1cec5e0/output/res/color-v23/abc_tint_default.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/release/color-v23/abc_tint_switch_track.xml",
+        "source": "/Users/limxing/.android/build-cache/e412236e8ef8f45ebdfefef440c8faeec1cec5e0/output/res/color-v23/abc_tint_switch_track.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/release/color-v23/abc_tint_btn_checkable.xml",
+        "source": "/Users/limxing/.android/build-cache/e412236e8ef8f45ebdfefef440c8faeec1cec5e0/output/res/color-v23/abc_tint_btn_checkable.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/release/color-v23/abc_btn_colored_borderless_text_material.xml",
+        "source": "/Users/limxing/.android/build-cache/e412236e8ef8f45ebdfefef440c8faeec1cec5e0/output/res/color-v23/abc_btn_colored_borderless_text_material.xml"
+    }
+]

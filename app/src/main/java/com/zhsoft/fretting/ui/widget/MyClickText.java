@@ -5,7 +5,7 @@ import android.text.TextPaint;
 import android.text.style.ClickableSpan;
 import android.view.View;
 
-import com.zhsoft.fretting.R;
+import cn.com.buyforyou.fund.R;
 
 
 /**

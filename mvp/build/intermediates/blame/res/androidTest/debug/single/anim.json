@@ -1,0 +1,66 @@
+[
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/anim/design_bottom_sheet_slide_in.xml",
+        "source": "/Users/limxing/.android/build-cache/9327fd76bc46fb158a6c995ef548fcfa8cbfbae3/output/res/anim/design_bottom_sheet_slide_in.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_in_top.xml",
+        "source": "/Users/limxing/.android/build-cache/e412236e8ef8f45ebdfefef440c8faeec1cec5e0/output/res/anim/abc_slide_in_top.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/anim/abc_shrink_fade_out_from_bottom.xml",
+        "source": "/Users/limxing/.android/build-cache/e412236e8ef8f45ebdfefef440c8faeec1cec5e0/output/res/anim/abc_shrink_fade_out_from_bottom.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/anim/abc_fade_in.xml",
+        "source": "/Users/limxing/.android/build-cache/e412236e8ef8f45ebdfefef440c8faeec1cec5e0/output/res/anim/abc_fade_in.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_out_bottom.xml",
+        "source": "/Users/limxing/.android/build-cache/e412236e8ef8f45ebdfefef440c8faeec1cec5e0/output/res/anim/abc_slide_out_bottom.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/anim/abc_fade_out.xml",
+        "source": "/Users/limxing/.android/build-cache/e412236e8ef8f45ebdfefef440c8faeec1cec5e0/output/res/anim/abc_fade_out.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_out_top.xml",
+        "source": "/Users/limxing/.android/build-cache/e412236e8ef8f45ebdfefef440c8faeec1cec5e0/output/res/anim/abc_slide_out_top.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/anim/design_bottom_sheet_slide_out.xml",
+        "source": "/Users/limxing/.android/build-cache/9327fd76bc46fb158a6c995ef548fcfa8cbfbae3/output/res/anim/design_bottom_sheet_slide_out.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/anim/abc_popup_exit.xml",
+        "source": "/Users/limxing/.android/build-cache/e412236e8ef8f45ebdfefef440c8faeec1cec5e0/output/res/anim/abc_popup_exit.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/anim/design_fab_out.xml",
+        "source": "/Users/limxing/.android/build-cache/9327fd76bc46fb158a6c995ef548fcfa8cbfbae3/output/res/anim/design_fab_out.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/anim/abc_slide_in_bottom.xml",
+        "source": "/Users/limxing/.android/build-cache/e412236e8ef8f45ebdfefef440c8faeec1cec5e0/output/res/anim/abc_slide_in_bottom.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/anim/design_snackbar_out.xml",
+        "source": "/Users/limxing/.android/build-cache/9327fd76bc46fb158a6c995ef548fcfa8cbfbae3/output/res/anim/design_snackbar_out.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/anim/abc_grow_fade_in_from_bottom.xml",
+        "source": "/Users/limxing/.android/build-cache/e412236e8ef8f45ebdfefef440c8faeec1cec5e0/output/res/anim/abc_grow_fade_in_from_bottom.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/anim/abc_popup_enter.xml",
+        "source": "/Users/limxing/.android/build-cache/e412236e8ef8f45ebdfefef440c8faeec1cec5e0/output/res/anim/abc_popup_enter.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/anim/design_snackbar_in.xml",
+        "source": "/Users/limxing/.android/build-cache/9327fd76bc46fb158a6c995ef548fcfa8cbfbae3/output/res/anim/design_snackbar_in.xml"
+    },
+    {
+        "merged": "/Volumes/MovingPan/项目/fund/Fretting/mvp/build/intermediates/res/merged/androidTest/debug/anim/design_fab_in.xml",
+        "source": "/Users/limxing/.android/build-cache/9327fd76bc46fb158a6c995ef548fcfa8cbfbae3/output/res/anim/design_fab_in.xml"
+    }
+]

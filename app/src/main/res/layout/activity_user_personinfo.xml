@@ -265,7 +265,7 @@
 
                 <TextView
                     android:layout_alignParentLeft="true"
-                    android:text="基金账号"
+                    android:text="交易账号"
                     style="@style/text_bold_16"/>
 
                 <TextView

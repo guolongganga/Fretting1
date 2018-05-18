@@ -17,11 +17,11 @@
 //import android.widget.ProgressBar;
 //import android.widget.TextView;
 //
-//import com.zhsoft.fretting.R;
-//import com.zhsoft.fretting.model.user.ImageResp;
-//import com.zhsoft.fretting.present.user.ISuccessDataLoadView;
-//import com.zhsoft.fretting.present.user.ImgCodePersenter;
-//import com.zhsoft.fretting.utils.Base64ImageUtil;
+//import cn.com.buyforyou.fund.R;
+//import cn.com.buyforyou.fund.model.user.ImageResp;
+//import cn.com.buyforyou.fund.present.user.ISuccessDataLoadView;
+//import cn.com.buyforyou.fund.present.user.ImgCodePersenter;
+//import cn.com.buyforyou.fund.utils.Base64ImageUtil;
 //
 //import cn.droidlover.xdroidmvp.mvp.XActivity;
 //

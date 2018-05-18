@@ -67,7 +67,7 @@
                             android:layout_height="match_parent"
                             android:gravity="center_vertical"
                             android:hint="@string/user_update_tradepwd_old_hint"
-                            android:inputType="numberPassword"
+                            android:inputType="textPassword"
                             android:maxLength="6"/>
 
                     </android.support.design.widget.TextInputLayout>
