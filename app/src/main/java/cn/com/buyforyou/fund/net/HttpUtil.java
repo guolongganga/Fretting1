@@ -22,6 +22,7 @@ import cn.com.buyforyou.fund.model.user.MyBonusResp;
 import cn.com.buyforyou.fund.model.user.OccupationResp;
 import cn.com.buyforyou.fund.model.user.PersonInfoResp;
 import cn.com.buyforyou.fund.model.user.PhoneResp;
+import cn.com.buyforyou.fund.model.user.ResidentsTaxInfoResp;
 import cn.com.buyforyou.fund.model.user.ResultDetailResp;
 import cn.com.buyforyou.fund.model.user.RiskInfoResp;
 import cn.com.buyforyou.fund.model.user.SelfChooseResp;
@@ -64,6 +65,7 @@ import static cn.com.buyforyou.fund.net.HttpContent.get_next_time;
 import static cn.com.buyforyou.fund.net.HttpContent.get_occupation;
 import static cn.com.buyforyou.fund.net.HttpContent.image_code;
 import static cn.com.buyforyou.fund.net.HttpContent.my_bankcard;
+import static cn.com.buyforyou.fund.net.HttpContent.my_crsinfoquery;
 import static cn.com.buyforyou.fund.net.HttpContent.my_informationpage;
 import static cn.com.buyforyou.fund.net.HttpContent.my_times_buy_detail;
 import static cn.com.buyforyou.fund.net.HttpContent.my_times_buy_index;
@@ -82,6 +84,7 @@ import static cn.com.buyforyou.fund.net.HttpContent.phone_code;
 import static cn.com.buyforyou.fund.net.HttpContent.purchase;
 import static cn.com.buyforyou.fund.net.HttpContent.redeem_init;
 import static cn.com.buyforyou.fund.net.HttpContent.risk_question;
+import static cn.com.buyforyou.fund.net.HttpContent.save_crsinfoquery;
 import static cn.com.buyforyou.fund.net.HttpContent.send_phone_code;
 import static cn.com.buyforyou.fund.net.HttpContent.setup_index;
 import static cn.com.buyforyou.fund.net.HttpContent.share_out_bonus_trade;
@@ -210,10 +213,20 @@ public interface HttpUtil {
     @POST(my_informationpage)
     Flowable<PersonInfoResp> myInformationPage(@Body CommonReqData reqData);
 
+    //涉水信息
+    @Headers("appType:Android")
+    @POST(my_crsinfoquery)
+    Flowable<ResidentsTaxInfoResp> myResidentsTax(@Body CommonReqData reqData);
+
     //变更个人信息
     @Headers("appType:Android")
     @POST(change_my_information)
     Flowable<BaseResp> changeMyInformation(@Body CommonReqData reqData);
+
+    //保存居民涉税信息
+    @Headers("appType:Android")
+    @POST(save_crsinfoquery)
+    Flowable<BaseResp> saveTaxInfo(@Body CommonReqData reqData);
 
     //找回登录密码 短信验证码
     @Headers("appType:Android")
@@ -409,9 +422,6 @@ public interface HttpUtil {
     @Headers("appType:Android")
     @POST(check_version)
     Flowable<UpdateVersionResp> checkVersion(@Body CommonReqData reqData);
-
-
-
 
 
 }

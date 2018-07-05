@@ -29,10 +29,13 @@ import cn.com.buyforyou.fund.constant.Constant;
 import cn.com.buyforyou.fund.model.LoginResp;
 import cn.com.buyforyou.fund.model.user.ImageResp;
 import cn.com.buyforyou.fund.present.user.RegisterFirstPresent;
+
 import com.zhsoft.fretting.ui.widget.CountdownButton;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
+
 import cn.com.buyforyou.fund.utils.Base64ImageUtil;
 import cn.com.buyforyou.fund.utils.RuntimeHelper;
+
 import com.zhsoft.fretting.ui.widget.ChenJingET;
 
 import butterknife.BindView;
@@ -67,6 +70,11 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
      */
     @BindView(R.id.phone_number)
     EditText phoneNumber;
+    /**
+     * 邀请码
+     */
+    @BindView(R.id.invite_code)
+    EditText invite_code;
     /**
      * 密码
      */
@@ -127,7 +135,7 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
     EditText etCode;
 
     private CustomDialog customDialog;
-    private String TAG="RegisterFirstActivity";
+    private String TAG = "RegisterFirstActivity";
 
 
     @Override
@@ -302,7 +310,7 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
                 //注册接口 短信验证码
                 httpLoadingDialog.visible("加载中...");
                 httpLoadingDialog.setCanceledOnKeyBack();
-                getP().register(phone, pwd, code);
+                getP().register(phone, pwd, code, invite_code.getText().toString());
 
                 //全局变量设置为登录状态
 //                RuntimeHelper.getInstance().setLogin(true);
@@ -319,10 +327,10 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
      */
     public void showImageCode(final String phone) {
         //设置contentView
-        AlertDialog.Builder builder = new AlertDialog.Builder(context,R.style.PEditTextView);
+        AlertDialog.Builder builder = new AlertDialog.Builder(context, R.style.PEditTextView);
         View contentView = LayoutInflater.from(context).inflate(R.layout.pop_show_image_code, null);
         mPopWindow = builder.create();
-        mPopWindow.setView(contentView,0,0,0,0);
+        mPopWindow.setView(contentView, 0, 0, 0, 0);
 //        View contentView = LayoutInflater.from(context).inflate(R.layout.pop_show_image_code, null);
 //        mPopWindow = new PopupWindow(contentView,
 //                LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT, true);

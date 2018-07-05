@@ -11,6 +11,7 @@ import android.widget.PopupWindow;
 
 import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.model.ApplyBaseInfo;
+
 import com.zhsoft.fretting.ui.widget.wheel.OnWheelChangedListener;
 import com.zhsoft.fretting.ui.widget.wheel.WheelView;
 import com.zhsoft.fretting.ui.widget.wheel.adapters.ArrayWheelAdapter;
@@ -40,14 +41,23 @@ public class SelectPopupWindow extends PopupWindow implements OnWheelChangedList
     private WheelView mViewContent;
     private Context mContext;
     private CallBack callBack;
+    private CallBackCode callBackCode;
     private ArrayList<ApplyBaseInfo> list;
 
     public interface CallBack {
         void onSelectChange(int currentItem, String name);
     }
 
+    public interface CallBackCode {
+        void onSelectChange(int currentItem, String name, String Code);
+    }
+
     public void setCallBack(CallBack callBack) {
         this.callBack = callBack;
+    }
+
+    public void setCallBackCode(CallBackCode callBackCode) {
+        this.callBackCode = callBackCode;
     }
 
     public SelectPopupWindow(Context context, final ArrayList<ApplyBaseInfo> list) {
@@ -76,6 +86,9 @@ public class SelectPopupWindow extends PopupWindow implements OnWheelChangedList
                 if (callBack != null) {
                     callBack.onSelectChange(currentItem, list.get(currentItem).getContent());
                 }
+                if (callBackCode != null) {
+                    callBackCode.onSelectChange(currentItem, list.get(currentItem).getContent(), list.get(currentItem).getCode());
+                }
             }
         });
 
@@ -100,7 +113,9 @@ public class SelectPopupWindow extends PopupWindow implements OnWheelChangedList
         mViewContent.setVisibleItems(7);
     }
 
-    /** 所有信息 */
+    /**
+     * 所有信息
+     */
     private String[] mDatas;
 
     protected void initDatas() {

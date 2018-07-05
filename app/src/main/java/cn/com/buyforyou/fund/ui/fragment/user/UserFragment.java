@@ -1,18 +1,12 @@
 package cn.com.buyforyou.fund.ui.fragment.user;
 
 
-import android.app.ActivityManager;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
-import android.system.Os;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -20,10 +14,17 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import butterknife.BindView;
 import cn.com.buyforyou.fund.App;
 import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.constant.Constant;
-import cn.com.buyforyou.fund.event.InvalidTokenEvent;
 import cn.com.buyforyou.fund.event.RefreshUserDataEvent;
 import cn.com.buyforyou.fund.model.user.HoldFundResp;
 import cn.com.buyforyou.fund.model.user.MyHoldFundResp;
@@ -42,19 +43,8 @@ import cn.com.buyforyou.fund.ui.activity.user.TransactionQueryActivity;
 import cn.com.buyforyou.fund.ui.adapter.fund.FundTabViewPagerAdapter;
 import cn.com.buyforyou.fund.utils.BigDecimalUtil;
 import cn.com.buyforyou.fund.utils.RuntimeHelper;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
-import cn.droidlover.xdroidmvp.log.XLog;
 import cn.droidlover.xdroidmvp.mvp.XFragment;
-import cn.droidlover.xdroidmvp.net.NetError;
 
 /**
  * 作者：sunnyzeng on 2017/12/5

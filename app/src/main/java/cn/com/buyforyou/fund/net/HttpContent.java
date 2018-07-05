@@ -51,6 +51,10 @@ public class HttpContent {
     public static final String get_occupation = "permissionCheck/fundHome/getOccupation";
     /** 我的个人信息 */
     public static final String my_informationpage = "permissionCheck/fundHome/MyInformationPage";
+    /** 个人涉税信息 */
+    public static final String my_crsinfoquery= "permissionCheck/fundHome/crsinfoquery";
+    /** 保存个人涉税信息 */
+    public static final String save_crsinfoquery = "permissionCheck/fundHome/crsinfooperate";
     /** 修改个人信息 */
     public static final String change_my_information = "permissionCheck/fundHome/changeMyInformation";
     /** 找回登录密码 的 短信验证码 */

@@ -12,6 +12,7 @@ public class RiskInfoResp extends BaseResp<RiskInfoResp> {
     private String riskEvaluteStatus;
     private String riskEvaluteVal;
     private String serviceTel;
+    private String invite_code;
 
     public String getServiceTel() {
         return serviceTel;
@@ -35,5 +36,13 @@ public class RiskInfoResp extends BaseResp<RiskInfoResp> {
 
     public void setRiskEvaluteVal(String riskEvaluteVal) {
         this.riskEvaluteVal = riskEvaluteVal;
+    }
+
+    public String getInvite_code() {
+        return invite_code;
+    }
+
+    public void setInvite_code(String invite_code) {
+        this.invite_code = invite_code;
     }
 }

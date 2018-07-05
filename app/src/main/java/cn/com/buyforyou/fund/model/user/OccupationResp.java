@@ -34,4 +34,12 @@ public class OccupationResp extends BaseResp<ArrayList<OccupationResp>> {
     public void setKeyvalue(String keyvalue) {
         this.keyvalue = keyvalue;
     }
+
+    @Override
+    public String toString() {
+        return "OccupationResp{" +
+                "caption='" + caption + '\'' +
+                ", keyvalue='" + keyvalue + '\'' +
+                '}';
+    }
 }

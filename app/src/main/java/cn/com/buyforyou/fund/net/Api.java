@@ -12,9 +12,9 @@ import cn.droidlover.xdroidmvp.net.XApi;
 
 public class Api {
 
-    public static String[] urls = new String[]{"appservice.buyforyou.com.cn","114.242.38.89:18443", "20.1.149.115:8443",
+    public static String[] urls = new String[]{"appservice.buyforyou.com.cn", "114.242.38.89:18443", "20.1.149.115:8443",
             "20.1.149.116:8443", "20.1.149.114:8443", "20.1.149.130:8443",
-            "20.1.149.250:8443", "20.1.149.173:8443", "20.1.149.113:8443"};
+            "20.1.149.250:8443", "20.1.149.173:8443", "20.1.149.113:8443", "10.0.8.252:8443", "10.0.8.74:8443"};
 
     //    public static final String API_BASE_URL = "https://20.1.149.250:8443/";//测试服务器
 //    public static final String API_BASE_URL = "https://114.242.38.89:18443/";//测试服务器外网

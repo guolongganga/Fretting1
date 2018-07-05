@@ -42,7 +42,13 @@
         <!--设置-->
         <activity android:name=".ui.activity.user.SettingActivity"></activity>
         <!--个人信息-->
-        <activity android:name=".ui.activity.user.PersonInfoActivity"></activity>
+        <activity
+            android:name=".ui.activity.user.PersonInfoActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
+        <!--居民涉税信息-->
+        <activity
+            android:name=".ui.activity.user.ResidentsTaxInfoActivity"
+            android:windowSoftInputMode="stateAlwaysHidden|adjustPan" />
         <!--变更手机号 信息页-->
         <activity android:name=".ui.activity.user.PhoneActivity"></activity>
         <!--变更手机号 更改页-->
@@ -122,7 +128,9 @@
         <activity android:name=".ui.activity.boot.WebRiskActivity"></activity>
 
 
-        <activity android:name=".ui.activity.UpdateAppActivity" android:theme="@style/AtivityNoAnimation" />
+        <activity
+            android:name=".ui.activity.UpdateAppActivity"
+            android:theme="@style/AtivityNoAnimation" />
 
 
         <provider
@@ -136,7 +144,6 @@
         </provider>
 
 
-
     </application>
 
     <!--权限设置-->
@@ -146,12 +153,12 @@
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <!--<meta-data-->
-        <!--android:name="UMENG_APPKEY"-->
-        <!--android:value="5ad05d348f4a9d3227000185" />-->
+    <!--android:name="UMENG_APPKEY"-->
+    <!--android:value="5ad05d348f4a9d3227000185" />-->
     <!--<meta-data-->
-        <!--android:name="UMENG_CHANNEL"-->
-        <!--android:value="Official Website" />-->
+    <!--android:name="UMENG_CHANNEL"-->
+    <!--android:value="Official Website" />-->
 </manifest>

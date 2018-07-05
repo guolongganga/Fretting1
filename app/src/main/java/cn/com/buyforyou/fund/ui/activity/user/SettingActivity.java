@@ -27,7 +27,9 @@ import cn.com.buyforyou.fund.net.HttpContent;
 import cn.com.buyforyou.fund.present.user.SettingPresent;
 import cn.com.buyforyou.fund.ui.activity.boot.WebPublicActivity;
 import cn.com.buyforyou.fund.ui.activity.boot.WebRiskActivity;
+
 import com.zhsoft.fretting.ui.widget.CustomDialog;
+
 import cn.com.buyforyou.fund.utils.RuntimeHelper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -42,44 +44,96 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  */
 
 public class SettingActivity extends XActivity<SettingPresent> {
-    /** 返回按钮 */
-    @BindView(R.id.head_back) ImageButton headBack;
-    /** 标题 */
-    @BindView(R.id.head_title) TextView headTitle;
-    /** 个人信息 */
-    @BindView(R.id.personinfo) TextView personinfo;
-    /** 手机号码 */
-    @BindView(R.id.phone) TextView phone;
-    /** 是否做过风险测评 风险等级 */
-    @BindView(R.id.tv_risk_grade) TextView tvRiskGrade;
-    /** 密码管理 */
-    @BindView(R.id.password_manager) TextView passwordManager;
-    /** 银行卡号 */
-    @BindView(R.id.bankcard) TextView bankcard;
-    /** 风险等级测评 */
-    @BindView(R.id.risk_test) LinearLayout riskTest;
-    /** 客服电话 */
-    @BindView(R.id.call_agent) TextView callAgent;
-    /** 关于我们 */
-    @BindView(R.id.about_us) TextView aboutUs;
+    /**
+     * 返回按钮
+     */
+    @BindView(R.id.head_back)
+    ImageButton headBack;
+    /**
+     * 标题
+     */
+    @BindView(R.id.head_title)
+    TextView headTitle;
+    /**
+     * 个人信息
+     */
+    @BindView(R.id.personinfo)
+    TextView personinfo;
+    /**
+     * 手机号码
+     */
+    @BindView(R.id.phone)
+    TextView phone;
+    /**
+     * 是否做过风险测评 风险等级
+     */
+    @BindView(R.id.tv_risk_grade)
+    TextView tvRiskGrade;
+    /**
+     * 密码管理
+     */
+    @BindView(R.id.password_manager)
+    TextView passwordManager;
+    /**
+     * 银行卡号
+     */
+    @BindView(R.id.bankcard)
+    TextView bankcard;
+    /**
+     * 风险等级测评
+     */
+    @BindView(R.id.risk_test)
+    LinearLayout riskTest;
+    /**
+     * 客服电话
+     */
+    @BindView(R.id.call_agent)
+    TextView callAgent;
+    /**
+     * 关于我们
+     */
+    @BindView(R.id.about_us)
+    TextView aboutUs;
 //    /** 切换账户 */
 //    @BindView(R.id.change_user) TextView changeUser;
-    /** 安全退出 */
-    @BindView(R.id.exit) Button exit;
+    /**
+     * 安全退出
+     */
+    @BindView(R.id.exit)
+    Button exit;
+    /**
+     * 邀请码
+     */
+    @BindView(R.id.invite_code)
+    TextView inviteCode;
 
-    /** 针对即使获取了拨打电话的权限依然报错问题的解决方案 */
+    /**
+     * 针对即使获取了拨打电话的权限依然报错问题的解决方案
+     */
     private static final int MY_PERMISSIONS_REQUEST_CALL_PHONE = 1;
-    /** 客服电话 */
+    /**
+     * 客服电话
+     */
     private String serviceTel;
-    /** 登录标识 */
+    /**
+     * 登录标识
+     */
     private String token;
-    /** 用户编号 */
+    /**
+     * 用户编号
+     */
     private String userId;
-    /** 是否风险测评 */
+    /**
+     * 是否风险测评
+     */
     private String riskEvaluteStatus;
-    /** 加载圈 */
+    /**
+     * 加载圈
+     */
     private HttpLoadingDialog httpLoadingDialog;
-    /** 是否开户 */
+    /**
+     * 是否开户
+     */
     private String isOpenAccount;
     private CustomDialog dialog;
 
@@ -267,6 +321,19 @@ public class SettingActivity extends XActivity<SettingPresent> {
         } else {
             tvRiskGrade.setText(data.getRiskEvaluteVal());
         }
+
+        if (!Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
+            inviteCode.setText("未生成");
+            inviteCode.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    showToast("您还未开户成功，暂不能生成邀请码");
+                }
+            });
+        } else {
+            inviteCode.setText(data.getInvite_code());
+        }
+
     }
 
     /**
@@ -337,9 +404,10 @@ public class SettingActivity extends XActivity<SettingPresent> {
 
     /**
      * 设置水波纹点击背景
+     *
      * @param itemView
      */
-    private void setRippBac(View itemView){
+    private void setRippBac(View itemView) {
         if (itemView.getBackground() == null) {
             TypedValue typedValue = new TypedValue();
             Resources.Theme theme = itemView.getContext().getTheme();

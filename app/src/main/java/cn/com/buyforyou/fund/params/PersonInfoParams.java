@@ -21,6 +21,7 @@ public class PersonInfoParams extends CommonReqData<PersonInfoParams> {
     /** 邮箱 */
     private String email;
     private String trade_password;
+    private String cust_flag;
 
     public String getTrade_password() {
         return trade_password;
@@ -76,5 +77,13 @@ public class PersonInfoParams extends CommonReqData<PersonInfoParams> {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getCust_flag() {
+        return cust_flag;
+    }
+
+    public void setCust_flag(String cust_flag) {
+        this.cust_flag = cust_flag;
     }
 }

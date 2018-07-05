@@ -1,5 +1,7 @@
 package cn.com.buyforyou.fund.model.user;
 
+import java.util.List;
+
 import cn.com.buyforyou.fund.model.BaseResp;
 
 /**
@@ -28,6 +30,11 @@ public class PersonInfoResp extends BaseResp<PersonInfoResp> {
     private String ta_acco;
     /** 邮箱 */
     private String email;
+
+    /** 税收居民选择的类型 */
+    private OccupationResp cust_flag_info;
+    /** 税收居民 */
+    private List<OccupationResp> taxflag;
 
     public String getUserName() {
         return userName;
@@ -107,5 +114,21 @@ public class PersonInfoResp extends BaseResp<PersonInfoResp> {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public List<OccupationResp> getTaxflag() {
+        return taxflag;
+    }
+
+    public void setTaxflag(List<OccupationResp> taxflag) {
+        this.taxflag = taxflag;
+    }
+
+    public OccupationResp getCust_flag_info() {
+        return cust_flag_info;
+    }
+
+    public void setCust_flag_info(OccupationResp cust_flag_info) {
+        this.cust_flag_info = cust_flag_info;
     }
 }

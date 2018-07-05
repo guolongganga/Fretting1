@@ -18,6 +18,7 @@ public class RegisterFirstParams extends CommonReqData<RegisterFirstParams> {
     private String mobile_tel;
     private String password;
     private String phone_code;
+    private String invite_code;
 
     public String getPhone_code() {
         return phone_code;
@@ -27,7 +28,14 @@ public class RegisterFirstParams extends CommonReqData<RegisterFirstParams> {
         this.phone_code = phone_code;
     }
 
-    //    private String image_code;
+    public String getInvite_code() {
+        return invite_code;
+    }
+
+    public void setInvite_code(String invite_code) {
+        this.invite_code = invite_code;
+    }
+//    private String image_code;
 //    private String image_code_id;
 
 //    public String getImage_code() {

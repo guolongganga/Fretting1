@@ -113,7 +113,8 @@ public class PersonInfoPresent extends XPresent<PersonInfoActivity> {
      * @param email
      * @param selectOccupation
      */
-    public void changeMyInformation(String token, String userId, String id_enddate, String address, String detaile_address, String email, OccupationResp selectOccupation, String trade_password) {
+    public void changeMyInformation(String token, String userId, String id_enddate, String address, String detaile_address, String email,
+                                    OccupationResp selectOccupation, String trade_password, String currentItemTax) {
         final CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -126,6 +127,7 @@ public class PersonInfoPresent extends XPresent<PersonInfoActivity> {
         params.setOccupation(selectOccupation);
         params.setTrade_password(trade_password);
         reqData.setData(params);
+        params.setCust_flag(currentItemTax);
 
         Api.getApi()
                 .changeMyInformation(reqData)

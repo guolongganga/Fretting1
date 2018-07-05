@@ -3,6 +3,7 @@ package cn.com.buyforyou.fund.ui.activity.user;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -17,15 +18,21 @@ import cn.com.buyforyou.fund.App;
 import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.constant.Constant;
 import cn.com.buyforyou.fund.event.InvalidTokenEvent;
+import cn.com.buyforyou.fund.model.ApplyBaseInfo;
 import cn.com.buyforyou.fund.model.user.OccupationResp;
 import cn.com.buyforyou.fund.model.user.PersonInfoResp;
 import cn.com.buyforyou.fund.present.user.PersonInfoPresent;
+
 import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.ui.widget.FundBuyDialog;
 import com.zhsoft.fretting.ui.widget.PopShow;
 import com.zhsoft.fretting.ui.widget.CitySelectPopupWindow;
+
 import cn.com.buyforyou.fund.utils.KeyBoardUtils;
+
 import com.zhsoft.fretting.ui.widget.ChenJingET;
+import com.zhsoft.fretting.ui.widget.SelectPopupWindow;
+
 import cn.com.buyforyou.fund.utils.RuntimeHelper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -48,59 +55,125 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
     private Calendar calendar = Calendar.getInstance();
     //时间选择器
     private DatePickerDialog timeDialog;
-    /** 返回按钮 */
-    @BindView(R.id.head_back) ImageButton headBack;
-    /** 标题 */
-    @BindView(R.id.head_title) TextView headTitle;
-    /** 用户名 */
-    @BindView(R.id.name) TextView name;
-    /** 身份证号 */
-    @BindView(R.id.identity) TextView identity;
-    /** 账户编号 */
-    @BindView(R.id.accountid) TextView accountid;
-    /** 邮箱 */
-    @BindView(R.id.email) EditText email;
-    /** 性别 */
-    @BindView(R.id.sex) TextView sex;
-    /** 身份证期限 */
-    @BindView(R.id.limit_time) TextView limitTime;
-    /** 选择 永久有效 */
-    @BindView(R.id.iv_selector) ImageView ivSelector;
-    /** 国籍 */
-    @BindView(R.id.nationality) TextView nationality;
-    /** 选择职业 */
-    @BindView(R.id.linearlayout_duty) LinearLayout linearlayout_duty;
-    /** 职业 */
-    @BindView(R.id.duty) TextView duty;
+    /**
+     * 返回按钮
+     */
+    @BindView(R.id.head_back)
+    ImageButton headBack;
+    /**
+     * 标题
+     */
+    @BindView(R.id.head_title)
+    TextView headTitle;
+    /**
+     * 用户名
+     */
+    @BindView(R.id.name)
+    TextView name;
+    /**
+     * 身份证号
+     */
+    @BindView(R.id.identity)
+    TextView identity;
+    /**
+     * 账户编号
+     */
+    @BindView(R.id.accountid)
+    TextView accountid;
+    /**
+     * 邮箱
+     */
+    @BindView(R.id.email)
+    EditText email;
+    /**
+     * 性别
+     */
+    @BindView(R.id.sex)
+    TextView sex;
+    /**
+     * 身份证期限
+     */
+    @BindView(R.id.limit_time)
+    TextView limitTime;
+    /**
+     * 选择 永久有效
+     */
+    @BindView(R.id.iv_selector)
+    ImageView ivSelector;
+    /**
+     * 国籍
+     */
+    @BindView(R.id.nationality)
+    TextView nationality;
+    /**
+     * 选择职业
+     */
+    @BindView(R.id.linearlayout_duty)
+    LinearLayout linearlayout_duty;
+    /**
+     * 职业
+     */
+    @BindView(R.id.duty)
+    TextView duty;
+    /**
+     * 居民税收选择框
+     */
+    @BindView(R.id.residents_tax)
+    TextView residentsTax;
+    /**
+     * 居民涉税信息
+     */
+    @BindView(R.id.residents_tax_info)
+    TextView residentsTaxInfo;
 //    /** 选择地址 */
 //    @BindView(R.id.linearlayout_area) LinearLayout linearlayoutArea;
 //    /** 地址 */
 //    @BindView(R.id.address) TextView address;
-    /** 详细地址 */
-    @BindView(R.id.address_detail) TextView addressDetail;
-    /** 保存按钮 */
-    @BindView(R.id.btn_save) Button btnSave;
+    /**
+     * 详细地址
+     */
+    @BindView(R.id.address_detail)
+    TextView addressDetail;
+    /**
+     * 保存按钮
+     */
+    @BindView(R.id.btn_save)
+    Button btnSave;
 
 //    /** 设置按钮 */
 //    @BindView(R.id.head_right) Button headRight;
 //    /** 编辑按钮 */
 //    @BindView(R.id.click_update) TextView clickUpdate;
 
-    /** 用户编号 */
+    /**
+     * 用户编号
+     */
     private String userId;
-    /** 登录标识 */
+    /**
+     * 登录标识
+     */
     private String token;
 //    /** 地址弹出框 */
 //    private CitySelectPopupWindow popupWindow;
-    /** 加载框 */
+    /**
+     * 加载框
+     */
     private HttpLoadingDialog httpLoadingDialog;
-    /** 职业集合 */
+    /**
+     * 职业集合
+     */
     private ArrayList<OccupationResp> listOccupation;
-    /** 选择的职业 */
+    /**
+     * 选择的职业
+     */
     private OccupationResp selectOccupationResp;
-    /** 输入密码弹框 */
+    /**
+     * 输入密码弹框
+     */
     private FundBuyDialog fundBuyDialog;
-    /** 密码错误弹框 */
+    /**
+     * 密码错误弹框
+     */
     private CustomDialog errorDialog;
 
     @Override
@@ -305,7 +378,7 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
                                 //验证是否符合更换条件
                                 dialog.dismiss();
                                 httpLoadingDialog.visible("保存中...");
-                                getP().changeMyInformation(token, userId, id_enddate, null, getText(addressDetail), getText(email), selectOccupationResp, str);
+                                getP().changeMyInformation(token, userId, id_enddate, null, getText(addressDetail), getText(email), selectOccupationResp, str, currentItemTax);
 
 
                             }
@@ -374,8 +447,105 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
             //邮箱
             email.setText(personInfoResp.getEmail());
 
+            //显示居民税收类型
+            if (null != personInfoResp.getCust_flag_info()) {
+
+                isShowTax(personInfoResp.getCust_flag_info().getKeyvalue(), personInfoResp.getCust_flag_info().getCaption());
+            }
+
+            initPopWindow(personInfoResp.getTaxflag());
+
+            residentsTaxInfo.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("caption", residentsTax.getText().toString());
+                    bundle.putString("keyvalue", currentItemTax);
+                    startActivityDelay(ResidentsTaxInfoActivity.class, bundle);
+                }
+            });
+
         }
     }
+
+    /**
+     * 是否显示居民涉税信息
+     *
+     * @param keyvalue key值
+     * @param caption  内容
+     */
+    private void isShowTax(String keyvalue, String caption) {
+
+        if (null == keyvalue||keyvalue.equals("null")) {
+            keyvalue = "0";
+        }
+        if (null == caption || caption.equals("null")) {
+            caption = "请选择";
+        }
+
+        residentsTax.setText(caption);
+        currentItemTax = keyvalue + "";
+
+        residentsTaxInfo.setVisibility(View.GONE);
+        switch (keyvalue) {
+            case "0":
+                residentsTaxInfo.setVisibility(View.GONE);
+                break;
+            case "1":
+                residentsTaxInfo.setVisibility(View.VISIBLE);
+                break;
+            case "2":
+                residentsTaxInfo.setVisibility(View.VISIBLE);
+                break;
+        }
+
+
+    }
+
+    /**
+     * 居民税收弹框
+     */
+    private SelectPopupWindow cyclePopupWindow;
+    /**
+     * 选择完的涉税信息
+     */
+    private String currentItemTax = "0";
+
+    /**
+     * 初始化弹出框
+     *
+     * @param list 居民税收类型集合
+     */
+    private void initPopWindow(List<OccupationResp> list) {
+
+        if (null == list || list.size() == 0) {
+            return;
+        }
+
+        ArrayList<ApplyBaseInfo> cycleList = new ArrayList<>();
+        for (OccupationResp occupationResp : list) {
+            cycleList.add(new ApplyBaseInfo(occupationResp.getKeyvalue(), occupationResp.getCaption()));
+        }
+        //初始化周期弹出框
+        cyclePopupWindow = new SelectPopupWindow(this, cycleList);
+        cyclePopupWindow.setCallBack(new SelectPopupWindow.CallBack() {
+            @Override
+            public void onSelectChange(int currentItem, String name) {
+                isShowTax(currentItem + "", name);
+            }
+        });
+
+        residentsTax.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //设置layout在PopupWindow中显示的位置
+                cyclePopupWindow.showAtLocation(residentsTax, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0);
+            }
+        });
+
+    }
+
 
     /**
      * 请求用户信息失败
@@ -418,6 +588,7 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
 
     /**
      * 更换银行卡 密码错误
+     *
      * @param message
      */
     public void passwordError(String message) {

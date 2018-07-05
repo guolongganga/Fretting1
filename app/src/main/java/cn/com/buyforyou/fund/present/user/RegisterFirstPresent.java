@@ -30,7 +30,7 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
      * @param mobile_tel 手机号码
      * @param password   密码
      */
-    public void register(String mobile_tel, String password, String code) {
+    public void register(String mobile_tel, String password, String code, String invite_code) {
 
         CommonReqData reqData = new CommonReqData();
 
@@ -38,6 +38,7 @@ public class RegisterFirstPresent extends XPresent<RegisterFirstActivity> {
         params.setMobile_tel(mobile_tel);
         params.setPassword(password);
         params.setPhone_code(code);
+        params.setInvite_code(invite_code);
         reqData.setData(params);
 
         Api.getApi()
