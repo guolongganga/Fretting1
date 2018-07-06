@@ -11,6 +11,8 @@ import android.widget.TextView;
 import com.zhsoft.fretting.ui.widget.SelectPopupWindow;
 import com.zhsoft.fretting.ui.widget.wheel.ScrollListView;
 
+import org.apache.http.util.TextUtils;
+
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -233,7 +235,7 @@ public class ResidentsTaxInfoActivity extends XActivity<ResidentsTaxInfoPresent>
                     return;
                 }
                 if (address_provinces.getText().toString().trim().equals("")) {
-                    showToast("请输入出生省份城");
+                    showToast("请输入出生省份/城市");
                     return;
                 }
                 if (surname_e.getText().toString().trim().equals("")) {
@@ -257,8 +259,14 @@ public class ResidentsTaxInfoActivity extends XActivity<ResidentsTaxInfoPresent>
                     return;
                 }
 
-
                 String type = "0";
+
+                for (TaxInfoEResp taxInfoEResp : residentsTaxInfoResp.getCrsmain().getTaxinfo()) {
+                    if (null == taxInfoEResp.getTax_nation() || taxInfoEResp.getTax_nation().equals("")) {
+                        showToast("请选择税收居民国（地区）");
+                        type = "1";
+                    }
+                }
 
                 for (TaxInfoEResp taxInfoEResp : taxInfoAdapter.getTaxInfoEResps_e()) {
                     if (null == taxInfoEResp.getTax_no() || taxInfoEResp.getTax_no().equals("")) {
@@ -267,6 +275,14 @@ public class ResidentsTaxInfoActivity extends XActivity<ResidentsTaxInfoPresent>
                     }
                 }
 
+                for (TaxInfoEResp taxInfoEResp : residentsTaxInfoResp.getCrsmain().getTaxinfo()) {
+                    if (null == taxInfoEResp.getNo_tax_no_reason() || taxInfoEResp.getNo_tax_no_reason().equals("B")) {
+                        if (TextUtils.isEmpty(taxInfoEResp.getTax_explain())) {
+                            showToast("请输入未能取得纳税人识别号的具体原因");
+                            type = "1";
+                        }
+                    }
+                }
 
                 if (type.equals("1")) {
                     return;

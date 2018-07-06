@@ -9,6 +9,7 @@
     <string name="app_name">微银基金</string>
     <string name="click_logout">再按一次退出</string>
     <string name="request_error">服务器繁忙，请稍后重试</string>
+    <string name="input_abc">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>
 
     <!--用户界面通用字符串-->
     <string name="user_common_phone">手机号</string>
