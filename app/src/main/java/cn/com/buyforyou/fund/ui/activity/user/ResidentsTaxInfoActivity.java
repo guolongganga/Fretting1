@@ -265,14 +265,24 @@ public class ResidentsTaxInfoActivity extends XActivity<ResidentsTaxInfoPresent>
                     if (null == taxInfoEResp.getTax_nation() || taxInfoEResp.getTax_nation().equals("")) {
                         showToast("请选择税收居民国（地区）");
                         type = "1";
+                        break;
                     }
+                }
+
+                if (type.equals("1")) {
+                    return;
                 }
 
                 for (TaxInfoEResp taxInfoEResp : taxInfoAdapter.getTaxInfoEResps_e()) {
                     if (null == taxInfoEResp.getTax_no() || taxInfoEResp.getTax_no().equals("")) {
                         showToast("请输入可用的纳税识别号码");
                         type = "1";
+                        break;
                     }
+                }
+
+                if (type.equals("1")) {
+                    return;
                 }
 
                 for (TaxInfoEResp taxInfoEResp : residentsTaxInfoResp.getCrsmain().getTaxinfo()) {
@@ -280,6 +290,7 @@ public class ResidentsTaxInfoActivity extends XActivity<ResidentsTaxInfoPresent>
                         if (TextUtils.isEmpty(taxInfoEResp.getTax_explain())) {
                             showToast("请输入未能取得纳税人识别号的具体原因");
                             type = "1";
+                            break;
                         }
                     }
                 }
