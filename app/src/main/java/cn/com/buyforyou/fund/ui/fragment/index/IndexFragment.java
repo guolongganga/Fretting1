@@ -527,7 +527,7 @@ public class IndexFragment extends XFragment<IndexPresent> {
                 tvWanarnings.setText(startModel.getFund_name());
             }
 
-            //微银专题
+            //微动利专题
             if (data.getThemeList() != null && data.getThemeList().size() > 2) {
                 themeList = data.getThemeList();
                 ILFactory.getLoader().loadNet(ivThemeOne, themeList.get(0).getImgurl(), null);

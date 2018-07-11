@@ -6,7 +6,7 @@
     <string name="buy">购买</string>
 
 
-    <string name="app_name">微银基金</string>
+    <string name="app_name">微动利基金</string>
     <string name="click_logout">再按一次退出</string>
     <string name="request_error">服务器繁忙，请稍后重试</string>
     <string name="input_abc">0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ</string>

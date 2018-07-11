@@ -15,7 +15,7 @@ public class IndexResp extends BaseResp<IndexResp> {
      */
     private ArrayList<BannerModel> bannerList;
     /**
-     * 微银专题
+     * 微动利专题
      */
     private ArrayList<BannerModel> themeList;
     /**

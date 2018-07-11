@@ -54,7 +54,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:text="微银基金·与您共成长"
+        android:text="微动利基金·与您共成长"
         android:textColor="@color/color_504B4A"
         android:textSize="@dimen/text_size_22"/>
 
