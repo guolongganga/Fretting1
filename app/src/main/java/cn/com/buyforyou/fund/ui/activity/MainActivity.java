@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.util.TypedValue;
 import android.view.View;
+import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -62,6 +63,7 @@ public class MainActivity extends XActivity {
     RadioButton radioButtonFund;
     @BindView(R.id.main_bottom_mine)
     RadioButton radioButtonMine;
+
 
     /** 碎片集合 */
     private List<Fragment> fragments;
@@ -312,6 +314,7 @@ public class MainActivity extends XActivity {
             int bottom = itemView.getPaddingBottom();
             int left = itemView.getPaddingLeft();
             int right = itemView.getPaddingRight();
+
             if (theme.resolveAttribute(android.R.attr.selectableItemBackground, typedValue, true)) {
                 itemView.setBackgroundResource(typedValue.resourceId);
             }
