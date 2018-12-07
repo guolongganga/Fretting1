@@ -28,7 +28,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
  * Created by guolonggang on 2018/12/5.
- * Description:短信验证码
+ * Description:短信验证码....
  */
 
 public class SmsVerificationActivity extends XActivity<SmsMessagePresent>{
