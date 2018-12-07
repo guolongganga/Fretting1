@@ -16,6 +16,7 @@ import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.constant.Constant;
 import cn.com.buyforyou.fund.event.ChangeBankCardEvent;
 import cn.com.buyforyou.fund.model.user.BankResp;
+import cn.com.buyforyou.fund.model.user.OpenAccountResp;
 import cn.com.buyforyou.fund.present.user.BankCardChangePresent;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
 import com.zhsoft.fretting.ui.widget.ChenJingET;
@@ -101,6 +102,10 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
     private HttpLoadingDialog httpLoadingDialog;
     private String trade_password;
     private boolean shouldStopChange = false;
+    private StringBuilder builder;
+    private String originalAppno;
+    private String otherSerial;
+
 
     @Override
     public int getLayoutId() {
@@ -135,7 +140,11 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
 
     @Override
     public void initEvents() {
+       // String bankNumber = banknumber.getText().toString();
         banknumber.addTextChangedListener(new TextWatcher() {
+
+
+
             @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
@@ -154,7 +163,7 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
                 int len = str.length();
                 int courPos;
 
-                StringBuilder builder = new StringBuilder();
+                builder = new StringBuilder();
                 for (int i = 0; i < len; i++) {
                     builder.append(str.charAt(i));
                     if (i == 3 || i == 7 || i == 11 || i == 15) {
@@ -216,7 +225,9 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
 
                 //发送请求验证码
                 httpLoadingDialog.visible();
-                getP().getMessageCode(phoneNumber, token, userId);
+
+                //(String phone,String bankAccout,String phoneCode, BankResp selectBank,String originalAppno,String otherSerial, String token, String userId) {
+                getP().getMessageCode(strPhone,getText(banknumber),"",bankResp,"","",token,userId);
 
             }
         });
@@ -253,7 +264,7 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
                 }
                 //绑定银行卡接口
                 httpLoadingDialog.visible();
-                getP().changeBankCard(token, userId, bankResp, getText(banknumber), phoneNumber, getText(msgCode), trade_password);
+                getP().changeBankCard(token, userId, bankResp, getText(banknumber), phoneNumber, getText(msgCode), trade_password,originalAppno,otherSerial);
             }
         });
 
@@ -279,9 +290,12 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
     /**
      * 发送请求验证码成功
      */
-    public void requestMessageCodeSuccess() {
+    public void requestMessageCodeSuccess(OpenAccountResp resp) {
         httpLoadingDialog.dismiss();
         getVerifyCode.start();
+        originalAppno = resp.getOriginalAppno();
+        otherSerial = resp.getOtherSerial();
+
     }
 
     /**
