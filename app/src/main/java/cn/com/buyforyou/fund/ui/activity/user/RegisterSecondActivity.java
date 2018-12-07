@@ -10,6 +10,7 @@ import android.text.SpannableString;
 import android.text.Spanned;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -25,6 +26,7 @@ import cn.com.buyforyou.fund.event.RefreshUserDataEvent;
 import cn.com.buyforyou.fund.model.user.BankResp;
 import cn.com.buyforyou.fund.net.Api;
 import cn.com.buyforyou.fund.net.HttpContent;
+import cn.com.buyforyou.fund.params.OpenAccountParams;
 import cn.com.buyforyou.fund.present.user.RegisterSecondPresent;
 import cn.com.buyforyou.fund.ui.activity.boot.WebPublicActivity;
 import com.zhsoft.fretting.ui.widget.ChenJingET;
@@ -45,6 +47,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  */
 
 public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
+
 
     /**
      * 返回按钮
@@ -142,6 +145,25 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
      */
     private String strPhone;
     private boolean shouldStopChange = false;
+
+    private  int count=0;
+
+    public static final String TAG ="RegisterSecondActivity" ;
+
+    /**
+     * 数据
+     * @return
+     */
+
+    private String strpwdAgain;
+    private String strpwd;
+
+    private String strBanknumber;
+    private String strBankName;
+    private String strIdentity;
+    private String strUsername;
+    private String bank_name;
+
 
     @Override
     public int getLayoutId() {
@@ -253,15 +275,20 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
             }
         });
         btnSave.setOnClickListener(new View.OnClickListener() {
+
+
+
+
             @Override
             public void onClick(View view) {
-                String strUsername = getText(userName);
-                String strIdentity = getText(identity);
-                String strBankName = getText(banckName);
-                String strBanknumber = getText(banknumber);
-                String strPhone = getText(phone);
-                String strpwd = getText(password);
-                String strpwdAgain = getText(passwordAgain);
+
+                strUsername = getText(userName);
+                strIdentity = getText(identity);
+                strBankName = getText(banckName);
+                strBanknumber = getText(banknumber);
+                strPhone = getText(phone);
+                strpwd = getText(password);
+                strpwdAgain = getText(passwordAgain);
 //                String strMsgCode = getText(msgCode);
                 //表单验证
                 if (noNetWork()) {
@@ -316,9 +343,12 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
                     return;
                 }
                 //下一步 请求注册接口
-                httpLoadingDialog.visible("开户中...");
+                httpLoadingDialog.visible("开户预校验中...");
                 httpLoadingDialog.setCanceledOnKeyBack();
                 getP().openAccount(userId, token, strUsername, strIdentity, getText(email), bankResp, strBanknumber, strPhone, strpwd);
+                count++;
+                Log.e(TAG, "onClick: "+count);
+
 
 //                Bundle bundle = new Bundle();
 //                //姓名
@@ -366,18 +396,20 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Constant.BANKLIST_RESULT_CODE && requestCode == Constant.BANKLIST_ACTIVITY) {
             bankResp = data.getParcelableExtra(Constant.CHOOSE_BANCK);
-            banckName.setText(bankResp.getBank_name());
+            bank_name = bankResp.getBank_name();
+            banckName.setText(bank_name);
         }
     }
 
     /**
+     * 开户预校验失败
      * 开户失败
      * @param message
      */
     public void requestOpenAccountFail(String message) {
         httpLoadingDialog.dismiss();
 
-        new AlertDialog.Builder(context).setTitle("开户失败").setMessage(message).setNegativeButton("确定", new DialogInterface.OnClickListener() {
+        new AlertDialog.Builder(context).setTitle("开户预校验失败").setMessage(message).setNegativeButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -386,22 +418,42 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
     }
 
     /**
+     * 开户预校验失败
      * 开户成功
      */
     public void requestOpenAccountSuccess() {
         httpLoadingDialog.dismiss();
-//        showToast(data);
+       // showToast(data);
         //更新开户状态 改成已开户
-        App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, Constant.ALREADY_OPEN_ACCOUNT);
-        EventBus.getDefault().post(new RefreshUserDataEvent());
+//        App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, Constant.ALREADY_OPEN_ACCOUNT);
+//        EventBus.getDefault().post(new RefreshUserDataEvent());
 
         Bundle bundle = new Bundle();
-        //姓名
-        bundle.putString(Constant.NAME, getText(userName));
+
+        //用户名
+        bundle.putString(Constant.NAME,strUsername);
         //身份证号
-        bundle.putString(Constant.CERT_NO, getText(identity));
-        startActivity(RegisterSuccessActivity.class, bundle);
+        bundle.putString(Constant.CERT_NO,strIdentity);
+        //邮箱
+        bundle.putString(Constant.CHANGE_EMAIL,getText(email));
+        //银行名称
+        bundle.putParcelable(Constant.CHOOSE_BANCK,bankResp);
+
+        //银行卡号
+        bundle.putString(Constant.CHANGE_BANK,strBanknumber);
+
+        //手机号
+        bundle.putString(Constant.PHONE,strPhone);
+        //交易密码
+        bundle.putString(Constant.PASSWORD,strpwd);
+        startActivity(SmsVerificationActivity.class,bundle);
         finish();
+        //姓名
+//        bundle.putString(Constant.NAME, getText(userName));
+//        //身份证号
+//        bundle.putString(Constant.CERT_NO, getText(identity));
+//        startActivity(RegisterSuccessActivity.class, bundle);
+//        finish();
     }
 
     private void backDeal() {
