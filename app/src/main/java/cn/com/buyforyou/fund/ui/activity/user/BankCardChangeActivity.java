@@ -30,7 +30,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
 
 /**
  * 作者：sunnyzeng on 2017/12/14 10:13
- * 描述：变更银行卡 第二步....
+ * 描述：变更银行卡 第二步......
  */
 
 public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
