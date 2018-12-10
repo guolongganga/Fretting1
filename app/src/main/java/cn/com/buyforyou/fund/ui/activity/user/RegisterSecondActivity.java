@@ -343,7 +343,7 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
                     return;
                 }
                 //下一步 请求注册接口
-                httpLoadingDialog.visible("开户预校验中...");
+                httpLoadingDialog.visible("开户预校验...");
                 httpLoadingDialog.setCanceledOnKeyBack();
                 getP().openAccount(userId, token, strUsername, strIdentity, getText(email), bankResp, strBanknumber, strPhone, strpwd);
                 count++;
