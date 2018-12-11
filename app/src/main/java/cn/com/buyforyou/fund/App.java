@@ -39,12 +39,15 @@ public class App extends Application {
     private static SharedPref sharedPref;
     public static boolean isDebug = BuildConfig.DEBUG;
     public static int _urlindex;
+    public static int urls;
 
     @Override
     public void onCreate() {
         super.onCreate();
         context = this;
         _urlindex = getSharedPref().getInt("url", 0);
+        //测试环境
+         urls = getSharedPref().getInt("url", 1);
         //设置是否打印日志
         XDroidConf.LOG = isDebug;
         Logger.addLogAdapter(new AndroidLogAdapter());
@@ -112,7 +115,9 @@ public class App extends Application {
 //        初始化友盟
 //        UMConfigure.init(context,UMConfigure.DEVICE_TYPE_PHONE,"5ad05d348f4a9d3227000185");
 //        MobclickAgent.setScenarioType(context, MobclickAgent.EScenarioType.E_UM_NORMAL);
-        CrashReport.initCrashReport(context, "0bd343e2ea", isDebug);
+      //  CrashReport.initCrashReport(context, "0bd343e2ea", isDebug);
+        //腾讯Bugly统计
+        CrashReport.initCrashReport(context, "ca4bfa2187", isDebug);
     }
 
     /**
