@@ -41,8 +41,8 @@
         <activity android:name=".ui.activity.user.RegisterSuccessActivity"></activity>
         <!--设置-->
         <activity android:name=".ui.activity.user.SettingActivity"></activity>
-        <!--手机短信验证码-->
 
+        <!--手机短信验证码-->
         <activity android:name=".ui.activity.user.SmsVerificationActivity"></activity>
         <!--个人信息-->
         <activity
