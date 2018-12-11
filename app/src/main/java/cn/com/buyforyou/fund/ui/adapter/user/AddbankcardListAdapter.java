@@ -7,6 +7,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
 import butterknife.BindView;
 import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.model.user.BankResp;
@@ -20,6 +22,8 @@ import cn.droidlover.xdroidmvp.kit.KnifeKit;
  */
 
 public class AddbankcardListAdapter extends SimpleRecAdapter<BankResp, AddbankcardListAdapter.ViewHolder> {
+    public static final int ITEM_CLICK = 0;    //点击标识
+    private ImageLoader imageLoader = ImageLoader.getInstance();
     @Override
     public AddbankcardListAdapter.ViewHolder newViewHolder(View itemView) {
         return new ViewHolder(itemView);
@@ -35,7 +39,16 @@ public class AddbankcardListAdapter extends SimpleRecAdapter<BankResp, Addbankca
     }
 
     @Override
-    public void onBindViewHolder(AddbankcardListAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(final AddbankcardListAdapter.ViewHolder holder, final int position) {
+        final BankResp bankResp = data.get(position);
+
+        //item的点击事件
+        holder.rlContent.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getRecItemClick().onItemClick(position, bankResp, ITEM_CLICK, holder);
+            }
+        });
 
     }
 
@@ -52,21 +65,18 @@ public class AddbankcardListAdapter extends SimpleRecAdapter<BankResp, Addbankca
          */
         @BindView(R.id.bank_name)
         TextView bankName;
-        /**
-         * 银行限额
-         */
-        @BindView(R.id.bank_limit)
-        TextView bankLimit;
+
         /**
          * 内容
          */
         @BindView(R.id.rl_content)
         RelativeLayout rlContent;
         /**
-         * 分割线
+         * 交易账号
          */
-        @BindView(R.id.view_line)
-        View viewLine;
+        @BindView(R.id.trade_number)
+        TextView tradeNumber;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
