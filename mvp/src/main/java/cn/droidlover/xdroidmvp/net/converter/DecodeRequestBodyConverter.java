@@ -52,10 +52,10 @@ public class DecodeRequestBodyConverter<T> implements Converter<T, RequestBody> 
         String strData = gson.toJson(value);
         XLog.d(TAG, "加密前 : " + strData);
         //加密请求数据
-        String encrypt = EncryptDecrypt.encryptByAES(strData);
+       // String encrypt = EncryptDecrypt.encryptByAES(strData);
 
         Map<String, String> map = new HashMap<>();
-        map.put("reqData", encrypt);
+        map.put("reqData", strData);
 
         return RequestBody.create(MEDIA_TYPE, gson.toJson(map));
 
