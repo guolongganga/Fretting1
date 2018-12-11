@@ -20,6 +20,7 @@ import cn.com.buyforyou.fund.model.user.ImageResp;
 import cn.com.buyforyou.fund.model.user.InvestPlanResp;
 import cn.com.buyforyou.fund.model.user.MyBonusResp;
 import cn.com.buyforyou.fund.model.user.OccupationResp;
+import cn.com.buyforyou.fund.model.user.OpenAccountResp;
 import cn.com.buyforyou.fund.model.user.PersonInfoResp;
 import cn.com.buyforyou.fund.model.user.PhoneResp;
 import cn.com.buyforyou.fund.model.user.ResidentsTaxInfoResp;
@@ -71,7 +72,10 @@ import static cn.com.buyforyou.fund.net.HttpContent.my_times_buy_detail;
 import static cn.com.buyforyou.fund.net.HttpContent.my_times_buy_index;
 import static cn.com.buyforyou.fund.net.HttpContent.my_times_buy_state_change;
 import static cn.com.buyforyou.fund.net.HttpContent.newest_fund;
-import static cn.com.buyforyou.fund.net.HttpContent.open_account;
+
+import static cn.com.buyforyou.fund.net.HttpContent.open_account_check;
+import static cn.com.buyforyou.fund.net.HttpContent.open_account_get_sms;
+import static cn.com.buyforyou.fund.net.HttpContent.open_account_new;
 import static cn.com.buyforyou.fund.net.HttpContent.open_check_id_exist;
 import static cn.com.buyforyou.fund.net.HttpContent.open_check_phone_exist;
 import static cn.com.buyforyou.fund.net.HttpContent.open_remitbranch_bank;
@@ -133,11 +137,21 @@ public interface HttpUtil {
     @POST(phone_code)
     Flowable<BaseResp> getPhoneCode(@Body CommonReqData reqData);
 
-    //开户绑卡
+    //开户绑卡预校验中
+//    @Headers("appType:Android")
+//    @POST(open_account)
+//    Flowable<OpenAccountResp> openAccount(@Body CommonReqData reqData);
     @Headers("appType:Android")
-    @POST(open_account)
-    Flowable<BaseResp> openAccount(@Body CommonReqData reqData);
-
+    @POST(open_account_check)
+    Flowable<OpenAccountResp> openAccount(@Body CommonReqData reqData);
+  //获取短信验证码(新增)
+    @Headers("appType:Android")
+    @POST(open_account_get_sms)
+    Flowable<OpenAccountResp> openAccountgetSms(@Body CommonReqData reqData);
+  //确认开户(新增)
+  @Headers("appType:Android")
+  @POST(open_account_new)
+  Flowable<OpenAccountResp> openAccountNew(@Body CommonReqData reqData);
     //我的资产
     @Headers("appType:Android")
     @POST(fund_home)
@@ -176,7 +190,7 @@ public interface HttpUtil {
     //发送短信验证码 不需要图片验证码
     @Headers("appType:Android")
     @POST(send_phone_code)
-    Flowable<BaseResp> sendPhoneCode(@Body CommonReqData reqData);
+    Flowable<OpenAccountResp> sendPhoneCode(@Body CommonReqData reqData);
 
     //我的手机号码
     @Headers("appType:Android")
