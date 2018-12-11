@@ -117,6 +117,7 @@ public class App extends Application {
 //        MobclickAgent.setScenarioType(context, MobclickAgent.EScenarioType.E_UM_NORMAL);
       //  CrashReport.initCrashReport(context, "0bd343e2ea", isDebug);
         //腾讯Bugly统计
+
         CrashReport.initCrashReport(context, "ca4bfa2187", isDebug);
     }
 
