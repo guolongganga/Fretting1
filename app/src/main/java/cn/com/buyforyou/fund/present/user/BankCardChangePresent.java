@@ -1,9 +1,12 @@
 package cn.com.buyforyou.fund.present.user;
 
+import android.app.ProgressDialog;
+
 import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.constant.Constant;
 import cn.com.buyforyou.fund.model.BaseResp;
 import cn.com.buyforyou.fund.model.user.BankResp;
+import cn.com.buyforyou.fund.model.user.OpenAccountResp;
 import cn.com.buyforyou.fund.net.Api;
 import cn.com.buyforyou.fund.params.ChangeBankCardParams;
 import cn.com.buyforyou.fund.params.CommonReqData;
@@ -24,23 +27,30 @@ public class BankCardChangePresent extends XPresent<BankCardChangeActivity> {
 
     /**
      * 银行预留手机号验证
-     *
+     *   //(String phone,String bankAccout,String phoneCode,
+     *   BankResp selectBank,String originalAppno,String otherSerial, String token, String userId)
      * @param phone
      */
-    public void getMessageCode(String phone, String token, String userId) {
+    public void getMessageCode(String phone, String bankAccout,String phoneCode,
+        BankResp selectBank,String originalAppno,String otherSerial,String token, String userId) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
 
         SendPhoneCodeParams params = new SendPhoneCodeParams();
-        params.setPhoneNo(phone);
+        params.setMobile(phone);
+        params.setBankAccout(bankAccout);
+        params.setPhoneCode(phoneCode);
+        params.setSelectBank(selectBank);
+        params.setOriginalAppno(originalAppno);
+        params.setOtherSerial(otherSerial);
         reqData.setData(params);
 
         Api.getApi().sendPhoneCode(reqData)
-                .compose(XApi.<BaseResp>getApiTransformer())
-                .compose(XApi.<BaseResp>getScheduler())
-                .compose(getV().<BaseResp>bindToLifecycle())
-                .subscribe(new ApiSubscriber<BaseResp>() {
+                .compose(XApi.<OpenAccountResp>getApiTransformer())
+                .compose(XApi.<OpenAccountResp>getScheduler())
+                .compose(getV().<OpenAccountResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<OpenAccountResp>() {
                     @Override
                     protected void onFail(NetError error) {
                         getV().requestMessageCodeFail();
@@ -48,9 +58,9 @@ public class BankCardChangePresent extends XPresent<BankCardChangeActivity> {
                     }
 
                     @Override
-                    public void onNext(BaseResp resp) {
+                    public void onNext(OpenAccountResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
-                            getV().requestMessageCodeSuccess();
+                            getV().requestMessageCodeSuccess(resp.getData());
                         } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(resp.getMessage());
                             getV().areadyLogout();
@@ -73,7 +83,7 @@ public class BankCardChangePresent extends XPresent<BankCardChangeActivity> {
      * @param phoneNumber 银行预留手机号
      * @param msgCode     短信验证码
      */
-    public void changeBankCard(String token, String userId, BankResp bankResp, String bankNumber, String phoneNumber, String msgCode,String trade_password) {
+    public void changeBankCard(String token, String userId, BankResp bankResp, String bankNumber, String phoneNumber, String msgCode,String trade_password,String originalAppno,String otherSerial) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -84,6 +94,9 @@ public class BankCardChangePresent extends XPresent<BankCardChangeActivity> {
         params.setMobile(phoneNumber);
         params.setPhoneCode(msgCode);
         params.setTrade_password(trade_password);
+        params.setOtherSerial(otherSerial);
+        params.setOriginalAppno(originalAppno);
+
 
         reqData.setData(params);
 
