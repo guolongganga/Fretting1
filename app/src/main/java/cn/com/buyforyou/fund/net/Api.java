@@ -12,7 +12,7 @@ import cn.droidlover.xdroidmvp.net.XApi;
 
 public class Api {
 
-    public static String[] urls = new String[]{"appservice.buyforyou.com.cn", "114.242.38.89:18443", "20.1.149.115:8443",
+    public static String[] urls = new String[]{"appservice.buyforyou.com.cn", "10.1.1.210:8443","114.242.38.89:8443", "20.1.149.115:8443",
             "20.1.149.116:8443", "20.1.149.114:8443", "20.1.149.130:8443",
             "20.1.149.250:8443", "20.1.149.173:8443", "20.1.149.113:8443", "10.0.8.252:8443", "10.0.8.74:8443"};
 
@@ -22,9 +22,9 @@ public class Api {
 //    public static final String API_BASE_URL = "https://20.1.149.116:8443/";//陈
 //    public static final String API_BASE_URL = "https://20.1.149.114:8443/";//苑
 
-    public static String API_BASE_URL = "https://" + urls[App._urlindex] + "/";//聂 老竹
+    public static String API_BASE_URL = "https://" + urls[App.urls] + "/";//聂 老竹
 
-
+   //192.168.1.142  本地后台地址
     private static HttpUtil httpUtil;
 
     public static HttpUtil getApi() {
@@ -45,8 +45,8 @@ public class Api {
      */
     public static void resetUrl(int which) {
         App.getSharedPref().putInt("url", which);
-        App._urlindex = which;
-        API_BASE_URL = "https://" + urls[App._urlindex] + "/";//聂 老竹
+        App.urls = which;
+        API_BASE_URL = "https://" + urls[App.urls] + "/";//聂 老竹
         httpUtil = null;
     }
 }
