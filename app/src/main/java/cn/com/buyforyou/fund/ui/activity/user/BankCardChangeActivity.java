@@ -18,8 +18,10 @@ import cn.com.buyforyou.fund.event.ChangeBankCardEvent;
 import cn.com.buyforyou.fund.model.user.BankResp;
 import cn.com.buyforyou.fund.model.user.OpenAccountResp;
 import cn.com.buyforyou.fund.present.user.BankCardChangePresent;
+
 import com.zhsoft.fretting.ui.widget.CountdownButton;
 import com.zhsoft.fretting.ui.widget.ChenJingET;
+
 import cn.com.buyforyou.fund.utils.RuntimeHelper;
 
 import org.greenrobot.eventbus.EventBus;
@@ -140,12 +142,12 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
 
     @Override
     public void initEvents() {
-       // String bankNumber = banknumber.getText().toString();
+        // String bankNumber = banknumber.getText().toString();
         banknumber.addTextChangedListener(new TextWatcher() {
 
 
-
-            @Override public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
             }
 
@@ -227,7 +229,7 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
                 httpLoadingDialog.visible();
 
                 //(String phone,String bankAccout,String phoneCode, BankResp selectBank,String originalAppno,String otherSerial, String token, String userId) {
-                getP().getMessageCode(strPhone,getText(banknumber),"",bankResp,"","",token,userId);
+                getP().getMessageCode(strPhone, getText(banknumber), "", bankResp, "", "", token, userId);
 
             }
         });
@@ -264,7 +266,7 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
                 }
                 //绑定银行卡接口
                 httpLoadingDialog.visible();
-                getP().changeBankCard(token, userId, bankResp, getText(banknumber), phoneNumber, getText(msgCode), trade_password,originalAppno,otherSerial);
+                getP().changeBankCard(token, userId, bankResp, getText(banknumber), strPhone, getText(msgCode), trade_password, originalAppno, otherSerial);
             }
         });
 
@@ -293,6 +295,7 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
     public void requestMessageCodeSuccess(OpenAccountResp resp) {
         httpLoadingDialog.dismiss();
         getVerifyCode.start();
+
         originalAppno = resp.getOriginalAppno();
         otherSerial = resp.getOtherSerial();
 
