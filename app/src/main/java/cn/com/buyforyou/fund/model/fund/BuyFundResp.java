@@ -23,17 +23,18 @@ import java.util.List;
  * "message":"成功","status":200}
  */
 
-public class BuyFundResp extends BaseResp<BuyFundResp> implements Parcelable {
-    /** 银行名称及尾号 */
-    private String name;
-    /** 银行logo */
-    private String logo;
+public class BuyFundResp  extends BaseResp<BuyFundResp> implements Parcelable {
+//    /** 银行名称及尾号 */
+//    private String name;
+//    /** 银行logo */
+//    private String logo;
     /** 风险等级 */
+    private List<BankCard> bankCard;
     private String fundRisk;
     /** 是否能够购买 */
     private String canBuy;
-    /** 银行限额 */
-    private String info;
+//    /** 银行限额 */
+//    private String info;
     /** 提示1 */
     private String info1;
     /** 提示2 */
@@ -46,27 +47,35 @@ public class BuyFundResp extends BaseResp<BuyFundResp> implements Parcelable {
     private BigDecimal high_value;
     /** 最低购买限额 */
     private BigDecimal low_value;
-    /** 申购费 */
-    private String source_rate;
+//    /** 申购费 */
+//    private String source_rate;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLogo() {
-        return logo;
-    }
-
-    public void setLogo(String logo) {
-        this.logo = logo;
-    }
+//    public String getName() {
+//        return name;
+//    }
+//
+//    public void setName(String name) {
+//        this.name = name;
+//    }
+//
+//    public String getLogo() {
+//        return logo;
+//    }
+//
+//    public void setLogo(String logo) {
+//        this.logo = logo;
+//    }
 
     public String getFundRisk() {
         return fundRisk;
+    }
+
+    public List<BankCard> getBankCard() {
+        return bankCard;
+    }
+
+    public void setBankCard(List<BankCard> bankCard) {
+        this.bankCard = bankCard;
     }
 
     public void setFundRisk(String fundRisk) {
@@ -81,13 +90,13 @@ public class BuyFundResp extends BaseResp<BuyFundResp> implements Parcelable {
         this.canBuy = canBuy;
     }
 
-    public String getInfo() {
-        return info;
-    }
-
-    public void setInfo(String info) {
-        this.info = info;
-    }
+//    public String getInfo() {
+//        return info;
+//    }
+//
+//    public void setInfo(String info) {
+//        this.info = info;
+//    }
 
     public String getInfo1() {
         return info1;
@@ -137,13 +146,13 @@ public class BuyFundResp extends BaseResp<BuyFundResp> implements Parcelable {
         this.low_value = low_value;
     }
 
-    public String getSource_rate() {
-        return source_rate;
-    }
-
-    public void setSource_rate(String source_rate) {
-        this.source_rate = source_rate;
-    }
+//    public String getSource_rate() {
+//        return source_rate;
+//    }
+//
+//    public void setSource_rate(String source_rate) {
+//        this.source_rate = source_rate;
+//    }
 
     @Override
     public int describeContents() {
@@ -152,29 +161,30 @@ public class BuyFundResp extends BaseResp<BuyFundResp> implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.name);
-        dest.writeString(this.logo);
+//        dest.writeString(this.name);
+//        dest.writeString(this.logo);
         dest.writeString(this.fundRisk);
         dest.writeString(this.canBuy);
-        dest.writeString(this.info);
+        //dest.writeString(this.buyResp);
         dest.writeString(this.info1);
         dest.writeString(this.info2);
         dest.writeList(this.default_auto_buy);
         dest.writeString(this.curr_rate);
         dest.writeSerializable(this.high_value);
         dest.writeSerializable(this.low_value);
-        dest.writeString(this.source_rate);
+        dest.writeList(this.bankCard);
+        //dest.writeString(this.source_rate);
     }
 
     public BuyFundResp() {
     }
 
     protected BuyFundResp(Parcel in) {
-        this.name = in.readString();
-        this.logo = in.readString();
+//        this.name = in.readString();
+//        this.logo = in.readString();
         this.fundRisk = in.readString();
         this.canBuy = in.readString();
-        this.info = in.readString();
+       // this.info = in.readString();
         this.info1 = in.readString();
         this.info2 = in.readString();
         this.default_auto_buy = new ArrayList<ApplyBaseInfo>();
@@ -182,7 +192,10 @@ public class BuyFundResp extends BaseResp<BuyFundResp> implements Parcelable {
         this.curr_rate = in.readString();
         this.high_value = (BigDecimal) in.readSerializable();
         this.low_value = (BigDecimal) in.readSerializable();
-        this.source_rate = in.readString();
+        this.bankCard=new ArrayList<BankCard>();
+        in.readList(this.bankCard,BankCard.class.getClassLoader());
+
+       // this.source_rate = in.readString();
     }
 
     public static final Creator<BuyFundResp> CREATOR = new Creator<BuyFundResp>() {
