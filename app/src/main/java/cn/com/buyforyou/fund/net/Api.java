@@ -2,8 +2,7 @@ package cn.com.buyforyou.fund.net;
 
 import cn.com.buyforyou.fund.App;
 
-import cn.droidlover.xdroidmvp.cache.SharedPref;
-import cn.droidlover.xdroidmvp.log.XLog;
+
 import cn.droidlover.xdroidmvp.net.XApi;
 
 /**
@@ -24,7 +23,10 @@ public class Api {
 
     public static String API_BASE_URL = "https://" + urls[App.urls] + "/";//聂 老竹
 
-   //192.168.1.142  本地后台地址
+
+
+   //192.168.1.10:8443  本地后台地址
+    //测试服务器地址  10.1.1.210:8443
     private static HttpUtil httpUtil;
 
     public static HttpUtil getApi() {
