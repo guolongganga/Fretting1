@@ -1,10 +1,14 @@
 package cn.com.buyforyou.fund.net;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import cn.com.buyforyou.fund.model.BaseResp;
 import cn.com.buyforyou.fund.model.LoginResp;
 import cn.com.buyforyou.fund.model.fund.BuyFundResp;
 import cn.com.buyforyou.fund.model.fund.BuyNowResp;
 import cn.com.buyforyou.fund.model.fund.CalculationResp;
+import cn.com.buyforyou.fund.model.fund.CheckUserPictureResp;
 import cn.com.buyforyou.fund.model.fund.FundStatusResp;
 import cn.com.buyforyou.fund.model.fund.GetNextTimeResp;
 import cn.com.buyforyou.fund.model.fund.InvestResp;
@@ -13,6 +17,7 @@ import cn.com.buyforyou.fund.model.fund.NewestFundResp;
 import cn.com.buyforyou.fund.model.fund.SellResp;
 import cn.com.buyforyou.fund.model.index.IndexResp;
 import cn.com.buyforyou.fund.model.index.UpdateVersionResp;
+import cn.com.buyforyou.fund.model.user.BankAddResp;
 import cn.com.buyforyou.fund.model.user.BankCardResp;
 import cn.com.buyforyou.fund.model.user.BankResp;
 import cn.com.buyforyou.fund.model.user.CancleOrderResp;
@@ -23,6 +28,7 @@ import cn.com.buyforyou.fund.model.user.OccupationResp;
 import cn.com.buyforyou.fund.model.user.OpenAccountResp;
 import cn.com.buyforyou.fund.model.user.PersonInfoResp;
 import cn.com.buyforyou.fund.model.user.PhoneResp;
+import cn.com.buyforyou.fund.model.user.PhotoResp;
 import cn.com.buyforyou.fund.model.user.ResidentsTaxInfoResp;
 import cn.com.buyforyou.fund.model.user.ResultDetailResp;
 import cn.com.buyforyou.fund.model.user.RiskInfoResp;
@@ -30,14 +36,26 @@ import cn.com.buyforyou.fund.model.user.SelfChooseResp;
 import cn.com.buyforyou.fund.model.user.TransactionResp;
 import cn.com.buyforyou.fund.model.user.UpdateBonusResp;
 import cn.com.buyforyou.fund.model.user.UserAccountResp;
+import cn.com.buyforyou.fund.model.user.UserInforResp;
+import cn.com.buyforyou.fund.model.user.UserInformationResp;
+import cn.com.buyforyou.fund.model.user.UserMessageResp;
 import cn.com.buyforyou.fund.model.user.WebBonusResp;
 import cn.com.buyforyou.fund.params.CommonReqData;
 
 import io.reactivex.Flowable;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
+import retrofit2.http.PartMap;
 
+import static cn.com.buyforyou.fund.net.HttpContent.add_account;
+import static cn.com.buyforyou.fund.net.HttpContent.add_account_check;
+import static cn.com.buyforyou.fund.net.HttpContent.add_account_get_sms;
 import static cn.com.buyforyou.fund.net.HttpContent.bonus_his_page;
 import static cn.com.buyforyou.fund.net.HttpContent.bonus_xg_details;
 import static cn.com.buyforyou.fund.net.HttpContent.bonus_xg_modifybonus;
@@ -48,14 +66,17 @@ import static cn.com.buyforyou.fund.net.HttpContent.buy_on_fund;
 import static cn.com.buyforyou.fund.net.HttpContent.buy_updata_data;
 import static cn.com.buyforyou.fund.net.HttpContent.change_bankcard;
 import static cn.com.buyforyou.fund.net.HttpContent.change_bankcard_check;
+import static cn.com.buyforyou.fund.net.HttpContent.change_bankcard_check_new;
 import static cn.com.buyforyou.fund.net.HttpContent.change_my_information;
 import static cn.com.buyforyou.fund.net.HttpContent.change_phone_index;
 import static cn.com.buyforyou.fund.net.HttpContent.change_phone_save;
 import static cn.com.buyforyou.fund.net.HttpContent.change_phone_sendcode;
+
 import static cn.com.buyforyou.fund.net.HttpContent.check_version;
 import static cn.com.buyforyou.fund.net.HttpContent.common_bank_list;
 import static cn.com.buyforyou.fund.net.HttpContent.find_fixed_fund_like;
 import static cn.com.buyforyou.fund.net.HttpContent.find_fund_like;
+import static cn.com.buyforyou.fund.net.HttpContent.ftp_upload;
 import static cn.com.buyforyou.fund.net.HttpContent.fund_home;
 import static cn.com.buyforyou.fund.net.HttpContent.fund_invest_time;
 import static cn.com.buyforyou.fund.net.HttpContent.fund_times_save;
@@ -64,6 +85,7 @@ import static cn.com.buyforyou.fund.net.HttpContent.fund_type_fixed;
 import static cn.com.buyforyou.fund.net.HttpContent.get_home;
 import static cn.com.buyforyou.fund.net.HttpContent.get_next_time;
 import static cn.com.buyforyou.fund.net.HttpContent.get_occupation;
+import static cn.com.buyforyou.fund.net.HttpContent.get_user_message;
 import static cn.com.buyforyou.fund.net.HttpContent.image_code;
 import static cn.com.buyforyou.fund.net.HttpContent.my_bankcard;
 import static cn.com.buyforyou.fund.net.HttpContent.my_crsinfoquery;
@@ -89,9 +111,10 @@ import static cn.com.buyforyou.fund.net.HttpContent.purchase;
 import static cn.com.buyforyou.fund.net.HttpContent.redeem_init;
 import static cn.com.buyforyou.fund.net.HttpContent.risk_question;
 import static cn.com.buyforyou.fund.net.HttpContent.save_crsinfoquery;
-import static cn.com.buyforyou.fund.net.HttpContent.send_phone_code;
+
 import static cn.com.buyforyou.fund.net.HttpContent.setup_index;
 import static cn.com.buyforyou.fund.net.HttpContent.share_out_bonus_trade;
+import static cn.com.buyforyou.fund.net.HttpContent.show_trade_accoinfo;
 import static cn.com.buyforyou.fund.net.HttpContent.single_trade_query;
 import static cn.com.buyforyou.fund.net.HttpContent.trade_password_check;
 import static cn.com.buyforyou.fund.net.HttpContent.trade_password_phonecode;
@@ -99,6 +122,7 @@ import static cn.com.buyforyou.fund.net.HttpContent.trade_password_reset;
 import static cn.com.buyforyou.fund.net.HttpContent.trade_query;
 import static cn.com.buyforyou.fund.net.HttpContent.user_follow_data;
 import static cn.com.buyforyou.fund.net.HttpContent.user_login;
+import static cn.com.buyforyou.fund.net.HttpContent.user_message;
 import static cn.com.buyforyou.fund.net.HttpContent.user_register;
 import static cn.com.buyforyou.fund.net.HttpContent.withdraw_apply_detail;
 import static cn.com.buyforyou.fund.net.HttpContent.withdraw_apply_list;
@@ -143,15 +167,25 @@ public interface HttpUtil {
 //    Flowable<OpenAccountResp> openAccount(@Body CommonReqData reqData);
     @Headers("appType:Android")
     @POST(open_account_check)
-    Flowable<OpenAccountResp> openAccount(@Body CommonReqData reqData);
+    Flowable<BaseResp> openAccount(@Body CommonReqData reqData);
   //获取短信验证码(新增)
     @Headers("appType:Android")
     @POST(open_account_get_sms)
     Flowable<OpenAccountResp> openAccountgetSms(@Body CommonReqData reqData);
+
+  /***
+   * 汇付2.0增开第一步
+   * 增开交易账号预校验  C404增开预校验
+   * @return
+   */
+  @Headers("appType:Android")
+  @POST(add_account_check)
+  Flowable<BaseResp> addAccountCheck(@Body CommonReqData reqData);
+
   //确认开户(新增)
   @Headers("appType:Android")
   @POST(open_account_new)
-  Flowable<OpenAccountResp> openAccountNew(@Body CommonReqData reqData);
+  Flowable<BaseResp> openAccountNew(@Body CommonReqData reqData);
     //我的资产
     @Headers("appType:Android")
     @POST(fund_home)
@@ -173,14 +207,45 @@ public interface HttpUtil {
     Flowable<BaseResp> goRiskTest(@Body String reqData);
 
     //我的银行卡
-    @Headers("appType:Android")
-    @POST(my_bankcard)
-    Flowable<BankCardResp> getMyBankCard(@Body CommonReqData reqData);
+//    @Headers("appType:Android")
+//    @POST(my_bankcard)
+//    Flowable<BankCardResp> getMyBankCard(@Body CommonReqData reqData);
+  //展示银行卡列表以及添加银行卡(第一步)
+  @Headers("appType:Android")
+  @POST(my_bankcard)
+  Flowable<BankAddResp> getMyBankCard(@Body CommonReqData reqData);
+
+  //添加银行卡短信验证码（汇付2.0 第二步）
+  @Headers("appType:Android")
+  @POST(add_account_get_sms)
+  Flowable<OpenAccountResp> addAccountgetSms(@Body CommonReqData reqData);
+
+  /**
+   *
+   * 汇付2.0 切换银行卡信息（点击银行列表item）
+   */
+  @Headers("appType:Android")
+  @POST(show_trade_accoinfo)
+  Flowable<BankCardResp> showTradeAccoInfo(@Body CommonReqData reqData);
+  /***
+   * 汇付2.0增开第三步
+   * 增开交易账号校验验证码》》增开账户  短信签约确认(B404)》》增开交易账号(C405)
+   * @return
+   */
+  @Headers("appType:Android")
+  @POST(add_account)
+  Flowable<BaseResp> addAccount(@Body CommonReqData reqData);
+
+  //点击添加银行卡得到用户信息
+  @Headers("appType:Android")
+  @POST(get_user_message)
+  Flowable<UserMessageResp> getUserMessage(@Body CommonReqData reqData);
 
     //检查是否可以更换银行卡
     @Headers("appType:Android")
     @POST(change_bankcard_check)
     Flowable<BankCardResp> changeBankCardCheck(@Body CommonReqData reqData);
+
 
     //更换银行卡操作
     @Headers("appType:Android")
@@ -188,9 +253,12 @@ public interface HttpUtil {
     Flowable<BaseResp> changeBankCard(@Body CommonReqData reqData);
 
     //发送短信验证码 不需要图片验证码
+//    @Headers("appType:Android")
+//    @POST(send_phone_code)
+//    Flowable<BaseResp> sendPhoneCode(@Body CommonReqData reqData);
     @Headers("appType:Android")
-    @POST(send_phone_code)
-    Flowable<OpenAccountResp> sendPhoneCode(@Body CommonReqData reqData);
+    @POST(change_bankcard_check_new)
+    Flowable<OpenAccountResp> changeBankCardCheckNew(@Body CommonReqData reqData);
 
     //我的手机号码
     @Headers("appType:Android")
@@ -436,6 +504,25 @@ public interface HttpUtil {
     @Headers("appType:Android")
     @POST(check_version)
     Flowable<UpdateVersionResp> checkVersion(@Body CommonReqData reqData);
+
+  //以file文件的形式上传图片
+ @POST(ftp_upload)
+ //MultipartBody.Part[] parts  上传多张图片
+ //@PartMap() Map<String, RequestBody> maps
+ //单张图片
+ @Headers("appType:Android")
+ //@PartMap Map<String,RequestBody> map
+ @Multipart
+  Flowable<PhotoResp> ftpUpload(@PartMap Map<String,Object> requestBodyMap, @Part MultipartBody.Part picZ,@Part MultipartBody.Part picZ1,@Part MultipartBody.Part picZ2,
+                                @Part MultipartBody.Part picZ3);
+
+ @Headers("appType:Android")
+  @POST(user_message)
+  Flowable<UserInformationResp> userMessage(@Body CommonReqData reqData);
+
+//  @Headers("appType:Android")
+//  @POST(check_user_picture)
+//  Flowable<CheckUserPictureResp> checkUserPicture(@Body CommonReqData reqData);
 
 
 }
