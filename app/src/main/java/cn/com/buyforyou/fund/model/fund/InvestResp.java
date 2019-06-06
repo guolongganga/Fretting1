@@ -4,9 +4,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import cn.com.buyforyou.fund.model.BaseResp;
+import cn.com.buyforyou.fund.model.user.BankCardInfoResp;
 import cn.com.buyforyou.fund.model.user.BankCardResp;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 作者：sunnyzeng on 2018/1/16 10:03
@@ -34,9 +37,17 @@ public class InvestResp extends BaseResp<InvestResp> implements Parcelable {
     private String fund_name;
 
     /**
-     * 银行卡信息
+     * 外层银行卡信息
      */
     private BankCardResp bankCardPageEntity;
+
+
+
+    /**
+     * 银行卡信息（新增）
+     *
+     */
+    private List<BankCardInfoResp> bankCard;
 
     /**
      * 最低购买金额
@@ -324,6 +335,13 @@ public class InvestResp extends BaseResp<InvestResp> implements Parcelable {
         this.total_succ_time = total_succ_time;
     }
 
+    public List<BankCardInfoResp> getBankCard() {
+        return bankCard;
+    }
+
+    public void setBankCard(List<BankCardInfoResp> bankCard) {
+        this.bankCard = bankCard;
+    }
 
     @Override
     public int describeContents() {
@@ -356,6 +374,7 @@ public class InvestResp extends BaseResp<InvestResp> implements Parcelable {
         dest.writeString(this.next_fixrequest_date);
         dest.writeString(this.total_succ_sum);
         dest.writeString(this.total_succ_time);
+        dest.writeList(bankCard);
     }
 
     public InvestResp() {
@@ -386,6 +405,9 @@ public class InvestResp extends BaseResp<InvestResp> implements Parcelable {
         this.next_fixrequest_date = in.readString();
         this.total_succ_sum = in.readString();
         this.total_succ_time = in.readString();
+        this.bankCard=new ArrayList<BankCardInfoResp>();
+        in.readList(this.bankCard,BankCardInfoResp.class.getClassLoader());
+
     }
 
     public static final Creator<InvestResp> CREATOR = new Creator<InvestResp>() {
