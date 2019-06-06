@@ -8,6 +8,15 @@ android {
             storeFile file('../meican.jks')
             storePassword 'android'
         }
+        lintOptions {
+            checkReleaseBuilds false
+            abortOnError false
+        }
+        dexOptions{
+
+            javaMaxHeapSize "4g"
+
+        }
     }
     compileSdkVersion rootProject.ext.android.compileSdkVersion
     buildToolsVersion rootProject.ext.android.buildToolsVersion
@@ -39,12 +48,13 @@ dependencies {
     annotationProcessor rootProject.ext.dependencies["butterknife-apt"]
     compile rootProject.ext.dependencies["avi-loading"]
     compile rootProject.ext.dependencies["imageloader"]
+    //noinspection GradleCompatible
     compile 'com.android.support:appcompat-v7:26.+'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
     compile 'com.android.support:design:26.0.0-alpha1'
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'org.apache.httpcomponents:httpcore:4.4.4'
-//    compile 'com.android.support:support-v4:23.3.0'
+
 
     compile 'com.tencent.bugly:crashreport:latest.release'
     compile 'com.tencent.bugly:nativecrashreport:latest.release'
@@ -53,10 +63,13 @@ dependencies {
 
     compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
 
-//    compile 'com.github.a-voyager:AutoInstaller:v1.1'
-//    debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5'
-//    releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
-//    testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5'
+    compile 'com.github.xiaweizi:MarqueeTextView:1.0'
+
+
+
+
+
+
 
 
 }
