@@ -20,8 +20,36 @@ public class HttpContent {
     public static final String image_code = "noPermission/imageBase64";
     /** 短信验证码 */
     public static final String phone_code = "noPermission/phoneCode";
-    /** 开户绑卡 */
-    public static final String open_account = "permissionCheck/openAccount";
+//    /** 开户绑卡 */
+//    public static final String open_account = "permissionCheck/openAccount";
+     /** 开户绑卡预校验*/
+     public static final String open_account_check = "permissionCheck/openAccountCheck";
+     /**获取短信验证码*/
+     public static final String open_account_get_sms = "permissionCheck/openAccountGetSms";
+    /**确认开户(新增)
+     *
+     */
+    public static final String open_account_new= "permissionCheck/openAccountNew";
+    /***
+     * 汇付2.0增开第一步
+     * 增开交易账号预校验  C404增开预校验
+     * @return
+     */
+    public static final String add_account_check= "permissionCheck/addAccountCheck";
+    /**
+     * 汇付2.0增开第二步 增开交易账号短信验证码
+     */
+    public static final String add_account_get_sms= "permissionCheck/addAccountGetSms";
+    /**
+     * 汇付2.0 点击银行列表item  展示切换银行卡信息
+     */
+    public static final String show_trade_accoinfo= "/permissionCheck/fundHome/showTradeAccoInfo";
+    /***
+     * 汇付2.0增开第三步
+     * 增开交易账号校验验证码》》增开账户  短信签约确认(B404)》》增开交易账号(C405)
+     * @return
+     */
+    public static final String add_account= "permissionCheck/addAccount";
     /** 我的资产 */
     public static final String fund_home = "permissionCheck/fundHome";
     /** 基金页 */
@@ -29,17 +57,29 @@ public class HttpContent {
     public static final String newest_fund = "noPermission/fundTypeListOrderBy";
     /** 主页 */
     public static final String get_home = "noPermission/getHome";
+    /**添加银行卡得到用户信息
+     *
+     */
+    public static final String get_user_message = "permissionCheck/getUserMessage";
+
     /** 我的银行卡 */
     public static final String my_bankcard = "permissionCheck/fundHome/turnToMyBankCard";
     /** 检查是否可以更换银行卡 */
     public static final String change_bankcard_check = "permissionCheck/fundHome/changeBankCardCheck";
     /** 更换银行卡操作 */
-    public static final String change_bankcard = "permissionCheck/fundHome/changeBankCard";
+//    public static final String change_bankcard = "permissionCheck/fundHome/changeBankCard";
+    public static final String change_bankcard = "permissionCheck/fundHome/changeBankCardNew";
+
     /** 发送短信验证码 不需要图片验证码 更换银行卡 */
-    public static final String send_phone_code = "permissionCheck/fundHome/sendPhoneCode";
+   // public static final String send_phone_code = "permissionCheck/fundHome/sendPhoneCode";
+   // public static final String send_phone_code = "permissionCheck/fundHome/changeBankCardCheckNew";
+    public static final String change_bankcard_check_new = "permissionCheck/fundHome/changeBankCardCheckNew";
+
     /** 我的手机号码 */
     public static final String change_phone_index = "permissionCheck/change/phone/index";
     /** 发送短信验证码 不需要图片验证码 更换手机号码 */
+
+
     public static final String change_phone_sendcode = "permissionCheck/change/phone/sendCode";
     /** 更换手机号 */
     public static final String change_phone_save = "permissionCheck/change/phone/save";
@@ -139,6 +179,15 @@ public class HttpContent {
 //    检测版本更新
     public static final String check_version = "/noPermission/versionCheck";
 
+    //以file文件的形式上传图片
+    public static  final String ftp_upload="/permissionCheck/ftpUpload";
+
+    //个人信息
+    public  static final String user_message="/permissionCheck/userMessage";
+
+//    //检验用户身份证和银行卡是否上传
+//    public static final String check_user_picture="permissionCheck/checkUserPicture";
+
 
 
     /************************************************ html页面 **************************************************/
@@ -151,14 +200,18 @@ public class HttpContent {
     public static final String risk_dengji = "htmlNoPermission/risk/dengji";
     /** 持有基金详情页 */
     public static final String hold_fund_detail = "htmlNoPermission/myFound/holdFundDetail";
-    /** 权益须知 */
+    /** 网上交易服务协议 */
     public static final String openaccount_agreement = "htmlNoPermission/openAccount/agreement";
-    /** 服务协议 */
+    /** 投资人权益须知 */
     public static final String openaccount_instructions = "htmlNoPermission/openAccount/instructions";
+    /**隐私保护指引*/
+    public static final String openaccount_privacyagreement="htmlNoPermission/openAccount/privacyAgreement";
     /** 定投的协议 */
     public static final String agreement_fdtimesbuy = "htmlNoPermission/agreement/fdTimesBuy";
     /** 关于我们 */
     public static final String about_us = "htmlNoPermission/aboutUs";
+    /**公募基金风险揭示及售前告知书*/
+    public static final String agreement_buyagreement="htmlNoPermission/agreement/buyAgreement";
 
 
 }
