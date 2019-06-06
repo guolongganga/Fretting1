@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import cn.com.buyforyou.fund.model.BaseResp;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 
 /**
  * 作者：sunnyzeng on 2017/12/22 15:53
@@ -20,7 +21,7 @@ public class BankCardResp extends BaseResp<BankCardResp> implements Parcelable {
     /** 银行卡尾号 */
     private String bankNoTail;
     /** 交易账号 */
-    private String ta_acco;
+    private String trade_acco;
     /** 是否能够更改银行卡  0代表不能 1代表能 */
 //    private String isCanChangeBankNo;
     private String limit_per_day;
@@ -51,13 +52,22 @@ public class BankCardResp extends BaseResp<BankCardResp> implements Parcelable {
         this.bankNoTail = bankNoTail;
     }
 
-    public String getTa_acco() {
-        return ta_acco;
+//    public String getTa_acco() {
+//        return ta_acco;
+//    }
+//
+//    public void setTa_acco(String ta_acco) {
+//        this.ta_acco = ta_acco;
+//    }
+
+    public String getTrade_acco() {
+        return trade_acco;
     }
 
-    public void setTa_acco(String ta_acco) {
-        this.ta_acco = ta_acco;
+    public void setTrade_acco(String trade_acco) {
+        this.trade_acco = trade_acco;
     }
+
 
 //    public String getIsCanChangeBankNo() {
 //        return isCanChangeBankNo;
@@ -101,7 +111,7 @@ public class BankCardResp extends BaseResp<BankCardResp> implements Parcelable {
         dest.writeString(this.bankLogo);
         dest.writeString(this.bankName);
         dest.writeString(this.bankNoTail);
-        dest.writeString(this.ta_acco);
+        dest.writeString(this.trade_acco);
         dest.writeString(this.limit_per_day);
         dest.writeString(this.limit_per_month);
         dest.writeString(this.limit_per_payment);
@@ -114,7 +124,7 @@ public class BankCardResp extends BaseResp<BankCardResp> implements Parcelable {
         this.bankLogo = in.readString();
         this.bankName = in.readString();
         this.bankNoTail = in.readString();
-        this.ta_acco = in.readString();
+        this.trade_acco = in.readString();
         this.limit_per_day = in.readString();
         this.limit_per_month = in.readString();
         this.limit_per_payment = in.readString();
