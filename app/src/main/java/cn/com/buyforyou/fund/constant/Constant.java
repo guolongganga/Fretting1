@@ -52,12 +52,17 @@ public class Constant {
 
     //选择的银行
     public static final String CHOOSE_BANCK = BASE_CONSTANT + "";
+    //交易账号
+    public static final String TRADEACCO= BASE_CONSTANT + "trade_acco";
 
     //注册传递电话号码
     public static final String PHONE = BASE_CONSTANT + "phone";
 
     //注册成功传递姓名
     public static final String NAME = BASE_CONSTANT + "name";
+
+    //注册成功传递邮箱
+    public static final String CHANGE_EMAIL ="email" ;
 
     //注册成功传递身份证号
     public static final String CERT_NO = BASE_CONSTANT + "cert_no";
@@ -107,6 +112,9 @@ public class Constant {
     //购买成功传递数据
     public static final String BUY_SUCCESS_OBJECT = "buy_success_object";
 
+    //购买传递显示默认开户银行信息
+    public static final String BUY_SELECT= "buy_select";
+
     //基金列表-->基金详情页传递基金代码
     public static final String FUND_DETAIL_CODE = "fund_detail_code";
 
@@ -145,6 +153,8 @@ public class Constant {
 
     //交易密码
     public static final String TRADE_PASSWORD = BASE_CONSTANT + "trade_password";
+    //银行名字
+    public static final String BANK_NAME = BASE_CONSTANT + "bank_name";
 
 
     /********************************************* 固定值 ********************************************/
@@ -279,4 +289,6 @@ public class Constant {
 
     //接口状态值  未登录
     public static final int PASSWORD_ERROR_STATUS = 526;
+
+
 }
