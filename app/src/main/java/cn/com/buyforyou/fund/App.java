@@ -97,6 +97,7 @@ public class App extends Application {
                 return 0;
             }
 
+
             @Override
             public boolean configLogEnable() {
                 return true;
