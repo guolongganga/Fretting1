@@ -22,6 +22,8 @@ public class InvestInfoResp implements Parcelable {
     private String bank_name;
     private String bank_account;
     private String next_fixrequest_date;
+    //交易账号
+    private  String trade_acco;
 
     public String getScheduled_protocol_id() {
         return scheduled_protocol_id;
@@ -87,6 +89,14 @@ public class InvestInfoResp implements Parcelable {
         this.next_fixrequest_date = next_fixrequest_date;
     }
 
+    public String getTrade_acco() {
+        return trade_acco;
+    }
+
+    public void setTrade_acco(String trade_acco) {
+        this.trade_acco = trade_acco;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -102,6 +112,7 @@ public class InvestInfoResp implements Parcelable {
         dest.writeString(this.bank_name);
         dest.writeString(this.bank_account);
         dest.writeString(this.next_fixrequest_date);
+        dest.writeString(this.trade_acco);
     }
 
     public InvestInfoResp() {
@@ -116,6 +127,7 @@ public class InvestInfoResp implements Parcelable {
         this.bank_name = in.readString();
         this.bank_account = in.readString();
         this.next_fixrequest_date = in.readString();
+        this.trade_acco=in.readString();
     }
 
     public static final Parcelable.Creator<InvestInfoResp> CREATOR = new Parcelable.Creator<InvestInfoResp>() {
