@@ -1,5 +1,6 @@
 package cn.com.buyforyou.fund.ui.activity.user;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,7 @@ import cn.com.buyforyou.fund.event.InvalidTokenEvent;
 import cn.com.buyforyou.fund.model.fund.InvestResp;
 import cn.com.buyforyou.fund.model.user.InvestRecordResp;
 import cn.com.buyforyou.fund.present.user.InvestDetailPresent;
+import cn.com.buyforyou.fund.ui.activity.fund.InverstUpdataActivity;
 import cn.com.buyforyou.fund.ui.activity.fund.InvestActivity;
 import cn.com.buyforyou.fund.ui.adapter.user.InvestRecordRecyleAdapter;
 import cn.com.buyforyou.fund.ui.adapter.user.MyFundRecyleAdapter;
@@ -87,6 +89,8 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
     private String fundCode;
     /** 基金名称 */
     private String fundName;
+    //交易账号
+    private String trade_acco;
 
     @Override
     public int getLayoutId() {
@@ -100,6 +104,7 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
 
     @Override
     public void initData(Bundle bundle) {
+
         headTitle.setText("定投详情");
         httpLoadingDialog = new HttpLoadingDialog(context);
         token = App.getSharedPref().getString(Constant.TOKEN, "");
@@ -107,10 +112,10 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
         //防止一进页面显示在最底部
         xrvInvestRecord.setFocusable(false);
         xrvInvestRecord.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
-
         if (bundle != null) {
             protocol_id = bundle.getString(Constant.INVEST_PROTOCOL_ID);
             investStatus = bundle.getString(Constant.INVEST_STATUS);
+            trade_acco= bundle.getString(Constant.TRADEACCO);
         }
 
         httpLoadingDialog.visible();
@@ -178,7 +183,7 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
                                                         endPasswordDialog.dismiss();
                                                         //请求终止接口
                                                         httpLoadingDialog.visible();
-                                                        getP().changeState(token, userId, protocol_id, Constant.INVEST_STATE_END, str);
+                                                        getP().changeState(token, userId, protocol_id, Constant.INVEST_STATE_END, str,trade_acco);
 
                                                     }
                                                 }).create();
@@ -217,7 +222,7 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
                                                         stopPasswordDialog.dismiss();
                                                         //请求暂停接口
                                                         httpLoadingDialog.visible();
-                                                        getP().changeState(token, userId, protocol_id, Constant.INVEST_STATE_STOP, str);
+                                                        getP().changeState(token, userId, protocol_id, Constant.INVEST_STATE_STOP, str,trade_acco);
 
                                                     }
                                                 }).create();
@@ -256,7 +261,7 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
                                                         recoveryPasswordDialog.dismiss();
                                                         // 请求恢复接口
                                                         httpLoadingDialog.visible();
-                                                        getP().changeState(token, userId, protocol_id, Constant.INVEST_STATE_ING, str);
+                                                        getP().changeState(token, userId, protocol_id, Constant.INVEST_STATE_ING, str,trade_acco);
 
                                                     }
                                                 }).create();
@@ -275,7 +280,7 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
             public void onClick(View view) {
                 //修改定投
                 httpLoadingDialog.visible();
-                getP().investTimeUpdata(token, userId, protocol_id);
+                getP().investTimeUpdata(token, userId, protocol_id,trade_acco);
             }
         });
     }
@@ -300,6 +305,8 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
                         bundle.putString(Constant.ACTIVITY_TITLE, getString(R.string.result_title_buy));
                         //交易流水号
                         bundle.putString(Constant.INVEST_PROTOCOL_ID, model.getAllot_no());
+                        //交易账号
+                        bundle.putString(Constant.TRADEACCO,trade_acco);
 
                         if ("11".equals(model.getStatus())) {
                             //TODO 交易成功，待确认份额
@@ -339,6 +346,8 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
             tvBankTail.setText("(" + resp.getBankCardPageEntity().getBankNoTail() + ")");
             tvProtocolNumber.setText(resp.getScheduled_protocol_id());
             tvDayWeek.setText(resp.getNext_fixrequest_date() + "  " + resp.getExchWeek());
+            //交易账号
+            trade_acco = resp.getTrade_acco();
         }
 
     }
@@ -372,7 +381,7 @@ public class InvestDeatilActivity extends XActivity<InvestDetailPresent> {
         bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
         bundle.putString(Constant.INVEST_PROTOCOL_ID, protocol_id);
         bundle.putParcelable(Constant.INVEST_FUND_OBJECT, resp);
-        startActivity(InvestActivity.class, bundle);
+        startActivity(InverstUpdataActivity.class, bundle);
 
     }
 
