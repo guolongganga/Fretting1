@@ -7,6 +7,9 @@ import android.support.v4.widget.NestedScrollView;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -15,6 +18,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
+import com.xiaweizi.marquee.MarqueeTextView;
 
 import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.constant.Constant;
@@ -33,6 +37,7 @@ import cn.com.buyforyou.fund.ui.activity.index.PopularityActivity;
 import cn.com.buyforyou.fund.ui.activity.index.TimingActivity;
 import cn.com.buyforyou.fund.ui.adapter.index.PopularityRecycleAdapter;
 import cn.com.buyforyou.fund.ui.adapter.index.PreferRecycleAdapter;
+import cn.com.buyforyou.fund.ui.adapter.index.RecommendAdapter;
 import cn.com.buyforyou.fund.utils.BigDecimalUtil;
 import cn.com.buyforyou.fund.utils.RateStyleUtil;
 
@@ -56,12 +61,32 @@ import cn.droidlover.xrecyclerview.XRecyclerView;
  */
 
 public class IndexFragment extends XFragment<IndexPresent> {
-
+    private boolean flag = true;
+    private RecommendAdapter recommAdapter;
+    private ArrayList<ProductModel> indexFunds;
+    private List<ProductModel> list = new ArrayList<>();
+    private List<ProductModel> myList = new ArrayList<>();
+//    /**
+//     * 公告
+//     */
+//    @BindView(R.id.tv_notice)
+//    TextView tvNotice;
     /**
      * 轮播图
      */
     @BindView(R.id.banner)
     FlyBanner banner;
+
+    /**
+     * 小喇叭
+     */
+//    @BindView(R.id.image_trumpet)
+//    ImageView imageViewTrumpet;
+    /**
+     * 跑马灯
+     */
+//    @BindView(R.id.marquee_textview)
+//    MarqueeTextView marqueeTextView;
     /**
      * 人气产品
      */
@@ -72,6 +97,7 @@ public class IndexFragment extends XFragment<IndexPresent> {
      */
     @BindView(R.id.popularity_more)
     TextView popularityMore;
+
     /**
      * 明星基金
      */
@@ -200,6 +226,23 @@ public class IndexFragment extends XFragment<IndexPresent> {
     @BindView(R.id.error_view)
     TextView errorView;
 
+//    /**
+//     * 每周推荐
+//     */
+//    //更多
+//    @BindView(R.id.week_more)
+//    TextView tvWeekMore;
+//    /**
+//     * 图标
+//     */
+//    @BindView(R.id.image_week)
+//    ImageView imageViewMore;
+//    /**
+//     * 每周推荐列表
+//     */
+//    @BindView(R.id.xrv_week_popularity)
+//    XRecyclerView xrvWeekRecommend;
+
 
     /**
      * 明星基金
@@ -244,15 +287,32 @@ public class IndexFragment extends XFragment<IndexPresent> {
         xrvPopularity.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
         xrvPrefer.setFocusable(false);
         xrvPrefer.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
-
+//        xrvWeekRecommend.setFocusable(false);
+//        xrvWeekRecommend.gridLayoutManager(context, 2);
         httpLoadingDialog.visible();
         getP().loadData();
+     //   setAnimal();
+//        marqueeTextView.setText("这是一段很长的威武霸气的滚动的实现跑马灯效果的一段逼格很高的很有含义和涵养的文字");
+//        marqueeTextView.resumeScroll();
         try{
             getP().checkUpdate(context.getPackageManager().getPackageInfo(context.getPackageName(),0).versionName);
 
         }catch (Exception e){
 
         }
+
+//
+    }  /**
+     * 小喇叭的动画并让跑马灯跑起来
+     */
+    public void setAnimal() {
+        final Animation animation = new AlphaAnimation(1, 0); // Change alpha from fully visible to invisible
+        animation.setDuration(500); // duration - half a second
+        animation.setInterpolator(new LinearInterpolator()); // do not alter animation rate
+        animation.setRepeatCount(Animation.INFINITE); // Repeat animation infinitely
+        animation.setRepeatMode(Animation.REVERSE);
+       // imageViewTrumpet.setAnimation(animation);
+
     }
 
 
@@ -260,6 +320,13 @@ public class IndexFragment extends XFragment<IndexPresent> {
 
     @Override
     public void initEvents() {
+        //公告
+//        tvNotice.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //跳转到相应的页面
+//            }
+//        });
         //人气产品 更多
         popularityMore.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -323,6 +390,39 @@ public class IndexFragment extends XFragment<IndexPresent> {
                 getP().loadData();
             }
         });
+//        tvWeekMore.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (flag) {
+//                    recommAdapter.setData(myList);
+//                    flag = false;
+//                    imageViewMore.setBackgroundResource(R.mipmap.arrow_top_o);
+//
+//                } else {
+//                    recommAdapter.setData(list);
+//                    imageViewMore.setBackgroundResource(R.mipmap.arrow_down_o);
+//                    flag = true;
+//
+//                }
+//
+//            }
+//        });
+//        imageViewMore.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (flag) {
+//                    recommAdapter.setData(myList);
+//                    flag = false;
+//                   // imageViewMore.setBackgroundResource(R.mipmap.arrow_top_o);
+//
+//                } else {
+//                    recommAdapter.setData(list);
+//                   // imageViewMore.setBackgroundResource(R.mipmap.arrow_down_o);
+//                    flag = true;
+//
+//                }
+//            }
+//        });
 
         //明星基金 模块
         llStar.setOnClickListener(new View.OnClickListener() {
@@ -443,6 +543,26 @@ public class IndexFragment extends XFragment<IndexPresent> {
         });
         return adapter;
     }
+//    /**
+//     * 初始化每周推荐adapter
+//     */
+//    public RecommendAdapter getRecommendAdapter() {
+//        recommAdapter = new RecommendAdapter(context);
+//        xrvWeekRecommend.setAdapter(recommAdapter);
+//        recommAdapter.setRecItemClick(new RecyclerItemCallback<ProductModel, RecommendAdapter.ViewHolder>() {
+//            @Override
+//            public void onItemClick(int position, ProductModel model, int tag, RecommendAdapter.ViewHolder holder) {
+//                super.onItemClick(position, model, tag, holder);
+//                switch (tag) {
+//                    //点击
+//                    case RecommendAdapter.ITEM_CLICK:
+//                        startDetaiActivity(model);
+//                        break;
+//                }
+//            }
+//        });
+//        return recommAdapter;
+//    }
 
     /**
      * 初始化优选定投adapter
@@ -478,7 +598,17 @@ public class IndexFragment extends XFragment<IndexPresent> {
 //        }
 //    }
 
-
+//    private void setDataList() {
+//        if (indexFunds != null) {
+//            list.add(indexFunds.get(0));
+//            list.add(indexFunds.get(1));
+//            myList.add(indexFunds.get(0));
+//            myList.add(indexFunds.get(1));
+//            myList.add(indexFunds.get(0));
+//            myList.add(indexFunds.get(1));
+//        }
+//
+//    }
     /**
      * 请求主页数据
      *
@@ -535,6 +665,12 @@ public class IndexFragment extends XFragment<IndexPresent> {
                 ILFactory.getLoader().loadNet(ivThemeThree, themeList.get(2).getImgurl(), null);
 
             }
+//            //每周推荐
+//            if (data.getIndexFunds() != null) {
+//                indexFunds = data.getIndexFunds();
+//                getRecommendAdapter().addData(indexFunds);
+//                setDataList();
+//            }
 
             //人气产品
             if (data.getHotFunds() != null && data.getHotFunds().size() > 0) {
