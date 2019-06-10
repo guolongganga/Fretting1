@@ -137,7 +137,6 @@ public class Router {
     }
 
     public Router putSerializable(@Nullable String key, @Nullable Serializable value) {
-        getBundleData().putSerializable(key, value);
         return this;
     }
 
