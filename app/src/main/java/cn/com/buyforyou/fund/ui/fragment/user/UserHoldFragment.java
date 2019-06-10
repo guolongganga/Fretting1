@@ -1,6 +1,7 @@
 package cn.com.buyforyou.fund.ui.fragment.user;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.TextView;
 
@@ -31,7 +32,8 @@ public class UserHoldFragment extends XFragment {
     /**
      * 我的持仓基金
      */
-    private ArrayList<MyHoldFundResp> fundList;
+    private ArrayList<MyHoldFundResp> fundList=new ArrayList<>();
+    private String trade_acco;
 
     @Override
     public int getLayoutId() {
@@ -48,14 +50,33 @@ public class UserHoldFragment extends XFragment {
         xrvUserHold.setFocusable(false);
         xrvUserHold.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
         if (bundle != null) {
-            fundList = bundle.getParcelableArrayList(Constant.FUND_OBJECT);
+             fundList = bundle.getParcelableArrayList(Constant.FUND_OBJECT);
+            for (int i = 0; i <fundList.size() ; i++) {
+                //交易账号
+                trade_acco = fundList.get(i).getTrade_acco();
+
+            }
             if (fundList != null && fundList.size() > 0) {
-                xrvUserHold.setVisibility(View.VISIBLE);
-                tvEmpty.setVisibility(View.GONE);
+                if(xrvUserHold!=null)
+                {
+                    xrvUserHold.setVisibility(View.VISIBLE);
+                }
+                if(tvEmpty!=null)
+                {
+                    tvEmpty.setVisibility(View.GONE);
+                }
                 getMyFundAdapter().addData(fundList);
             } else {
-                xrvUserHold.setVisibility(View.GONE);
-                tvEmpty.setVisibility(View.VISIBLE);
+                if(xrvUserHold!=null)
+                {
+                    xrvUserHold.setVisibility(View.GONE);
+                }
+                if(tvEmpty!=null)
+                {
+                    tvEmpty.setVisibility(View.VISIBLE);
+                }
+
+
             }
         }
 
@@ -68,8 +89,12 @@ public class UserHoldFragment extends XFragment {
      * @return
      */
     public SimpleRecAdapter getMyFundAdapter() {
+
         MyFundRecyleAdapter adapter = new MyFundRecyleAdapter(context);
-        xrvUserHold.setAdapter(adapter);
+        if(xrvUserHold!=null)
+        {
+            xrvUserHold.setAdapter(adapter);
+        }
         adapter.setRecItemClick(new RecyclerItemCallback<MyHoldFundResp, MyFundRecyleAdapter.ViewHolder>() {
             @Override
             public void onItemClick(int position, MyHoldFundResp model, int tag, MyFundRecyleAdapter.ViewHolder holder) {
@@ -83,6 +108,7 @@ public class UserHoldFragment extends XFragment {
                         bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.hold_fund_detail);
                         bundle.putString(Constant.FUND_DETAIL_CODE, model.getFundCode());
                         bundle.putString(Constant.FUND_DETAIL_NAME, model.getFundName());
+                        bundle.putString(Constant.TRADEACCO,model.getTrade_acco());
                         startActivity(FundDetailWebActivity.class, bundle);
                         break;
                 }
@@ -99,12 +125,26 @@ public class UserHoldFragment extends XFragment {
     public void setList(ArrayList<MyHoldFundResp> list) {
         this.fundList = list;
         if (fundList != null && fundList.size() > 0) {
-            xrvUserHold.setVisibility(View.VISIBLE);
-            tvEmpty.setVisibility(View.GONE);
+            if(xrvUserHold!=null)
+            {
+                xrvUserHold.setVisibility(View.VISIBLE);
+            }
+            if(tvEmpty!=null)
+            {
+                tvEmpty.setVisibility(View.GONE);
+            }
             getMyFundAdapter().addData(fundList);
         } else {
-            xrvUserHold.setVisibility(View.GONE);
-            tvEmpty.setVisibility(View.VISIBLE);
+            if(xrvUserHold!=null)
+            {
+                xrvUserHold.setVisibility(View.GONE);
+            }
+            if(tvEmpty!=null)
+            {
+                tvEmpty.setVisibility(View.VISIBLE);
+            }
+
+
         }
     }
 }
