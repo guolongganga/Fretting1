@@ -1,5 +1,6 @@
 package cn.com.buyforyou.fund.ui.activity.fund;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -12,6 +13,7 @@ import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.text.method.LinkMovementMethod;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -24,36 +26,47 @@ import android.widget.TextView;
 import cn.com.buyforyou.fund.App;
 import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.constant.Constant;
+import cn.com.buyforyou.fund.event.ChangeBankCardMessageEvent;
 import cn.com.buyforyou.fund.event.InvalidTokenEvent;
+import cn.com.buyforyou.fund.event.InverstBankCardEvent;
 import cn.com.buyforyou.fund.event.RefreshUserDataEvent;
 import cn.com.buyforyou.fund.model.ApplyBaseInfo;
+import cn.com.buyforyou.fund.model.fund.BankCard;
 import cn.com.buyforyou.fund.model.fund.GetNextTimeResp;
 import cn.com.buyforyou.fund.model.fund.InvestResp;
 import cn.com.buyforyou.fund.model.fund.InvestSureResp;
+import cn.com.buyforyou.fund.model.user.BankCardInfoResp;
 import cn.com.buyforyou.fund.model.user.BankCardResp;
 import cn.com.buyforyou.fund.net.Api;
 import cn.com.buyforyou.fund.net.HttpContent;
 import cn.com.buyforyou.fund.present.fund.InvestPersent;
 import cn.com.buyforyou.fund.ui.activity.boot.WebPublicActivity;
 import cn.com.buyforyou.fund.ui.activity.user.BankCardActivity;
+import cn.com.buyforyou.fund.ui.activity.user.ChangeBankCardListActivity;
 import cn.com.buyforyou.fund.ui.activity.user.FindPwdTradeFirstActivity;
+import cn.com.buyforyou.fund.ui.activity.user.InverstBankCardActivity;
 import cn.com.buyforyou.fund.ui.activity.user.LoginActivity;
+
 import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.ui.widget.FundBuyDialog;
 import com.zhsoft.fretting.ui.widget.MyClickText;
 import com.zhsoft.fretting.ui.widget.OnTvClick;
 import com.zhsoft.fretting.ui.widget.SelectPopupWindow;
+
 import cn.com.buyforyou.fund.utils.Base64ImageUtil;
 import cn.com.buyforyou.fund.utils.BigDecimalUtil;
 import cn.com.buyforyou.fund.utils.KeyBoardUtils;
 import cn.com.buyforyou.fund.utils.RuntimeHelper;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -67,6 +80,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  */
 
 public class InvestActivity extends XActivity<InvestPersent> {
+    private static final String TAG = "InvestActivity";
     /**
      * 返回
      */
@@ -212,6 +226,15 @@ public class InvestActivity extends XActivity<InvestPersent> {
      */
     private String protocol_id;
     private float limitPerPay;
+    private String bankNoTail;
+    private String bankName1;
+    private String limit_per_payment;
+    private String limit_per_day;
+    private String bankLogo;
+    private String exchdate;
+    private String exchWeek;
+    private String trade_acco;
+
 
     @Override
     public int getLayoutId() {
@@ -225,6 +248,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
 
     @Override
     public void initData(Bundle bundle) {
+        EventBus.getDefault().register(this);
         //设置标题
         headTitle.setText("定投");
         //初始化加载框
@@ -258,18 +282,20 @@ public class InvestActivity extends XActivity<InvestPersent> {
             protocol_id = bundle.getString(Constant.INVEST_PROTOCOL_ID);
             //显示数据
             investResp = (InvestResp) bundle.getParcelable(Constant.INVEST_FUND_OBJECT);
+            Log.e(TAG, "initData: " + investResp);
             //获取到基金数据
             //获取 图片Base64 字符串
             if (investResp != null) {
                 //刷新银行卡信息
-                refreshBankView(investResp.getBankCardPageEntity());
+                refreshBankView(investResp);
+                // bankCardView(investResp);
 
                 //最小投资金额
                 etAmount.setHint("最低购买金额" + BigDecimalUtil.bigdecimalToString(investResp.getMinPurchaseAmt()) + "元");
                 //首次交易月
-                first_trade_month = investResp.getFirst_trade_month();
+                // first_trade_month = investResp.getFirst_trade_month();
                 //下次扣款日
-                tvNextTime.setText("注：下次扣款日：" + investResp.getExchdate() + " " + investResp.getExchWeek());
+                tvNextTime.setText("注：下次扣款日：" + exchdate + " " + exchWeek + "");
                 //定投周期
                 cycleSelectorCode = investResp.getProtocol_period_unit();
                 for (int i = 0; i < cycleList.size(); i++) {
@@ -415,7 +441,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
                         daySelectorCode = selectList.get(currentItem).getCode();
                         if (isNotEmpty(getText(etInvestDay)) && !getText(etInvestDay).equals(lastDayChoose)) {
                             //请求接口得到扣款日期 下次扣款时间：2017-12-18，遇非交易日顺延
-                            getP().nextDeductTime(token, userId, fundCode, cycleSelectorCode, daySelectorCode);
+                            getP().nextDeductTime(token, userId, fundCode, cycleSelectorCode, daySelectorCode, trade_acco);
                         }
                     }
                 });
@@ -451,10 +477,11 @@ public class InvestActivity extends XActivity<InvestPersent> {
                 }
                 //如果amount小于最小购买金额，重新填写购买金额
 
-//                if (amount.compareTo(investResp.getMinPurchaseAmt()) < 0) {
-                if (Float.parseFloat(strAmount) < investResp.getMinPurchaseAmt().floatValue()) {
-                    showToast("最小投资金额为" + BigDecimalUtil.bigdecimalToString(investResp.getMinPurchaseAmt()) + "元");
-                    return;
+                if (amount.compareTo(investResp.getMinPurchaseAmt()) < 0) {
+                    if (Float.parseFloat(strAmount) < investResp.getMinPurchaseAmt().floatValue()) {
+                        showToast("最小投资金额为" + BigDecimalUtil.bigdecimalToString(investResp.getMinPurchaseAmt()) + "元");
+                        return;
+                    }
                 }
                 if (!isNotEmpty(getText(etInvestWeek))) {
                     showToast("请选择定投周期");
@@ -485,23 +512,26 @@ public class InvestActivity extends XActivity<InvestPersent> {
                                     //确定购买
                                     httpLoadingDialog.visible();
                                     getP().sureInvest(token, userId, fundCode, fundName, strAmount,
-                                            first_trade_month, cycleSelectorCode, daySelectorCode, str, null);
+                                            first_trade_month, cycleSelectorCode, daySelectorCode, str, null, trade_acco);
                                 } else if (Constant.INVEST_ACTIVITY_UPDATE.equals(type)) {
                                     //确定修改 增加protocol_id
                                     httpLoadingDialog.visible();
                                     getP().sureInvest(token, userId, fundCode, fundName, strAmount,
-                                            first_trade_month, cycleSelectorCode, daySelectorCode, str, protocol_id);
+                                            first_trade_month, cycleSelectorCode, daySelectorCode, str, protocol_id, trade_acco);
                                 }
                             }
                         }).create();
                 fundBuyDialog.show();
             }
         });
+
         /*更换银行卡*/
         rlChange.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(BankCardActivity.class, Constant.INVEST_BANK_ACTIVITY);
+                Bundle bundle = new Bundle();
+                bundle.putParcelable(Constant.INVEST_FUND_OBJECT, investResp);
+                startActivity(InverstBankCardActivity.class, bundle);
             }
         });
         /*金额输入监控*/
@@ -534,9 +564,33 @@ public class InvestActivity extends XActivity<InvestPersent> {
     }
 
     /**
+     * 更新银行卡信息
+     *
+     * @param event
+     */
+    @Subscribe(threadMode = ThreadMode.POSTING)
+    public void onChangeTabEvent(InverstBankCardEvent event) {
+
+        // refreshBankView(investResp);
+        if (!TextUtils.isEmpty(event.getBankLogo())) {
+            //将Base64图片串转换成Bitmap
+            Bitmap bitmap = Base64ImageUtil.base64ToBitmap(event.getBankLogo());
+            bankImage.setImageBitmap(bitmap);
+        }
+        bankName.setText(event.getBankName() + "（尾号" + event.getBankNoTail() + "）");
+        //银行限额
+        limitPerPay = Float.parseFloat(event.getLimitPerPay());
+        bankLimit.setText("单笔限额" + limitPerPay + "万，单日限额" + event.getLmitPperDay() + "万");
+        //交易账号
+        trade_acco = event.getTrade_acco();
+
+
+    }
+
+    /**
      * 请求我的银行卡信息成功 数据显示
      */
-    public void requestInvestSuccess(BankCardResp resp) {
+    public void requestInvestSuccess(InvestResp resp) {
         httpLoadingDialog.dismiss();
         //刷新银行卡数据
         refreshBankView(resp);
@@ -575,6 +629,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
         Bundle bundle = new Bundle();
         bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
         bundle.putParcelable(Constant.INVEST_SUCCESS_OBJECT, sureResp);
+
         startActivity(InvestSuccessActivity.class, bundle);
     }
 
@@ -586,37 +641,88 @@ public class InvestActivity extends XActivity<InvestPersent> {
     }
 
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == Constant.INVEST_BANK_ACTIVITY && resultCode == Constant.SUCCESS_BACK_BANK) {
-            String isChange = data.getStringExtra(Constant.CHANGE_BANK);
-            //如果修改了银行卡就刷新本页面数据
-            if (Constant.CHANGE_BANK_SUCCESS.equals(isChange)) {
-                //获取银行卡数据 判断是否能够定投
-                httpLoadingDialog.visible();
-                getP().investTime(token, userId, fundCode, fundName);
-            }
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == Constant.INVEST_BANK_ACTIVITY && resultCode == Constant.SUCCESS_BACK_BANK) {
+//            String isChange = data.getStringExtra(Constant.CHANGE_BANK);
+//            //如果修改了银行卡就刷新本页面数据
+//            if (Constant.CHANGE_BANK_SUCCESS.equals(isChange)) {
+//                //获取银行卡数据 判断是否能够定投
+//                httpLoadingDialog.visible();
+//                getP().investTime(token, userId, fundCode, fundName);
+//            }
+//        }
+//    }
 
     /**
      * 刷新银行卡视图
      *
-     * @param bankCardResp
+     * @param
      */
-    public void refreshBankView(BankCardResp bankCardResp) {
-        String strimage = bankCardResp.getBankLogo();
-        if (!TextUtils.isEmpty(strimage)) {
+    public void refreshBankView(InvestResp resp) {
+
+        List<BankCardInfoResp> bankCardInfoResp = resp.getBankCard();
+        for (BankCardInfoResp bankList : bankCardInfoResp) {
+
+            if (bankList.getSelect() != null && bankList.getSelect().equals("0"))
+
+
+            {
+                //银行logo
+                bankLogo = bankCardInfoResp.get(0).getBankLogo();
+                //银行尾号
+                bankNoTail = bankCardInfoResp.get(0).getBankNoTail();
+                //银行名字
+                bankName1 = bankCardInfoResp.get(0).getBankName();
+                //银行限额
+                limit_per_payment = bankCardInfoResp.get(0).getLimit_per_payment();
+                //单日限额
+                limit_per_day = bankCardInfoResp.get(0).getLimit_per_day();
+                //下次扣款日
+                exchdate = bankCardInfoResp.get(0).getExchdate();
+                //扣款星期几
+                exchWeek = bankCardInfoResp.get(0).getExchWeek();
+                first_trade_month = bankCardInfoResp.get(0).getFirst_trade_month();
+                trade_acco = bankCardInfoResp.get(0).getTrade_acco();
+            }
+
+        }
+        if (!TextUtils.isEmpty(bankLogo)) {
             //将Base64图片串转换成Bitmap
-            Bitmap bitmap = Base64ImageUtil.base64ToBitmap(strimage);
+            Bitmap bitmap = Base64ImageUtil.base64ToBitmap(bankLogo);
             bankImage.setImageBitmap(bitmap);
         }
         //银行卡名称和尾号
-        bankName.setText(bankCardResp.getBankName() + "（" + bankCardResp.getBankNoTail() + "）");
+        bankName.setText(bankName1 + "（" + bankNoTail + "）");
         //银行限额
-        limitPerPay = Float.parseFloat(bankCardResp.getLimit_per_payment());
-        bankLimit.setText("单笔限额" + bankCardResp.getLimit_per_payment() + "万，单日限额" + bankCardResp.getLimit_per_day() + "万");
+        limitPerPay = Float.parseFloat(limit_per_payment);
+        bankLimit.setText("单笔限额" + limitPerPay + "万，单日限额" + limit_per_day + "万");
+
+    }
+
+
+    //刷新银行卡视图
+    public void bankCardView(InvestResp resp) {
+
+        BankCardResp bankCardPageEntity = resp.getBankCardPageEntity();
+        String bankLogo = bankCardPageEntity.getBankLogo();
+        String bank_name = bankCardPageEntity.getBankName();
+        String bankNoTail = bankCardPageEntity.getBankNoTail();
+        String limit_per_day = bankCardPageEntity.getLimit_per_day();
+        String limit_per_payment = bankCardPageEntity.getLimit_per_payment();
+
+        if (!TextUtils.isEmpty(bankLogo)) {
+            //将Base64图片串转换成Bitmap
+            Bitmap bitmap = Base64ImageUtil.base64ToBitmap(bankLogo);
+            bankImage.setImageBitmap(bitmap);
+        }
+        //银行卡名称和尾号
+        bankName.setText(bank_name + "（" + bankNoTail + "）");
+        //银行限额
+        limitPerPay = Float.parseFloat(limit_per_payment);
+        bankLimit.setText("单笔限额" + limitPerPay + "万，单日限额" + limit_per_day + "万");
+
 
     }
 
@@ -659,6 +765,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
             fundBuyDialog = null;
         }
         super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     /**
@@ -668,7 +775,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
      */
     public void agreementText() {
 
-        SpannableString spannableString = new SpannableString("我已阅读并同意《定期定额申购协议》");
+        SpannableString spannableString = new SpannableString("我已阅读并同意《定期定额投资业务协议》");
 
         MyClickText click1 = new MyClickText(this);
         click1.setOnTvClick(new OnTvClick() {
@@ -682,7 +789,7 @@ public class InvestActivity extends XActivity<InvestPersent> {
         });
 
         //设置下划线
-        spannableString.setSpan(click1, 7, 17, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        spannableString.setSpan(click1, 7, 19, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
 //        spannableString.setSpan(click2, 24, 35, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         //当然这里也可以通过setSpan来设置哪些位置的文本哪些颜色
         tvAgreement.setText(spannableString);
