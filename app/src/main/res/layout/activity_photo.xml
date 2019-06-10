@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <include layout="@layout/layout_head"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/iv_idcardZ"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:paddingLeft="@dimen/dimen_8"
+                android:paddingRight="@dimen/dimen_8"
+                android:layout_gravity="center"
+                android:layout_width="@dimen/dimen_80"
+                android:layout_height="@dimen/dimen_80"
+                android:gravity="center"
+                android:scaleType="fitXY"
+                android:src="@mipmap/truck_img_add"/>
+            <TextView
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dimen_8"
+                android:paddingRight="@dimen/dimen_8"
+                android:layout_gravity="center"
+                android:text="身份证正面"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/iv_idcardF"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:paddingLeft="@dimen/dimen_8"
+                android:paddingRight="@dimen/dimen_8"
+                android:layout_gravity="center"
+                android:layout_width="@dimen/dimen_80"
+                android:layout_height="@dimen/dimen_80"
+                android:gravity="center"
+                android:scaleType="fitXY"
+                android:src="@mipmap/truck_img_add"/>
+            <TextView
+                android:layout_marginTop="@dimen/dimen_10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:paddingLeft="@dimen/dimen_8"
+                android:paddingRight="@dimen/dimen_8"
+                android:text="身份证反面"/>
+
+
+        </LinearLayout>
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/iv_bankcardZ"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:paddingLeft="@dimen/dimen_8"
+                android:paddingRight="@dimen/dimen_8"
+                android:layout_gravity="center_vertical"
+                android:layout_width="@dimen/dimen_80"
+                android:gravity="center"
+                android:layout_height="@dimen/dimen_80"
+                android:scaleType="fitXY"
+                android:src="@mipmap/truck_img_add"/>
+            <TextView
+                android:layout_marginTop="@dimen/dimen_10"
+                android:paddingLeft="@dimen/dimen_8"
+                android:paddingRight="@dimen/dimen_8"
+                android:gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:text="银行卡正面"/>
+
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <ImageView
+                android:id="@+id/iv_bankcardF"
+                android:layout_marginTop="@dimen/dimen_10"
+                android:paddingLeft="@dimen/dimen_8"
+                android:paddingRight="@dimen/dimen_8"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:scaleType="fitXY"
+                android:layout_width="@dimen/dimen_80"
+                android:layout_height="@dimen/dimen_80"
+                android:src="@mipmap/truck_img_add"/>
+            <TextView
+                android:layout_marginTop="@dimen/dimen_10"
+                android:paddingLeft="@dimen/dimen_8"
+                android:paddingRight="@dimen/dimen_8"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:text="银行卡反面"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+    <Button
+        android:id="@+id/btn_commit"
+        style="@style/common_blue_button_rect"
+        android:text="提交"/>
+
+
+
+</LinearLayout>
