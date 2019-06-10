@@ -147,7 +147,7 @@ public class ResultDetailOneActivity extends XActivity<ResultDetailOnePresent> {
                                                     public void onFinish(String str) {
                                                         fundBuyDialog.dismiss();
                                                         httpLoadingDialog.visible();
-                                                        getP().withdrawApplyOperate(allot_no, str, token, userId);
+                                                        getP().withdrawApplyOperate(allot_no, str, token, userId,null);
 
                                                     }
                                                 }).create();
