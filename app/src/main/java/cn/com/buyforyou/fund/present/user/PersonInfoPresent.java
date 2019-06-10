@@ -5,6 +5,8 @@ import cn.com.buyforyou.fund.constant.Constant;
 import cn.com.buyforyou.fund.model.BaseResp;
 import cn.com.buyforyou.fund.model.user.OccupationResp;
 import cn.com.buyforyou.fund.model.user.PersonInfoResp;
+import cn.com.buyforyou.fund.model.user.UserInforResp;
+import cn.com.buyforyou.fund.model.user.UserInformationResp;
 import cn.com.buyforyou.fund.net.Api;
 import cn.com.buyforyou.fund.params.CommonReqData;
 import cn.com.buyforyou.fund.params.PersonInfoParams;
@@ -22,6 +24,43 @@ import cn.droidlover.xdroidmvp.net.XApi;
  */
 
 public class PersonInfoPresent extends XPresent<PersonInfoActivity> {
+    /**
+     * 判断小红点接口
+     */
+    public void getUserMessage(String token, String userId) {
+        CommonReqData reqData = new CommonReqData();
+        reqData.setToken(token);
+        reqData.setUserId(userId);
+
+        Api.getApi()
+                .userMessage(reqData)
+                .compose(XApi.<UserInformationResp>getApiTransformer())
+                .compose(XApi.<UserInformationResp>getScheduler())
+                .compose(getV().<UserInformationResp>bindToLifecycle())
+                .subscribe(new ApiSubscriber<UserInformationResp>() {
+                    @Override
+                    protected void onFail(NetError error) {
+                        getV().requestUserInfoFail();
+                        getV().showToast(R.string.request_error);
+                    }
+
+                    @Override
+                    public void onNext(UserInformationResp informationResp) {
+                        if (informationResp != null && informationResp.getStatus() == 200) {
+                            getV().requestUserMessageSuccess(informationResp);
+                        } else if (informationResp != null && informationResp.getStatus() == Constant.NO_LOGIN_STATUS) {
+                            getV().showToast(informationResp.getMessage());
+                            getV().areadyLogout();
+                        } else {
+                            getV().requestUserInfoFail();
+                            getV().showToast(informationResp.getMessage());
+                            XLog.e("返回数据为空");
+                        }
+                    }
+                });
+
+    }
+
 
     /**
      * 获取个人信息
