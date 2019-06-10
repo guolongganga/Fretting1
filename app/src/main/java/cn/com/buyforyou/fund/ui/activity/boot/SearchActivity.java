@@ -80,7 +80,7 @@ public class SearchActivity extends XActivity<SearchPersent> {
 //        mOptionSearch.setListener(this);
 //        xrvHotList.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
 //        xrvSearchList.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
-
+     //////
         //获取热搜数据
 //        getP().hotListData();
         //设置热搜显示
