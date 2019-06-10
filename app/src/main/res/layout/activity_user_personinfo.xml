@@ -352,6 +352,269 @@
             </LinearLayout>
 
             <include layout="@layout/layout_divider_horizontal" />
+            <!--上传身份证-->
+            <RelativeLayout
+                android:id="@+id/relative_ll"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginTop="10dp"
+                android:gravity="center_vertical"
+                android:paddingLeft="@dimen/dimen_15"
+                android:paddingRight="@dimen/dimen_15">
+
+                <TextView
+                    android:id="@+id/tv_number"
+                    style="@style/text_bold_16"
+                    android:layout_alignParentLeft="true"
+                    android:text="请上传身份证以及银行卡照片" />
+                <ImageView
+                    android:id="@+id/identity_image"
+                    android:layout_width="@dimen/dimen_10"
+                    android:layout_height="@dimen/dimen_10"
+                    android:src="@drawable/dot"
+                    android:layout_alignParentTop="true"
+                    android:layout_toRightOf="@+id/tv_number"
+                    android:layout_marginLeft="@dimen/dimen_1"
+                    android:visibility="gone"/>
+            </RelativeLayout>
+
+
+            <include layout="@layout/layout_divider_horizontal" />
+
+
+            <!--&lt;!&ndash;是否存在他人实际控制关系&ndash;&gt;-->
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:paddingLeft="@dimen/dimen_15">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_control"-->
+                    <!--style="@style/text_bold_16"-->
+                    <!--android:text="是否存在他人实际控制关系" />-->
+
+                <!--<RadioGroup-->
+                    <!--android:id="@+id/rg_control"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:padding="@dimen/dimen_10"-->
+
+
+                    <!--&gt;-->
+
+                    <!--<RadioButton-->
+                        <!--android:id="@+id/radio_no"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:button="@null"-->
+                        <!--android:drawablePadding="@dimen/dimen_10"-->
+                        <!--android:drawableStart="@drawable/check_radiobutton_selector"-->
+                        <!--android:text="否" />-->
+
+                    <!--<RadioButton-->
+                        <!--android:id="@+id/radio_yes"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="@dimen/dimen_10"-->
+                        <!--android:button="@null"-->
+                        <!--android:drawablePadding="@dimen/dimen_10"-->
+                        <!--android:drawableStart="@drawable/check_radiobutton_selector"-->
+                        <!--android:text="是" />-->
+                <!--</RadioGroup>-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/ll_control"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="48dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:paddingLeft="@dimen/dimen_15"-->
+                <!--android:visibility="gone">-->
+
+                <!--<TextView-->
+                    <!--style="@style/text_bold_16"-->
+                    <!--android:text="实际控制人姓名" />-->
+
+                <!--<EditText-->
+                    <!--android:id="@+id/control_name"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:background="@android:color/transparent"-->
+                    <!--android:gravity="left"-->
+                    <!--android:hint="请输入实际控制人姓名"-->
+                    <!--android:paddingLeft="15dp"-->
+                    <!--android:paddingRight="15dp"-->
+                    <!--android:singleLine="true"-->
+
+                    <!--android:text=""-->
+                    <!--android:textColor="@color/color_text_333"-->
+                    <!--android:textColorHint="@color/color_CCCCCC"-->
+                    <!--android:textCursorDrawable="@null"-->
+                    <!--android:maxLength="50"-->
+                    <!--android:textSize="15sp" />-->
+            <!--</LinearLayout>-->
+
+            <!--<include layout="@layout/layout_divider_horizontal" />-->
+
+            <!--&lt;!&ndash;交易的实际受益人&ndash;&gt;-->
+
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:paddingLeft="@dimen/dimen_15">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_favoree"-->
+                    <!--style="@style/text_bold_16"-->
+                    <!--android:text="交易的实际受益人" />-->
+
+                <!--<RadioGroup-->
+                    <!--android:id="@+id/rg_favoree"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:padding="@dimen/dimen_10"-->
+
+
+                    <!--&gt;-->
+
+                    <!--<RadioButton-->
+                        <!--android:id="@+id/radio_favoree_no"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:button="@null"-->
+                        <!--android:drawablePadding="@dimen/dimen_10"-->
+                        <!--android:drawableStart="@drawable/check_radiobutton_selector"-->
+                        <!--android:text="本人" />-->
+
+                    <!--<RadioButton-->
+                        <!--android:id="@+id/radio_favoree_yes"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="@dimen/dimen_10"-->
+                        <!--android:button="@null"-->
+                        <!--android:drawablePadding="@dimen/dimen_10"-->
+                        <!--android:drawableStart="@drawable/check_radiobutton_selector"-->
+                        <!--android:text="他人" />-->
+                <!--</RadioGroup>-->
+            <!--</LinearLayout>-->
+
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/ll_favoree"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="48dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:paddingLeft="@dimen/dimen_15"-->
+                <!--android:visibility="gone">-->
+
+                <!--<TextView-->
+                    <!--style="@style/text_bold_16"-->
+                    <!--android:text="交易的实际受益人姓名" />-->
+
+                <!--<EditText-->
+                    <!--android:id="@+id/favoree_name"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:background="@android:color/transparent"-->
+                    <!--android:gravity="left"-->
+                    <!--android:hint="请输入实际交易人姓名"-->
+                    <!--android:paddingLeft="15dp"-->
+                    <!--android:paddingRight="15dp"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:text=""-->
+                    <!--android:maxLength="18"-->
+                    <!--android:textColor="@color/color_text_333"-->
+                    <!--android:textColorHint="@color/color_CCCCCC"-->
+                    <!--android:textCursorDrawable="@null"-->
+                    <!--android:textSize="15sp" />-->
+            <!--</LinearLayout>-->
+
+            <!--<include layout="@layout/layout_divider_horizontal" />-->
+            <!--&lt;!&ndash;是否有不良诚信记录&ndash;&gt;-->
+            <!--<LinearLayout-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:paddingLeft="@dimen/dimen_15">-->
+
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_recored"-->
+                    <!--style="@style/text_bold_16"-->
+                    <!--android:text="是否有不良诚信记录" />-->
+
+                <!--<RadioGroup-->
+                    <!--android:id="@+id/rg_recored"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:padding="@dimen/dimen_10"-->
+
+                    <!--&gt;-->
+
+                    <!--<RadioButton-->
+                        <!--android:id="@+id/radio_recored_no"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:button="@null"-->
+                        <!--android:drawablePadding="@dimen/dimen_10"-->
+                        <!--android:drawableStart="@drawable/check_radiobutton_selector"-->
+                        <!--android:text="否" />-->
+
+                    <!--<RadioButton-->
+                        <!--android:id="@+id/radio_record_yes"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="@dimen/dimen_10"-->
+                        <!--android:button="@null"-->
+                        <!--android:drawablePadding="@dimen/dimen_10"-->
+
+                        <!--android:drawableStart="@drawable/check_radiobutton_selector"-->
+                        <!--android:text="是" />-->
+                <!--</RadioGroup>-->
+            <!--</LinearLayout>-->
+
+            <!--<LinearLayout-->
+                <!--android:id="@+id/ll_record"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="48dp"-->
+                <!--android:gravity="center_vertical"-->
+                <!--android:orientation="horizontal"-->
+                <!--android:paddingLeft="@dimen/dimen_15"-->
+                <!--android:visibility="gone">-->
+
+                <!--<TextView-->
+                    <!--style="@style/text_bold_16"-->
+                    <!--android:text="不良诚信记录" />-->
+
+                <!--<EditText-->
+                    <!--android:id="@+id/record_edit"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:background="@android:color/transparent"-->
+                    <!--android:gravity="left"-->
+                    <!--android:hint="请输入不良诚信记录"-->
+                    <!--android:paddingLeft="15dp"-->
+                    <!--android:paddingRight="15dp"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:text=""-->
+                    <!--android:maxLength="18"-->
+                    <!--android:textColor="@color/color_text_333"-->
+                    <!--android:textColorHint="@color/color_CCCCCC"-->
+                    <!--android:textCursorDrawable="@null"-->
+                    <!--android:textSize="15sp" />-->
+            <!--</LinearLayout>-->
+
+            <!--<include layout="@layout/layout_divider_horizontal" />-->
+
 
             <!--下一步-->
             <Button
