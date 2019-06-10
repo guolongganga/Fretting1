@@ -1,5 +1,6 @@
 package cn.com.buyforyou.fund.ui.activity.user;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -65,6 +66,8 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
     private int pageSize = 10;
     /** 定投计划数据 */
     private ArrayList<InvestInfoResp> planResp;
+    //交易账号
+    private String  trade_acco;
 
 
     @Override
@@ -142,6 +145,8 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
                             Bundle bundle = new Bundle();
                             bundle.putString(Constant.INVEST_PROTOCOL_ID, model.getScheduled_protocol_id());
                             bundle.putString(Constant.INVEST_STATUS, model.getScheduled_protocol_state());
+                             trade_acco = model.getTrade_acco();
+                            bundle.putString(Constant.TRADEACCO,trade_acco);
                             startActivity(InvestDeatilActivity.class, bundle, Constant.INVEST_PLAN_ACTIVITY);
                         }
                         break;
@@ -164,6 +169,7 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
      * @param resp
      */
     public void requestInvestSuccess(final InvestResp resp) {
+       // String trade_acco = resp.getTrade_acco();
         //去定投
         Bundle bundle = new Bundle();
         bundle.putString(Constant.INVEST_ACTIVITY_TYPE, Constant.INVEST_ACTIVITY);
@@ -203,7 +209,7 @@ public class InvestPlanActivity extends XActivity<InvestPlanPresent> {
         if (requestCode == Constant.INVEST_PLAN_ACTIVITY && resultCode == Constant.INVEST_DETAIL_BACK) {
 //            showToast("刷新页面数据");
             httpLoadingDialog.visible();
-            getP().buyOnFundData(token, userId, fundCode);
+            getP().buyOnFundData(token, userId, fundCode,trade_acco);
         }
     }
 
