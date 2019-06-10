@@ -7,12 +7,53 @@ import cn.com.buyforyou.fund.model.user.BankResp;
  * 描述：
  */
 
-public class ChangeBankCardParams extends CommonReqData<ChangeBankCardParams> {
+public class
+
+ChangeBankCardParams extends CommonReqData<ChangeBankCardParams> {
     private BankResp selectBank;
     private String bankAccout;
     private String mobile;
     private String phoneCode;
     private String trade_password;
+    private String originalAppno; //原申请单号
+    private String otherSerial; //对方流水号
+    private String bank_name; //银行名字
+    private String trade_acco;//交易账号
+
+    public String getBank_name() {
+        return bank_name;
+    }
+
+    public void setBank_name(String bank_name) {
+        this.bank_name = bank_name;
+    }
+
+    public String getTrade_acco() {
+        return trade_acco;
+    }
+
+    public void setTrade_acco(String trade_acco) {
+        this.trade_acco = trade_acco;
+    }
+
+    public String getOriginalAppno() {
+        return originalAppno;
+    }
+
+    public void setOriginalAppno(String originalAppno) {
+        this.originalAppno = originalAppno;
+    }
+
+    public String getOtherSerial() {
+        return otherSerial;
+    }
+
+    public void setOtherSerial(String otherSerial) {
+        this.otherSerial = otherSerial;
+    }
+
+
+
     public String getTrade_password() {
         return trade_password;
     }
