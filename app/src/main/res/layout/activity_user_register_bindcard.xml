@@ -368,7 +368,7 @@
                     android:layout_gravity="center"
                     android:layout_marginLeft="@dimen/dimen_10"
                     android:layout_weight="1"
-                    android:text="我已阅读并同意《北京微动利基金销售有限公司基金电子直销服务协议》 与《投资人权益须知协议》"
+                    android:text="我已阅读并同意《网上交易服务协议 》、《投资人权益须知》与《隐私保护指引》"
                     android:textColor="@color/color_9B9B9B"
                     android:textSize="@dimen/text_size_12"/>
 
@@ -378,7 +378,7 @@
             <Button
                 android:id="@+id/btn_save"
                 style="@style/common_red_button_circle"
-                android:text="保 存"/>
+                android:text="下一步"/>
 
         </LinearLayout>
     </ScrollView>
