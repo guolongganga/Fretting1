@@ -7,6 +7,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import cn.com.buyforyou.fund.R;
+import cn.com.buyforyou.fund.constant.Constant;
 import cn.com.buyforyou.fund.model.user.HoldFundResp;
 import cn.com.buyforyou.fund.model.user.MyHoldFundResp;
 import cn.com.buyforyou.fund.utils.BigDecimalUtil;
@@ -62,6 +63,9 @@ public class MyFundRecyleAdapter extends SimpleRecAdapter<MyHoldFundResp, MyFund
         holder.llContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                //getRecItemClick().onItemClick(position,resp,ITEM_CLICK,holder);
+
                 getRecItemClick().onItemClick(position, resp, ITEM_CLICK, holder);
             }
         });
