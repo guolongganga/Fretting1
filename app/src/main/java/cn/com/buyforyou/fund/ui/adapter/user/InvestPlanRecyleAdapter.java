@@ -40,7 +40,7 @@ public class InvestPlanRecyleAdapter extends SimpleRecAdapter<InvestInfoResp, In
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        InvestInfoResp planResp = data.get(position);
+        final InvestInfoResp planResp = data.get(position);
         holder.tvFundName.setText(planResp.getFund_name());
         holder.tvFundCode.setText("(" + planResp.getFund_code() + ")");
         holder.tvInvesType.setText(planResp.getDt_way());
@@ -61,12 +61,21 @@ public class InvestPlanRecyleAdapter extends SimpleRecAdapter<InvestInfoResp, In
             //终止 灰色
             holder.ivArrow.setVisibility(View.GONE);
             holder.tvInvestStatus.setTextColor(getColor(R.color.color_696969));
+
         }
 
         holder.rlContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getRecItemClick().onItemClick(position, data.get(position), ITEM_CLICK, holder);
+                if(planResp.getScheduled_protocol_state().equals(Constant.INVEST_PLAN_END))
+                {
+                    view.setClickable(false);
+                }
+                else
+                {
+                    getRecItemClick().onItemClick(position, data.get(position), ITEM_CLICK, holder);
+                }
+
             }
         });
     }
