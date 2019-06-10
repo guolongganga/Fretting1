@@ -48,6 +48,9 @@ public class InvestBuyParams extends CommonReqData<InvestBuyParams> {
      * 协议编号
      */
     private String scheduled_protocol_id;
+    //交易账号
+    private String trade_acco;
+
 
     public String getScheduled_protocol_id() {
         return scheduled_protocol_id;
@@ -111,5 +114,13 @@ public class InvestBuyParams extends CommonReqData<InvestBuyParams> {
 
     public void setProtocol_period_unit(String protocol_period_unit) {
         this.protocol_period_unit = protocol_period_unit;
+    }
+
+    public String getTrade_acco() {
+        return trade_acco;
+    }
+
+    public void setTrade_acco(String trade_acco) {
+        this.trade_acco = trade_acco;
     }
 }
