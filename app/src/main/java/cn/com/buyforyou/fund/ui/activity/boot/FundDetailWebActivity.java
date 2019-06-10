@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.net.http.SslError;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.DownloadListener;
@@ -21,15 +22,21 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.orhanobut.logger.Logger;
+
 import cn.com.buyforyou.fund.App;
 import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.constant.Constant;
 import cn.com.buyforyou.fund.event.ChangeTabEvent;
 import cn.com.buyforyou.fund.event.InvalidTokenEvent;
 import cn.com.buyforyou.fund.event.RefreshBonusEvent;
+
+import cn.com.buyforyou.fund.model.BaseResp;
+import cn.com.buyforyou.fund.model.fund.BankCard;
 import cn.com.buyforyou.fund.model.fund.BuyFundResp;
+import cn.com.buyforyou.fund.model.fund.CheckUserPictureResp;
 import cn.com.buyforyou.fund.model.fund.InvestResp;
 import cn.com.buyforyou.fund.model.fund.SellResp;
+import cn.com.buyforyou.fund.model.user.BankCardResp;
 import cn.com.buyforyou.fund.model.user.InvestPlanResp;
 import cn.com.buyforyou.fund.model.user.UpdateBonusResp;
 import cn.com.buyforyou.fund.model.user.WebBonusResp;
@@ -44,9 +51,12 @@ import cn.com.buyforyou.fund.ui.activity.user.BonusChangeActivity;
 import cn.com.buyforyou.fund.ui.activity.user.InvestPlanActivity;
 import cn.com.buyforyou.fund.ui.activity.user.LoginActivity;
 import cn.com.buyforyou.fund.ui.activity.user.PersonInfoActivity;
+import cn.com.buyforyou.fund.ui.activity.user.PhotoActivity;
 import cn.com.buyforyou.fund.ui.activity.user.RegisterSecondActivity;
 import cn.com.buyforyou.fund.ui.activity.user.TransactionQuerySingleActivity;
+
 import com.zhsoft.fretting.ui.widget.CustomDialog;
+
 import cn.com.buyforyou.fund.utils.RuntimeHelper;
 import cn.com.buyforyou.fund.webjs.JSInterfaceClick;
 import cn.com.buyforyou.fund.webjs.JSInterfaceUtils;
@@ -54,6 +64,9 @@ import cn.com.buyforyou.fund.webjs.JSInterfaceUtils;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
@@ -129,6 +142,8 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      * 风险等级 弹出框
      */
     private CustomDialog validateDialog;
+    private List<BankCard> bankCard;
+    private String trade_acco;
 
     @Override
     public int getLayoutId() {
@@ -156,6 +171,9 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
         //基金名称
         fundName = bundle.getString(Constant.FUND_DETAIL_NAME);
+        //交易账号
+        trade_acco = bundle.getString(Constant.TRADEACCO);
+
 
         if (RuntimeHelper.getInstance().isLogin()) {
             //用户登录标识
@@ -272,7 +290,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         String ua = webSettings.getUserAgentString();
         webSettings.setUserAgentString(ua.replace("appType", "Android"));
 
-        link = link + "?fund_code=" + fundCode + "&token=" + token + "&userId=" + userId;
+        link = link + "?fund_code=" + fundCode + "&token=" + token + "&userId=" + userId + "&trade_acco=" + trade_acco;
         XLog.e(link);
         mWeb.loadUrl(link);
 
@@ -317,6 +335,11 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             public void toLogin() {
                 baseToLogin();
             }
+            @Override
+            public void toUploadPictures()
+            {
+                baseToUpLoad();
+            }
 
             @Override
             public void toBuy() {
@@ -353,6 +376,8 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             }
         });
     }
+
+
 
     /**
      * 登录 关注
@@ -438,7 +463,8 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             token = App.getSharedPref().getString(Constant.TOKEN, "");
             //用户编号
             userId = App.getSharedPref().getString(Constant.USERID, "");
-            getP().sellFundPre(token, userId, fundCode);
+           // getP().checkUserPicture(token,userId);
+            getP().sellFundPre(token, userId, fundCode, trade_acco);
             showLoading();
         } else {
             //跳转回登录界面
@@ -448,7 +474,24 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         }
 
     }
-    private void showLoading(){
+    private void  baseToUpLoad()
+    {
+        if (RuntimeHelper.getInstance().isLogin()) {
+            //用户登录标识
+            token = App.getSharedPref().getString(Constant.TOKEN, "");
+            //用户编号
+            userId = App.getSharedPref().getString(Constant.USERID, "");
+            startActivity(PhotoActivity.class);
+            showLoading();
+        } else {
+            //跳转回登录界面
+            Bundle bundle = new Bundle();
+            bundle.putString(Constant.SKIP_SIGN, Constant.WEB_ACTIVITY);
+            startActivity(LoginActivity.class, bundle);
+        }
+    }
+
+    private void showLoading() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -457,7 +500,8 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
             }
         });
     }
-    private void closeLoading(){
+
+    private void closeLoading() {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -471,8 +515,8 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      * 定投计划
      */
     private void baseToInvestPlan() {
-       showLoading();
-        getP().buyOnFundData(token, userId, fundCode);
+        showLoading();
+        getP().buyOnFundData(token, userId, fundCode,trade_acco);
     }
 
     /**
@@ -480,7 +524,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      */
     private void baseToBonus() {
 //        showLoading();
-        getP().loadBonusData(fundCode, token, userId);
+        getP().loadBonusData(fundCode, token, userId, trade_acco);
 
     }
 
@@ -492,6 +536,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
 //        Logger.d("baseToAppIndex");
         Bundle bundle = new Bundle();
         bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
+        bundle.putString(Constant.TRADEACCO, trade_acco);
         startActivity(TransactionQuerySingleActivity.class, bundle);
     }
 
@@ -517,46 +562,71 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
     /**
      * 购买（是否符合购买资格）成功 跳转购买页面
      */
-    public void requestBuyFundSuccess(final BuyFundResp resp) {
-        httpLoadingDialog.dismiss();
-        if (Constant.TO_OPEN_ACCOUNT.equals(resp.getCanBuy()) || Constant.TO_PERSON_INFO.equals(resp.getCanBuy())
-                || Constant.TO_RISK_TEST.equals(resp.getCanBuy())) {
-            switchDialog(resp.getCanBuy());
-        } else if (Constant.TO_VALIDATE.equals(resp.getCanBuy())) {
-            //弹出风险等级框
-            if (validateDialog == null) {
-                validateDialog = new CustomDialog.Builder(context)
-                        .setMessage(resp.getFundRisk())
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                validateDialog.dismiss();
-                            }
-                        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                validateDialog.dismiss();
-                                //去购买
-                                Bundle bundle = new Bundle();
-                                bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
-                                bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
-                                bundle.putParcelable(Constant.BUY_FUND_OBJECT, resp);
-                                startActivity(BuyActivity.class, bundle);
-                            }
-                        }).create();
-            }
-            validateDialog.show();
-        } else {
+    public void requestBuyFundSuccess(final BuyFundResp buyFundResp) {
 
+        httpLoadingDialog.dismiss();
+
+        if (Constant.TO_OPEN_ACCOUNT.equals(buyFundResp.getCanBuy()) || Constant.TO_PERSON_INFO.equals(buyFundResp.getCanBuy())
+                || Constant.TO_RISK_TEST.equals(buyFundResp.getCanBuy())) {
+            switchDialog(buyFundResp.getCanBuy());
+        } else if (Constant.TO_VALIDATE.equals(buyFundResp.getCanBuy())) {
+            //弹出风险等级框
+
+            validateDialog = new CustomDialog.Builder(context)
+                    .setMessage(buyFundResp.getFundRisk())
+                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            validateDialog.dismiss();
+                        }
+                    }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            validateDialog.dismiss();
+
+                            //去购买
+                            Bundle bundle = new Bundle();
+                            bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
+                            bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
+                            bundle.putParcelable(Constant.BUY_FUND_OBJECT, buyFundResp);
+                            startActivity(BuyActivity.class, bundle);
+                        }
+                    }).create();
+
+            validateDialog.show();
+        } else
+
+        {
+            // BankCard buyResp = resp.getBankCard();
+            bankCard = buyFundResp.getBankCard();
+
+            // String select = bankCard.getSelect();
             //去购买
             Bundle bundle = new Bundle();
             bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
             bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
-            bundle.putParcelable(Constant.BUY_FUND_OBJECT, resp);
+            // bundle.putParcelable(Constant.BUY_FUND_OBJECT, resp);
+            bundle.putParcelable(Constant.BUY_FUND_OBJECT, buyFundResp);
             startActivity(BuyActivity.class, bundle);
         }
 
+
     }
+
+//    /**
+//     * 请求验证用户是否上传身份证和银行卡照片等信息
+//     */
+//    public void CheckUserPictureSuccess(CheckUserPictureResp resp)
+//    {
+//        httpLoadingDialog.dismiss();
+//    }
+//    /***
+//     *验证用户失败
+//     */
+//    public  void checkUserPictureFailed()
+//    {
+//        httpLoadingDialog.dismiss();
+//    }
 
     /**
      * 请求定投验证接口失败
@@ -571,36 +641,35 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      * @param resp
      */
     public void requestInvestSuccess(final InvestResp resp) {
-
         httpLoadingDialog.dismiss();
         if (Constant.TO_OPEN_ACCOUNT.equals(resp.getCanBuy()) || Constant.TO_PERSON_INFO.equals(resp.getCanBuy())
                 || Constant.TO_RISK_TEST.equals(resp.getCanBuy())) {
             switchDialog(resp.getCanBuy());
         } else if (Constant.TO_VALIDATE.equals(resp.getCanBuy())) {
             //弹出风险等级框
-            if (validateDialog == null) {
-                validateDialog = new CustomDialog.Builder(context)
-                        .setMessage(resp.getFundRisk())
-                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                validateDialog.dismiss();
-                            }
-                        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialogInterface, int i) {
-                                validateDialog.dismiss();
-                                //去定投
-                                Bundle bundle = new Bundle();
-                                bundle.putString(Constant.INVEST_ACTIVITY_TYPE, Constant.INVEST_ACTIVITY);
-                                bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
-                                bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
-                                bundle.putParcelable(Constant.INVEST_FUND_OBJECT, resp);
-                                startActivity(InvestActivity.class, bundle);
-                            }
-                        }).create();
-            }
+
+            validateDialog = new CustomDialog.Builder(context)
+                    .setMessage(resp.getFundRisk())
+                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            validateDialog.dismiss();
+                        }
+                    }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialogInterface, int i) {
+                            validateDialog.dismiss();
+                            //去定投
+                            Bundle bundle = new Bundle();
+                            bundle.putString(Constant.INVEST_ACTIVITY_TYPE, Constant.INVEST_ACTIVITY);
+                            bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
+                            bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
+                            bundle.putParcelable(Constant.INVEST_FUND_OBJECT, resp);
+                            startActivity(InvestActivity.class, bundle);
+                        }
+                    }).create();
             validateDialog.show();
+
         } else if (Constant.TO_CHANGE_ACCOUNT.equals(resp.getCanBuy())) {
             new CustomDialog.Builder(context).setMessage(R.string.invest_notallow).setPositiveButton("确定", new DialogInterface.OnClickListener() {
                 @Override
@@ -628,7 +697,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
      * @param planResp
      */
     public void requestInvestPlanSuccess(InvestPlanResp planResp) {
-       closeLoading();
+        closeLoading();
         //1有 0没有 定投
         if ("0".equals(planResp.getHasDt())) {
             //跳转定投购买
@@ -753,6 +822,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         Bundle bundle = new Bundle();
         bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
         bundle.putString(Constant.FUND_DETAIL_NAME, fundName);
+        bundle.putString(Constant.TRADEACCO, trade_acco);
         startActivity(SellActivity.class, bundle);
     }
 
@@ -791,6 +861,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
         if (mWeb != null) {
             mWeb.onResume();
         }
+        httpLoadingDialog.dismiss();
     }
 
     @Override
@@ -850,7 +921,7 @@ public class FundDetailWebActivity extends XActivity<FundDetailPresent> {
     public void loadBonusDataSuccess(final WebBonusResp model) {
 //        httpLoadingDialog.dismiss();
         Bundle bundle = new Bundle();
-        bundle.putBoolean("isFromWeb",true);
+        bundle.putBoolean("isFromWeb", true);
         bundle.putParcelable(Constant.ACTIVITY_OBJECT, model);
         startActivity(BonusChangeActivity.class, bundle);
 
