@@ -81,12 +81,13 @@ public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
      * @param userId
      * @param protocol_id
      */
-    public void investTimeUpdata(String token, String userId, String protocol_id) {
+    public void investTimeUpdata(String token, String userId, String protocol_id,String trade_acco) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
         InvestSuccessParams params = new InvestSuccessParams();
         params.setScheduled_protocol_id(protocol_id);
+        params.setTrade_acco(trade_acco);
         reqData.setData(params);
 
         Api.getApi().buyUpdataData(reqData)
@@ -126,7 +127,7 @@ public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
      * @param investState
      * @param password
      */
-    public void changeState(String token, String userId, String protocol_id, final String investState, String password) {
+    public void changeState(String token, String userId, String protocol_id, final String investState, String password,String trade_acco) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -134,6 +135,7 @@ public class InvestDetailPresent extends XPresent<InvestDeatilActivity> {
         params.setScheduled_protocol_id(protocol_id);
         params.setScheduled_protocol_state(investState);
         params.setPassword(password);
+        params.setTrade_acco(trade_acco);
         reqData.setData(params);
 
         Api.getApi().myTimesBuyStateChange(reqData)
