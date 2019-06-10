@@ -49,6 +49,8 @@ public class CancleOrderActivity extends XActivity<CancleOrderPresent> {
     private FundBuyDialog fundBuyDialog;
     /** 密码错误弹框 */
     private CustomDialog errorDialog;
+    //交易账号
+    private  String trade_acco;
 
     @Override
     public int getLayoutId() {
@@ -68,6 +70,11 @@ public class CancleOrderActivity extends XActivity<CancleOrderPresent> {
         //获取本地缓存
         userId = App.getSharedPref().getString(Constant.USERID, "");
         token = App.getSharedPref().getString(Constant.TOKEN, "");
+//        if(bundle!=null)
+//        {
+//             trade_acco = bundle.getString(Constant.TRADEACCO);
+//
+//        }
         xrvMyInvest.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
 
         //请求撤单列表接口
@@ -124,7 +131,7 @@ public class CancleOrderActivity extends XActivity<CancleOrderPresent> {
                                     public void onButtonClick(DialogInterface dialog, String str) {
                                         dialog.dismiss();
                                         httpLoadingDialog.visible();
-                                        getP().withdrawApplyOperate(model.getAllot_no(), str, model.getFund_code(), token, userId);
+                                        getP().withdrawApplyOperate(model.getAllot_no(), str, model.getFund_code(), token, userId,model.getTrade_acco());
 
                                     }
                                 }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
