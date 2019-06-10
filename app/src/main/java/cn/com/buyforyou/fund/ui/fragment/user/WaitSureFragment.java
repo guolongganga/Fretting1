@@ -50,12 +50,24 @@ public class WaitSureFragment extends XFragment {
         if (bundle != null) {
             fundList = bundle.getParcelableArrayList(Constant.ACTIVITY_OBJECT);
             if (fundList != null && fundList.size() > 0) {
-                xrvUserHold.setVisibility(View.VISIBLE);
-                tvEmpty.setVisibility(View.GONE);
+                if(xrvUserHold!=null)
+                {
+                    xrvUserHold.setVisibility(View.VISIBLE);
+                }
+                if(tvEmpty!=null)
+                {
+                    tvEmpty.setVisibility(View.GONE);
+                }
                 getWaitSureAdapter().addData(fundList);
             } else {
-                xrvUserHold.setVisibility(View.GONE);
-                tvEmpty.setVisibility(View.VISIBLE);
+                if(xrvUserHold!=null)
+                {
+                    xrvUserHold.setVisibility(View.GONE);
+                }
+                if(tvEmpty!=null)
+                {
+                    tvEmpty.setVisibility(View.VISIBLE);
+                }
             }
         }
 
@@ -69,7 +81,10 @@ public class WaitSureFragment extends XFragment {
      */
     public SimpleRecAdapter getWaitSureAdapter() {
         WaitSureRecyleAdapter adapter = new WaitSureRecyleAdapter(context);
-        xrvUserHold.setAdapter(adapter);
+        if(xrvUserHold!=null)
+        {
+            xrvUserHold.setAdapter(adapter);
+        }
         adapter.setRecItemClick(new RecyclerItemCallback<HoldFundResp, WaitSureRecyleAdapter.ViewHolder>() {
             @Override
             public void onItemClick(int position, HoldFundResp model, int tag, WaitSureRecyleAdapter.ViewHolder holder) {
@@ -92,12 +107,24 @@ public class WaitSureFragment extends XFragment {
     public void setList(ArrayList<HoldFundResp> list) {
         this.fundList = list;
         if (fundList != null && fundList.size() > 0) {
-            xrvUserHold.setVisibility(View.VISIBLE);
-            tvEmpty.setVisibility(View.GONE);
+            if(xrvUserHold!=null)
+            {
+                xrvUserHold.setVisibility(View.VISIBLE);
+            }
+            if(tvEmpty!=null)
+            {
+                tvEmpty.setVisibility(View.GONE);
+            }
             getWaitSureAdapter().addData(fundList);
         } else {
-            xrvUserHold.setVisibility(View.GONE);
-            tvEmpty.setVisibility(View.VISIBLE);
+            if(xrvUserHold!=null)
+            {
+                xrvUserHold.setVisibility(View.GONE);
+            }
+            if(tvEmpty!=null)
+            {
+                tvEmpty.setVisibility(View.VISIBLE);
+            }
         }
     }
 }
