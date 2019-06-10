@@ -54,7 +54,7 @@ public class InvestPersent extends XPresent<InvestActivity> {
                     @Override
                     public void onNext(InvestResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
-                            getV().requestInvestSuccess(resp.getData().getBankCardPageEntity());
+                            getV().requestInvestSuccess(resp);
                         } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(resp.getMessage());
                             getV().areadyLogout();
@@ -74,7 +74,7 @@ public class InvestPersent extends XPresent<InvestActivity> {
      * @param token
      * @param userId
      */
-    public void nextDeductTime(String token, String userId, String fund_code, String protocol_period_unit, String first_exchdate) {
+    public void nextDeductTime(String token, String userId, String fund_code, String protocol_period_unit, String first_exchdate,String trade_acco) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -82,6 +82,7 @@ public class InvestPersent extends XPresent<InvestActivity> {
         params.setFundCode(fund_code);
         params.setProtocol_period_unit(protocol_period_unit);
         params.setFirst_exchdate(first_exchdate);
+        params.setTrade_acco(trade_acco);
 
         reqData.setData(params);
 
@@ -132,7 +133,7 @@ public class InvestPersent extends XPresent<InvestActivity> {
      * @param password             密码
      */
     public void sureInvest(String token, String userId, String fundCode, String fund_name, String apply_sum,
-                           String first_trade_month, String protocol_period_unit, String fix_date, String password, String protocol_id) {
+                           String first_trade_month, String protocol_period_unit, String fix_date, String password, String protocol_id,String trade_acco) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -146,6 +147,7 @@ public class InvestPersent extends XPresent<InvestActivity> {
         params.setFix_date(fix_date);
         params.setPassword(password);
         params.setScheduled_protocol_id(protocol_id);
+        params.setTrade_acco(trade_acco);
 
         reqData.setData(params);
 
