@@ -29,7 +29,7 @@ public class TransactionSingleContentPresent extends XPresent<TransactionSingleC
      * @param tabType
      * @param fundCode
      */
-    public void loadTransactionData(String token, String userId, final int pageno, int pageSize, String tabType, String fundCode) {
+    public void loadTransactionData(String token, String userId, final int pageno, int pageSize, String tabType, String fundCode,String trade_acco) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -39,6 +39,7 @@ public class TransactionSingleContentPresent extends XPresent<TransactionSingleC
         params.setPageSize(pageSize);
         params.setTransactionCategory(tabType);
         params.setFundCode(fundCode);
+        params.setTrade_acco(trade_acco);
         reqData.setData(params);
 
         Api.getApi()
@@ -80,7 +81,7 @@ public class TransactionSingleContentPresent extends XPresent<TransactionSingleC
      * @param tabType
      * @param fundCode
      */
-    public void shareOutBonusTradeQuery(String token, String userId, final int pageno, int pageSize, String tabType, String fundCode) {
+    public void shareOutBonusTradeQuery(String token, String userId, final int pageno, int pageSize, String tabType, String fundCode,String trade_acco) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -90,6 +91,7 @@ public class TransactionSingleContentPresent extends XPresent<TransactionSingleC
         params.setPageSize(pageSize);
         params.setTransactionCategory(tabType);
         params.setFundCode(fundCode);
+        params.setTrade_acco(trade_acco);
         reqData.setData(params);
 
         Api.getApi()
