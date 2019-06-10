@@ -10,5 +10,5 @@
         path="." />
     <external-path
         name="files_root"
-        path="Android/data/cn.com.buyforyou.fund/" />
+        path="Android/data/cn.com.buyforyou.fund/"/>
 </paths>
