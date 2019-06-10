@@ -77,7 +77,7 @@ public class BuyPresent extends XPresent<BuyActivity> {
      * @param balance
      * @param password
      */
-    public void purchase(String token, String userId, String fund_code, String balance, String password, String auto_buy) {
+    public void purchase(String token, String userId, String fund_code, String balance, String password, String auto_buy,String trade_acco) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -87,6 +87,7 @@ public class BuyPresent extends XPresent<BuyActivity> {
         params.setBalance(balance);
         params.setPassword(password);
         params.setAuto_buy(auto_buy);
+        params.setTrade_acco(trade_acco);
 
         reqData.setData(params);
 
@@ -127,7 +128,7 @@ public class BuyPresent extends XPresent<BuyActivity> {
      * @param userId
      * @param fund_code
      */
-    public void buyFundCalculation(String token, String userId, String fund_code, String apply_sum) {
+    public void buyFundCalculation(String token, String userId, String fund_code, String apply_sum,String trade_acco) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -135,6 +136,7 @@ public class BuyPresent extends XPresent<BuyActivity> {
         BuyCalculationParams params = new BuyCalculationParams();
         params.setFund_code(fund_code);
         params.setApply_sum(apply_sum);
+        params.setTrade_acco(trade_acco);
 
         reqData.setData(params);
 
