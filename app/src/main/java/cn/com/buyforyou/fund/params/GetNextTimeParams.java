@@ -15,6 +15,8 @@ public class GetNextTimeParams extends CommonReqData<GetNextTimeParams> {
     private String fundCode;
     private String protocol_period_unit;
     private String first_exchdate;
+    //交易账号
+    private String  trade_acco;
 
     public String getFundCode() {
         return fundCode;
@@ -38,5 +40,13 @@ public class GetNextTimeParams extends CommonReqData<GetNextTimeParams> {
 
     public void setFirst_exchdate(String first_exchdate) {
         this.first_exchdate = first_exchdate;
+    }
+
+    public String getTrade_acco() {
+        return trade_acco;
+    }
+
+    public void setTrade_acco(String trade_acco) {
+        this.trade_acco = trade_acco;
     }
 }
