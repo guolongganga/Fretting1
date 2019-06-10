@@ -27,7 +27,7 @@ import cn.com.buyforyou.fund.model.fund.FundStatusResp;
 import cn.com.buyforyou.fund.model.fund.SellResp;
 import cn.com.buyforyou.fund.model.user.BankCardResp;
 import cn.com.buyforyou.fund.present.fund.SellPresent;
-import cn.com.buyforyou.fund.ui.activity.user.BankCardActivity;
+//import cn.com.buyforyou.fund.ui.activity.user.BankCardActivity;
 import cn.com.buyforyou.fund.ui.activity.user.FindPwdTradeFirstActivity;
 import cn.com.buyforyou.fund.ui.activity.user.LoginActivity;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
@@ -166,6 +166,10 @@ public class SellActivity extends XActivity<SellPresent> {
      * 巨额赎回处理类型 集合
      */
     private List<ApplyBaseInfo> list;
+    /**
+     * 交易账号
+     */
+    private String trade_acco;
 
     /**
      * 绑定UI布局
@@ -207,9 +211,11 @@ public class SellActivity extends XActivity<SellPresent> {
             fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
             //基金名称
             fundName = bundle.getString(Constant.FUND_DETAIL_NAME);
+            //交易账号
+             trade_acco = bundle.getString(Constant.TRADEACCO);
             //请求赎回基金的展示页数据
             httpLoadingDialog.visible();
-            getP().sellFundPre(token, userId, fundCode);
+            getP().sellFundPre(token, userId, fundCode,trade_acco);
         }
 
     }
@@ -250,7 +256,7 @@ public class SellActivity extends XActivity<SellPresent> {
             @Override
             public void onClick(View view) {
                 //跳转更换银行卡
-                startActivity(BankCardActivity.class, Constant.INVEST_BANK_ACTIVITY);
+                //startActivity(BankCardActivity.class, Constant.INVEST_BANK_ACTIVITY);
             }
         });
 
@@ -394,7 +400,7 @@ public class SellActivity extends XActivity<SellPresent> {
             if (Constant.CHANGE_BANK_SUCCESS.equals(isChange)) {
                 //TODO 获取银行卡数据
                 httpLoadingDialog.visible();
-                getP().sellFundPre(token, userId, fundCode);
+                getP().sellFundPre(token, userId, fundCode,trade_acco);
             }
         }
     }
