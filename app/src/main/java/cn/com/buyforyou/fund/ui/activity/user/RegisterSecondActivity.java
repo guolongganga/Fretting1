@@ -22,6 +22,7 @@ import android.widget.TextView;
 import cn.com.buyforyou.fund.App;
 import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.constant.Constant;
+import cn.com.buyforyou.fund.event.BankCardMessageEvent;
 import cn.com.buyforyou.fund.event.RefreshUserDataEvent;
 import cn.com.buyforyou.fund.model.user.BankResp;
 import cn.com.buyforyou.fund.net.Api;
@@ -194,6 +195,7 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
 
     @Override
     public void initEvents() {
+
         identity.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -308,6 +310,8 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
                     return;
                 }
                 if (!isNotEmpty(strBanknumber)) {
+
+
                     showToast("银行卡号不能为空");
                     return;
                 }
@@ -445,9 +449,9 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
         //手机号
         bundle.putString(Constant.PHONE,strPhone);
         //交易密码
-        bundle.putString(Constant.PASSWORD,strpwd);
+        bundle.putString(Constant.TRADE_PASSWORD,strpwd);
         startActivity(SmsVerificationActivity.class,bundle);
-        finish();
+        //finish();
         //姓名
 //        bundle.putString(Constant.NAME, getText(userName));
 //        //身份证号
@@ -473,15 +477,15 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
      */
     public void registerServiceText() {
 
-        SpannableString spannableString = new SpannableString("我已阅读并同意《北京微动利基金销售有限公司基金电子直销服务协议》与《投资人权益须知协议》");
+        SpannableString spannableString = new SpannableString("我已阅读并同意《网上交易服务协议 》、《投资人权益须知》与《隐私保护指引》");
 
         MyClickText click1 = new MyClickText(this);
         click1.setOnTvClick(new OnTvClick() {
             @Override
             public void onClick(View widget) {
                 Bundle bundle = new Bundle();
-//                bundle.putInt(Constant.WEB_TITLE, R.string.user_register_service1);
-                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.openaccount_instructions);
+//                bundle.putInt(Constant.WEB_TITLE, R.string.user_register_service1);openaccount_agreement
+                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.openaccount_agreement);
                 startActivity(WebPublicActivity.class, bundle);
             }
         });
@@ -492,13 +496,25 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
             public void onClick(View widget) {
                 Bundle bundle = new Bundle();
 //                bundle.putInt(Constant.WEB_TITLE, R.string.user_register_service2);
-                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.openaccount_agreement);
+                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.openaccount_instructions);
+                startActivity(WebPublicActivity.class, bundle);
+            }
+        });
+
+        MyClickText click3 = new MyClickText(this);
+        click3.setOnTvClick(new OnTvClick() {
+            @Override
+            public void onClick(View widget) {
+                Bundle bundle = new Bundle();
+//                bundle.putInt(Constant.WEB_TITLE, R.string.user_register_service2);
+                bundle.putString(Constant.WEB_LINK, Api.API_BASE_URL + HttpContent.openaccount_privacyagreement);
                 startActivity(WebPublicActivity.class, bundle);
             }
         });
         //设置下划线
-        spannableString.setSpan(click1, 7, 32, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
-        spannableString.setSpan(click2, 33, 44, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        spannableString.setSpan(click1, 7, 18, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        spannableString.setSpan(click2, 19, 28, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+        spannableString.setSpan(click3, 29, 37, Spanned.SPAN_INCLUSIVE_INCLUSIVE);
         //当然这里也可以通过setSpan来设置哪些位置的文本哪些颜色
         registerService.setText(spannableString);
         registerService.setMovementMethod(LinkMovementMethod.getInstance());
@@ -530,4 +546,6 @@ public class RegisterSecondActivity extends XActivity<RegisterSecondPresent> {
     public void checkIDExistSuccess() {
 
     }
+
+
 }
