@@ -13,6 +13,7 @@ import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.constant.Constant;
 import cn.com.buyforyou.fund.event.InvalidTokenEvent;
 import cn.com.buyforyou.fund.model.ApplyBaseInfo;
+import cn.com.buyforyou.fund.model.fund.InvestResp;
 import cn.com.buyforyou.fund.model.user.InvestInfoResp;
 import cn.com.buyforyou.fund.model.user.InvestPlanResp;
 import cn.com.buyforyou.fund.present.user.MyInvestPresent;
@@ -85,6 +86,10 @@ public class MyInvestActivity extends XActivity<MyInvestPresent> {
     /** 全部基金 */
     private ApplyBaseInfo allFund;
     private String isFirst = "1";
+    //交易账号
+    private String trade_acco;
+    //终止
+    private String scheduled_protocol_state;
 
 
     @Override
@@ -238,12 +243,18 @@ public class MyInvestActivity extends XActivity<MyInvestPresent> {
                 switch (tag) {
                     //点击
                     case MyFundRecyleAdapter.ITEM_CLICK:
-                        //定投详情
-                        Bundle bundle = new Bundle();
-                        //协议号
-                        bundle.putString(Constant.INVEST_PROTOCOL_ID, model.getScheduled_protocol_id());
-                        bundle.putString(Constant.INVEST_STATUS, model.getScheduled_protocol_state());
-                        startActivity(InvestDeatilActivity.class, bundle, Constant.INVEST_PLAN_ACTIVITY);
+
+
+                            //定投详情
+                            Bundle bundle = new Bundle();
+                            //协议号
+                            bundle.putString(Constant.INVEST_PROTOCOL_ID, model.getScheduled_protocol_id());
+                            bundle.putString(Constant.INVEST_STATUS, model.getScheduled_protocol_state());
+                            //交易账号
+                            bundle.putString(Constant.TRADEACCO,trade_acco);
+                            startActivity(InvestDeatilActivity.class, bundle, Constant.INVEST_PLAN_ACTIVITY);
+
+
                         break;
                 }
             }
@@ -274,8 +285,20 @@ public class MyInvestActivity extends XActivity<MyInvestPresent> {
      */
     public void requestDataSuccess(int pageno, InvestPlanResp resp, boolean first) {
         httpLoadingDialog.dismiss();
+
         //初始化基金选择框
         if (resp != null) {
+            ArrayList<InvestInfoResp> resResult = resp.getResResult();
+
+            for (InvestInfoResp result:resResult)
+            {
+                //交易账号
+                trade_acco = result.getTrade_acco();
+                scheduled_protocol_state = result.getScheduled_protocol_state();
+
+
+            }
+
 
             if (first) {
                 if (resp.getAllFunds() != null && resp.getAllFunds().size() > 0) {
