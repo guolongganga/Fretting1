@@ -72,7 +72,7 @@ public class ResultDetailOnePresent extends XPresent<ResultDetailOneActivity> {
      * @param token
      * @param userId
      */
-    public void withdrawApplyOperate(String allot_no, String password, String token, String userId) {
+    public void withdrawApplyOperate(String allot_no, String password, String token, String userId,String trade_acco) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -80,6 +80,7 @@ public class ResultDetailOnePresent extends XPresent<ResultDetailOneActivity> {
         ResultParams params = new ResultParams();
         params.setAllot_no(allot_no);
         params.setPassword(password);
+        params.setTrade_acco(trade_acco);
         reqData.setData(params);
 
         Api.getApi().withdrawApplyOperate(reqData)
