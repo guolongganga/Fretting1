@@ -89,6 +89,7 @@
     <!--我的银行卡-->
     <string name="user_bank_card_hint">注：若您账户在持仓或者在途交易期间，则不能更换银行卡</string>
     <string name="user_bank_card_change">更换银行卡</string>
+    <string name="user_bank_card_add">添加银行卡</string>
     <string name="user_bank_card_account">交易账号</string>
 
     <!--我的-->
