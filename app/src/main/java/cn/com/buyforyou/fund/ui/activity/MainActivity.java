@@ -1,6 +1,7 @@
 package cn.com.buyforyou.fund.ui.activity;
 
 import android.app.Activity;
+import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -15,11 +16,14 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.zhsoft.fretting.ui.widget.CustomDialog;
+
 import cn.com.buyforyou.fund.App;
 import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.constant.Constant;
 import cn.com.buyforyou.fund.event.ChangeTabEvent;
 import cn.com.buyforyou.fund.event.InvalidTokenEvent;
+import cn.com.buyforyou.fund.ui.activity.fund.BuyActivity;
 import cn.com.buyforyou.fund.ui.activity.user.LoginActivity;
 import cn.com.buyforyou.fund.ui.fragment.fund.FundFragment;
 import cn.com.buyforyou.fund.ui.fragment.user.UserFragment;
@@ -65,6 +69,8 @@ public class MainActivity extends XActivity {
     RadioButton radioButtonMine;
 
 
+
+
     /** 碎片集合 */
     private List<Fragment> fragments;
     /** 碎片 */
@@ -81,6 +87,8 @@ public class MainActivity extends XActivity {
     private String token;
 
     private long firstTime; //用于点击两次返回退出程序
+
+    private CustomDialog validateDialog;
 
     //合理调用commitAllowingStateLoss与commit
     //commit必须在状态保存(onSaveInstanceState)之前调用
@@ -99,6 +107,7 @@ public class MainActivity extends XActivity {
             } else if (msg.what == 2) {
                 allowStateLoss = true;
                 radioButtonMine.setChecked(true);
+
 //                show(2);
             }
         }
@@ -110,11 +119,14 @@ public class MainActivity extends XActivity {
         //获取本地缓存
         userId = App.getSharedPref().getString(Constant.USERID, "");
         token = App.getSharedPref().getString(Constant.TOKEN, "");
+
         //判断是否有本地的缓存
         if (isNotEmpty(userId) && isNotEmpty(token)) {
             //如果有缓存表示已经登录了
             //全局变量设置为登录状态
             RuntimeHelper.getInstance().setLogin(true);
+
+
         }
         fragments = new ArrayList<>();
         fragments.add(new IndexFragment());
@@ -188,6 +200,7 @@ public class MainActivity extends XActivity {
 
     /**
      * 获取当前Fragment
+     *
      *
      * @return
      */
