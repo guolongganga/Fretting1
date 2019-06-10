@@ -37,6 +37,8 @@ public class TransactionQuerySingleActivity extends XActivity {
     @BindView(R.id.view_pager) ViewPager mViewPager;
     /** 基金编号 */
     private String fundCode;
+    //交易账号
+    private String trade_acco;
 
     @Override
     public int getLayoutId() {
@@ -51,7 +53,13 @@ public class TransactionQuerySingleActivity extends XActivity {
     @Override
     public void initData(Bundle bundle) {
         headTitle.setText("交易查询");
-        fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
+        if(bundle!=null)
+        {
+            fundCode = bundle.getString(Constant.FUND_DETAIL_CODE);
+            trade_acco = bundle.getString(Constant.TRADEACCO);
+
+        }
+
         showChannel();
 
     }
@@ -106,6 +114,7 @@ public class TransactionQuerySingleActivity extends XActivity {
             Bundle bundle = new Bundle();
             bundle.putString(Constant.FUND_TAB_NAME, tabName.get(i));
             bundle.putString(Constant.FUND_DETAIL_CODE, fundCode);
+            bundle.putString(Constant.TRADEACCO,trade_acco);
             fragment.setArguments(bundle);
             fragmentList.add(fragment);
         }
