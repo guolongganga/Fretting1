@@ -67,7 +67,7 @@ public class CancleOrderPresent extends XPresent<CancleOrderActivity> {
      * @param token
      * @param userId
      */
-    public void withdrawApplyOperate(String allot_no, String password, String fund_code, String token, String userId) {
+    public void withdrawApplyOperate(String allot_no, String password, String fund_code, String token, String userId,String trade_acco) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
@@ -78,6 +78,7 @@ public class CancleOrderPresent extends XPresent<CancleOrderActivity> {
         params.setBusin_board_type("");
         params.setComb_requestno("");
         params.setFund_code(fund_code);
+        params.setTrade_acco(trade_acco);
         reqData.setData(params);
 
         Api.getApi().withdrawApplyOperate(reqData)
