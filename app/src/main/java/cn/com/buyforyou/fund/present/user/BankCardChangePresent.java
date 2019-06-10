@@ -31,22 +31,23 @@ public class BankCardChangePresent extends XPresent<BankCardChangeActivity> {
      *   BankResp selectBank,String originalAppno,String otherSerial, String token, String userId)
      * @param phone
      */
-    public void getMessageCode(String phone, String bankAccout,String phoneCode,
-        BankResp selectBank,String originalAppno,String otherSerial,String token, String userId) {
+    public void changeBankCardCheckNew(String bank_name,String phone, String bankAccout,String phoneCode,
+        String  trade_acco,String originalAppno,String otherSerial,String token, String userId) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
 
         SendPhoneCodeParams params = new SendPhoneCodeParams();
+        params.setBank_name(bank_name);
         params.setMobile(phone);
         params.setBankAccout(bankAccout);
         params.setPhoneCode(phoneCode);
-        params.setSelectBank(selectBank);
+        params.setTrade_acco(trade_acco);
         params.setOriginalAppno(originalAppno);
         params.setOtherSerial(otherSerial);
         reqData.setData(params);
 
-        Api.getApi().sendPhoneCode(reqData)
+        Api.getApi().changeBankCardCheckNew(reqData)
                 .compose(XApi.<OpenAccountResp>getApiTransformer())
                 .compose(XApi.<OpenAccountResp>getScheduler())
                 .compose(getV().<OpenAccountResp>bindToLifecycle())
@@ -61,6 +62,7 @@ public class BankCardChangePresent extends XPresent<BankCardChangeActivity> {
                     public void onNext(OpenAccountResp resp) {
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestMessageCodeSuccess(resp.getData());
+
                         } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
                             getV().showToast(resp.getMessage());
                             getV().areadyLogout();
@@ -78,18 +80,19 @@ public class BankCardChangePresent extends XPresent<BankCardChangeActivity> {
     /**
      * 更换银行卡
      *
-     * @param bankResp    选择的银行
+     *
      * @param bankNumber  银行卡号
      * @param phoneNumber 银行预留手机号
      * @param msgCode     短信验证码
      */
-    public void changeBankCard(String token, String userId, BankResp bankResp, String bankNumber, String phoneNumber, String msgCode,String trade_password,String originalAppno,String otherSerial) {
+    public void changeBankCard(String token, String userId, String bank_name,String trade_acco, String bankNumber, String phoneNumber, String msgCode,String trade_password,String originalAppno,String otherSerial) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
 
         ChangeBankCardParams params = new ChangeBankCardParams();
-        params.setSelectBank(bankResp);
+        params.setBank_name(bank_name);
+        params.setTrade_acco(trade_acco);
         params.setBankAccout(bankNumber);
         params.setMobile(phoneNumber);
         params.setPhoneCode(msgCode);
