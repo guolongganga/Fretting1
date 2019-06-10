@@ -51,6 +51,18 @@
                 android:layout_height="match_parent"
                 android:background="@color/white"
                 android:orientation="vertical">
+                <!--&lt;!&ndash;公告&ndash;&gt;-->
+                <!--<TextView-->
+                    <!--android:id="@+id/tv_notice"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_marginTop="@dimen/dimen_9"-->
+                    <!--android:ellipsize="end"-->
+                    <!--android:layout_marginLeft="@dimen/dimen_10"-->
+                    <!--android:singleLine="true"-->
+                    <!--android:text="五一放假了，请您做好您的资金安排"-->
+                    <!--android:textColor="@color/color_f7182d"-->
+                    <!--android:textSize="@dimen/text_size_14"/>-->
 
                 <!--轮播banner-->
                 <cn.droidlover.xdroidmvp.banner.FlyBanner
@@ -60,6 +72,32 @@
 
                 <!--分割线-->
                 <View style="@style/divider_10dp_f9"/>
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:orientation="horizontal"-->
+                    <!--android:layout_marginTop="@dimen/dimen_5">-->
+                    <!--<ImageView-->
+                        <!--android:id="@+id/image_trumpet"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:src="@mipmap/trumpet"-->
+                        <!--android:gravity="center"-->
+                        <!--android:layout_gravity="center_vertical"-->
+                        <!--android:layout_marginLeft="@dimen/dimen_15"/>-->
+                    <!--<com.xiaweizi.marquee.MarqueeTextView-->
+                        <!--android:id="@+id/marquee_textview"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginLeft="@dimen/dimen_10"-->
+                        <!--android:text="这是一段很长的威武霸气的滚动的实现跑马灯效果的一段逼格很高的很有含义和涵养的文字"-->
+                        <!--android:textColor="#ff0000"-->
+                        <!--android:textSize="14sp"-->
+                        <!--app:scroll_first_delay="0"-->
+                        <!--app:scroll_interval="10000"-->
+                        <!--app:scroll_mode="mode_forever" />-->
+
+                <!--</LinearLayout>-->
 
                 <!--明星基金-->
                 <LinearLayout
@@ -222,6 +260,61 @@
                         android:scaleType="fitXY"/>
 
                 </LinearLayout>
+
+                <!--&lt;!&ndash;微动利专题&ndash;&gt;-->
+                <!--<LinearLayout-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:gravity="center_vertical"-->
+                    <!--android:orientation="horizontal">-->
+
+                    <!--&lt;!&ndash;蓝色小短线&ndash;&gt;-->
+                    <!--<View style="@style/blue_short_rect"/>-->
+
+                    <!--&lt;!&ndash;&lt;!&ndash;微动利专题 字体&ndash;&gt;&ndash;&gt;-->
+                    <!--&lt;!&ndash;<TextView&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:text="微动利专题"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:textColor="@color/color_444444"&ndash;&gt;-->
+                    <!--&lt;!&ndash;android:textSize="@dimen/text_size_16"/>&ndash;&gt;-->
+                    <!--&lt;!&ndash;每周推荐&ndash;&gt;-->
+                    <!--<TextView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:text="每周推荐"-->
+                        <!--android:textColor="@color/color_444444"-->
+                        <!--android:textSize="@dimen/text_size_16"-->
+                        <!--android:layout_weight="1"/>-->
+                    <!--&lt;!&ndash;更多&ndash;&gt;-->
+
+                    <!--<TextView-->
+                        <!--android:id="@+id/week_more"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:gravity="center_vertical"-->
+                        <!--android:text="更多"-->
+                        <!--android:paddingRight="@dimen/dimen_7"-->
+                        <!--android:textColor="@color/color_main"/>-->
+                    <!--&lt;!&ndash;箭头&ndash;&gt;-->
+                    <!--<ImageView-->
+                        <!--android:id="@+id/image_week"-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:layout_marginRight="@dimen/dimen_15"-->
+                        <!--android:background="@mipmap/arrow_down_o"/>-->
+
+
+                <!--</LinearLayout>-->
+                <!--&lt;!&ndash;每周推荐列表&ndash;&gt;-->
+                <!--<cn.droidlover.xrecyclerview.XRecyclerView-->
+                    <!--android:id="@+id/xrv_week_popularity"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:nestedScrollingEnabled="false"-->
+                    <!--android:overScrollMode="never"/>-->
+
+
 
                 <!--分割线-->
                 <View style="@style/divider_10dp_f9"/>
