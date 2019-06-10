@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+    android:id="@+id/rl_finger_one"
+
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingLeft="@dimen/dimen_15"
+    android:paddingRight="@dimen/dimen_15"
+
+   >
+    <!--&lt;!&ndash;指数基金 内容&ndash;&gt;-->
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/dimen_94"-->
+        <!--android:orientation="horizontal">-->
+        <!-- 指数基金一 -->
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/rl_finger_one"-->
+           <!--&gt;-->
+            <!--基金名称-->
+            <TextView
+                android:layout_marginTop="@dimen/dimen_15"
+                android:id="@+id/tv_nvshen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:ellipsize="end"
+                android:singleLine="true"
+                android:text="中欧新蓝筹优选"
+                android:textColor="@color/color_333333"
+                android:textSize="@dimen/text_size_16"/>
+
+            <!--利率-->
+            <TextView
+                android:id="@+id/tv_nvshen_shouyi"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_nvshen"
+                android:layout_centerHorizontal="true"
+                android:text="38.99%"
+                android:textColor="@color/color_main"
+                android:textSize="@dimen/text_size_26"/>
+
+            <!-- 利率描述 近一年收益率-->
+            <TextView
+                android:id="@+id/tv_finger_one_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv_nvshen_shouyi"
+                android:layout_centerHorizontal="true"
+                android:text="近一年收益率"
+                android:textColor="@color/color_A4A4A4"
+                android:textSize="@dimen/text_size_12"/>
+
+        </RelativeLayout>
+        <!--&lt;!&ndash;竖直分割线&ndash;&gt;-->
+        <!--<View-->
+            <!--android:layout_width="@dimen/dimen_1"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginBottom="@dimen/dimen_16"-->
+            <!--android:background="@color/color_F9F9F9"/>-->
+
+        <!--&lt;!&ndash; 指数基金二 &ndash;&gt;-->
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/rl_finger_two"-->
+            <!--android:layout_width="@dimen/dimen_0"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:paddingLeft="@dimen/dimen_15"-->
+            <!--android:paddingRight="@dimen/dimen_15">-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_chihuo"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:ellipsize="end"-->
+                <!--android:singleLine="true"-->
+                <!--android:text="沪港深新起点股票"-->
+                <!--android:textColor="@color/color_333333"-->
+                <!--android:textSize="@dimen/text_size_16"/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_chihuo_shouyi"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@id/tv_chihuo"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:text="46.24%"-->
+                <!--android:textColor="@color/color_main"-->
+                <!--android:textSize="@dimen/text_size_26"/>-->
+
+            <!--<TextView-->
+                <!--android:id="@+id/tv_finger_two_desc"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_below="@id/tv_chihuo_shouyi"-->
+                <!--android:layout_centerHorizontal="true"-->
+                <!--android:text="近一年收益率"-->
+                <!--android:textColor="@color/color_A4A4A4"-->
+                <!--android:textSize="@dimen/text_size_12"/>-->
+
+        <!--</RelativeLayout>-->
+
+    <!--</LinearLayout>-->
+
+<!--</RelativeLayout>-->
