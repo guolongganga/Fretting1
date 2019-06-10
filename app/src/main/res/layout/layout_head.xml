@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/dimen_62.5"
-                android:background="@color/colorPrimary"
-                android:paddingTop="@dimen/dimen_22">
+    android:id="@+id/rl"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_62.5"
+    android:background="@color/colorPrimary"
+    android:paddingTop="@dimen/dimen_22">
 
     <ImageButton
         android:id="@+id/head_back"
@@ -13,22 +14,21 @@
         android:background="@android:color/transparent"
         android:scaleType="center"
         android:src="@drawable/icon_common_fanhui"
-        android:visibility="visible"
-        />
+        android:visibility="visible" />
 
     <TextView
-        android:layout_marginLeft="45dp"
-        android:layout_marginRight="45dp"
         android:id="@+id/head_title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_centerHorizontal="true"
-        android:gravity="center"
-        android:text=""
+        android:layout_marginLeft="45dp"
+        android:layout_marginRight="45dp"
         android:ellipsize="end"
+        android:gravity="center"
         android:lines="1"
+        android:text=""
         android:textColor="@color/white"
-        android:textSize="17dp"/>
+        android:textSize="17dp" />
 
     <Button
         android:id="@+id/head_right"
@@ -39,17 +39,30 @@
         android:scaleType="center"
         android:textColor="@color/white"
         android:textSize="@dimen/text_size_14"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
+    <!--<ImageView-->
+        <!--android:id="@+id/image_redLine"-->
+        <!--android:layout_width="@dimen/dimen_10"-->
+        <!--android:layout_height="@dimen/dimen_10"-->
+        <!--android:layout_alignParentRight="true"-->
+        <!--android:layout_alignParentTop="true"-->
+        <!--android:layout_marginRight="@dimen/dimen_1"-->
+        <!--android:layout_toRightOf="@+id/head_right"-->
+        <!--android:src="@drawable/dot"-->
+        <!--android:visibility="visible"-->
+
+
+        <!--/>-->
+
 
     <ImageButton
         android:id="@+id/head_right_imgbtn"
         android:layout_width="45dp"
+
         android:layout_height="match_parent"
         android:layout_alignParentRight="true"
         android:background="@android:color/transparent"
         android:scaleType="center"
-        android:visibility="gone"
-        />
+        android:visibility="gone" />
 
 </RelativeLayout>
