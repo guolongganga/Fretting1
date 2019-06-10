@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dimen_64"
+    android:gravity="center_vertical"
+    android:paddingLeft="@dimen/dimen_15"
+    android:paddingRight="@dimen/dimen_15"
+    android:background="@color/white">
+
+    <RelativeLayout
+    android:id="@+id/rl_content"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+
+    >
+    <!--银行logo-->
+    <ImageView
+    android:id="@+id/bank_image"
+    android:layout_width="@dimen/dimen_35"
+    android:layout_height="@dimen/dimen_35"
+    android:layout_centerVertical="true"
+    android:layout_marginLeft="@dimen/dimen_15"
+    android:layout_marginRight="@dimen/dimen_15"
+    />
+    <!--银行名称和尾号 招商银行(2339)-->
+    <TextView
+    android:id="@+id/bank_name"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="8dp"
+    android:layout_toRightOf="@id/bank_image"
+    android:textColor="@color/color_text_333"
+    android:textSize="18dp"/>
+    <!--限额 单笔上限10万，单日限额50万-->
+    <TextView
+    android:id="@+id/bank_limit"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_below="@id/bank_name"
+    android:layout_toRightOf="@id/bank_image"
+    android:layout_marginTop="@dimen/dimen_2"
+    android:textColor="@color/color_999999"
+    android:textSize="@dimen/dimen_12"/>
+    <!--箭头-->
+    <ImageView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_alignParentRight="true"
+    android:layout_centerVertical="true"
+    android:layout_marginRight="@dimen/dimen_15"
+    android:src="@drawable/icon_common_arrow_right"/>
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
