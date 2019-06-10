@@ -6,7 +6,18 @@ package cn.com.buyforyou.fund.params;
  */
 
 public class BankCardChangeParams {
+    //交易密码
     private String trade_password;
+    //交易账号
+    private String trade_acco;
+
+    public String getTrade_acco() {
+        return trade_acco;
+    }
+
+    public void setTrade_acco(String trade_acco) {
+        this.trade_acco = trade_acco;
+    }
 
     public String getTrade_password() {
         return trade_password;
