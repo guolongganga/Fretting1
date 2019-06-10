@@ -31,12 +31,13 @@ public class InvestPlanPresent extends XPresent<InvestPlanActivity> {
      * @param userId
      * @param fundCode
      */
-    public void buyOnFundData(String token, String userId, String fundCode) {
+    public void buyOnFundData(String token, String userId, String fundCode,String trade_acco) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
         InvestParams params = new InvestParams();
         params.setFundCode(fundCode);
+        params.setTrade_acco(trade_acco);
         reqData.setData(params);
 
         Api.getApi().buyOnFundData(reqData)
