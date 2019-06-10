@@ -1,5 +1,8 @@
 package cn.com.buyforyou.fund.params;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import cn.com.buyforyou.fund.model.user.BankResp;
 
 /**
@@ -7,7 +10,7 @@ import cn.com.buyforyou.fund.model.user.BankResp;
  * 描述：开户绑卡接口参数
  */
 
-public class OpenAccountParams extends CommonReqData<OpenAccountParams> {
+public class OpenAccountParams extends CommonReqData<OpenAccountParams>   {
     private String userName;
     private String certNo;
     private String email;
@@ -71,4 +74,6 @@ public class OpenAccountParams extends CommonReqData<OpenAccountParams> {
     public void setTradePassword(String tradePassword) {
         this.tradePassword = tradePassword;
     }
+
+
 }
