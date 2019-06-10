@@ -42,6 +42,8 @@ public class UserAccountResp extends BaseResp<UserAccountResp> {
      */
     private String yesterday;
 
+
+
     public BigDecimal getTotalAssets() {
         return totalAssets;
     }
@@ -97,4 +99,6 @@ public class UserAccountResp extends BaseResp<UserAccountResp> {
     public void setYesterday(String yesterday) {
         this.yesterday = yesterday;
     }
+
+
 }
