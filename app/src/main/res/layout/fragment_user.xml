@@ -33,6 +33,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1">
+
                     <!--总资产字体-->
                     <TextView
                         android:id="@+id/font_total"
@@ -193,7 +194,7 @@
                 style="@style/user_text_top_image"
                 android:drawableTop="@drawable/icon_user_chedan"
                 android:text="@string/user_remove"
-                android:visibility="gone" />
+                />
 
         </LinearLayout>
 
