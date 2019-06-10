@@ -22,6 +22,16 @@ public class BuyNowParams extends CommonReqData<BuyNowParams> {
     private String password;
     /** 分红方式 */
     private String auto_buy;
+    //交易账号
+    private String trade_acco;
+
+    public String getTrade_acco() {
+        return trade_acco;
+    }
+
+    public void setTrade_acco(String trade_acco) {
+        this.trade_acco = trade_acco;
+    }
 
     public String getAuto_buy() {
         return auto_buy;
