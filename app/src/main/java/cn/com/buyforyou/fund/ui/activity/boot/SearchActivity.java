@@ -63,6 +63,7 @@ public class SearchActivity extends XActivity<SearchPersent> {
 
 
 //    private OptionSearch mOptionSearch = new OptionSearch(Looper.myLooper());
+    ////
 
     @Override
     public int getLayoutId() {
