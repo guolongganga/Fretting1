@@ -4,11 +4,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        >
         <include layout="@layout/layout_head"/>
 
         <RelativeLayout
@@ -185,12 +186,47 @@
             android:layout_marginLeft="@dimen/dimen_15"
             android:textColor="@color/color_9B9B9B"
             android:textSize="@dimen/text_size_12"/>
+        <!--基金合同和招募说明书-->
+        <!--<TextView-->
+            <!--android:id="@+id/tv_fund_contract"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="@dimen/dimen_15"-->
+            <!--android:textColor="@color/color_9B9B9B"-->
+            <!--android:lineSpacingMultiplier="1.3"-->
+            <!--android:text="该产品为高风险产品,可能因为市场波动等原因导致本金出现亏损,请务必关注本网披露的费率,交易规则及公告,仔细阅读《基金合同》、《招募说明书》,了解您的主要权益和产品特定风险,审慎决策。"-->
+            <!--android:textSize="@dimen/text_size_12"/>-->
         <!--确认购买-->
         <Button
             android:id="@+id/sure"
             style="@style/common_blue_button_rect"
             android:background="@color/color_B9D1F8"
             android:text="@string/fund_sure"/>
+        <!--协议-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dimen_15"
+            android:layout_marginRight="@dimen/dimen_15"
+            android:orientation="horizontal">
+            <!--勾选框-->
+            <ImageView
+                android:id="@+id/register_service_select"
+                android:layout_width="@dimen/dimen_15"
+                android:layout_height="@dimen/dimen_15"
+                android:layout_gravity="center"
+                android:src="@drawable/register_iv_selector"/>
+            <!--我同意《xxx协议》-->
+            <TextView
+                android:id="@+id/tv_agreement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginLeft="@dimen/dimen_10"
+                android:layout_weight="1"
+                android:lineSpacingMultiplier="1.1"
+                android:textColor="@color/color_f7182d"/>
+        </LinearLayout>
 
 
     </LinearLayout>
@@ -218,5 +254,7 @@
             android:textColor="@color/color_9B9B9B"
             android:textSize="@dimen/text_size_12"/>
     </LinearLayout>
+
+
 
 </RelativeLayout>
