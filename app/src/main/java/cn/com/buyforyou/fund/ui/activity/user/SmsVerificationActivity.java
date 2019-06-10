@@ -3,23 +3,28 @@ package cn.com.buyforyou.fund.ui.activity.user;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Path;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.zhsoft.fretting.ui.widget.ChenJingET;
 import com.zhsoft.fretting.ui.widget.CountdownButton;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 import cn.com.buyforyou.fund.App;
 import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.constant.Constant;
 import cn.com.buyforyou.fund.event.RefreshUserDataEvent;
+import cn.com.buyforyou.fund.model.BaseResp;
 import cn.com.buyforyou.fund.model.user.BankResp;
 import cn.com.buyforyou.fund.model.user.OpenAccountResp;
 import cn.com.buyforyou.fund.present.user.SmsMessagePresent;
@@ -52,6 +57,13 @@ public class SmsVerificationActivity extends XActivity<SmsMessagePresent>{
      */
     @BindView(R.id.head_back)
     ImageButton headBack;
+
+    /**
+     * 标题
+     */
+    @BindView(R.id.head_title)
+    TextView headTitle;
+
 
     /**
      * 预留手机号
@@ -87,8 +99,7 @@ public class SmsVerificationActivity extends XActivity<SmsMessagePresent>{
     /**
      * 短信验证码返回的参数
      */
-    private String id1;
-    private String id2;
+
     private String originalAppno;
     private String otherSerial;
     private String code;
@@ -109,7 +120,7 @@ public class SmsVerificationActivity extends XActivity<SmsMessagePresent>{
         //解决键盘弹出遮挡不滚动问题
         ChenJingET.assistActivity(context);
         httpLoadingDialog = new HttpLoadingDialog(context);
-
+        headTitle.setText("基金开户");
         userId = App.getSharedPref().getString(Constant.USERID, "");
         token = App.getSharedPref().getString(Constant.TOKEN, "");
 
@@ -124,13 +135,13 @@ public class SmsVerificationActivity extends XActivity<SmsMessagePresent>{
         email = bundle.getString(Constant.CHANGE_EMAIL);
 //        //银行名称
         bankResp = bundle.getParcelable(Constant.CHOOSE_BANCK);
-        Log.e(TAG, "initData: "+bankResp );
+        Log.e(TAG, "initData: "+bankResp);
         //银行卡号
         strBankNumber = bundle.getString(Constant.CHANGE_BANK);
         //手机号
         strPhone = bundle.getString(Constant.PHONE);
         //交易密码
-        strPwd = bundle.getString(Constant.PASSWORD);
+        strPwd = bundle.getString(Constant.TRADE_PASSWORD);
         //得到手机号
         phoneNumber.setText(strPhone);
 
@@ -187,16 +198,20 @@ public class SmsVerificationActivity extends XActivity<SmsMessagePresent>{
     /**
      *
      * 获取验证码成功
+     * @param
      */
-    public void requestGetMessageCode(OpenAccountResp data)
+    public void requestGetMessageCode(OpenAccountResp resp)
     {
         httpLoadingDialog.dismiss();
         //开始倒计时
         getVerifyCode.start();
         showToast(R.string.success_send_phone_verify);
-        originalAppno = data.getOriginalAppno();
 
-        otherSerial = data.getOtherSerial();
+        //Object data = resp.getData();
+        otherSerial = resp.getOtherSerial();
+        originalAppno=resp.getOriginalAppno();
+        // Log.e(TAG, "requestMessageCodeSuccess: "+originalAppno+"___________"+otherSerial );
+
     }
     /**
      * 获取验证码失败
@@ -225,7 +240,7 @@ public class SmsVerificationActivity extends XActivity<SmsMessagePresent>{
         //身份证号
         bundle.putString(Constant.CERT_NO, strIdentity);
         startActivity(RegisterSuccessActivity.class, bundle);
-        finish();
+        //finish();
     }
 
     /**
