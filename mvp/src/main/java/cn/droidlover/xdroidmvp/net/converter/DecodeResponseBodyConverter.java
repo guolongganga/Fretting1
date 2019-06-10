@@ -29,11 +29,11 @@ public class DecodeResponseBodyConverter<T> implements Converter<ResponseBody, T
         String resp = value.string();
 
         //解密返回数据
-        String decResp = EncryptDecrypt.decrptByAES(resp);
+      //  String decResp = EncryptDecrypt.decrptByAES(resp);
 
-        XLog.d(TAG, "解密数据 : " + decResp);
+     //  XLog.d(TAG, "解密数据 : " + decResp);
 
-        return adapter.fromJson(decResp);
+        return adapter.fromJson(resp);
     }
 }
 
