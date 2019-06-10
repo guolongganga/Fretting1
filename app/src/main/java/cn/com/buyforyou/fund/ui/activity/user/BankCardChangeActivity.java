@@ -2,8 +2,10 @@ package cn.com.buyforyou.fund.ui.activity.user;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +17,8 @@ import cn.com.buyforyou.fund.App;
 import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.constant.Constant;
 import cn.com.buyforyou.fund.event.ChangeBankCardEvent;
+import cn.com.buyforyou.fund.event.RefreshUserDataEvent;
+import cn.com.buyforyou.fund.model.BaseResp;
 import cn.com.buyforyou.fund.model.user.BankResp;
 import cn.com.buyforyou.fund.model.user.OpenAccountResp;
 import cn.com.buyforyou.fund.present.user.BankCardChangePresent;
@@ -26,9 +30,14 @@ import cn.com.buyforyou.fund.utils.RuntimeHelper;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Map;
+import java.util.Observable;
+
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.mvp.XActivity;
+
+import static com.tencent.bugly.crashreport.common.strategy.StrategyBean.d;
 
 /**
  * 作者：sunnyzeng on 2017/12/14 10:13
@@ -36,6 +45,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  */
 
 public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
+    private static final String TAG ="BankCardChangeActivity";
     /**
      * 返回按钮
      */
@@ -67,6 +77,9 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
     @BindView(R.id.phone)
     EditText phone;
     /**
+     *
+     *
+     *
      * 短信验证码
      */
     @BindView(R.id.msg_code)
@@ -107,6 +120,8 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
     private StringBuilder builder;
     private String originalAppno;
     private String otherSerial;
+    private String trade_acco;
+    private String bank_name;
 
 
     @Override
@@ -132,8 +147,14 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
         strPhone = App.getSharedPref().getString(Constant.USER_PHONE, "");
         phone.setText(strPhone);
         if (bundle != null) {
+            //交易密码
             trade_password = bundle.getString(Constant.TRADE_PASSWORD, "");
+            //交易账号
+            trade_acco = bundle.getString(Constant.TRADEACCO);
+            //银行名字
+            bank_name = bundle.getString(Constant.BANK_NAME);
         }
+        bankName.setText(bank_name);
         //弹出框
         httpLoadingDialog = new HttpLoadingDialog(context);
         httpLoadingDialog.setCanceledOnKeyBack();
@@ -191,13 +212,13 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
             }
         });
 
-        llChooseBank.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                //选择银行
-                startActivity(BankListActivity.class, Constant.BANKLIST_ACTIVITY);
-            }
-        });
+//        llChooseBank.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                //选择银行
+//                startActivity(BankListActivity.class, Constant.BANKLIST_ACTIVITY);
+//            }
+//        });
         getVerifyCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -206,10 +227,6 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
                 //表单验证
                 if (noNetWork()) {
                     showNetWorkError();
-                    return;
-                }
-                if (!isNotEmpty(getText(bankName))) {
-                    showToast("请选择银行名称");
                     return;
                 }
                 if (!isNotEmpty(getText(banknumber))) {
@@ -229,7 +246,7 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
                 httpLoadingDialog.visible();
 
                 //(String phone,String bankAccout,String phoneCode, BankResp selectBank,String originalAppno,String otherSerial, String token, String userId) {
-                getP().getMessageCode(strPhone, getText(banknumber), "", bankResp, "", "", token, userId);
+                getP().changeBankCardCheckNew(bank_name,strPhone, getText(banknumber), "", trade_acco, "", "", token, userId);
 
             }
         });
@@ -244,10 +261,10 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
                     showNetWorkError();
                     return;
                 }
-                if (!isNotEmpty(getText(bankName))) {
-                    showToast("请选择银行名称");
-                    return;
-                }
+//                if (!isNotEmpty(getText(bankName))) {
+//                    showToast("请选择银行名称");
+//                    return;
+//                }
                 if (!isNotEmpty(getText(banknumber))) {
                     showToast("银行卡号不能为空");
                     return;
@@ -266,20 +283,20 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
                 }
                 //绑定银行卡接口
                 httpLoadingDialog.visible();
-                getP().changeBankCard(token, userId, bankResp, getText(banknumber), strPhone, getText(msgCode), trade_password, originalAppno, otherSerial);
+                getP().changeBankCard(token, userId,bank_name,trade_acco, getText(banknumber), strPhone, getText(msgCode), trade_password, originalAppno, otherSerial);
             }
         });
 
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Constant.BANKLIST_RESULT_CODE && requestCode == Constant.BANKLIST_ACTIVITY) {
-            bankResp = data.getParcelableExtra(Constant.CHOOSE_BANCK);
-            bankName.setText(bankResp.getBank_name());
-        }
-    }
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == Constant.BANKLIST_RESULT_CODE && requestCode == Constant.BANKLIST_ACTIVITY) {
+//            bankResp = data.getParcelableExtra(Constant.CHOOSE_BANCK);
+//            bankName.setText(bankResp.getBank_name());
+//        }
+//    }
 
     /**
      * 重试，发送请求验证码成功
@@ -295,10 +312,8 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
     public void requestMessageCodeSuccess(OpenAccountResp resp) {
         httpLoadingDialog.dismiss();
         getVerifyCode.start();
-
-        originalAppno = resp.getOriginalAppno();
-        otherSerial = resp.getOtherSerial();
-
+         originalAppno = resp.getOriginalAppno();
+         otherSerial = resp.getOtherSerial();
     }
 
     /**
@@ -309,6 +324,7 @@ public class BankCardChangeActivity extends XActivity<BankCardChangePresent> {
         showToast("更换成功");
         //跳转回我的银行卡页面，并更新页面信息
         EventBus.getDefault().post(new ChangeBankCardEvent());
+        //EventBus.getDefault().post(new RefreshUserDataEvent());
         finish();
     }
 
