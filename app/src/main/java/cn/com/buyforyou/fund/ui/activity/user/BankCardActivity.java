@@ -4,7 +4,9 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -37,6 +39,7 @@ import cn.droidlover.xdroidmvp.mvp.XActivity;
  */
 
 public class BankCardActivity extends XActivity<BankCardPresent> {
+    private static final String TAG ="BankCardActivity" ;
     /** 返回按钮 */
     @BindView(R.id.head_back) ImageButton headBack;
     /** 标题 */
@@ -68,6 +71,8 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
     private CustomDialog errorDialog;
     /** 交易密码 */
     private String trade_password;
+    private String trade_acco;
+    private String bankName;
 
     @Override
     public int getLayoutId() {
@@ -81,18 +86,20 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
 
     @Override
     public void initData(Bundle bundle) {
+        if(bundle!=null)
+        {
+            trade_acco= bundle.getString(Constant.TRADEACCO);
+        }
         headTitle.setText("我的银行卡");
         httpLoadingDialog = new HttpLoadingDialog(context);
         //获取用户缓存的userid 和 token
         userId = App.getSharedPref().getString(Constant.USERID, "");
         token = App.getSharedPref().getString(Constant.TOKEN, "");
-
         //注册eventbus
         EventBus.getDefault().register(this);
-
         //获取我的银行卡信息
         httpLoadingDialog.visible();
-        getP().getBankCardInfo(token, userId);
+        getP().getBankCardInfo(token, userId,trade_acco);
     }
 
     @Override
@@ -120,7 +127,8 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
                                 dialog.dismiss();
                                 httpLoadingDialog.visible();
                                 trade_password = str;
-                                getP().changeBankCardCheck(token, userId, str);
+                                httpLoadingDialog.visible();
+                                getP().changeBankCardCheck(token, userId, str,trade_acco);
 
                             }
                         }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
@@ -152,8 +160,11 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
             Bitmap bitmap = Base64ImageUtil.base64ToBitmap(strimage);
             imageBanck.setImageBitmap(bitmap);
         }
+        bankName = resp.getBankName();
+
         banckName.setText(resp.getBankName() + "（尾号" + resp.getBankNoTail() + "）");
-        tradeNumber.setText(resp.getTa_acco());
+        trade_acco = resp.getTrade_acco();
+        tradeNumber.setText(trade_acco);
     }
 
     /**
@@ -202,7 +213,7 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
         httpLoadingDialog.visible();
         //修改了银行卡
         isChange = "0";
-        getP().getBankCardInfo(token, userId);
+        getP().getBankCardInfo(token, userId,trade_acco);
 //        showToast("修改啦");
     }
 
@@ -214,6 +225,8 @@ public class BankCardActivity extends XActivity<BankCardPresent> {
         httpLoadingDialog.dismiss();
         Bundle bundle = new Bundle();
         bundle.putString(Constant.TRADE_PASSWORD, trade_password);
+        bundle.putString(Constant.BANK_NAME,bankName);
+        bundle.putString(Constant.TRADEACCO,trade_acco);
         startActivity(BankCardChangeActivity.class, bundle);
     }
 
