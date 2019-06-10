@@ -1,5 +1,6 @@
 package cn.com.buyforyou.fund.ui.activity.user;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import cn.com.buyforyou.fund.present.user.LoginPresent;
 import cn.com.buyforyou.fund.ui.activity.MainActivity;
 import cn.com.buyforyou.fund.utils.RuntimeHelper;
 import com.zhsoft.fretting.ui.widget.ChenJingET;
+import com.zhsoft.fretting.ui.widget.CustomDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -50,6 +52,7 @@ public class LoginActivity extends XActivity<LoginPresent> {
     /** 从哪个页面跳转过来的请求码 */
     private String mRequestCode;
     private String phone;
+
 
     @Override
     public int getLayoutId() {
@@ -155,14 +158,19 @@ public class LoginActivity extends XActivity<LoginPresent> {
 
         if (Constant.WEB_ACTIVITY.equals(mRequestCode)) {
             finish();
-        }else if (Constant.SKIP_INDEX_ACTIVITY.equals(mRequestCode)) {
+        }
+        else if (Constant.SKIP_INDEX_ACTIVITY.equals(mRequestCode)) {
             EventBus.getDefault().post(new ChangeTabEvent(Constant.MAIN_INDEX));
             startActivity(MainActivity.class);
             finish();
-        } else {
+        }
+        else {
             startActivity(MainActivity.class);
             finish();
         }
+
+
+
 
 
     }
