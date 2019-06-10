@@ -9,6 +9,8 @@ public class InvestParams extends CommonReqData<InvestParams> {
     private String fundCode;
     private String fund_full_name;
     private String fund_name;
+    //交易账号
+    private String trade_acco;
 
     public String getFundCode() {
         return fundCode;
@@ -32,5 +34,13 @@ public class InvestParams extends CommonReqData<InvestParams> {
 
     public void setFund_name(String fund_name) {
         this.fund_name = fund_name;
+    }
+
+    public String getTrade_acco() {
+        return trade_acco;
+    }
+
+    public void setTrade_acco(String trade_acco) {
+        this.trade_acco = trade_acco;
     }
 }
