@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+   >
+    <!--标题-->
+    <include layout="@layout/layout_head"/>
+
+
+
+
+    <LinearLayout
+
+        android:id="@+id/ll_choose_bank"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/small_margin_size"
+        android:paddingRight="@dimen/small_margin_size">
+        <!--银行名称-->
+        <TextView
+            android:layout_width="110dp"
+            android:text="银行名称"
+            style="@style/text_bold_16"/>
+        <!--显示选择的银行-->
+        <TextView
+            android:id="@+id/banck_name"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:gravity="center_vertical"
+            android:hint="请选择"
+            android:textColor="@color/color_text_333"
+            android:textColorHint="@color/color_CCCCCC"
+            android:textSize="@dimen/text_size_15"/>
+        <!--小箭头-->
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/icon_common_arrow_right"/>
+
+    </LinearLayout>
+
+        <include layout="@layout/layout_divider_horizontal"/>
+
+        <!--银行卡号-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/small_margin_size"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:layout_width="110dp"
+                android:text="银行卡号"
+                style="@style/text_bold_16"/>
+            <!--请输入银行卡号-->
+            <EditText
+                android:id="@+id/banknumber"
+                android:hint="请输入银行卡号"
+                android:inputType="number"
+                style="@style/edit_user_15"
+                />
+
+        </LinearLayout>
+
+
+        <!--身份证号-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:background="@color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingLeft="@dimen/small_margin_size"
+            android:paddingRight="15dp">
+
+            <TextView
+                android:layout_width="110dp"
+                android:text="身份证号"
+                style="@style/text_bold_16"/>
+            <!--请输入身份证号-->
+            <EditText
+                android:id="@+id/identity"
+                android:hint="请输入身份证号"
+                android:inputType="text"
+                style="@style/edit_user_15"
+                />
+
+        </LinearLayout>
+
+        <include layout="@layout/layout_divider_horizontal"/>
+
+
+    <!--姓名-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/small_margin_size"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:text="姓名"
+            style="@style/text_bold_16"/>
+        <!--请输入姓名-->
+        <EditText
+            android:id="@+id/user_name"
+            android:hint="请输入姓名"
+            android:inputType="text"
+            style="@style/edit_user_15"
+            />
+
+    </LinearLayout>
+
+    <include layout="@layout/layout_divider_horizontal"/>
+    <!--手机号-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/small_margin_size"
+        android:paddingRight="15dp">
+
+        <TextView
+            android:layout_width="110dp"
+            android:text="手机号"
+            style="@style/text_bold_16"/>
+        <!--请输入预留手机号-->
+        <EditText
+            android:id="@+id/phone"
+            android:hint="请输入预留手机号"
+            android:inputType="number"
+            android:maxLength="11"
+            style="@style/edit_user_15"
+            />
+
+    </LinearLayout>
+    <!--下一步-->
+    <Button
+        android:id="@+id/btn_save"
+        style="@style/common_red_button_circle"
+        android:text="下一步"/>
+
+
+</LinearLayout>
