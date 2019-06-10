@@ -21,6 +21,12 @@ public class StateChangeParams extends CommonReqData<StateChangeParams> {
      */
     private String password;
 
+    /**
+     *
+     * 交易账号
+     */
+    private String trade_acco;
+
     public String getScheduled_protocol_id() {
         return scheduled_protocol_id;
     }
@@ -43,5 +49,13 @@ public class StateChangeParams extends CommonReqData<StateChangeParams> {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getTrade_acco() {
+        return trade_acco;
+    }
+
+    public void setTrade_acco(String trade_acco) {
+        this.trade_acco = trade_acco;
     }
 }
