@@ -158,7 +158,7 @@ public class PhoneChangePresent extends XPresent<PhoneChangeActivity> {
         reqData.setUserId(userId);
 
         SendPhoneCodeParams params = new SendPhoneCodeParams();
-        params.setPhoneNo(phone);
+        params.setMobile(phone);
         reqData.setData(params);
 
         Api.getApi()
