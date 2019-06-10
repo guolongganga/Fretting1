@@ -46,7 +46,8 @@ public class TransactionSingleContentFragment extends XFragment<TransactionSingl
     private String userId;
     /** 基金编号 */
     private String fundCode;
-//    private StateView errorView;
+    private String trade_acco;
+    //    private StateView errorView;
 
     @Override
     public int getLayoutId() {
@@ -64,10 +65,16 @@ public class TransactionSingleContentFragment extends XFragment<TransactionSingl
         token = App.getSharedPref().getString(Constant.TOKEN, "");
         userId = App.getSharedPref().getString(Constant.USERID, "");
         //tab类型 请求接口的时候需要
-        fundTabName = bundle.getString(Constant.FUND_TAB_NAME, "");
+        if(bundle!=null)
+        {
+            fundTabName = bundle.getString(Constant.FUND_TAB_NAME, "");
 //        fundCode = "3Q0103";
-        fundCode = bundle.getString(Constant.FUND_DETAIL_CODE, "");
-        tabType = fundTabType(fundTabName);
+            fundCode = bundle.getString(Constant.FUND_DETAIL_CODE, "");
+            tabType = fundTabType(fundTabName);
+            trade_acco = bundle.getString(Constant.TRADEACCO);
+
+        }
+
 
         contentLayout.getSwipeRefreshLayout().setColorSchemeResources(
                 R.color.color_main,
@@ -108,9 +115,9 @@ public class TransactionSingleContentFragment extends XFragment<TransactionSingl
 
     private void requestTranData(int pageNo) {
         if (Constant.TRANSACTION_TAB_BONUS.equals(fundTabName)) {
-            getP().shareOutBonusTradeQuery(token, userId, pageNo, pageSize, tabType, fundCode);
+            getP().shareOutBonusTradeQuery(token, userId, pageNo, pageSize, tabType, fundCode,trade_acco);
         } else {
-            getP().loadTransactionData(token, userId, pageNo, pageSize, tabType, fundCode);
+            getP().loadTransactionData(token, userId, pageNo, pageSize, tabType, fundCode,trade_acco);
         }
     }
 
