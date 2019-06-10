@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:orientation="vertical"
+    android:layout_height="match_parent">
+    <include layout="@layout/layout_head" />
+
+
+    <!--手机号-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_66"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/small_margin_size"
+        android:paddingRight="15dp">
+
+        <TextView
+            style="@style/text_bold_16"
+            android:layout_width="@dimen/dimen_83"
+            android:text="@string/user_common_phone" />
+        <!--请输入手机号-->
+        <EditText
+            android:id="@+id/phone_number"
+            style="@style/edit_user_15"
+            android:hint="@string/user_common_phone_hint"
+            android:enabled="false"
+            android:inputType="number"
+            android:maxLength="11" />
+
+    </LinearLayout>
+
+    <include layout="@layout/layout_divider_horizontal"/>
+
+    <!--验证码-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_66"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingLeft="@dimen/small_margin_size"
+        android:paddingRight="15dp">
+
+        <TextView
+            style="@style/text_bold_16"
+            android:layout_width="@dimen/dimen_83"
+            android:layout_height="wrap_content"
+            android:text="@string/user_common_message_code" />
+        <!--请输入验证码-->
+        <EditText
+            android:id="@+id/msg_code"
+            style="@style/edit_user_15"
+            android:hint="@string/user_common_message_code_hint"
+            android:inputType="text"
+            android:maxLength="11" />
+        <!--获取验证码-->
+        <com.zhsoft.fretting.ui.widget.CountdownButton
+            android:id="@+id/get_verify_code"
+            style="@style/AppTheme.Button_send_code" />
+
+    </LinearLayout>
+
+    <include layout="@layout/layout_divider_horizontal"/>
+
+    <!--下一步-->
+    <Button
+        android:id="@+id/btn_save"
+        style="@style/common_red_button_message"
+        android:text="下一步"/>
+
+
+</LinearLayout>
