@@ -16,12 +16,12 @@ public class SharedPref implements ICache {
 
     static final String SP_NAME = XDroidConf.CACHE_SP_NAME;
 
-    private static SharedPref instance;
+        private static SharedPref instance;
 
     private SharedPref(Context context) {
-        sharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
-        editor = sharedPreferences.edit();
-    }
+            sharedPreferences = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
+            editor = sharedPreferences.edit();
+        }
 
     public static SharedPref getInstance(Context context) {
         if (instance == null) {
