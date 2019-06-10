@@ -7,12 +7,15 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.zhsoft.fretting.ui.widget.CustomDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -22,15 +25,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import cn.com.buyforyou.fund.App;
 import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.constant.Constant;
+import cn.com.buyforyou.fund.event.BankCardMessageEvent;
 import cn.com.buyforyou.fund.event.RefreshUserDataEvent;
 import cn.com.buyforyou.fund.model.user.HoldFundResp;
 import cn.com.buyforyou.fund.model.user.MyHoldFundResp;
 import cn.com.buyforyou.fund.model.user.UserAccountResp;
 import cn.com.buyforyou.fund.net.Api;
 import cn.com.buyforyou.fund.present.user.UserPresent;
+import cn.com.buyforyou.fund.ui.activity.fund.BuyActivity;
 import cn.com.buyforyou.fund.ui.activity.user.BonusActivity;
 import cn.com.buyforyou.fund.ui.activity.user.CancleOrderActivity;
 import cn.com.buyforyou.fund.ui.activity.user.LoginActivity;
@@ -182,7 +188,7 @@ public class UserFragment extends XFragment<UserPresent> {
     /**
      * 我的持仓基金
      */
-    private ArrayList<MyHoldFundResp> fundList = new ArrayList<>();
+    private ArrayList<MyHoldFundResp> fundList=new ArrayList<>() ;
 
     /**
      * 在途基金
@@ -190,6 +196,12 @@ public class UserFragment extends XFragment<UserPresent> {
     private ArrayList<HoldFundResp> passageList = new ArrayList<>();
     private WaitSureFragment waitSureFragment;
     private UserHoldFragment userHoldFragment;
+    private String certNo;
+    private String struserName;
+    //交易账号
+    private String trade_acco;
+    public static final String TAG ="UserFragment" ;
+    private CustomDialog validateDialog;
 
 
     @Override
@@ -199,10 +211,12 @@ public class UserFragment extends XFragment<UserPresent> {
 
     @Override
     public void initData(Bundle savedInstanceState) {
+
         //设置标题
         headBack.setVisibility(View.GONE);
         headTitle.setText("我的");
         headRight.setVisibility(View.VISIBLE);
+
         headRight.setText("设置");
         mTabLayout.setTabMode(TabLayout.MODE_FIXED);
         //加载框
@@ -211,6 +225,26 @@ public class UserFragment extends XFragment<UserPresent> {
         isOpenAccountView();
         //注册事件
         EventBus.getDefault().register(this);
+//        if (RuntimeHelper.getInstance().isLogin() && Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
+//            validateDialog = new CustomDialog.Builder(context)
+//                    .setMessage("标题")
+//                    .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialogInterface, int i) {
+//                            validateDialog.dismiss();
+//                        }
+//                    }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                        @Override
+//                        public void onClick(DialogInterface dialogInterface, int i) {
+//                            validateDialog.dismiss();
+//
+//
+//                        }
+//                    }).create();
+//
+//            validateDialog.show();
+//        }
+
 
 //        xrvMyFund.verticalLayoutManager(context);//设置RecycleView类型 - 不设置RecycleView不显示
         //如果已登录，请求我的持仓基金数据
@@ -276,6 +310,8 @@ public class UserFragment extends XFragment<UserPresent> {
 
             }
         });
+
+
         //设置按钮
         headRight.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -284,6 +320,9 @@ public class UserFragment extends XFragment<UserPresent> {
                     showToast("您尚未登录，请先登录");
                     return;
                 }
+                Bundle bundle=new Bundle();
+                bundle.putString(Constant.NAME,struserName);
+                bundle.putString(Constant.CERT_NO,certNo);
                 startActivity(SettingActivity.class);
 
             }
@@ -369,13 +408,21 @@ public class UserFragment extends XFragment<UserPresent> {
         });
         //撤单
         remove.setOnClickListener(new View.OnClickListener() {
+
+
             @Override
             public void onClick(View view) {
                 if (!Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
                     showToast("您还未开户，请先去开户");
                     return;
                 }
-                startActivity(CancleOrderActivity.class);
+                Bundle bundle=new Bundle();
+                if(bundle!=null)
+                {
+                    bundle.putString(Constant.TRADEACCO,trade_acco);
+                    Log.e(TAG, "onClick: "+trade_acco );
+                }
+                startActivity(CancleOrderActivity.class,bundle);
             }
         });
         //去开户
@@ -386,6 +433,18 @@ public class UserFragment extends XFragment<UserPresent> {
             }
         });
 
+    }
+
+    /**
+     *  接受Eventbus 传过来的值
+     *
+     * @param
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void bankCardMessage(BankCardMessageEvent event) {
+        certNo = event.getCertNo();
+        struserName = event.getUserName();
+        Log.e("shezhisehzhi", "bankCardMessage: "+certNo+struserName );
     }
 
 
@@ -402,6 +461,7 @@ public class UserFragment extends XFragment<UserPresent> {
     public void showMyFund(UserAccountResp resps) {
         httpLoadingDialog.dismiss();
         if (resps != null) {
+
             //总资产
             tvTotalAssets.setText(BigDecimalUtil.bigdecimalToString(resps.getTotalAssets()));
             //昨日收益
@@ -414,13 +474,20 @@ public class UserFragment extends XFragment<UserPresent> {
             tvPassage.setText(BigDecimalUtil.bigdecimalToString(resps.getOntheRoadAssets()));
             //收益时间
             tvTime.setText("昨日收益(" + resps.getYesterday() + ")");
-
             //持仓基金
             if (fundList != null) {
                 fundList.clear();
             }
             fundList.addAll(resps.getFundList());
 
+           if(fundList !=null&& fundList.size()>0)
+           {
+               for (int i = 0; i < fundList.size() ; i++) {
+               trade_acco = fundList.get(i).getTrade_acco();
+
+           }
+           }
+            Log.e(TAG, "showMyFund: "+trade_acco );
             //待确认基金
             if (passageList != null) {
                 passageList.clear();
@@ -483,6 +550,9 @@ public class UserFragment extends XFragment<UserPresent> {
         }
         if (RuntimeHelper.getInstance().isLogin() && Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
             requestFund();
+           //在这里去进行请求风险测试是否过期  如果过期跳转相应的链接  如果没有过期就不显示弹框
+
+
         }
     }
 
@@ -524,5 +594,6 @@ public class UserFragment extends XFragment<UserPresent> {
         bundle.putString(Constant.SKIP_SIGN, Constant.SKIP_INDEX_ACTIVITY);
         startActivity(LoginActivity.class, bundle);
     }
+
 
 }
