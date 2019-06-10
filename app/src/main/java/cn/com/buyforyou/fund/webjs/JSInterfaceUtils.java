@@ -85,6 +85,14 @@ public class JSInterfaceUtils {
             jSInterfaceClick.toAppIndex();
         }
     }
+    @JavascriptInterface
+    public void toUploadPictures()
+    {
+        if(jSInterfaceClick!=null)
+        {
+            jSInterfaceClick.toUploadPictures();
+        }
+    }
 
     private JSInterfaceClick jSInterfaceClick;
 
