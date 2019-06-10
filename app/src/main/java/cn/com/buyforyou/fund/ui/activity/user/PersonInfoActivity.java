@@ -1,9 +1,12 @@
 package cn.com.buyforyou.fund.ui.activity.user;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+
 import android.content.DialogInterface;
+
 import android.os.Bundle;
-import android.util.Log;
+
 import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
@@ -12,33 +15,47 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import cn.com.buyforyou.fund.App;
 import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.constant.Constant;
-import cn.com.buyforyou.fund.event.InvalidTokenEvent;
+import cn.com.buyforyou.fund.event.BankCardMessageEvent;
+
+import cn.com.buyforyou.fund.event.ChangeBankCardEvent;
+import cn.com.buyforyou.fund.event.ChangeUserMessageEvent;
 import cn.com.buyforyou.fund.model.ApplyBaseInfo;
 import cn.com.buyforyou.fund.model.user.OccupationResp;
 import cn.com.buyforyou.fund.model.user.PersonInfoResp;
+import cn.com.buyforyou.fund.model.user.UserInforResp;
+import cn.com.buyforyou.fund.model.user.UserInformationResp;
 import cn.com.buyforyou.fund.present.user.PersonInfoPresent;
+
 
 import com.zhsoft.fretting.ui.widget.CustomDialog;
 import com.zhsoft.fretting.ui.widget.FundBuyDialog;
 import com.zhsoft.fretting.ui.widget.PopShow;
-import com.zhsoft.fretting.ui.widget.CitySelectPopupWindow;
+
 
 import cn.com.buyforyou.fund.utils.KeyBoardUtils;
 
 import com.zhsoft.fretting.ui.widget.ChenJingET;
 import com.zhsoft.fretting.ui.widget.SelectPopupWindow;
+import com.zhsoft.fretting.ui.widget.wheel.MessageDialog;
 
 import cn.com.buyforyou.fund.utils.RuntimeHelper;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -55,6 +72,7 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
     private Calendar calendar = Calendar.getInstance();
     //时间选择器
     private DatePickerDialog timeDialog;
+
     /**
      * 返回按钮
      */
@@ -85,6 +103,11 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
      */
     @BindView(R.id.email)
     EditText email;
+    /**
+     * 小红点
+     */
+    @BindView(R.id.identity_image)
+    ImageView imageView;
     /**
      * 性别
      */
@@ -134,16 +157,92 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
      */
     @BindView(R.id.address_detail)
     TextView addressDetail;
+    /*
+    *  上传身份证以及银行卡照片
+    *
+    */
+    @BindView(R.id.relative_ll)
+    RelativeLayout relativeLayout;
+
+    /**
+     * 是否存在他人实际控制关系
+     */
+//    @BindView(R.id.rg_control)
+//    RadioGroup rgControl;
+//
+//    @BindView(R.id.radio_no)
+//    RadioButton radioControl;
+//
+//    @BindView(R.id.radio_yes)
+//    RadioButton radioButtonControl;
+//
+//    @BindView(R.id.ll_control)
+//    LinearLayout llControl;
+//
+//    @BindView(R.id.control_name)
+//    EditText editControl;
+//
+//    @BindView(R.id.tv_control)
+//    TextView tvControl;
+//
+//
+//    /**
+//     * 交易的实际受益人
+//     */
+//    @BindView(R.id.rg_favoree)
+//    RadioGroup rgFavoree;
+//
+//    @BindView(R.id.radio_favoree_no)
+//    RadioButton radioFacoreeNo;
+//
+//
+//    @BindView(R.id.radio_favoree_yes)
+//    RadioButton radioFacoreeYes;
+//
+//    @BindView(R.id.ll_favoree)
+//    LinearLayout llFavoree;
+//
+//    @BindView(R.id.favoree_name)
+//    EditText editFavoree;
+//
+//    @BindView(R.id.tv_favoree)
+//    TextView tvFavoree;
+//
+//
+//
+//    /**
+//     * 是否有不良信用记录
+//     */
+//    @BindView(R.id.rg_recored)
+//    RadioGroup  rgRecored;
+//
+//    @BindView(R.id.radio_recored_no)
+//    RadioButton radioRecoredNo;
+//
+//    @BindView(R.id.radio_record_yes)
+//    RadioButton radioRecordYes;
+//
+//    @BindView(R.id.ll_record)
+//    LinearLayout llRecord;
+//
+//    @BindView(R.id.record_edit)
+//    EditText editRecord;
+//
+//    @BindView(R.id.tv_recored)
+//    TextView tvRecored;
     /**
      * 保存按钮
      */
     @BindView(R.id.btn_save)
     Button btnSave;
 
-//    /** 设置按钮 */
-//    @BindView(R.id.head_right) Button headRight;
-//    /** 编辑按钮 */
-//    @BindView(R.id.click_update) TextView clickUpdate;
+
+    /**
+     * 点击保存弹框
+     */
+    private MessageDialog alertDialog;
+
+
 
     /**
      * 用户编号
@@ -175,6 +274,12 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
      * 密码错误弹框
      */
     private CustomDialog errorDialog;
+   private  int years;
+   private int mouths;
+   private int day;
+//    private boolean flag=true;
+//    private boolean flag1=true;
+//    private boolean flag2=true;
 
     @Override
     public int getLayoutId() {
@@ -194,7 +299,7 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
         headTitle.setText("个人信息");
         ivSelector.setSelected(false);
         httpLoadingDialog = new HttpLoadingDialog(context);
-
+      //  EventBus.getDefault().register(this);
         //获取用户缓存的userid 和 token
         userId = App.getSharedPref().getString(Constant.USERID, "");
         token = App.getSharedPref().getString(Constant.TOKEN, "");
@@ -206,40 +311,12 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
         //请求个人信息接口
         getP().getUserInfo(token, userId);
 
+
     }
 
     @Override
     public void initEvents() {
-//        headRight.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                if ("完成".equals(headRight.getText().toString())) {
-//                    //保存邮箱信息
-//                    showToast("保存该信息");
-//                    //然后设置为不可编辑状态
-//                    email.setFocusable(false);
-//                    email.setFocusableInTouchMode(false);
-//                    headRight.setText("编辑");
-//                    clickUpdate.setVisibility(View.GONE);
-//                } else if ("编辑".equals(headRight.getText().toString())) {
-//                    clickUpdate.setVisibility(View.VISIBLE);
-//                    clickUpdate.setText("修改");
-//
-//                }
-//
-//            }
-//        });
 
-//        clickUpdate.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                headRight.setText("完成");
-//                email.setSelection(email.getText().toString().trim().length());//将光标移至文字末尾
-//                email.setFocusableInTouchMode(true);
-//                email.setFocusable(true);
-//                email.requestFocus();
-//            }
-//        });
         headBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -247,15 +324,73 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
             }
         });
 
+//        rgControl.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                flag=false;
+//                switch (checkedId)
+//                {
+//                    case R.id.radio_no:
+//                        radioControl.setChecked(true);
+//                        llControl.setVisibility(View.GONE);
+//                        break;
+//                    case R.id.radio_yes:
+//                        radioButtonControl.setChecked(true);
+//                        llControl.setVisibility(View.VISIBLE);
+//                        //exitControlName = editControl.getText().toString();
+//                        break;
+//                }
+//            }
+//        });
+//        rgFavoree.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                flag1=false;
+//                switch (checkedId)
+//                {
+//                    case R.id.radio_favoree_no:
+//                        radioFacoreeNo.setChecked(true);
+//                        llFavoree.setVisibility(View.GONE);
+//                        break;
+//                    case R.id.radio_favoree_yes:
+//                        radioFacoreeYes.setChecked(true);
+//                        llFavoree.setVisibility(View.VISIBLE);
+//                        break;
+//                }
+//            }
+//        });
+//        rgRecored.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+//            @Override
+//            public void onCheckedChanged(RadioGroup group, int checkedId) {
+//                flag2=false;
+//                switch (checkedId)
+//                {
+//                    case R.id.radio_recored_no:
+//                        radioRecoredNo.setChecked(true);
+//                        llRecord.setVisibility(View.GONE);
+//                        break;
+//                    case R.id.radio_record_yes:
+//                        radioRecordYes.setChecked(true);
+//                        llRecord.setVisibility(View.VISIBLE);
+//                        break;
+//                }
+//            }
+//        });
+
         limitTime.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //如果未勾选永久有效 就可以选择时间
                 if (!ivSelector.isSelected()) {
-
-                    timeDialog = new DatePickerDialog(context, new DatePickerDialog.OnDateSetListener() {
+                    timeDialog = new DatePickerDialog(context,AlertDialog.THEME_HOLO_LIGHT, new DatePickerDialog.OnDateSetListener() {
                         @Override
                         public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                            years = calendar.get(Calendar.YEAR);
+                            mouths = calendar.get(Calendar.MONTH);
+                            day = calendar.get(Calendar.DAY_OF_MONTH);
+
+
                             //月份未满10 前面添加0
                             String strMonth;
                             int month = monthOfYear + 1;
@@ -275,7 +410,22 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
                         }
                     }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH));
                     timeDialog.show();
+
                 }
+
+
+            }
+        });
+        /**
+         * 上传身份证以及银行卡
+         *
+         */
+
+        relativeLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                startActivity(PhotoActivity.class);
 
             }
         });
@@ -318,15 +468,7 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
             }
         });
 
-//        linearlayoutArea.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                //关闭当前输入框
-//                KeyBoardUtils.closeKeybord(PersonInfoActivity.this);
-//                //显示窗口
-//                popupWindow.showAtLocation(linearlayoutArea, Gravity.BOTTOM | Gravity.CENTER_HORIZONTAL, 0, 0); //设置layout在PopupWindow中显示的位置
-//            }
-//        });
+
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -357,6 +499,65 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
                     showToast("邮箱不能为空");
                     return;
                 }
+                if((getText(residentsTax)).equals("请选择"))
+                {
+                    showToast("请选择居民税收类型");
+                    return;
+                }
+//                if(flag)
+//                {
+//                    showToast("请选择是否存在他人实际控制关系");
+//                    return;
+//                }
+//                else
+//
+//                {
+//                    if(radioButtonControl.isChecked())
+//                    {
+//                        if(!isNotEmpty(getText(editControl)))
+//                        {
+//                            showToast("实际控制人姓名不能为空");
+//                            return;
+//                        }
+//                    }
+//
+//
+//                }
+//                if(flag1)
+//                {
+//                    showToast("请选择交易的实际受益人");
+//                    return;
+//                }
+//                else
+//                {
+//                    if(radioFacoreeYes.isChecked())
+//                    {
+//                        if(!isNotEmpty(getText(editFavoree)))
+//                        {
+//                            showToast("交易的实际受益人姓名不能为空");
+//                            return;
+//                        }
+//                    }
+//                }
+//                if(flag2)
+//                {
+//                    showToast("请选择是否有不良诚信记录");
+//                    return;
+//                }
+//                else
+//                {
+//                    if(radioRecordYes.isChecked())
+//                    {
+//
+//                        if(!isNotEmpty(getText(editRecord)))
+//                        {
+//                            showToast("不良诚信记录不能为空");
+//                            return;
+//                        }
+//
+//                    }
+//                }
+
                 //身份证有限期
                 final String id_enddate;
                 if (ivSelector.isSelected()) {
@@ -365,6 +566,54 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
                     id_enddate = getText(limitTime);
                 }
 //                httpLoadingDialog.visible("保存中...");
+//                alertDialog = new MessageDialog.Builder(context)
+//                        .setMessage("本人保证提供的信息真实、准确、完整，知晓并确认若提供的信息不真实、不准确、不完整的，应该依法承担相应法律责任，基金销售机构将不承担由此导致的关于适当性不匹配的任何后果，且有权拒绝销售产品或提供服务。本人已知晓并确认提供信息发生重要变化、可能影响投资者分类的，应当及时进行更新并告知基金销售机构")
+//                        .setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                alertDialog.dismiss();
+//                            }
+//                        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialogInterface, int i) {
+//                                alertDialog.dismiss();
+//                                //弹出交易密码框
+//                                fundBuyDialog = new FundBuyDialog
+//                                        .Builder(context)
+//                                        .setOnTextFinishListener(new FundBuyDialog.OnTextFinishListener() {
+//                                            @Override
+//                                            public void onFinish(String str) {
+//                                            }
+//                                        }).setPositiveButton("确定", new FundBuyDialog.OnPositiveButtonListener() {
+//                                            @Override
+//                                            public void onButtonClick(DialogInterface dialog, String str) {
+//                                                //验证是否符合更换条件
+//                                                dialog.dismiss();
+//                                                httpLoadingDialog.visible("保存中...");
+//                                                getP().changeMyInformation(token, userId, id_enddate, null, getText(addressDetail), getText(email), selectOccupationResp, str, currentItemTax);
+//
+//
+//                                            }
+//                                        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                                            @Override
+//                                            public void onClick(DialogInterface dialog, int which) {
+//                                                dialog.dismiss();
+//                                            }
+//                                        }).create();
+//
+//                                fundBuyDialog.show();
+//
+//
+//                            }
+//                        }).create();
+//                alertDialog.show();
+//
+//
+//
+//
+//
+//            }
+//        });
                 //弹出交易密码框
                 fundBuyDialog = new FundBuyDialog
                         .Builder(context)
@@ -396,6 +645,50 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
         });
 
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        //判断小红点接口
+        getP().getUserMessage(token,userId);
+    }
+
+    private String getTime(Date date) {//可根据需要自行截取数据显示
+        //"YYYY-MM-DD HH:MM:SS"        "yyyy-MM-dd"
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+        return format.format(date);
+    }
+    /**
+     * 判断小红点是否显示请求接口成功
+     *
+     */
+    public void requestUserMessageSuccess(UserInformationResp informationResp)
+    {
+        httpLoadingDialog.dismiss();
+        if(informationResp.getData()
+                !=null) {
+            String idCardF = informationResp.getData().getIdCardF();
+            String idCardZ = informationResp.getData().getIdCardZ();
+            String bankCardZ = informationResp.getData().getBankCardZ();
+            String bankCardF = informationResp.getData().getBankCardF();
+            if (idCardF == null || idCardZ == null || bankCardZ == null || bankCardF == null)
+            {
+                imageView.setVisibility(View.VISIBLE);
+            }
+
+            else if(idCardF!=null&&idCardZ!=null&&bankCardZ!=null&&bankCardF!=null)
+            {
+                imageView.setVisibility(View.GONE);
+
+            }
+        }
+        else
+        {
+              imageView.setVisibility(View.VISIBLE);
+
+        }
+       // EventBus.getDefault().post(new ChangeUserMessageEvent());
     }
 
     /**
@@ -467,6 +760,7 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
             });
 
         }
+        EventBus.getDefault().post(new BankCardMessageEvent(personInfoResp.getUserName(), personInfoResp.getCertNo()));
     }
 
     /**
@@ -477,7 +771,7 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
      */
     private void isShowTax(String keyvalue, String caption) {
 
-        if (null == keyvalue||keyvalue.equals("null")) {
+        if (null == keyvalue || keyvalue.equals("null")) {
             keyvalue = "0";
         }
         if (null == caption || caption.equals("null")) {
@@ -563,6 +857,19 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
         httpLoadingDialog.dismiss();
         listOccupation = data;
     }
+//    /**
+//     * 发送Eventbus事件
+//     * 如果用户信息已补全  就隐藏小红点
+//     *
+//     * @param event
+//     */
+//    @Subscribe(threadMode = ThreadMode.POSTING)
+//    public void changeMessageEvent(ChangeUserMessageEvent event) {
+//
+//        httpLoadingDialog.visible();
+//        getP().getUserMessage(token,userId);
+//
+//}
 
     /**
      * 获取职业集合失败
@@ -629,6 +936,7 @@ public class PersonInfoActivity extends XActivity<PersonInfoPresent> {
 
     @Override
     protected void onDestroy() {
+       // EventBus.getDefault().unregister(this);
         if (errorDialog != null) {
             errorDialog.dismiss();
             errorDialog = null;
