@@ -38,6 +38,7 @@ public class TransactionContentPresent extends XPresent<TransactionContentFragme
         params.setPageNum(pageno);
         params.setPageSize(pageSize);
         params.setTransactionCategory(tabType);
+
         reqData.setData(params);
 
         Api.getApi()
