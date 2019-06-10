@@ -25,14 +25,17 @@ public class BankCardPresent extends XPresent<BankCardActivity> {
      * @param token
      * @param userId
      */
-    public void getBankCardInfo(String token, String userId) {
+    public void getBankCardInfo(String token, String userId,String trade_acco) {
         CommonReqData reqData = new CommonReqData();
 
         reqData.setToken(token);
         reqData.setUserId(userId);
+        BankCardChangeParams params=new BankCardChangeParams();
+        params.setTrade_acco(trade_acco);
+        reqData.setData(params);
 
         Api.getApi()
-                .getMyBankCard(reqData)
+                .showTradeAccoInfo(reqData)
                 .compose(XApi.<BankCardResp>getApiTransformer())
                 .compose(XApi.<BankCardResp>getScheduler())
                 .compose(getV().<BankCardResp>bindToLifecycle())
@@ -65,7 +68,7 @@ public class BankCardPresent extends XPresent<BankCardActivity> {
      * @param token
      * @param userId
      */
-    public void changeBankCardCheck(String token, String userId, String trade_password) {
+    public void changeBankCardCheck(String token, String userId, String trade_password,String trade_acco) {
         CommonReqData reqData = new CommonReqData();
 
         reqData.setToken(token);
@@ -73,6 +76,7 @@ public class BankCardPresent extends XPresent<BankCardActivity> {
 
         BankCardChangeParams params = new BankCardChangeParams();
         params.setTrade_password(trade_password);
+        params.setTrade_acco(trade_acco);
         reqData.setData(params);
 
         Api.getApi().changeBankCardCheck(reqData)
