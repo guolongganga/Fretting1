@@ -8,6 +8,15 @@ package cn.com.buyforyou.fund.params;
 public class InvestSuccessParams extends CommonReqData<InvestSuccessParams> {
     private String fundCode;
     private String scheduled_protocol_id;
+    private String trade_acco;
+
+    public String getTrade_acco() {
+        return trade_acco;
+    }
+
+    public void setTrade_acco(String trade_acco) {
+        this.trade_acco = trade_acco;
+    }
 
     public String getFundCode() {
         return fundCode;
