@@ -53,5 +53,10 @@ public class JSInterfaceClick implements JSInterfaceInter {
     public void toAppIndex() {
 
     }
+    //上传身份证和银行卡照片
+    public void toUploadPictures()
+    {
+
+    }
 
 }
