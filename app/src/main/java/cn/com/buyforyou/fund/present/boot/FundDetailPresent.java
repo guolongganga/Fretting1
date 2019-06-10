@@ -1,8 +1,13 @@
 package cn.com.buyforyou.fund.present.boot;
 
+import android.support.v4.view.PagerAdapter;
+
 import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.constant.Constant;
+import cn.com.buyforyou.fund.model.BaseResp;
+import cn.com.buyforyou.fund.model.Resp;
 import cn.com.buyforyou.fund.model.fund.BuyFundResp;
+import cn.com.buyforyou.fund.model.fund.CheckUserPictureResp;
 import cn.com.buyforyou.fund.model.fund.InvestResp;
 import cn.com.buyforyou.fund.model.fund.SellResp;
 import cn.com.buyforyou.fund.model.user.InvestPlanResp;
@@ -32,6 +37,42 @@ import io.reactivex.schedulers.Schedulers;
  */
 
 public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
+//    /**
+//     * 验证用户是否已上传银行卡和身份证照片
+//     */
+//    public void checkUserPicture(String token, String userId) {
+//        final CommonReqData reqData = new CommonReqData();
+//        reqData.setToken(token);
+//        reqData.setUserId(userId);
+//        Api.getApi().checkUserPicture(reqData)
+//                .compose(XApi.<CheckUserPictureResp>getApiTransformer())
+//                .compose(XApi.<CheckUserPictureResp>getScheduler())
+//                .compose(getV().<CheckUserPictureResp>bindToLifecycle())
+//                .subscribe(new ApiSubscriber<CheckUserPictureResp>() {
+//                    @Override
+//                    protected void onFail(NetError error) {
+//
+//                        getV().checkUserPictureFailed();
+//                        getV().showToast(R.string.request_error);
+//                    }
+//
+//                    @Override
+//                    public void onNext(CheckUserPictureResp resp) {
+//
+//                        if (resp != null && resp.getStatus() == 200) {
+//                            getV().CheckUserPictureSuccess(resp);
+//                        } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
+//                            getV().showToast(resp.getMessage());
+//                            getV().areadyLogout();
+//                        } else {
+//                            getV().checkUserPictureFailed();
+//                            getV().showToast(resp.getMessage());
+//                            XLog.e("返回数据为空");
+//                        }
+//                    }
+//                });
+//
+//    }
 
     /**
      * 购买基金 验证 （是否具备购买资格）
@@ -41,7 +82,7 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
      * @param fund_code
      */
     public void buyFund(String token, String userId, String fund_code) {
-        CommonReqData reqData = new CommonReqData();
+        final CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
         BuyFundParams params = new BuyFundParams();
@@ -55,12 +96,14 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
                 .subscribe(new ApiSubscriber<BuyFundResp>() {
                     @Override
                     protected void onFail(NetError error) {
+
                         getV().requestBuyFundFail();
                         getV().showToast(R.string.request_error);
                     }
 
                     @Override
                     public void onNext(BuyFundResp resp) {
+
                         if (resp != null && resp.getStatus() == 200) {
                             getV().requestBuyFundSuccess(resp.getData());
                         } else if (resp != null && resp.getStatus() == Constant.NO_LOGIN_STATUS) {
@@ -127,12 +170,13 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
      * @param userId
      * @param fund_code
      */
-    public void sellFundPre(String token, String userId, String fund_code) {
+    public void sellFundPre(String token, String userId, String fund_code,String trade_acco) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
         BuyFundParams params = new BuyFundParams();
         params.setFund_code(fund_code);
+        params.setTrade_acco(trade_acco);
         reqData.setData(params);
 
         Api.getApi().sellFundPre(reqData)
@@ -172,12 +216,13 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
      * @param userId
      * @param fundCode
      */
-    public void buyOnFundData(String token, String userId, String fundCode) {
+    public void buyOnFundData(String token, String userId, String fundCode,String trade_acco) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
         InvestParams params = new InvestParams();
         params.setFundCode(fundCode);
+        params.setTrade_acco(trade_acco);
         reqData.setData(params);
 
         Api.getApi().buyOnFundData(reqData)
@@ -210,12 +255,13 @@ public class FundDetailPresent extends XPresent<FundDetailWebActivity> {
     }
 
     //跳转分红详情
-    public void loadBonusData(String fundCode, String token, String userId) {
+    public void loadBonusData(String fundCode, String token, String userId,String trade_acco) {
         CommonReqData<BonusChangeParams> reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
         BonusChangeParams params = new BonusChangeParams();
         params.setFundCode(fundCode);
+        params.setTradeacco(trade_acco);
         reqData.setData(params);
 
 
