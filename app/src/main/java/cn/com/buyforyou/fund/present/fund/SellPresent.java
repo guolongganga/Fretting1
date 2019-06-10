@@ -34,12 +34,13 @@ public class SellPresent extends XPresent<SellActivity> {
      * @param userId
      * @param fund_code
      */
-    public void sellFundPre(String token, String userId, String fund_code) {
+    public void sellFundPre(String token, String userId, String fund_code,String trade_acco) {
         CommonReqData reqData = new CommonReqData();
         reqData.setToken(token);
         reqData.setUserId(userId);
         BuyFundParams params = new BuyFundParams();
         params.setFund_code(fund_code);
+        params.setTrade_acco(trade_acco);
         reqData.setData(params);
 
         Api.getApi().sellFundPre(reqData)
