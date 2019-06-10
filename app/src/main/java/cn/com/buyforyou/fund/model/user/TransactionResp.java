@@ -86,6 +86,8 @@ public class TransactionResp extends BaseResp<List<TransactionResp>> implements 
         this.incomeType = incomeType;
     }
 
+
+
     @Override
     public int describeContents() {
         return 0;
@@ -101,6 +103,7 @@ public class TransactionResp extends BaseResp<List<TransactionResp>> implements 
         dest.writeString(this.amount);
         dest.writeString(this.tans_status);
         dest.writeString(this.incomeType);
+
     }
 
     public TransactionResp() {
@@ -115,6 +118,7 @@ public class TransactionResp extends BaseResp<List<TransactionResp>> implements 
         this.amount = in.readString();
         this.tans_status = in.readString();
         this.incomeType = in.readString();
+
     }
 
     public static final Creator<TransactionResp> CREATOR = new Creator<TransactionResp>() {
