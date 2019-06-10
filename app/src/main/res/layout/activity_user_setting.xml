@@ -25,11 +25,57 @@
                 android:background="@color/color_FFFFFF"
                 android:orientation="vertical">
                 <!--个人信息-->
-                <TextView
+                <RelativeLayout
+                    android:id="@+id/relative_ll"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical"
+                    android:paddingLeft="@dimen/dimen_15"
+                    android:paddingRight="@dimen/dimen_15">
 
-                    android:id="@+id/personinfo"
-                    style="@style/user_setting_line"
-                    android:text="个人信息" />
+                    <TextView
+                        android:id="@+id/personinfo"
+                        style="@style/text_bold_17"
+                        android:text="个人信息" />
+                    <ImageView
+                        android:id="@+id/image_redLine"
+                        android:layout_width="@dimen/dimen_10"
+                        android:layout_height="@dimen/dimen_10"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginLeft="@dimen/dimen_1"
+                        android:layout_toRightOf="@+id/personinfo"
+                        android:src="@drawable/dot"
+                        android:visibility="gone"
+
+
+                       />
+                </RelativeLayout>
+                <!--个人信息-->
+
+
+
+
+
+
+                <!--<TextView-->
+
+                    <!--android:id="@+id/personinfo"-->
+                    <!--style="@style/user_setting_line"-->
+
+                    <!--android:text="个人信息" />-->
+                    <!--<ImageView-->
+                        <!--android:id="@+id/identity_image"-->
+                        <!--android:layout_width="@dimen/dimen_10"-->
+                        <!--android:layout_height="@dimen/dimen_10"-->
+                        <!--android:src="@drawable/dot"-->
+                        <!--android:layout_alignRight="@+id/personinfo"-->
+                        <!--/>-->
+
+
+
+
+
 
                 <include layout="@layout/layout_divider_horizontal" />
 
