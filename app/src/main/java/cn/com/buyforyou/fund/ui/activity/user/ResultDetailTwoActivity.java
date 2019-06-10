@@ -1,6 +1,7 @@
 package cn.com.buyforyou.fund.ui.activity.user;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -58,6 +59,8 @@ public class ResultDetailTwoActivity extends XActivity<ResultDetailTwoPresent> {
     private String userId;
     /** 加载框 */
     private HttpLoadingDialog httpLoadingDialog;
+    //交易账号
+    private String tradeacco;
 
 
     @Override
@@ -78,6 +81,8 @@ public class ResultDetailTwoActivity extends XActivity<ResultDetailTwoPresent> {
 //            recordStatus = bundle.getString(Constant.INVEST_RECORD_STATUS);
             allot_no = bundle.getString(Constant.INVEST_PROTOCOL_ID);
             title = bundle.getString(Constant.ACTIVITY_TITLE);
+//            //交易账号
+//            tradeacco = bundle.getString(Constant.TRADEACCO);
         }
         headTitle.setText(title);
         //获取用户缓存的userid 和 token
