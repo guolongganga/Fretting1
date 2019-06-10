@@ -10,18 +10,24 @@ import android.os.Bundle;
 import android.provider.Settings;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import cn.com.buyforyou.fund.App;
 import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.constant.Constant;
+import cn.com.buyforyou.fund.event.ChangeUserMessageEvent;
 import cn.com.buyforyou.fund.event.InvalidTokenEvent;
 import cn.com.buyforyou.fund.model.user.RiskInfoResp;
+import cn.com.buyforyou.fund.model.user.UserInforResp;
+import cn.com.buyforyou.fund.model.user.UserInformationResp;
 import cn.com.buyforyou.fund.net.Api;
 import cn.com.buyforyou.fund.net.HttpContent;
 import cn.com.buyforyou.fund.present.user.SettingPresent;
@@ -33,6 +39,8 @@ import com.zhsoft.fretting.ui.widget.CustomDialog;
 import cn.com.buyforyou.fund.utils.RuntimeHelper;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
@@ -59,6 +67,11 @@ public class SettingActivity extends XActivity<SettingPresent> {
      */
     @BindView(R.id.personinfo)
     TextView personinfo;
+    /**
+     * 个人信息以及小红点
+     */
+    @BindView(R.id.relative_ll)
+    RelativeLayout relativeLayout;
     /**
      * 手机号码
      */
@@ -106,6 +119,11 @@ public class SettingActivity extends XActivity<SettingPresent> {
      */
     @BindView(R.id.invite_code)
     TextView inviteCode;
+    /**
+     * 小红点
+     */
+    @BindView(R.id.image_redLine)
+    ImageView imageRedLine;
 
     /**
      * 针对即使获取了拨打电话的权限依然报错问题的解决方案
@@ -136,6 +154,8 @@ public class SettingActivity extends XActivity<SettingPresent> {
      */
     private String isOpenAccount;
     private CustomDialog dialog;
+    private String strUserName;
+    private String certNo;
 
     @Override
 
@@ -150,10 +170,12 @@ public class SettingActivity extends XActivity<SettingPresent> {
 
     @Override
     public void initData(Bundle bundle) {
+
         //设置标题
         headTitle.setText("设置");
         //初始化加载圈
         httpLoadingDialog = new HttpLoadingDialog(context);
+       // EventBus.getDefault().register(this);
         //获取本地缓存
         token = App.getSharedPref().getString(Constant.TOKEN, "");
         userId = App.getSharedPref().getString(Constant.USERID, "");
@@ -165,19 +187,21 @@ public class SettingActivity extends XActivity<SettingPresent> {
         httpLoadingDialog.visible();
         getP().riskGrade(token, userId);
 
-        setRippBac(personinfo);
+
+        setRippBac(relativeLayout);
         setRippBac(phone);
         setRippBac(passwordManager);
         setRippBac(bankcard);
 
         setRippBac(aboutUs);
+
     }
 
 
     @Override
     public void initEvents() {
 
-        personinfo.setOnClickListener(new View.OnClickListener() {
+        relativeLayout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!Constant.ALREADY_OPEN_ACCOUNT.equals(isOpenAccount)) {
@@ -214,7 +238,10 @@ public class SettingActivity extends XActivity<SettingPresent> {
                     showToast("您还未开户，请先去开户");
                     return;
                 }
-                startActivityDelay(BankCardActivity.class);
+                //跳转到银行卡
+               // startActivityDelay(BankCardActivity.class);
+                //跳转到添加银行卡
+                startActivity(AddBankCardListActivity.class);
             }
         });
         riskTest.setOnClickListener(new View.OnClickListener() {
@@ -302,6 +329,63 @@ public class SettingActivity extends XActivity<SettingPresent> {
         });
 
     }
+    /**
+     * 用户个人信息
+     *
+     * @param data
+     */
+    public void userMessageData(UserInformationResp data) {
+        httpLoadingDialog.dismiss();
+        if(data.getData()!=null)
+        {
+            String idCardF = data.getData().getIdCardF();
+            String idCardZ = data.getData().getIdCardZ();
+            String bankCardZ = data.getData().getBankCardZ();
+            String bankCardF = data.getData().getBankCardF();
+            if(idCardF==null||idCardZ==null||bankCardZ==null||bankCardF==null)
+            {
+                 imageRedLine.setVisibility(View.VISIBLE);
+            }
+            else
+            {
+                imageRedLine.setVisibility(View.GONE);
+            }
+
+        }
+        else
+        {
+            imageRedLine.setVisibility(View.VISIBLE);
+        }
+
+
+    }
+    /**
+     * 用户个人信息失败
+     */
+    public void UserMessageFail( ) {
+        httpLoadingDialog.dismiss();
+
+    }
+//    /**
+//     * 发送Eventbus事件
+//     * 如果用户信息已补全  就隐藏小红点
+//     *
+//     * @param event
+//     */
+//    @Subscribe(threadMode = ThreadMode.POSTING)
+//    public void changeMessageEvent(ChangeUserMessageEvent event) {
+//        //重新获取我的银行卡信息
+//        httpLoadingDialog.visible();
+//        getP().userMessageInformation(token,userId);
+//
+//    }
+
+    @Override
+    protected void onDestroy() {
+      //  EventBus.getDefault().unregister(this);
+        super.onDestroy();
+
+    }
 
     /**
      * 风险等级或是否做了风险测评 成功
@@ -334,6 +418,12 @@ public class SettingActivity extends XActivity<SettingPresent> {
             inviteCode.setText(data.getInvite_code());
         }
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getP().userMessageInformation(token,userId);
     }
 
     /**
