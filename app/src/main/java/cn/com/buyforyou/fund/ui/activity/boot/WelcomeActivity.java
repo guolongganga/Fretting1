@@ -86,3 +86,5 @@ public class WelcomeActivity extends XActivity {
                 .launch();
     }
 }
+
+
