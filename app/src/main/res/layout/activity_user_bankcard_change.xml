@@ -50,15 +50,14 @@
                         android:layout_weight="1"
                         android:background="@null"
                         android:gravity="center_vertical"
-                        android:hint="请选择"
                         android:textColor="@color/color_text_333"
                         android:textColorHint="@color/color_CCCCCC"
                         android:textSize="@dimen/text_size_15"/>
 
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/icon_common_arrow_right"/>
+                    <!--<ImageView-->
+                        <!--android:layout_width="wrap_content"-->
+                        <!--android:layout_height="wrap_content"-->
+                        <!--android:src="@drawable/icon_common_arrow_right"/>-->
 
                 </LinearLayout>
 
@@ -126,10 +125,7 @@
                         android:textSize="@dimen/text_size_14"
                         />
 
-                    <!--获取验证码-->
-                    <com.zhsoft.fretting.ui.widget.CountdownButton
-                        android:id="@+id/get_verify_code"
-                        style="@style/AppTheme.Button_send_code"/>
+
 
                 </LinearLayout>
 
@@ -164,6 +160,10 @@
                         android:textColorHint="@color/color_696969"
                         android:textSize="@dimen/text_size_14"
                         />
+                    <!--获取验证码-->
+                    <com.zhsoft.fretting.ui.widget.CountdownButton
+                        android:id="@+id/get_verify_code"
+                        style="@style/AppTheme.Button_send_code"/>
 
                 </LinearLayout>
 
