@@ -5,6 +5,7 @@ import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.constant.Constant;
 import cn.com.buyforyou.fund.model.BaseResp;
 import cn.com.buyforyou.fund.model.user.BankResp;
+import cn.com.buyforyou.fund.model.user.OpenAccountResp;
 import cn.com.buyforyou.fund.net.Api;
 import cn.com.buyforyou.fund.params.CommonReqData;
 import cn.com.buyforyou.fund.params.OpenAccountParams;
