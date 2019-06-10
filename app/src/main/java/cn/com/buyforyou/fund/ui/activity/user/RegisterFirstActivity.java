@@ -2,42 +2,30 @@ package cn.com.buyforyou.fund.ui.activity.user;
 
 import android.content.DialogInterface;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
-import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.PopupWindow;
 import android.widget.TextView;
-
 import cn.com.buyforyou.fund.App;
 import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.constant.Constant;
 import cn.com.buyforyou.fund.model.LoginResp;
 import cn.com.buyforyou.fund.model.user.ImageResp;
 import cn.com.buyforyou.fund.present.user.RegisterFirstPresent;
-
 import com.zhsoft.fretting.ui.widget.CountdownButton;
 import com.zhsoft.fretting.ui.widget.CustomDialog;
-
 import cn.com.buyforyou.fund.utils.Base64ImageUtil;
 import cn.com.buyforyou.fund.utils.RuntimeHelper;
-
 import com.zhsoft.fretting.ui.widget.ChenJingET;
-
 import butterknife.BindView;
 import cn.droidlover.xdroidmvp.dialog.httploadingdialog.HttpLoadingDialog;
 import cn.droidlover.xdroidmvp.log.XLog;
@@ -479,11 +467,12 @@ public class RegisterFirstActivity extends XActivity<RegisterFirstPresent> {
         App.getSharedPref().putString(Constant.USER_PHONE, getText(phoneNumber));
         App.getSharedPref().putString(Constant.IS_OPEN_ACCOUNT, model.getIsOpenAccount());
 
+
         //全局变量设置为登录状态
         RuntimeHelper.getInstance().setLogin(true);
         startActivity(RegisterSecondActivity.class);
 
-        finish();
+        //finish();
     }
 
     public void checkPhoneExistFail(boolean isExist) {
