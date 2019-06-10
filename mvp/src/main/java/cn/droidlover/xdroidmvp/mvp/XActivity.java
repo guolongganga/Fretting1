@@ -20,6 +20,8 @@ import com.tbruyelle.rxpermissions2.RxPermissions;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 //import com.umeng.analytics.MobclickAgent;
 
+import java.util.ArrayList;
+
 import butterknife.Unbinder;
 import cn.droidlover.xdroidmvp.R;
 import cn.droidlover.xdroidmvp.XDroidConf;
@@ -213,6 +215,8 @@ public abstract class XActivity<P extends IPresent> extends RxAppCompatActivity 
             throw new NullPointerException("TextView 对象为空");
         } else {
             return textView.getText().toString();
+
+
         }
     }
 
