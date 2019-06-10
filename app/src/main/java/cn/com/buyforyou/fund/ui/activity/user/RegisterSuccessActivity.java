@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import cn.com.buyforyou.fund.R;
 import cn.com.buyforyou.fund.constant.Constant;
+import cn.com.buyforyou.fund.event.BankCardMessageEvent;
 import cn.com.buyforyou.fund.event.ChangeTabEvent;
 import cn.com.buyforyou.fund.net.Api;
 import cn.com.buyforyou.fund.net.HttpContent;
@@ -57,9 +58,11 @@ public class RegisterSuccessActivity extends XActivity {
     public void initData(Bundle bundle) {
         headTitle.setText("基金开户");
         // 获取用户名和身份证号
-        username = bundle.getString(Constant.NAME, "");
-        certNo = bundle.getString(Constant.CERT_NO, "");
-
+        if(bundle!=null)
+        {
+            username = bundle.getString(Constant.NAME);
+            certNo = bundle.getString(Constant.CERT_NO);
+        }
         name.setText(username);
         identity.setText(certNo);
 
@@ -93,6 +96,7 @@ public class RegisterSuccessActivity extends XActivity {
 
     private void backDeal() {
         EventBus.getDefault().post(new ChangeTabEvent(Constant.MAIN_MY));
+        EventBus.getDefault().post(new BankCardMessageEvent(Constant.CERT_NO,Constant.NAME));
         startActivity(MainActivity.class);
         finish();
     }
