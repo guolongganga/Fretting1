@@ -38,6 +38,12 @@ public class MyHoldFundResp implements Parcelable {
      */
     private String fundCode;
 
+    /**
+     * 交易账号
+
+     */
+    private String trade_acco;
+
     public String getFundName() {
         return fundName;
     }
@@ -86,6 +92,14 @@ public class MyHoldFundResp implements Parcelable {
         this.fundCode = fundCode;
     }
 
+    public String getTrade_acco() {
+        return trade_acco;
+    }
+
+    public void setTrade_acco(String trade_acco) {
+        this.trade_acco = trade_acco;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -99,6 +113,7 @@ public class MyHoldFundResp implements Parcelable {
         dest.writeSerializable(this.totalEarn);
         dest.writeString(this.sureNumber);
         dest.writeString(this.fundCode);
+        dest.writeString(this.trade_acco);
     }
 
     public MyHoldFundResp() {
@@ -111,6 +126,7 @@ public class MyHoldFundResp implements Parcelable {
         this.totalEarn = (BigDecimal) in.readSerializable();
         this.sureNumber = in.readString();
         this.fundCode = in.readString();
+        this.trade_acco=in.readString();
     }
 
     public static final Parcelable.Creator<MyHoldFundResp> CREATOR = new Parcelable.Creator<MyHoldFundResp>() {
