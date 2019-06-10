@@ -45,7 +45,8 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
     private String token;
     /** 用户编号 */
     private String userId;
-//    private StateView errorView;
+    private String trade_acco;
+    //    private StateView errorView;
 
     @Override
     public int getLayoutId() {
@@ -62,9 +63,13 @@ public class TransactionContentFragment extends XFragment<TransactionContentPres
 
         token = App.getSharedPref().getString(Constant.TOKEN, "");
         userId = App.getSharedPref().getString(Constant.USERID, "");
-        //tab类型 请求接口的时候需要
-        fundTabName = bundle.getString(Constant.FUND_TAB_NAME, "");
-        tabType = fundTabType(fundTabName);
+        if(bundle!=null)
+        {
+            //tab类型 请求接口的时候需要
+            fundTabName = bundle.getString(Constant.FUND_TAB_NAME, "");
+            tabType = fundTabType(fundTabName);
+        }
+
 
         contentLayout.getSwipeRefreshLayout().setColorSchemeResources(
                 R.color.color_main,
