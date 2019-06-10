@@ -11,6 +11,8 @@ public class ResultParams extends CommonReqData<ResultParams> {
     private String busin_board_type;
     private String comb_requestno;
     private String fund_code;
+    //交易账号
+    private String trade_acco;
 
     public String getPassword() {
         return password;
@@ -50,5 +52,13 @@ public class ResultParams extends CommonReqData<ResultParams> {
 
     public void setFund_code(String fund_code) {
         this.fund_code = fund_code;
+    }
+
+    public String getTrade_acco() {
+        return trade_acco;
+    }
+
+    public void setTrade_acco(String trade_acco) {
+        this.trade_acco = trade_acco;
     }
 }
