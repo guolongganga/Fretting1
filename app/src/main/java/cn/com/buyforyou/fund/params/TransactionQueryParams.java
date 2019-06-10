@@ -10,6 +10,9 @@ public class TransactionQueryParams extends CommonReqData<TransactionQueryParams
     private int pageSize;
     private String transactionCategory;
     private String fundCode;
+    //交易账号
+    private String trade_acco;
+
 
     public String getFundCode() {
         return fundCode;
@@ -41,5 +44,13 @@ public class TransactionQueryParams extends CommonReqData<TransactionQueryParams
 
     public void setTransactionCategory(String transactionCategory) {
         this.transactionCategory = transactionCategory;
+    }
+
+    public String getTrade_acco() {
+        return trade_acco;
+    }
+
+    public void setTrade_acco(String trade_acco) {
+        this.trade_acco = trade_acco;
     }
 }
